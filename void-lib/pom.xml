@@ -6,7 +6,13 @@
 
     <groupId>cn.toutatis</groupId>
     <artifactId>void-lib</artifactId>
+    <packaging>pom</packaging>
     <version>0.0.0-ALPHA</version>
+    <modules>
+        <module>void-parent-web-support</module>
+
+        <module>void-common</module>
+    </modules>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
