@@ -9,9 +9,15 @@
     <packaging>pom</packaging>
     <version>0.0.0-ALPHA</version>
     <modules>
+
+        <!--父依赖管理库-->
         <module>void-parent-web-support</module>
 
+        <!--SpringBoot服务支持库-->
+        <module>void-spring-runtime-env</module>
+
         <module>void-common</module>
+        <module>void-samples</module>
     </modules>
 
     <properties>
