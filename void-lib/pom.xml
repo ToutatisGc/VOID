@@ -16,6 +16,8 @@
         <!--SpringBoot服务支持库-->
         <module>void-spring-runtime-env</module>
 
+        <module>void-standard-orm-lib</module>
+
         <module>void-common</module>
         <module>void-samples</module>
     </modules>
