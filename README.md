@@ -1,4 +1,4 @@
-# VOID
+# VOID  ![Hex.pm](https://img.shields.io/hexpm/l/blue?style=flat-square)
 
 #### Author:Toutatis_Gc
 
