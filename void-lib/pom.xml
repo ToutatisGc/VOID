@@ -20,7 +20,7 @@
         <module>void-standard-orm-lib</module>
 
         <!--工具类-->
-        <module>void-common</module>
+<!--        <module>void-common</module>-->
 
     </modules>
 
