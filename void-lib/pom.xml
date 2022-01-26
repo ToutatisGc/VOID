@@ -8,27 +8,56 @@
     <artifactId>void-lib</artifactId>
     <packaging>pom</packaging>
     <version>0.0.0-ALPHA</version>
+
+    <properties>
+        <java8.version>1.8</java8.version>
+        <java11.version>11</java11.version>
+    </properties>
+
+    <profiles>
+        <profile>
+            <id>JDK-${java8.version}</id>
+            <activation>
+                <jdk>${java8.version}</jdk>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+                <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+                <maven.compiler.encoding>UTF-8</maven.compiler.encoding>
+                <maven.compiler.source>${java8.version}</maven.compiler.source>
+                <maven.compiler.target>${java8.version}</maven.compiler.target>
+                <maven.compiler.compilerVersion>${java8.version}</maven.compiler.compilerVersion>
+            </properties>
+        </profile>
+        <profile>
+            <id>JDK-${java11.version}</id>
+            <activation>
+                <jdk>${java11.version}</jdk>
+            </activation>
+            <properties>
+                <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+                <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+                <maven.compiler.encoding>UTF-8</maven.compiler.encoding>
+                <maven.compiler.source>${java11.version}</maven.compiler.source>
+                <maven.compiler.target>${java11.version}</maven.compiler.target>
+                <maven.compiler.compilerVersion>${java11.version}</maven.compiler.compilerVersion>
+            </properties>
+        </profile>
+    </profiles>
+
     <modules>
 
         <!--父依赖管理库-->
-        <module>void-parent-web-support</module>
+        <module>void-feature-support</module>
 
-        <!--SpringBoot服务支持库-->
-        <module>void-spring-runtime-env</module>
+        <module>void-runtime-support</module>
 
         <!--标准化ORM库-->
         <module>void-standard-orm-lib</module>
 
-        <module>void-runtime-support</module>
-
         <!--工具类-->
 <!--        <module>void-common</module>-->
-
     </modules>
-
-    <properties>
-        <maven.compiler.source>8</maven.compiler.source>
-        <maven.compiler.target>8</maven.compiler.target>
-    </properties>
 
 </project>
