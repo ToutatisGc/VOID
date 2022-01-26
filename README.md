@@ -1,4 +1,4 @@
-# VOID  ![Hex.pm](https://img.shields.io/hexpm/l/blue?style=flat-square)
+# VOID  ![Hex.pm](https://img.shields.io/hexpm/l/blue?style=flat-square)![GitHub commit activity](https://img.shields.io/github/commit-activity/w/ToutatisGc/VOID?style=flat-square)![GitHub last commit](https://img.shields.io/github/last-commit/ToutatisGc/VOID?style=flat-square)
 
 #### Author:Toutatis_Gc
 

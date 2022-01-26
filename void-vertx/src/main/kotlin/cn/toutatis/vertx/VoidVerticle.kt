@@ -4,13 +4,30 @@ import io.vertx.core.AbstractVerticle
 import io.vertx.core.Promise
 import io.vertx.core.json.JsonObject
 import io.vertx.ext.web.Router
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 
 class VoidVerticle : AbstractVerticle() {
 
-  override fun start(startPromise: Promise<Void>) {
-//    log.info("")
+  companion object{
+    private val logger : Logger = LoggerFactory.getLogger(VoidVerticle::class.java)
+  }
 
+  override fun start(startPromise: Promise<Void>) {
+    /*异常处理*/
+    logger.info("")
     val router: Router = Router.router(vertx)
+
+    router.route().failureHandler { handler ->
+      run {
+        logger.error(handler.failure().message)
+        val statusCode = 404
+      }
+    }
+
+//    router.route("")
+
+    /*配置*/
     val config: JsonObject = config()
 
     vertx

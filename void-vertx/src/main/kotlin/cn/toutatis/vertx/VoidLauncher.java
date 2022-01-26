@@ -37,8 +37,15 @@ public class VoidLauncher extends Launcher {
         ConfigRetrieverOptions retrieverOptions = new ConfigRetrieverOptions();
         ConfigStoreOptions config = new ConfigStoreOptions()
                 .setType("file")
-                .setConfig(new JsonObject().put("path", "config.json"));
+                .setOptional(true)
+                .setConfig(new JsonObject().put("path", "application.json"));
         retrieverOptions.addStore(config);
+        ConfigStoreOptions yamlConfig = new ConfigStoreOptions()
+                .setType("file")
+                .setFormat("yaml")
+                .setOptional(true)
+                .setConfig(new JsonObject().put("path", "application.yaml"));
+        retrieverOptions.addStore(yamlConfig);
         ConfigRetriever retriever = ConfigRetriever.create(vertx,retrieverOptions);
         retriever.getConfig(ar -> {
             if (ar.failed()) {
