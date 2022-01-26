@@ -1,4 +1,4 @@
-# VOID  ![Hex.pm](https://img.shields.io/hexpm/l/blue?style=flat-square)![GitHub commit activity](https://img.shields.io/github/commit-activity/w/ToutatisGc/VOID?style=flat-square)![GitHub last commit](https://img.shields.io/github/last-commit/ToutatisGc/VOID?style=flat-square)
+# VOID  ![Hex.pm](https://img.shields.io/hexpm/l/blue?style=flat-square) ![GitHub commit activity](https://img.shields.io/github/commit-activity/w/ToutatisGc/VOID?style=flat-square) ![GitHub last commit](https://img.shields.io/github/last-commit/ToutatisGc/VOID?style=flat-square)
 
 #### Author:Toutatis_Gc
 
@@ -59,7 +59,7 @@ Void帮助您创建以Spring Boot/Vert.x为基础驱动的生产级Web服务，�
 ​		您在VOID遇到麻烦了吗?我们可以提供以下帮助:
 
 - 请查阅参考文档,使用说明或者使用实例,它们为最常见的问题提供了解决方案.
-- 学习Spring//Vert.x的知识,VOID支持建立在Java，Kotlin语言，Stream及reactiveb编程/Spring/Vert.x的基础上,如果碰到了 package 以非 cn.toutatis 域下的实例问题,请查阅 相关的官网 以获取相关框架的帮助.
+- 学习Spring/Vert.x的知识,VOID支持建立在Java，Kotlin语言，Stream及reactiveb编程/Spring/Vert.x的基础上,如果碰到了 package 以非 cn.toutatis 域下的实例问题,请查阅 相关的官网 以获取相关框架的帮助.
 - 如果您正在升级,请查阅更新说明,了解新的特性以及功能变动.
 - 在本项目的git下的issues发布问题,我会第一时间查看并提供解决方案.
 
@@ -80,7 +80,8 @@ Void帮助您创建以Spring Boot/Vert.x为基础驱动的生产级Web服务，�
 
 ​		您还需要JDK 1.8或以上
 
-```
+```bash
+#void-lib目录下
 mvn clean install -Dgpg.skip
 ```
 
@@ -88,27 +89,33 @@ mvn clean install -Dgpg.skip
 
 ## #模块
 
- 		VOID中的模块在此快速的概述.
+​		VOID中的模块在此快速的概述.
+
+#### void-lib ↓ 
+
+库根目录,包含了所有模块
+
+##### 	void-feature-support
+
+​	此库提供了对Spring Boot,Spring Cloud,Vert.x的依赖管理器,相关插件以及必要依赖包.
+
+##### 	void-runtime-support → void-vertx-runtime-support
+
+​	Vert.x相关支持
+
+##### 	void-common[未上传]
+
+​	此库包含了常用函数以及部分增强功能.
 
 
 
-##### void-lib → void-parent-support
-
-此库提供了对Spring Boot,Spring Cloud和Vert.x的依赖管理器以及必要依赖包.
-
-
-
-##### void-lib → void-common
-
-此库包含了常用函数以及部分增强功能.
-
-
-
-##### void-vertx
+#### void-vertx
 
 此库包含了Vert.x可运行基础服务.
 
-## #示例
+
+
+## #示例[暂无]
 
 void-samples 提供了相关功能的示例,要运行示例,请下载相关文件夹并且导入IDE 查阅相关使用和查看依赖关系.
 

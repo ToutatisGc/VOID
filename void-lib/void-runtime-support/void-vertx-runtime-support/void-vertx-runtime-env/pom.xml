@@ -2,25 +2,20 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <parent>
-        <artifactId>void-lib</artifactId>
-        <groupId>cn.toutatis</groupId>
-        <version>0.0.0-ALPHA</version>
-    </parent>
+
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>void-runtime-support</artifactId>
+    <groupId>cn.toutatis</groupId>
+    <artifactId>void-vertx-runtime-env</artifactId>
     <version>0.0.0-ALPHA</version>
-    <modules>
-        <module>void-vertx-runtime-support</module>
-        <module>void-spring-runtime-support</module>
-        <module>void-kotlin-runtime-support</module>
-    </modules>
-    <packaging>pom</packaging>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
     </properties>
+
+    <dependencyManagement>
+
+    </dependencyManagement>
 
 </project>

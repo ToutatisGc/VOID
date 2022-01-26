@@ -2,19 +2,13 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <parent>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <groupId>org.springframework.boot</groupId>
-        <version>2.6.2</version>
-        <relativePath/>
-    </parent>
 
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>void-parent-web-support</artifactId>
+    <artifactId>void-feature-support</artifactId>
 
     <groupId>cn.toutatis</groupId>
-    <version>0.0.1-ALPHA</version>
+    <version>0.0.0-ALPHA</version>
     <packaging>pom</packaging>
 
     <properties>
@@ -32,40 +26,8 @@
         <servlet.version>4.0.1</servlet.version>
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
+        <vertx.version>4.2.4</vertx.version>
     </properties>
-
-    <profiles>
-        <profile>
-            <id>JDK-${java8.version}</id>
-            <activation>
-                <jdk>${java8.version}</jdk>
-                <activeByDefault>true</activeByDefault>
-            </activation>
-            <properties>
-                <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-                <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-                <maven.compiler.encoding>UTF-8</maven.compiler.encoding>
-                <maven.compiler.source>${java8.version}</maven.compiler.source>
-                <maven.compiler.target>${java8.version}</maven.compiler.target>
-                <maven.compiler.compilerVersion>${java8.version}</maven.compiler.compilerVersion>
-            </properties>
-        </profile>
-        <profile>
-            <id>JDK-${java11.version}</id>
-            <activation>
-                <jdk>${java11.version}</jdk>
-                <activeByDefault>true</activeByDefault>
-            </activation>
-            <properties>
-                <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-                <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-                <maven.compiler.encoding>UTF-8</maven.compiler.encoding>
-                <maven.compiler.source>${java11.version}</maven.compiler.source>
-                <maven.compiler.target>${java11.version}</maven.compiler.target>
-                <maven.compiler.compilerVersion>${java11.version}</maven.compiler.compilerVersion>
-            </properties>
-        </profile>
-    </profiles>
 
     <url>https://www.toutatis.cn/</url>
 
@@ -107,7 +69,23 @@
 
     <dependencyManagement>
         <dependencies>
-            <!--SpringCloud依赖-->
+            <!--Vert.x依赖库-->
+            <dependency>
+                <groupId>io.vertx</groupId>
+                <artifactId>vertx-stack-depchain</artifactId>
+                <version>${vertx.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <!--SpringBoot依赖库-->
+            <dependency>
+                <artifactId>spring-boot-starter-parent</artifactId>
+                <groupId>org.springframework.boot</groupId>
+                <version>2.6.2</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <!--SpringCloud依赖库-->
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-dependencies</artifactId>
@@ -120,45 +98,38 @@
                 <groupId>com.google.guava</groupId>
                 <artifactId>guava</artifactId>
                 <version>${guava.version}</version>
+                <optional>true</optional>
             </dependency>
             <!--数据库连接池-->
             <dependency>
                 <groupId>com.alibaba</groupId>
                 <artifactId>druid</artifactId>
                 <version>${druid.version}</version>
+                <optional>true</optional>
             </dependency>
             <!--json序列化工具-->
             <dependency>
                 <groupId>com.alibaba</groupId>
                 <artifactId>fastjson</artifactId>
                 <version>${fastjson.version}</version>
+                <optional>true</optional>
             </dependency>
             <!--通用工具包-->
             <dependency>
                 <groupId>org.apache.commons</groupId>
                 <artifactId>commons-lang3</artifactId>
                 <version>${commons-lang3.version}</version>
+                <optional>true</optional>
             </dependency>
             <!--Servlet API支持-->
             <dependency>
                 <groupId>javax.servlet</groupId>
                 <artifactId>javax.servlet-api</artifactId>
                 <version>${servlet.version}</version>
+                <optional>true</optional>
             </dependency>
         </dependencies>
     </dependencyManagement>
-
-    <dependencies>
-        <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>fastjson</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-lang3</artifactId>
-        </dependency>
-    </dependencies>
 
     <build>
         <pluginManagement>
@@ -168,12 +139,14 @@
                     <groupId>org.springframework.boot</groupId>
                     <artifactId>spring-boot-maven-plugin</artifactId>
                     <version>${springboot.version}</version>
+                    <inherited>true</inherited>
                 </plugin>
 
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-source-plugin</artifactId>
                     <version>2.2.1</version>
+                    <inherited>true</inherited>
                     <executions>
                         <execution>
                             <id>attach-sources</id>
@@ -188,6 +161,7 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-javadoc-plugin</artifactId>
                     <version>2.9.1</version>
+                    <inherited>true</inherited>
                     <executions>
                         <execution>
                             <id>attach-javadocs</id>
@@ -202,6 +176,7 @@
                     <groupId>org.sonatype.plugins</groupId>
                     <artifactId>nexus-staging-maven-plugin</artifactId>
                     <version>1.6.7</version>
+                    <inherited>true</inherited>
                     <extensions>true</extensions>
                     <configuration>
                         <serverId>ossrh</serverId>
@@ -214,6 +189,7 @@
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-gpg-plugin</artifactId>
                     <version>1.6</version>
+                    <inherited>true</inherited>
                     <executions>
                         <execution>
                             <id>sign-artifacts</id>

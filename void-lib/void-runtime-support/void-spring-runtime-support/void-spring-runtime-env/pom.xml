@@ -3,15 +3,9 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
-    <parent>
-        <artifactId>void-parent-web-support</artifactId>
-        <groupId>cn.toutatis</groupId>
-        <version>0.0.1-ALPHA</version>
-        <relativePath/>
-    </parent>
-
     <modelVersion>4.0.0</modelVersion>
 
+    <groupId>cn.toutatis</groupId>
     <artifactId>void-spring-runtime-env</artifactId>
     <packaging>pom</packaging>
     <version>0.0.0-ALPHA</version>
@@ -21,10 +15,21 @@
         <url>https://www.toutatis.cn/project/VOID</url>
     </organization>
 
-
     <description>
        VOID 下 Spring Boot 运行环境支持
     </description>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>cn.toutatis</groupId>
+                <artifactId>void-parent-web-support</artifactId>
+                <version>0.0.0-ALPHA</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
     <dependencies>
         <!--springboot web 排除内置tomcat-->
@@ -95,43 +100,43 @@
             <optional>true</optional>
         </dependency>
 
-        <!--mysql 连接池-->
-        <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>druid</artifactId>
-            <optional>true</optional>
-        </dependency>
+<!--        &lt;!&ndash;mysql 连接池&ndash;&gt;-->
+<!--        <dependency>-->
+<!--            <groupId>com.alibaba</groupId>-->
+<!--            <artifactId>druid</artifactId>-->
+<!--            <optional>true</optional>-->
+<!--        </dependency>-->
 
-        <!--并发支持-->
-        <dependency>
-            <groupId>com.google.guava</groupId>
-            <artifactId>guava</artifactId>
-        </dependency>
+<!--        &lt;!&ndash;并发支持&ndash;&gt;-->
+<!--        <dependency>-->
+<!--            <groupId>com.google.guava</groupId>-->
+<!--            <artifactId>guava</artifactId>-->
+<!--        </dependency>-->
 
     </dependencies>
 
     <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-source-plugin</artifactId>
-            </plugin>
+<!--        <plugins>-->
+<!--            <plugin>-->
+<!--                <groupId>org.apache.maven.plugins</groupId>-->
+<!--                <artifactId>maven-source-plugin</artifactId>-->
+<!--            </plugin>-->
 
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-javadoc-plugin</artifactId>
-            </plugin>
+<!--            <plugin>-->
+<!--                <groupId>org.apache.maven.plugins</groupId>-->
+<!--                <artifactId>maven-javadoc-plugin</artifactId>-->
+<!--            </plugin>-->
 
-            <plugin>
-                <groupId>org.sonatype.plugins</groupId>
-                <artifactId>nexus-staging-maven-plugin</artifactId>
-            </plugin>
+<!--            <plugin>-->
+<!--                <groupId>org.sonatype.plugins</groupId>-->
+<!--                <artifactId>nexus-staging-maven-plugin</artifactId>-->
+<!--            </plugin>-->
 
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-gpg-plugin</artifactId>
-            </plugin>
-        </plugins>
+<!--            <plugin>-->
+<!--                <groupId>org.apache.maven.plugins</groupId>-->
+<!--                <artifactId>maven-gpg-plugin</artifactId>-->
+<!--            </plugin>-->
+<!--        </plugins>-->
     </build>
 
 </project>
