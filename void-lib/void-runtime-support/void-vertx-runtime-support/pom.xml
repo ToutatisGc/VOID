@@ -10,9 +10,10 @@
     <version>0.0.0-ALPHA</version>
     <modules>
 
+        <module>void-vertx-runtime-env</module>
+
         <module>void-vertx-support</module>
 
-        <module>void-vertx-runtime-env</module>
     </modules>
     <packaging>pom</packaging>
 

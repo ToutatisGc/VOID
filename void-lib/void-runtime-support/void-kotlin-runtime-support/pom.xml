@@ -10,17 +10,13 @@
         <groupId>cn.toutatis</groupId>
         <artifactId>void-feature-support</artifactId>
         <version>0.0.0-ALPHA</version>
-        <relativePath/>
+        <relativePath>../../void-feature-support/pom.xml</relativePath>
     </parent>
 
     <groupId>cn.toutatis</groupId>
     <artifactId>void-kotlin-runtime-support</artifactId>
     <version>0.0.0-ALPHA</version>
     <packaging>pom</packaging>
-
-    <properties>
-        <java.version>1.8</java.version>
-    </properties>
 
     <dependencies>
 
@@ -89,21 +85,6 @@
             </plugins>
         </pluginManagement>
         <plugins>
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-source-plugin</artifactId>
-            </plugin>
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-gpg-plugin</artifactId>
-            </plugin>
-
-            <plugin>
-                <groupId>org.sonatype.plugins</groupId>
-                <artifactId>nexus-staging-maven-plugin</artifactId>
-            </plugin>
 
         </plugins>
     </build>

@@ -25,12 +25,14 @@
             <groupId>cn.toutatis</groupId>
             <artifactId>void-kotlin-runtime-support</artifactId>
             <version>0.0.0-ALPHA</version>
+            <type>pom</type>
         </dependency>
 
         <dependency>
             <groupId>cn.toutatis</groupId>
             <artifactId>void-vertx-runtime-env</artifactId>
             <version>0.0.0-ALPHA</version>
+            <type>pom</type>
         </dependency>
     </dependencies>
 
@@ -43,10 +45,13 @@
                 <groupId>org.jetbrains.kotlin</groupId>
                 <artifactId>kotlin-maven-plugin</artifactId>
                 <version>${kotlin.version}</version>
+                <configuration>
+                    <nowarn>true</nowarn>
+                </configuration>
                 <executions>
                     <execution>
                         <id>compile</id>
-                        <phase>compile</phase>
+                        <phase>process-sources</phase>
                         <goals>
                             <goal>compile</goal>
                         </goals>
