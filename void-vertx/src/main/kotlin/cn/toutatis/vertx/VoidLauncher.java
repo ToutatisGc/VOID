@@ -1,9 +1,9 @@
 package cn.toutatis.vertx;
 
+import cn.toutatis.VoidContext;
 import io.vertx.config.ConfigRetriever;
 import io.vertx.config.ConfigRetrieverOptions;
 import io.vertx.config.ConfigStoreOptions;
-import io.vertx.core.Future;
 import io.vertx.core.Launcher;
 import io.vertx.core.Vertx;
 import io.vertx.core.VertxOptions;
@@ -34,6 +34,8 @@ public class VoidLauncher extends Launcher {
 
     public static void main(String[] args) {
         Vertx vertx = Vertx.vertx();
+        VoidContext voidContext = new VoidContext(vertx,VoidVerticle.class);
+//        VoidContextRuntime.INSTANCE.support(vertx);
         ConfigRetrieverOptions retrieverOptions = new ConfigRetrieverOptions();
         ConfigStoreOptions config = new ConfigStoreOptions()
                 .setType("file")
