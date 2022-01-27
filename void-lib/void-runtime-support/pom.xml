@@ -9,18 +9,14 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
+    <groupId>cn.toutatis</groupId>
     <artifactId>void-runtime-support</artifactId>
     <version>0.0.0-ALPHA</version>
-    <modules>
-        <module>void-vertx-runtime-support</module>
-        <module>void-spring-runtime-support</module>
-        <module>void-kotlin-runtime-support</module>
-    </modules>
     <packaging>pom</packaging>
-
-    <properties>
-        <maven.compiler.source>8</maven.compiler.source>
-        <maven.compiler.target>8</maven.compiler.target>
-    </properties>
+    <modules>
+        <module>void-kotlin-runtime-support</module>
+        <module>void-spring-runtime-support</module>
+        <module>void-vertx-runtime-support</module>
+    </modules>
 
 </project>
