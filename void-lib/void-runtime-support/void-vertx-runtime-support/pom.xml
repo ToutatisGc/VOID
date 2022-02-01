@@ -8,6 +8,7 @@
     <groupId>cn.toutatis</groupId>
     <artifactId>void-vertx-runtime-support</artifactId>
     <version>0.0.0-ALPHA</version>
+    <packaging>pom</packaging>
     <modules>
 
         <module>void-vertx-runtime-env</module>
@@ -15,13 +16,5 @@
         <module>void-vertx-support</module>
 
     </modules>
-    <packaging>pom</packaging>
-
-    <properties>
-        <java.version>1.8</java.version>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
 
 </project>

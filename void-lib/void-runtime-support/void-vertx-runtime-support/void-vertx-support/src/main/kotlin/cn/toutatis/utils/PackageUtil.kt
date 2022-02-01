@@ -34,7 +34,7 @@ object PackageUtil {
         val packagePath = packageName.replace(".", "/")
         val url: URL? = loader.getResource(packagePath)
         if (url != null) {
-            val type: String = url.getProtocol()
+            val type: String = url.protocol
             if (type == "file") {
                 fileNames = getClassNameByFile(url.getPath(), null, childPackage)
             } else if (type == "jar") {
