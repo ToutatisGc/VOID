@@ -1,6 +1,6 @@
 package cn.toutatis
 
-import cn.toutatis.annotation.VoidVertxApplication
+import cn.toutatis.annotations.VoidVertxApplication
 import cn.toutatis.bean.factory.PrepareBeanFactory
 import io.vertx.config.ConfigRetriever
 import io.vertx.config.ConfigRetrieverOptions

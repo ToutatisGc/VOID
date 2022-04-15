@@ -4,6 +4,13 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
 
+<!--    <parent>-->
+<!--        <groupId>cn.toutatis</groupId>-->
+<!--        <artifactId>void-feature-support</artifactId>-->
+<!--        <version>0.0.0-ALPHA</version>-->
+<!--        <relativePath/>-->
+<!--    </parent>-->
+
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>cn.toutatis</groupId>
@@ -14,6 +21,9 @@
     <modules>
         <!--SpringBoot服务支持库-->
         <module>void-spring-runtime-env</module>
+
+        <module>void-spring-support</module>
+
     </modules>
 
     <properties>

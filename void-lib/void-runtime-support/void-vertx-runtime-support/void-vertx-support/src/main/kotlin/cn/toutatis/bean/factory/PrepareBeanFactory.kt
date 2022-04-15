@@ -1,6 +1,6 @@
 package cn.toutatis.bean.factory
 
-import cn.toutatis.annotation.VoidVertxApplication
+import cn.toutatis.annotations.VoidVertxApplication
 import cn.toutatis.utils.PackageUtil
 import org.slf4j.LoggerFactory
 
