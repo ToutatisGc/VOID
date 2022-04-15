@@ -19,10 +19,16 @@
         <!--父依赖管理库-->
         <module>void-feature-support</module>
 
+        <!--各环境支持及增强-->
         <module>void-runtime-support</module>
 
         <!--标准化ORM库-->
         <module>void-standard-orm-lib</module>
+
+        <!--深度模块-->
+<!--        <module>void-depth</module>-->
+<!--        -->
+<!--        <module>void-separate-modules</module>-->
 
         <!--工具类-->
 <!--        <module>void-common</module>-->

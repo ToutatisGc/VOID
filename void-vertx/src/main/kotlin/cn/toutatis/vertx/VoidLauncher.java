@@ -1,7 +1,7 @@
 package cn.toutatis.vertx;
 
 import cn.toutatis.VoidContext;
-import cn.toutatis.annotation.VoidVertxApplication;
+import cn.toutatis.annotations.VoidVertxApplication;
 import io.vertx.core.Launcher;
 import io.vertx.core.Vertx;
 import io.vertx.core.VertxOptions;

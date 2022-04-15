@@ -15,7 +15,7 @@
         <java8.version>1.8</java8.version>
         <java11.version>11</java11.version>
         <void.version>0.0.0-ALPHA</void.version>
-        <springboot.version>2.5.6</springboot.version>
+        <springboot.version>2.6.6</springboot.version>
         <spring.version>5.3.12</spring.version>
         <spring.security.version>5.5.1</spring.security.version>
         <spring-cloud.version>Hoxton.SR2</spring-cloud.version>
@@ -27,7 +27,7 @@
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
         <vertx.version>4.2.4</vertx.version>
-        <kotlin.version>1.6.10</kotlin.version>
+        <kotlin.version>1.6.20</kotlin.version>
         <junit-jupiter.version>5.7.0</junit-jupiter.version>
         <kotlin.code.style>official</kotlin.code.style>
         <junit.version>4.12</junit.version>
@@ -85,7 +85,7 @@
             <dependency>
                 <artifactId>spring-boot-starter-parent</artifactId>
                 <groupId>org.springframework.boot</groupId>
-                <version>2.6.2</version>
+                <version>${springboot.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -187,7 +187,6 @@
                     <groupId>org.springframework.boot</groupId>
                     <artifactId>spring-boot-maven-plugin</artifactId>
                     <version>${springboot.version}</version>
-
                 </plugin>
 
 
@@ -273,6 +272,7 @@
         </pluginManagement>
 
         <plugins>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>
@@ -296,6 +296,7 @@
                 <artifactId>maven-gpg-plugin</artifactId>
                 <inherited>false</inherited>
             </plugin>
+
         </plugins>
 
     </build>

@@ -1,4 +1,4 @@
-package cn.toutatis.annotation
+package cn.toutatis.annotations
 
 import java.lang.annotation.Inherited
 

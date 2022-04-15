@@ -1,6 +1,6 @@
 package cn.toutatis.vertx.base
 
-import cn.toutatis.annotation.Instance
+import cn.toutatis.annotations.Instance
 
 @Instance
 class VoidErrorPage {

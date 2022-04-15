@@ -1,4 +1,4 @@
-package cn.toutatis.annotation
+package cn.toutatis.annotations
 
 @Target(AnnotationTarget.CLASS)
 @Retention(AnnotationRetention.RUNTIME)
