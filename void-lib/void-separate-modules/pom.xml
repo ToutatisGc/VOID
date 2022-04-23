@@ -9,10 +9,6 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <packaging>pom</packaging>
-    <modules>
-        <module>void-websocket</module>
-    </modules>
-
     <artifactId>void-separate-modules</artifactId>
 
     <description>可单独引入工作的模块</description>
@@ -20,8 +16,25 @@
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
+        <kotlin.version>1.6.20</kotlin.version>
     </properties>
 
+    <modules>
+        <!--通用工具包-->
+        <module>void-toolkit</module>
+        <!--redis模块-->
+        <module>void-redis</module>
+        <!--websocket模块-->
+        <module>void-websocket</module>
+    </modules>
+
+    <dependencies>
+        <dependency>
+            <groupId>cn.toutatis</groupId>
+            <artifactId>void-kotlin-runtime-support</artifactId>
+            <version>${kotlin.version}</version>
+        </dependency>
+    </dependencies>
 
 
 </project>
