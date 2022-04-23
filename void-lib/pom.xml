@@ -28,7 +28,7 @@
         <!--深度模块-->
 <!--        <module>void-depth</module>-->
 <!--        -->
-<!--        <module>void-separate-modules</module>-->
+        <module>void-separate-modules</module>
 
         <!--工具类-->
 <!--        <module>void-common</module>-->
