@@ -1,44 +1,91 @@
 package cn.toutatis.toolkit.file
 
 import org.apache.commons.io.IOUtils
+import org.slf4j.LoggerFactory
 import sun.security.util.Resources
 import java.io.File
+import java.io.FileNotFoundException
 import java.io.InputStream
 import java.net.URL
 import java.util.*
 
-
+/**
+ * @author Toutatis_Gc
+ * 文件工具箱
+ */
 enum class FileToolkit {
 
     INSTANCE;
+
+    private val logger = LoggerFactory.getLogger(FileToolkit::class.java)
 
     fun getResourcesFileAsString(filename:String): String? {
         return getResourcesFile(filename)?.readText(Charsets.UTF_8)
     }
 
+    /**
+     * Gets the files in the run directory.
+     */
     fun getResourcesFile(filename:String): URL?{
         return Thread.currentThread().contextClassLoader.getResource(filename)
     }
 
+    /**
+     * Get the Properties file in the run directory.
+     */
     fun getResourcesProperties(filename:String): ResourceBundle {
         return Resources.getBundle(filename)
     }
 
+    /**
+     * Gets the run path of the JAR.
+     */
     fun getRuntimePath(returnDir:Boolean): String {
         val codeSource = this.javaClass.protectionDomain.codeSource
         val runPath = File(codeSource.location.toURI().path)
         return if (returnDir) runPath.parent else runPath.path
     }
 
+    /**
+     * Get the resource files in the JAR package.
+     */
     fun getJarResource(filename:String): URL? {
         return this.javaClass.classLoader.getResource(filename)
     }
 
+    /**
+     * Get the resource files in the JAR package.
+     */
     fun getJarResourceAsStream(filename:String) : InputStream?{
         return this.javaClass.classLoader.getResourceAsStream(filename)
     }
 
+    /**
+     * Convert a file to a string.
+     */
     fun getFileContent(file:File): String{
         return IOUtils.toString(file.toURI(),Charsets.UTF_8)
+    }
+
+    fun findFileInPossibleLocation(path:String): File {
+        if (File(path).exists()){
+            return File(path).apply {
+                logger.info("Found the file!this file has a clear path!Nice!")
+            }
+        }else{
+            val resourcesFile = this.getResourcesFile(path)
+            if (resourcesFile != null && File(resourcesFile.toURI()).exists()){
+                return File(resourcesFile.toURI()).apply {
+                    logger.trace("Found the file!this file is a resource file,please use getResource method! ")
+                }
+            }
+            val jarResource = this.getJarResource(path)
+            if (jarResource != null && File(jarResource.toURI()).exists()){
+                return File(jarResource.toURI()).apply {
+                    logger.trace("Found the file!this file is a JAR package file,please use getJarResource method! ")
+                }
+            }
+            throw FileNotFoundException("Can't find [$path] this file location. QAQ")
+        }
     }
 }

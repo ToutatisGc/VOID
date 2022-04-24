@@ -1,6 +1,8 @@
 {
-  "include": [],
+  "auto-update": true,
+  "include": ["redis-userinfo.json","not-exist.json"],
   "general": {
-    "time-out": 0
+    "time-out": 0,
+    "testWhileIdle": true
   }
 }

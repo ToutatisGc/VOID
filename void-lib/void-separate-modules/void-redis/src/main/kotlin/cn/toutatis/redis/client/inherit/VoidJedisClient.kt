@@ -10,12 +10,21 @@ import redis.clients.jedis.JedisPool
  */
 class VoidJedisClient : VoidRedisClientInterface {
 
-    constructor(jedisPool: JedisPool){
+    private lateinit var jedisPool:JedisPool
 
+    private var jedis:Jedis
+
+    constructor(jedisPool: JedisPool){
+        this.jedisPool = jedisPool
+        jedis = this.jedisPool.resource
     }
 
     constructor(jedis:Jedis){
+        this.jedis = jedis
+    }
 
+    override fun isConnected():Boolean {
+        return jedis.isConnected
     }
 
 //    fun isConnected(): Unit {

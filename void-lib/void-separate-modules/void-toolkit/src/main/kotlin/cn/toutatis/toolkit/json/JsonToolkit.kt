@@ -61,12 +61,12 @@ object JsonToolkit {
             tmpJSONObject = if (i == 0){
                 obj.getJSONObject(ks) ?: throw NoSuchElementException("Please check object has this key [ $ks ]. ")
             }else{
-                val jsonObject = tmpJSONObject!!.getJSONObject(ks)
+                val jsonObject = tmpJSONObject!!.getJSONObject(ks) ?: throw NoSuchElementException("Please check object has this key [ $ks ]. ")
                 // 存入最后一个对象
                 if (i == index-1){
                     recordJsonHash[keySuffix] = jsonObject
                 }
-                jsonObject ?: throw NoSuchElementException("Please check object has this key [ $ks ]. ")
+                jsonObject
             }
         }
         if (recordJsonHash.size > maxRecord){
@@ -83,6 +83,13 @@ object JsonToolkit {
         return this.getValue(obj,key,String::class.java)
     }
 
+    fun getInteger(obj : JSONObject, key: String): Int? {
+        return this.getValue(obj,key,Int::class.java)
+    }
+
+    fun getBoolean(obj : JSONObject, key: String): Boolean? {
+        return this.getValue(obj,key,Boolean::class.java)
+    }
 
     /**
      * Change the maximum record value of recordJSONMap
@@ -103,7 +110,6 @@ object JsonToolkit {
             logger.warn("Caller:${callRecordNumMethodClassName}")
         }
     }
-
 }
 
 /**
@@ -115,3 +121,19 @@ fun <T> JSONObject.getItValue(key: String, type:Class<T>): T? = JsonToolkit.getV
  *Extend the getString function of JSONObject to get iterated values.
  */
 fun JSONObject.getItString(key: String ): String? = JsonToolkit.getString(this,key)
+
+fun JSONObject.getItString(key: String,default:String): String = JsonToolkit.getString(this,key) ?: default
+
+/**
+ *Extend the getInteger function of JSONObject to get iterated values.
+ */
+fun JSONObject.getItInteger(key: String ): Int? = JsonToolkit.getInteger(this,key)
+
+fun JSONObject.getItInteger(key: String,default:Int): Int = JsonToolkit.getInteger(this,key) ?: default
+
+/**
+ *Extend the getBoolean function of JSONObject to get iterated values.
+ */
+fun JSONObject.getItBoolean(key: String ): Boolean? = JsonToolkit.getBoolean(this,key)
+
+fun JSONObject.getItBoolean(key: String,default:Boolean): Boolean = JsonToolkit.getBoolean(this,key) ?: default
