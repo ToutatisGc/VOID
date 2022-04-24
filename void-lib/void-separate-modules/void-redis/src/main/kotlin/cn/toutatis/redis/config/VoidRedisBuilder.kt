@@ -1,9 +1,9 @@
 package cn.toutatis.redis.config
 
-import cn.toutatis.redis.client.VoidJedisClient
 import cn.toutatis.redis.client.VoidRedisClient
+import cn.toutatis.redis.client.inherit.VoidJedisClient
 import cn.toutatis.toolkit.file.FileToolkit
-import cn.toutatis.toolkit.json.JsonToolkit
+import cn.toutatis.toolkit.json.getItValue
 import com.alibaba.fastjson.JSONObject
 import redis.clients.jedis.Jedis
 import redis.clients.jedis.JedisPool
@@ -77,13 +77,15 @@ class VoidRedisBuilder{
     }
 
     fun buildClient(): VoidRedisClient {
-        val string = config.getJSONObject("general").getString("time-out")
-        System.err.println(string)
+        val timeOut = config.getItValue("general.time-out", String::class.java)
+        System.err.println(timeOut)
         when(clientType){
             /*连接Jedis*/
             ClientType.JEDIS ->{
                 if (usePool){
+                    /*TODO 配置文件填充，暂时使用默认值*/
                     val jedisPoolConfig = JedisPoolConfig()
+                    jedisPoolConfig.testWhileIdle = true
                     val jedisPool:JedisPool =
                         if (username != null && password != null){
                             JedisPool(jedisPoolConfig,address,port,username,password)
@@ -92,6 +94,7 @@ class VoidRedisBuilder{
                         }else{
                             JedisPool(jedisPoolConfig,address,port)
                         }
+                    return VoidRedisClient(VoidJedisClient(jedisPool))
                 }else{
                     val jedis = Jedis(address,port)
                     if (username != null && password != null){
@@ -109,9 +112,4 @@ class VoidRedisBuilder{
         /*TODO 未完成*/
         return VoidRedisClient(VoidJedisClient(JedisPool()))
     }
-
-    private fun <T> getValue(): Unit {
-        JsonToolkit.getValue(config, "", Int::class.java)
-    }
-
 }
