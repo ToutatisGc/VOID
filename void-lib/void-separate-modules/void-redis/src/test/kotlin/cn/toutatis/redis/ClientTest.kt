@@ -19,4 +19,9 @@ class ClientTest {
             .buildClient()
     }
 
+    @Test
+    fun testConnect(){
+
+    }
+
 }
