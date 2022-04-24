@@ -6,10 +6,14 @@ package cn.toutatis.redis.client
  */
 class VoidRedisClient {
 
-    private lateinit var redisClient : VoidRedisClientInterface
+    private var redisClient : VoidRedisClientInterface
 
     constructor(redisClient:VoidRedisClientInterface){
         this.redisClient = redisClient
+    }
+
+    fun isConnected(): Boolean {
+        return redisClient.isConnected()
     }
 
     private fun destroy(): Unit {

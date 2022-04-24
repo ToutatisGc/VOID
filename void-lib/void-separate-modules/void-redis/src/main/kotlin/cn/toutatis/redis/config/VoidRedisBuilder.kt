@@ -3,8 +3,9 @@ package cn.toutatis.redis.config
 import cn.toutatis.redis.client.VoidRedisClient
 import cn.toutatis.redis.client.inherit.VoidJedisClient
 import cn.toutatis.toolkit.file.FileToolkit
-import cn.toutatis.toolkit.json.getItValue
+import cn.toutatis.toolkit.json.getItBoolean
 import com.alibaba.fastjson.JSONObject
+import org.slf4j.LoggerFactory
 import redis.clients.jedis.Jedis
 import redis.clients.jedis.JedisPool
 import redis.clients.jedis.JedisPoolConfig
@@ -18,12 +19,20 @@ import java.io.FileNotFoundException
  */
 class VoidRedisBuilder{
 
-    /*默认使用资源下的配置文件*/
+
+    private val logger = LoggerFactory.getLogger(VoidRedisBuilder::class.java)
+
+    /**
+     * 默认使用资源下的配置文件
+     */
     private var configPath = "void-redis.json"
 
-    private val fileToolkit = FileToolkit.INSTANCE;
+    private val fileToolkit = FileToolkit.INSTANCE
 
-    private var clientType = ClientType.LETTUCE;
+    /**
+     * 默认使用Lettuce作为客户端
+     */
+    private var clientType = ClientType.LETTUCE
 
     private var username: String? = null
 
@@ -37,10 +46,18 @@ class VoidRedisBuilder{
 
     private lateinit var config : JSONObject
 
+    /**
+     * The configured priority is hard code > Profile
+     */
+    constructor(){
+        setConfig()
+    }
 
-    constructor()
-
+    /**
+     * The configured priority is hard code > Profile
+     */
     constructor(redisConnectInfo: RedisConnectInfo){
+        setConfig()
         this.username = redisConnectInfo.username
         this.password = redisConnectInfo.password
         this.address = redisConnectInfo.address
@@ -63,13 +80,32 @@ class VoidRedisBuilder{
     }
 
     fun setConfig(): VoidRedisBuilder {
-        val config = fileToolkit.getResourcesFile(configPath)
-            ?: throw FileNotFoundException("void-redis.json配置文件找不到,请配置配置文件或指定配置文件.")
-        this.config = JSONObject.parseObject(fileToolkit.getFileContent(File(config.toURI())))
+        //根文件必须指定,不得缺失
+        val rootConfigFile = fileToolkit.getResourcesFile(configPath)
+            ?: throw FileNotFoundException("[void-redis.json] configuration file could not be found. Please configure the file or specify the configuration file.")
+        val generalConfig = JSONObject.parseObject(fileToolkit.getFileContent(File(rootConfigFile.toURI())))
+        val includeFiles = generalConfig.getJSONArray("include")
+        if (includeFiles!= null && includeFiles.size > 0){
+            for (filename in includeFiles) {
+                filename as String
+                val includeFile = fileToolkit.getResourcesFile(filename)
+                if (includeFile != null){
+                    val includeConfigJSONObject = JSONObject.parseObject(fileToolkit.getFileContent(File(includeFile.toURI())))
+                    generalConfig.putAll(includeConfigJSONObject)
+                }else{
+                    logger.warn("Configuration file $filename not exist , ignore this file.")
+                }
+            }
+            generalConfig.remove("include")
+        }
+        this.config = generalConfig
         return this
     }
 
 
+    /**
+     * Specify the configuration file path.
+     */
     fun setConfig(configPath:String): VoidRedisBuilder {
         this.configPath = configPath
         setConfig()
@@ -77,15 +113,15 @@ class VoidRedisBuilder{
     }
 
     fun buildClient(): VoidRedisClient {
-        val timeOut = config.getItValue("general.time-out", String::class.java)
-        System.err.println(timeOut)
         when(clientType){
             /*连接Jedis*/
             ClientType.JEDIS ->{
                 if (usePool){
-                    /*TODO 配置文件填充，暂时使用默认值*/
                     val jedisPoolConfig = JedisPoolConfig()
-                    jedisPoolConfig.testWhileIdle = true
+                    with(config){
+                        /*TODO 配置文件填充，暂时使用默认值*/
+                        jedisPoolConfig.testWhileIdle = getItBoolean("general.time-out",true)
+                    }
                     val jedisPool:JedisPool =
                         if (username != null && password != null){
                             JedisPool(jedisPoolConfig,address,port,username,password)

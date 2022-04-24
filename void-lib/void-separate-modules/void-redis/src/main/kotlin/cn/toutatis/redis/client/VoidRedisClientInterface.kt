@@ -5,4 +5,7 @@ package cn.toutatis.redis.client
  *@date 2022/4/19 13:56
  */
 interface VoidRedisClientInterface {
+
+    fun isConnected():Boolean
+
 }

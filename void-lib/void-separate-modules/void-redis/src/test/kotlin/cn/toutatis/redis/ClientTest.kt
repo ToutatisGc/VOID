@@ -12,16 +12,12 @@ import org.junit.jupiter.api.Test
 class ClientTest {
 
     @Test
-    fun getClient(): Unit {
-        VoidRedisBuilder(RedisConnectInfo("Gc","gwg@w0d0t1", address = "192.168.154.200"))
+    fun testGetClient() {
+        val client = VoidRedisBuilder(RedisConnectInfo("Gc", "gwg@w0d0t1", address = "192.168.154.200"))
             .setClientType(ClientType.JEDIS)
-            .setConfig()
             .buildClient()
-    }
-
-    @Test
-    fun testConnect(){
-
+        val connected = client.isConnected()
+        System.err.println(connected)
     }
 
 }
