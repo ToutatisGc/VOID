@@ -50,7 +50,7 @@ class JSONTest {
                 jsonObject["key"] = "success"
                 originObj = jsonObject
             }else{
-                jsonObject["obj-${i}"] = "value-$i"
+                jsonObject["obj-${i}-v"] = "value-$i"
                 jsonObject["obj-${i}"] = originObj
                 originObj = jsonObject
             }

@@ -2,7 +2,8 @@
   "auto-update": true,
   "include": ["redis-userinfo.json","not-exist.json"],
   "general": {
-    "time-out": 0,
+    "db": 0,
+    "time-out": 3000,
     "testWhileIdle": true
   }
 }

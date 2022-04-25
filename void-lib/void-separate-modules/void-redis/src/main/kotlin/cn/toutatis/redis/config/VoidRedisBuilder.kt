@@ -4,11 +4,10 @@ import cn.toutatis.redis.client.VoidRedisClient
 import cn.toutatis.redis.client.inherit.VoidJedisClient
 import cn.toutatis.toolkit.file.FileToolkit
 import cn.toutatis.toolkit.json.getItBoolean
+import cn.toutatis.toolkit.json.getItInteger
 import com.alibaba.fastjson.JSONObject
 import org.slf4j.LoggerFactory
-import redis.clients.jedis.Jedis
-import redis.clients.jedis.JedisPool
-import redis.clients.jedis.JedisPoolConfig
+import redis.clients.jedis.*
 import java.io.File
 import java.io.FileNotFoundException
 
@@ -36,9 +35,9 @@ class VoidRedisBuilder{
 
     private var username: String? = null
 
-    private var password: String? = null
+    private lateinit var password: String
 
-    private var address: String = "localhost"
+    private var host: String = "localhost"
 
     private var port: Int =  6379
 
@@ -60,7 +59,7 @@ class VoidRedisBuilder{
         setConfig()
         this.username = redisConnectInfo.username
         this.password = redisConnectInfo.password
-        this.address = redisConnectInfo.address
+        this.host = redisConnectInfo.host
         this.port = redisConnectInfo.port
     }
 
@@ -74,6 +73,7 @@ class VoidRedisBuilder{
         return this
     }
 
+    @Deprecated("暂时全部使用连接池")
     fun setUsePool(usePool:Boolean): VoidRedisBuilder {
         this.usePool = usePool
         return this
@@ -116,36 +116,30 @@ class VoidRedisBuilder{
         when(clientType){
             /*连接Jedis*/
             ClientType.JEDIS ->{
-                if (usePool){
+                val pPassword = this.password
+                val jedisClientConfig:JedisClientConfig = object : JedisClientConfig {
+                    override fun getUser(): String? = config.getString("username") ?: username
+                    override fun getPassword(): String = config.getString("password") ?: pPassword
+                    override fun getDatabase(): Int = config.getItInteger("general.database", Protocol.DEFAULT_DATABASE)
+                    override fun getConnectionTimeoutMillis(): Int = config.getItInteger("general.time-out", Protocol.DEFAULT_TIMEOUT)
+                    override fun getSocketTimeoutMillis(): Int = config.getItInteger("general.time-out", Protocol.DEFAULT_TIMEOUT)
+                }
+                return if (usePool){
                     val jedisPoolConfig = JedisPoolConfig()
-                    with(config){
-                        /*TODO 配置文件填充，暂时使用默认值*/
-                        jedisPoolConfig.testWhileIdle = getItBoolean("general.time-out",true)
-                    }
-                    val jedisPool:JedisPool =
-                        if (username != null && password != null){
-                            JedisPool(jedisPoolConfig,address,port,username,password)
-                        }else if (password != null){
-                            JedisPool(jedisPoolConfig,address,port,0,password)
-                        }else{
-                            JedisPool(jedisPoolConfig,address,port)
-                        }
-                    return VoidRedisClient(VoidJedisClient(jedisPool))
+                    jedisPoolConfig.testWhileIdle = config.getItBoolean("general.time-out",true)
+                    val jedisPool = JedisPool(jedisPoolConfig, HostAndPort(host,port),jedisClientConfig)
+                    VoidRedisClient(VoidJedisClient(jedisPool))
                 }else{
-                    val jedis = Jedis(address,port)
-                    if (username != null && password != null){
-                        jedis.auth(username,password)
-                    }else if(password != null){
-                        jedis.auth(password)
-                    }
-                    val connected = jedis.client.isConnected
+                    val jedis = Jedis(host,port,jedisClientConfig)
+                    VoidRedisClient(VoidJedisClient(jedis))
                 }
             }
             ClientType.LETTUCE ->{
-
+                TODO("未完成")
             }
         }
         /*TODO 未完成*/
-        return VoidRedisClient(VoidJedisClient(JedisPool()))
+        TODO("未完成")
+//        return VoidRedisClient(VoidJedisClient(JedisPool()))
     }
 }
