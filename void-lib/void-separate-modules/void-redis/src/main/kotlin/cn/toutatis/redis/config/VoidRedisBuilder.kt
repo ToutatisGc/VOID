@@ -2,6 +2,7 @@ package cn.toutatis.redis.config
 
 import cn.toutatis.redis.client.VoidRedisClient
 import cn.toutatis.redis.client.inherit.jedis.VoidJedisClient
+import cn.toutatis.redis.client.inherit.jedis.VoidJedisPoolClient
 import cn.toutatis.toolkit.file.FileToolkit
 import cn.toutatis.toolkit.json.getItBoolean
 import cn.toutatis.toolkit.json.getItInteger
@@ -126,9 +127,9 @@ class VoidRedisBuilder{
                 }
                 return if (usePool){
                     val jedisPoolConfig = JedisPoolConfig()
-                    jedisPoolConfig.testWhileIdle = config.getItBoolean("general.time-out",true)
+                    jedisPoolConfig.testWhileIdle = config.getItBoolean("general.testWhileIdle",true)
                     val jedisPool = JedisPool(jedisPoolConfig, HostAndPort(host,port),jedisClientConfig)
-                    VoidRedisClient(VoidJedisClient(jedisPool))
+                    VoidRedisClient(VoidJedisPoolClient(jedisPool))
                 }else{
                     val jedis = Jedis(host,port,jedisClientConfig)
                     VoidRedisClient(VoidJedisClient(jedis))
