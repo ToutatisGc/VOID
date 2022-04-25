@@ -127,7 +127,7 @@ fun JSONObject.getItString(key: String,default:String): String = JsonToolkit.get
 /**
  *Extend the getInteger function of JSONObject to get iterated values.
  */
-fun JSONObject.getItInteger(key: String ): Int? = JsonToolkit.getInteger(this,key)
+fun JSONObject.getItInteger(key: String): Int? = JsonToolkit.getInteger(this,key)
 
 fun JSONObject.getItInteger(key: String,default:Int): Int = JsonToolkit.getInteger(this,key) ?: default
 

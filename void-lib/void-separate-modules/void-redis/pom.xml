@@ -17,6 +17,18 @@
         <kotlin.version>1.6.20</kotlin.version>
     </properties>
 
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>cn.toutatis</groupId>
+                <artifactId>void-feature-support</artifactId>
+                <version>0.0.0-ALPHA</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
     <dependencies>
 
         <dependency>
@@ -30,12 +42,13 @@
             <artifactId>lettuce-core</artifactId>
             <version>6.1.8.RELEASE</version>
         </dependency>
+
         <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter</artifactId>
-            <version>RELEASE</version>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
             <scope>test</scope>
         </dependency>
+
         <dependency>
             <groupId>cn.toutatis</groupId>
             <artifactId>void-toolkit</artifactId>
