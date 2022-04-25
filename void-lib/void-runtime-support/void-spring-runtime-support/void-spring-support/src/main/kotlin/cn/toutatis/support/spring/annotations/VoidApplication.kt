@@ -1,4 +1,4 @@
-package annotations
+package cn.toutatis.support.spring.annotations
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.context.properties.EnableConfigurationProperties

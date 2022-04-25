@@ -34,16 +34,39 @@
 
     <dependencies>
 
+        <!--Kotlin支持-->
         <dependency>
             <artifactId>void-kotlin-runtime-support</artifactId>
             <groupId>cn.toutatis</groupId>
             <version>${kotlin.version}</version>
         </dependency>
 
+        <!--自动配置-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-autoconfigure</artifactId>
         </dependency>
+
+
+        <!--webmvc支持-->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-webmvc</artifactId>
+        </dependency>
+
+        <!--接口文档支持-->
+        <dependency>
+            <groupId>com.github.xiaoymin</groupId>
+            <artifactId>knife4j-spring-boot-starter</artifactId>
+            <version>3.0.3</version>
+        </dependency>
+
+        <!--健康检查-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+
 
     </dependencies>
 
