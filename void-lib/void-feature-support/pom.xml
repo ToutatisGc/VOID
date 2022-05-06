@@ -170,6 +170,12 @@
                 <version>${servlet.version}</version>
                 <optional>true</optional>
             </dependency>
+
+            <dependency>
+                <groupId>ch.qos.logback</groupId>
+                <artifactId>logback-classic</artifactId>
+                <version>1.2.11</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 

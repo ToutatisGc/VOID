@@ -1,0 +1,15 @@
+spring:
+  banner:
+    location: META-INF/resources/banner.txt
+  devtools:
+    add-properties: true
+    restart:
+      enabled: true
+    livereload:
+      enabled: true
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driver-class-name: com.mysql.cj.jdbc.Driver
+mybatis-plus:
+  global-config:
+    banner: false

@@ -6,6 +6,6 @@ package cn.toutatis.redis.client
  */
 interface VoidRedisClientInterface {
 
-    fun isConnected():Boolean
+    fun checkConnected():Boolean
 
 }

@@ -11,7 +11,7 @@ class VoidRedisClient(private var redisClient: VoidRedisClientInterface) {
     private val logger = LoggerFactory.getLogger(VoidRedisClient::class.java)
 
     fun isConnected(): Boolean {
-        return redisClient.isConnected()
+        return redisClient.checkConnected()
     }
 
 }
