@@ -1,0 +1,8 @@
+server:
+  port: 8080
+spring:
+  application:
+    name: VOID-SPRING
+  profiles:
+    active: dev
+    include: []

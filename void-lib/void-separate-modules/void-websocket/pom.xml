@@ -15,6 +15,7 @@
 
     <artifactId>void-websocket</artifactId>
     <description>通用项目websocket支持</description>
+    <version>0.0.0-ALPHA</version>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
@@ -52,6 +53,23 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-websocket</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>cn.toutatis</groupId>
+            <artifactId>void-redis</artifactId>
+            <version>0.0.0-ALPHA</version>
+        </dependency>
+
 
     </dependencies>
 

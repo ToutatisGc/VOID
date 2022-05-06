@@ -1,7 +1,7 @@
 package cn.toutatis.redis.config
 
 import cn.toutatis.redis.client.VoidRedisClient
-import cn.toutatis.redis.client.inherit.VoidJedisClient
+import cn.toutatis.redis.client.inherit.jedis.VoidJedisClient
 import cn.toutatis.toolkit.file.FileToolkit
 import cn.toutatis.toolkit.json.getItBoolean
 import cn.toutatis.toolkit.json.getItInteger
