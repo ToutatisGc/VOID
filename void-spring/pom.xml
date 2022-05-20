@@ -43,11 +43,17 @@
             <scope>test</scope>
         </dependency>
 
-        <dependency>
-            <groupId>cn.toutatis</groupId>
-            <artifactId>void-websocket</artifactId>
-            <version>0.0.0-ALPHA</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>cn.toutatis</groupId>-->
+<!--            <artifactId>void-websocket</artifactId>-->
+<!--            <version>0.0.0-ALPHA</version>-->
+<!--            <exclusions>-->
+<!--                <exclusion>-->
+<!--                    <groupId>cn.toutatis</groupId>-->
+<!--                    <artifactId>void-redis</artifactId>-->
+<!--                </exclusion>-->
+<!--            </exclusions>-->
+<!--        </dependency>-->
 
         <dependency>
             <groupId>cn.toutatis</groupId>
