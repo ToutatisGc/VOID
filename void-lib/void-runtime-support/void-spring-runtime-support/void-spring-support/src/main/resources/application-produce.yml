@@ -1,15 +1,40 @@
 spring:
-  banner:
-    location: META-INF/resources/banner.txt
   devtools:
     add-properties: false
     restart:
       enabled: false
     livereload:
       enabled: false
+  application:
+    name: VOID
+  freemarker:
+    charset: UTF-8
+    template-loader-path: classpath:/templates/
+    suffix: .ftlh
+    cache: true
+    prefer-file-system-access: false
+    expose-request-attributes: true
+    expose-session-attributes: true
+    expose-spring-macro-helpers: true
+    allow-request-override: false
+    request-context-attribute: request
+    settings:
+      template_update_delay: 0
+  mvc:
+    pathmatch:
+      matching-strategy: ANT_PATH_MATCHER
+  banner:
+    location: META-INF/resources/banner.txt
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     driver-class-name: com.mysql.cj.jdbc.Driver
 mybatis-plus:
   global-config:
     banner: false
+knife4j:
+  enable: true
+  setting:
+    enableDebug: true
+    swaggerModelName: 实体类列表
+    enableVersion: true
+

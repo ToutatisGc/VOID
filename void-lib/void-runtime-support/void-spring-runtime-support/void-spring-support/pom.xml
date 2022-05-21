@@ -33,7 +33,6 @@
     </dependencyManagement>
 
     <dependencies>
-
         <!--Kotlin支持-->
         <dependency>
             <artifactId>void-kotlin-runtime-support</artifactId>
@@ -47,11 +46,15 @@
             <artifactId>spring-boot-autoconfigure</artifactId>
         </dependency>
 
-
         <!--webmvc支持-->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-webmvc</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
         </dependency>
 
         <!--接口文档支持-->
@@ -67,6 +70,18 @@
             <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
 
+        <!--mysql 链接工具-->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+
+        <!--mysql 连接池-->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid</artifactId>
+        </dependency>
 
     </dependencies>
 
