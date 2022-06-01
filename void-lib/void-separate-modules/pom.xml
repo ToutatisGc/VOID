@@ -27,6 +27,9 @@
         <module>void-redis</module>
         <!--websocket模块-->
         <module>void-websocket</module>
+        <!--公共部分-->
+<!--        <module>void-common</module>-->
+
     </modules>
 
     <dependencies>

@@ -31,8 +31,15 @@ public interface Result extends Serializable {
      */
     Object serialize();
 
+    /**
+     * @param data 返回数据
+     */
     void setData(Object data);
 
+    /**
+     * @param resultCode 结果代码
+     * 此方法用以设置返回的结果代码,不同的结果代码会返回不同效果
+     */
     void setResultCode(ResultCode resultCode);
 
 }

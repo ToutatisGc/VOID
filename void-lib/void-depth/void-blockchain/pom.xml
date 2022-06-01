@@ -11,6 +11,8 @@
 
     <artifactId>void-blockchain</artifactId>
 
+    <description>区块链</description>
+
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>

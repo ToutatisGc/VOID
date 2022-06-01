@@ -44,6 +44,8 @@ class VoidRedisBuilder{
 
     private var usePool : Boolean = true
 
+    private var enableTransaction = false
+
     private lateinit var config : JSONObject
 
     /**
@@ -77,6 +79,11 @@ class VoidRedisBuilder{
     @Deprecated("暂时全部使用连接池")
     fun setUsePool(usePool:Boolean): VoidRedisBuilder {
         this.usePool = usePool
+        return this
+    }
+
+    fun setEnableTransaction(enableTransaction:Boolean): VoidRedisBuilder {
+        this.enableTransaction = enableTransaction
         return this
     }
 

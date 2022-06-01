@@ -20,4 +20,8 @@ class VoidJedisPoolClient(private var jedisPool: JedisPool):VoidRedisClientInter
         return true
     }
 
+    override fun getDB(): Int {
+        TODO("Not yet implemented")
+    }
+
 }

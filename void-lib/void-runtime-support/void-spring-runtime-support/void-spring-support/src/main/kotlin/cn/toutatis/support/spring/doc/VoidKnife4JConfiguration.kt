@@ -47,6 +47,7 @@ class VoidKnife4JConfiguration {
     }
 
     /**
+     * Conflict with actuator
      * 与actuator冲突
      * ISSUE https://gitee.com/xiaoym/knife4j/issues/I4JT89
      */
