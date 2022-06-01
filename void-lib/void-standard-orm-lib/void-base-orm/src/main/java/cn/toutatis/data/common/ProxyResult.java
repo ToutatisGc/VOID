@@ -15,7 +15,7 @@ public class ProxyResult implements Result {
     private Boolean useSimpleMode = null;
 
     @JsonIgnore
-    private boolean autoConfig;
+    private boolean autoConfig = true;
 
     public ProxyResult(boolean useSimpleMode, boolean autoConfig) {
         this.useSimpleMode = useSimpleMode;
@@ -67,6 +67,7 @@ public class ProxyResult implements Result {
         return resultCode;
     }
 
+    @Override
     public void setResultCode(ResultCode resultCode) {
         this.resultCode = resultCode;
     }

@@ -8,4 +8,6 @@ interface VoidRedisClientInterface {
 
     fun checkConnected():Boolean
 
+    fun getDB(): Int
+
 }

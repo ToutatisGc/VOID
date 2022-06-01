@@ -29,6 +29,7 @@ object JsonToolkit {
     private var callRecordNumMethodClassName = ""
 
     /**
+     * 此方法获取以分隔符(.) 分隔的键，向下迭代以获取值
      * This method gets the delimiter (.) Delimited keys, iterating down to get the value
      * example: 获取json对象"obj.key1.key2.key3"的值111
      * {

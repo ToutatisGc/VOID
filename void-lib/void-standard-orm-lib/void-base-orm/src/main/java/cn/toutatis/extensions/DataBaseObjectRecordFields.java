@@ -18,6 +18,9 @@ package cn.toutatis.extensions;
 
 import java.util.Date;
 
+/**
+ * @author Toutatis_Gc
+ */
 public class DataBaseObjectRecordFields {
 
     private String sign;

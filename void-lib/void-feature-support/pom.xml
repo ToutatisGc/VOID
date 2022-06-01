@@ -32,6 +32,8 @@
         <junit-jupiter.version>5.7.0</junit-jupiter.version>
         <kotlin.code.style>official</kotlin.code.style>
         <junit.version>4.12</junit.version>
+        <logback.version>1.2.11</logback.version>
+        <aspectj.version>1.9.9.1</aspectj.version>
     </properties>
 
     <url>https://www.toutatis.cn/</url>
@@ -63,11 +65,11 @@
 
     <distributionManagement>
         <snapshotRepository>
-            <id>ossrh</id>
+            <id>sonatype</id>
             <url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
         </snapshotRepository>
         <repository>
-            <id>ossrh</id>
+            <id>sonatype</id>
             <url>https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/</url>
         </repository>
     </distributionManagement>
@@ -98,21 +100,21 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
-
+            <!--Kotlin反射依赖库-->
             <dependency>
                 <groupId>org.jetbrains.kotlin</groupId>
                 <artifactId>kotlin-reflect</artifactId>
                 <version>${kotlin.version}</version>
                 <optional>true</optional>
             </dependency>
-
+            <!--Kotlin支持库-->
             <dependency>
                 <groupId>org.jetbrains.kotlin</groupId>
                 <artifactId>kotlin-stdlib-jdk8</artifactId>
                 <version>${kotlin.version}</version>
                 <optional>true</optional>
             </dependency>
-
+            <!--Kotlin测试库-->
             <dependency>
                 <groupId>org.jetbrains.kotlin</groupId>
                 <artifactId>kotlin-test-junit</artifactId>
@@ -120,7 +122,7 @@
                 <optional>true</optional>
                 <scope>test</scope>
             </dependency>
-
+            <!--测试依赖-->
             <dependency>
                 <groupId>junit</groupId>
                 <artifactId>junit</artifactId>
@@ -170,12 +172,28 @@
                 <version>${servlet.version}</version>
                 <optional>true</optional>
             </dependency>
-
+            <!--日志支持库 SpringBoot默认日志-->
             <dependency>
                 <groupId>ch.qos.logback</groupId>
                 <artifactId>logback-classic</artifactId>
-                <version>1.2.11</version>
+                <version>${logback.version}</version>
+                <optional>true</optional>
             </dependency>
+
+            <!--AOP切面支持-->
+            <dependency>
+                <groupId>org.aspectj</groupId>
+                <artifactId>aspectjweaver</artifactId>
+                <version>${aspectj.version}</version>
+                <optional>true</optional>
+            </dependency>
+            <dependency>
+                <groupId>org.aspectj</groupId>
+                <artifactId>aspectjrt</artifactId>
+                <version>${aspectj.version}</version>
+                <optional>true</optional>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 
@@ -226,7 +244,7 @@
 
                     <extensions>true</extensions>
                     <configuration>
-                        <serverId>ossrh</serverId>
+                        <serverId>sonatype</serverId>
                         <nexusUrl>https://s01.oss.sonatype.org/</nexusUrl>
                         <autoReleaseAfterClose>true</autoReleaseAfterClose>
                     </configuration>
@@ -278,7 +296,8 @@
                         <dependency>
                             <groupId>org.jetbrains.kotlin</groupId>
                             <artifactId>kotlin-maven-allopen</artifactId>
-                            <version>${kotlin.version}</version>
+                            <version>1.6.10</version>
+<!--                            <version>${kotlin.version}</version>-->
                         </dependency>
                     </dependencies>
                 </plugin>
@@ -305,11 +324,11 @@
                 <inherited>false</inherited>
             </plugin>
 
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-gpg-plugin</artifactId>
-                <inherited>false</inherited>
-            </plugin>
+<!--            <plugin>-->
+<!--                <groupId>org.apache.maven.plugins</groupId>-->
+<!--                <artifactId>maven-gpg-plugin</artifactId>-->
+<!--                <inherited>false</inherited>-->
+<!--            </plugin>-->
 
         </plugins>
 
