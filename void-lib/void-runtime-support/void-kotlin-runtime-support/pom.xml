@@ -5,17 +5,27 @@
 
     <modelVersion>4.0.0</modelVersion>
 
-    <parent>
-        <groupId>cn.toutatis</groupId>
-        <artifactId>void-feature-support</artifactId>
-        <version>0.0.0-ALPHA</version>
-        <relativePath>../../void-feature-support/pom.xml</relativePath>
-    </parent>
 
     <groupId>cn.toutatis</groupId>
     <artifactId>void-kotlin-runtime-support</artifactId>
-    <version>${kotlin.version}</version>
+    <version>1.6.10</version>
     <packaging>pom</packaging>
+
+    <properties>
+        <kotlin.version>1.6.10</kotlin.version>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>cn.toutatis</groupId>
+                <artifactId>void-feature-support</artifactId>
+                <version>0.0.0-ALPHA</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
     <dependencies>
 
@@ -49,6 +59,7 @@
                 <plugin>
                     <groupId>org.jetbrains.kotlin</groupId>
                     <artifactId>kotlin-maven-plugin</artifactId>
+                    <version>${kotlin.version}</version>
                     <configuration>
                         <jvmTarget>1.8</jvmTarget>
                         <args>
