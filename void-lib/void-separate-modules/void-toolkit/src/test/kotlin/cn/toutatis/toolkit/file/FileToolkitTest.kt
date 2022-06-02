@@ -10,7 +10,7 @@ class FileToolkitTest{
 
     @Test
     fun testFindFileInPossibleLocation() {
-        val findFileInPossibleLocation = FileToolkit.INSTANCE.findFileInPossibleLocation("D:\\Git")
-        System.err.println(findFileInPossibleLocation)
+//        val findFileInPossibleLocation = FileToolkit.INSTANCE.findFileInPossibleLocation("D:\\Git")
+//        System.err.println(findFileInPossibleLocation)
     }
 }
