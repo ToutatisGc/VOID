@@ -22,6 +22,7 @@
         <guava.version>31.0.1-jre</guava.version>
         <druid.version>1.2.8</druid.version>
         <commons-lang.version>3.12.0</commons-lang.version>
+        <hutool.version>5.8.2</hutool.version>
         <commons-io.version>2.11.0</commons-io.version>
         <fastjson.version>1.2.80</fastjson.version>
         <servlet.version>4.0.1</servlet.version>
@@ -34,6 +35,10 @@
         <junit.version>4.12</junit.version>
         <logback.version>1.2.11</logback.version>
         <aspectj.version>1.9.9.1</aspectj.version>
+
+        <p.source.version>2.2.1</p.source.version>
+        <p.javadoc.version>2.9.1</p.javadoc.version>
+        <p.nexus-staging.version>1.6.7</p.nexus-staging.version>
     </properties>
 
     <url>https://www.toutatis.cn/</url>
@@ -158,6 +163,13 @@
                 <version>${commons-lang.version}</version>
                 <optional>true</optional>
             </dependency>
+            <!--hutool工具包-->
+            <dependency>
+                <groupId>cn.hutool</groupId>
+                <artifactId>hutool-all</artifactId>
+                <version>${hutool.version}</version>
+                <optional>true</optional>
+            </dependency>
             <!--IO工具包-->
             <dependency>
                 <groupId>commons-io</groupId>
@@ -179,7 +191,6 @@
                 <version>${logback.version}</version>
                 <optional>true</optional>
             </dependency>
-
             <!--AOP切面支持-->
             <dependency>
                 <groupId>org.aspectj</groupId>
@@ -193,7 +204,6 @@
                 <version>${aspectj.version}</version>
                 <optional>true</optional>
             </dependency>
-
         </dependencies>
     </dependencyManagement>
 
@@ -203,8 +213,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-source-plugin</artifactId>
-                    <version>2.2.1</version>
-
+                    <version>${p.source.version}</version>
                     <executions>
                         <execution>
                             <id>attach-sources</id>
@@ -214,19 +223,15 @@
                         </execution>
                     </executions>
                 </plugin>
-
                 <plugin>
                     <groupId>org.springframework.boot</groupId>
                     <artifactId>spring-boot-maven-plugin</artifactId>
                     <version>${springboot.version}</version>
                 </plugin>
-
-
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-javadoc-plugin</artifactId>
-                    <version>2.9.1</version>
-
+                    <version>${p.javadoc.version}</version>
                     <executions>
                         <execution>
                             <id>attach-javadocs</id>
@@ -236,12 +241,10 @@
                         </execution>
                     </executions>
                 </plugin>
-
                 <plugin>
                     <groupId>org.sonatype.plugins</groupId>
                     <artifactId>nexus-staging-maven-plugin</artifactId>
-                    <version>1.6.7</version>
-
+                    <version>${p.nexus-staging.version}</version>
                     <extensions>true</extensions>
                     <configuration>
                         <serverId>sonatype</serverId>
@@ -249,7 +252,6 @@
                         <autoReleaseAfterClose>true</autoReleaseAfterClose>
                     </configuration>
                 </plugin>
-
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-gpg-plugin</artifactId>
@@ -296,8 +298,7 @@
                         <dependency>
                             <groupId>org.jetbrains.kotlin</groupId>
                             <artifactId>kotlin-maven-allopen</artifactId>
-                            <version>1.6.10</version>
-<!--                            <version>${kotlin.version}</version>-->
+                            <version>${kotlin.version}</version>
                         </dependency>
                     </dependencies>
                 </plugin>
@@ -308,18 +309,21 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-source-plugin</artifactId>
+                <version>${p.source.version}</version>
                 <inherited>false</inherited>
             </plugin>
 
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-javadoc-plugin</artifactId>
+                <version>${p.javadoc.version}</version>
                 <inherited>false</inherited>
             </plugin>
 
             <plugin>
                 <groupId>org.sonatype.plugins</groupId>
                 <artifactId>nexus-staging-maven-plugin</artifactId>
+                <version>${p.nexus-staging.version}</version>
                 <inherited>false</inherited>
             </plugin>
 
