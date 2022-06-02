@@ -20,6 +20,18 @@
         <kotlin.version>1.6.10</kotlin.version>
     </properties>
 
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>cn.toutatis</groupId>
+                <artifactId>void-feature-support</artifactId>
+                <version>0.0.0-ALPHA</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
     <modules>
         <!--通用工具包-->
         <module>void-toolkit</module>
@@ -27,8 +39,8 @@
         <module>void-redis</module>
         <!--websocket模块-->
         <module>void-websocket</module>
+        <module>void-common</module>
         <!--公共部分-->
-<!--        <module>void-common</module>-->
 
     </modules>
 

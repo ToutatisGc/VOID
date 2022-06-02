@@ -83,6 +83,20 @@
             <groupId>com.alibaba</groupId>
             <artifactId>druid</artifactId>
         </dependency>
+        <!--公共部分-->
+        <dependency>
+            <groupId>cn.toutatis</groupId>
+            <artifactId>void-common</artifactId>
+            <version>0.0.0-ALPHA</version>
+            <scope>compile</scope>
+        </dependency>
+        <!--工具模块-->
+        <dependency>
+            <groupId>cn.toutatis</groupId>
+            <artifactId>void-toolkit</artifactId>
+            <version>0.0.0-ALPHA</version>
+            <scope>compile</scope>
+        </dependency>
 
     </dependencies>
 
