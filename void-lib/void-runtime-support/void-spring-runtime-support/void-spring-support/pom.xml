@@ -15,7 +15,7 @@
     <artifactId>void-spring-support</artifactId>
 
     <properties>
-        <kotlin.version>1.6.20</kotlin.version>
+        <kotlin.version>1.6.10</kotlin.version>
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
     </properties>
@@ -38,6 +38,7 @@
             <artifactId>void-kotlin-runtime-support</artifactId>
             <groupId>cn.toutatis</groupId>
             <version>${kotlin.version}</version>
+            <type>pom</type>
         </dependency>
 
         <!--自动配置-->

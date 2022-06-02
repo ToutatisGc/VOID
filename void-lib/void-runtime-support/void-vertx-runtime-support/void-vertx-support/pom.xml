@@ -15,7 +15,7 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <kotlin.version>1.6.20</kotlin.version>
+        <kotlin.version>1.6.10</kotlin.version>
         <kotlin.code.style>official</kotlin.code.style>
         <junit.version>4.12</junit.version>
     </properties>
@@ -25,6 +25,7 @@
             <groupId>cn.toutatis</groupId>
             <artifactId>void-kotlin-runtime-support</artifactId>
             <version>${kotlin.version}</version>
+            <type>pom</type>
         </dependency>
 
         <dependency>
