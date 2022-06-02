@@ -32,6 +32,10 @@
     </dependencyManagement>
 
     <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot</artifactId>
+        </dependency>
         <!--springboot web 排除内置tomcat-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
