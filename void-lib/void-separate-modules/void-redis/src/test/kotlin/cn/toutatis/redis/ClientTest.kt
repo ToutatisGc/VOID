@@ -18,7 +18,7 @@ class ClientTest {
 
     val host = "192.168.154.200"
 
-    @Test
+//    @Test
     fun testGetClient() {
         //连接用的是虚拟机连接，修改成自己的IP
         val client = VoidRedisBuilder(RedisConnectInfo("gwg@w0d0t", host = host))
@@ -35,7 +35,7 @@ class ClientTest {
         logger.info("Jedis连接池测试连接成功")
     }
 
-    @Test
+//    @Test
     fun aopTest(){
 //        VoidAOPTest().test1()
         AOPKotlinTest().test()
