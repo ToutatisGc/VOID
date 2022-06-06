@@ -1,4 +1,4 @@
-package cn.toutatis.common.annotations
+package cn.toutatis.common.annotations.database
 
 /**
  * 不放进数据库的字段

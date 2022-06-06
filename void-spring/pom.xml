@@ -19,17 +19,12 @@
         <kotlin.version>1.6.10</kotlin.version>
     </properties>
     <dependencies>
+        <!--Kotlin支持-->
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.jetbrains.kotlin</groupId>
-            <artifactId>kotlin-reflect</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.jetbrains.kotlin</groupId>
-            <artifactId>kotlin-stdlib-jdk8</artifactId>
+            <artifactId>void-kotlin-runtime-support</artifactId>
+            <groupId>cn.toutatis</groupId>
+            <version>${kotlin.version}</version>
+            <type>pom</type>
         </dependency>
 
         <dependency>
