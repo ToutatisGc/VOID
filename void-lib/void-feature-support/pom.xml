@@ -37,6 +37,7 @@
         <aspectj.version>1.9.9.1</aspectj.version>
         <ehcache.version>3.10.0</ehcache.version>
         <cacheapi.version>1.1.0</cacheapi.version>
+        <mybatis.version>3.5.1</mybatis.version>
 
         <p.source.version>2.2.1</p.source.version>
         <p.javadoc.version>2.9.1</p.javadoc.version>
@@ -211,13 +212,30 @@
                 <groupId>org.ehcache</groupId>
                 <artifactId>ehcache</artifactId>
                 <version>${ehcache.version}</version>
+                <optional>true</optional>
             </dependency>
             <!--JSR-107支持-->
             <dependency>
                 <groupId>javax.cache</groupId>
                 <artifactId>cache-api</artifactId>
                 <version>${cacheapi.version}</version>
+                <optional>true</optional>
             </dependency>
+
+            <!---->
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-boot-starter</artifactId>
+                <version>${mybatis.version}</version>
+                <optional>true</optional>
+            </dependency>
+
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-data-jpa</artifactId>
+                <optional>true</optional>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 
