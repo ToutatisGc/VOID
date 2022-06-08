@@ -56,6 +56,12 @@
             <version>0.0.0-ALPHA</version>
             <scope>compile</scope>
         </dependency>
+        <dependency>
+            <groupId>cn.toutatis</groupId>
+            <artifactId>void-base-orm</artifactId>
+            <version>0.0.0-ALPHA</version>
+            <scope>compile</scope>
+        </dependency>
 
     </dependencies>
 

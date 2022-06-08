@@ -1,8 +1,11 @@
 server:
-  port: 8080
+  port: 10000
 spring:
   application:
     name: VOID-SPRING
   profiles:
     active: dev
     include: []
+void:
+  doc:
+    base-package: cn.toutatis

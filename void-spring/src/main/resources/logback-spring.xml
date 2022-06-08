@@ -8,11 +8,7 @@
 <!--    日志记录包-->
     <logger name="cn.toutatis.crystal.api" level="info"/>
 
-
-
-
     <property name="LOG_PATH" value="${LOG_PATH:-.}"/>
-    <property name="APP_DIR" value="spring-boot-log"/>
     <!-- 彩色日志 -->
     <!-- 彩色日志依赖的渲染类,控制台上的日志彩色显示 -->
     <conversionRule conversionWord="clr" converterClass="org.springframework.boot.logging.logback.ColorConverter"/>

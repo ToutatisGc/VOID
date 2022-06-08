@@ -1,0 +1,8 @@
+{
+  "properties": [
+    {
+      "name": "void.doc.base-package",
+      "type": "java.lang.String",
+      "description": "Description for void.doc.base-package."
+  }
+] }
