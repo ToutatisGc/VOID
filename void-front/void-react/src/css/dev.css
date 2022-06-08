@@ -1,0 +1,68 @@
+.debugger-window {
+  overflow: auto;
+  position: fixed;
+  left: 0;
+  top: 0;
+  background-color: rgba(34, 85, 187, 0.5);
+  border: 2px solid yellowgreen;
+  text-align: center;
+  max-height: 100vh;
+  z-index: 999999999;
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+}
+
+.debugger-info {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+}
+
+.debugger-window > p {
+  flex-grow: 1;
+  flex-shrink: 1;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: greenyellow;
+  margin: 5px;
+  padding: 5px;
+  border-radius: 2px;
+  word-wrap: anywhere;
+}
+
+.debugger-window .debugger-info > * {
+  flex-grow: 1;
+  flex-shrink: 1;
+  background-color: rgba(0, 0, 0, 0.5);
+  color: greenyellow;
+  margin: 5px;
+  padding: 5px;
+  border-radius: 2px;
+  word-wrap: anywhere;
+}
+
+.debugger-button {
+  background-color: rgba(0, 0, 0, 0.5);
+  margin: 5px;
+  padding: 5px;
+  border-radius: 2px;
+  user-select: none;
+  pointer-events: all;
+  width: max-content;
+  max-width: max-content;
+  max-height: 30px;
+}
+
+.debugger-window .debugger-info p {
+  user-select: none;
+  pointer-events: all;
+  width: max-content;
+  max-width: max-content;
+  max-height: 30px;
+}
+
+.debugger-window_title {
+  color: red !important;
+}
+
+/*# sourceMappingURL=dev.css.map */

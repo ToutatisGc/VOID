@@ -1,0 +1,9 @@
+//主题基础配色
+$void-app-base-color: #36cb8a;
+//主要字体颜色
+$void-app-main-font-color: #555555;
+//背景底色
+$void-app-background-color: #dcdcdc;
+//第一次级标题颜色
+$void-sub-font-color: lighten($void-app-main-font-color,15);
+
