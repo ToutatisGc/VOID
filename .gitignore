@@ -15,3 +15,6 @@ buildNumber.properties
 mvnw
 mvnw.cmd
 *.log
+*.css.map
+**/node_modules/
+**/package-lock.json
