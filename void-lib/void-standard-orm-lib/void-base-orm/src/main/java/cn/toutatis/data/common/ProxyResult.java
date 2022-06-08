@@ -3,6 +3,11 @@ package cn.toutatis.data.common;
 import cn.toutatis.data.implement.Result;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+/**
+ * @author Toutatis
+ * 代理返回类
+ * TODO 请求返回前拦截并区别simpleMode然后分发继承类
+ */
 public class ProxyResult implements Result {
 
     private ResultCode resultCode;

@@ -23,6 +23,7 @@ package cn.toutatis.data.common;
  */
 public enum ResultCode implements Cloneable {
 
+    /*TODO 加占位*/
     /**
      * 操作部分
      */
@@ -100,14 +101,14 @@ public enum ResultCode implements Cloneable {
     /**
      * 是否成功
      */
-    private boolean isSuccess;
+    private final boolean success;
 
-    ResultCode(String code, String innerCode, boolean isSuccess, String info, String extraInfo) {
+    ResultCode(String code, String innerCode, boolean success, String info, String extraInfo) {
         this.code = code;
         this.innerCode = innerCode;
         this.info = info;
         this.extraInfo = extraInfo;
-        this.isSuccess = isSuccess;
+        this.success = success;
     }
 
     public String getCode() {
@@ -123,7 +124,7 @@ public enum ResultCode implements Cloneable {
     }
 
     public boolean isSuccess() {
-        return isSuccess;
+        return success;
     }
 
 }

@@ -1,5 +1,7 @@
 package cn.toutatis.spring
 
+import cn.toutatis.data.common.ProxyResult
+import cn.toutatis.data.common.ResultCode
 import com.github.xiaoymin.knife4j.annotations.ApiSupport
 import io.swagger.annotations.Api
 import io.swagger.annotations.ApiOperation
@@ -20,9 +22,14 @@ class TestController {
 
     @ApiOperation(value="获取用户信息",tags=["获取用户信息copy"],notes="注意问题点")
     @RequestMapping("/a",method=[RequestMethod.GET])
-
     fun test1():String{
         return "annotation"
+    }
+
+    @ApiOperation(value="测试返回Result",tags=["获取用户信息copy"],notes="注意问题点")
+    @RequestMapping("/b",method=[RequestMethod.GET])
+    fun test2(): ProxyResult {
+        return ProxyResult(ResultCode.NORMAL_SUCCESS,"成功111",null)
     }
 
 }

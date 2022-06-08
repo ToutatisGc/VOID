@@ -20,7 +20,7 @@ object JsonToolkit {
     private val logger = LoggerFactory.getLogger(JsonToolkit::class.java)
 
     /**
-     * Maximum number of records. If this value is exceeded, the JSON map will be cleared and recorded again
+     * Maximum number of records. If this value is exceeded, the JSON map will be cleared and recorded again.
      */
     private var maxRecord = DEFAULT_MAX_RECORD
 
@@ -29,8 +29,10 @@ object JsonToolkit {
     private var callRecordNumMethodClassName = ""
 
     /**
-     * 此方法获取以分隔符(.) 分隔的键，向下迭代以获取值
-     * This method gets the delimiter (.) Delimited keys, iterating down to get the value
+     * 此方法获取以分隔符(.) 分隔的键，向下迭代以获取值.
+     *
+     * This method gets the delimiter (.) Delimited keys, iterating down to get the value.
+     *
      * example: 获取json对象"obj.key1.key2.key3"的值111
      * {
      *      key1:{

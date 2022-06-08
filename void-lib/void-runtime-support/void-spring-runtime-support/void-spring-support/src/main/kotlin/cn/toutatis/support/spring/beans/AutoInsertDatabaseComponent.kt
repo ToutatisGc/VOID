@@ -10,8 +10,8 @@ import javax.sql.DataSource
 @Component(StandardComponentPool.VOID_AUTO_INSERT_OBJS_COMPONENT)
 class AutoInsertDatabaseComponent {
 
-    @Autowired
-    private lateinit var datasource: DataSource
+//    @Autowired
+//    private lateinit var datasource: DataSource
 
     fun checkAndInsert(){
         for (needCreatedBean in VoidContext.needCreatedBeans) {
