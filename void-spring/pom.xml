@@ -3,17 +3,17 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.6.6</version>
+        <groupId>cn.toutatis</groupId>
+        <artifactId>void-feature-support</artifactId>
+        <version>0.0.0-ALPHA</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>cn.toutatis</groupId>
     <artifactId>void-spring</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>0.0.0-ALPHA</version>
     <packaging>war</packaging>
     <name>void-spring</name>
-    <description>Demo project for Spring Boot</description>
+    <description>SpringBoot集成VOID标准环境</description>
     <properties>
         <java.version>1.8</java.version>
         <kotlin.version>1.6.10</kotlin.version>
@@ -39,6 +39,16 @@
         </dependency>
 
 <!--        <dependency>-->
+<!--            <groupId>de.codecentric</groupId>-->
+<!--            <artifactId>spring-boot-admin-starter-server</artifactId>-->
+<!--        </dependency>-->
+
+<!--        <dependency>-->
+<!--            <groupId>de.codecentric</groupId>-->
+<!--            <artifactId>spring-boot-admin-starter-client</artifactId>-->
+<!--        </dependency>-->
+
+<!--        <dependency>-->
 <!--            <groupId>cn.toutatis</groupId>-->
 <!--            <artifactId>void-websocket</artifactId>-->
 <!--            <version>0.0.0-ALPHA</version>-->
@@ -62,6 +72,12 @@
             <version>0.0.0-ALPHA</version>
             <scope>compile</scope>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-jdbc</artifactId>
+            <version>RELEASE</version>
+            <scope>compile</scope>
+        </dependency>
 
     </dependencies>
 
@@ -76,6 +92,7 @@
             <plugin>
                 <groupId>org.jetbrains.kotlin</groupId>
                 <artifactId>kotlin-maven-plugin</artifactId>
+                <version>${kotlin.version}</version>
                 <configuration>
                     <args>
                         <arg>-Xjsr305=strict</arg>
