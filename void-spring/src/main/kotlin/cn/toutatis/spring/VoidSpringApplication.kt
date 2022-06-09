@@ -8,6 +8,7 @@ import org.springframework.context.ConfigurableApplicationContext
 import org.springframework.context.annotation.ComponentScan
 
 @VoidApplication
+//@EnableAdminServer
 @ComponentScan(basePackages = ["cn.toutatis"])
 class VoidSpringApplication
 
