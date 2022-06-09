@@ -97,6 +97,12 @@
             <version>0.0.0-ALPHA</version>
             <scope>compile</scope>
         </dependency>
+
+        <dependency>
+            <groupId>cn.toutatis</groupId>
+            <artifactId>void-base-orm</artifactId>
+            <version>0.0.0-ALPHA</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -135,7 +141,7 @@
                     <dependency>
                         <groupId>org.jetbrains.kotlin</groupId>
                         <artifactId>kotlin-maven-allopen</artifactId>
-                        <version>${kotlin.version}</version>
+                        <version>LATEST</version>
                     </dependency>
                 </dependencies>
             </plugin>
