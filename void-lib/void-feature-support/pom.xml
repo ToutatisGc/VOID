@@ -233,7 +233,7 @@
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-data-jpa</artifactId>
-                <optional>true</optional>
+                <version>${springboot.version}</version>
                 <optional>true</optional>
             </dependency>
             <!--Springboot监控-->
@@ -248,6 +248,14 @@
                 <artifactId>spring-boot-admin-starter-client</artifactId>
                 <version>${springboot.version}</version>
                 <optional>true</optional>
+            </dependency>
+
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>RELEASE</version>
+                <optional>true</optional>
+                <scope>compile</scope>
             </dependency>
 
         </dependencies>
