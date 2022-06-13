@@ -7,10 +7,8 @@ import com.baomidou.mybatisplus.annotation.Version;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
 
 /**
  * @author Toutatis_Gc
@@ -94,7 +92,7 @@ public class EntityBasicAttribute<O extends Model<?>> extends Model<O> {
         LocalDateTime nowTime = LocalDateTime.now();
         this.setCreateTime(nowTime);
         this.setLastUpdateTime(nowTime);
-        this.setStatus(DataStatus.LOGIC_NORMAL);
+        this.setStatus(DataStatus.SYS_OPEN.getCode());
     }
 
     public String getCreateTimeStr() {
