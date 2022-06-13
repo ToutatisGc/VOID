@@ -17,6 +17,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
  * @author Administrator
  */
 @ApiModel("测试类")
+@EqualsAndHashCode(callSuper = true)
 public class Person extends EntityBasicAttribute<Person> {
 
     @TableId
@@ -52,19 +53,4 @@ public class Person extends EntityBasicAttribute<Person> {
         this.age = age;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-
-        if (o == null || getClass() != o.getClass()) return false;
-
-        Person person = (Person) o;
-
-        return new EqualsBuilder().append(id, person.id).append(name, person.name).append(age, person.age).isEquals();
-    }
-
-    @Override
-    public int hashCode() {
-        return new HashCodeBuilder(17, 37).append(id).append(name).append(age).toHashCode();
-    }
 }
