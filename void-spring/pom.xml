@@ -2,12 +2,14 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
+
     <parent>
         <groupId>cn.toutatis</groupId>
         <artifactId>void-feature-support</artifactId>
         <version>0.0.0-ALPHA</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
+
     <groupId>cn.toutatis</groupId>
     <artifactId>void-spring</artifactId>
     <version>0.0.0-ALPHA</version>
@@ -72,11 +74,11 @@
             <version>0.0.0-ALPHA</version>
             <scope>compile</scope>
         </dependency>
+
+        <!--各种ORM框架-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-jdbc</artifactId>
-            <version>RELEASE</version>
-            <scope>compile</scope>
         </dependency>
 
         <dependency>
@@ -89,9 +91,11 @@
             <artifactId>mybatis-plus-boot-starter</artifactId>
         </dependency>
 
+        <!--lombok注解支持-->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
+            <scope>provided</scope>
         </dependency>
 
     </dependencies>

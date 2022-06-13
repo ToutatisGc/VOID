@@ -25,6 +25,7 @@
         <hutool.version>5.8.2</hutool.version>
         <commons-io.version>2.11.0</commons-io.version>
         <fastjson.version>1.2.80</fastjson.version>
+        <jackson.version>2.13.1</jackson.version>
         <servlet.version>4.0.1</servlet.version>
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
@@ -173,6 +174,13 @@
                 <version>${hutool.version}</version>
                 <optional>true</optional>
             </dependency>
+            <!--JSON序列化-->
+            <dependency>
+                <groupId>com.fasterxml.jackson.core</groupId>
+                <artifactId>jackson-annotations</artifactId>
+                <version>${jackson.version}</version>
+                <optional>true</optional>
+            </dependency>
             <!--IO工具包-->
             <dependency>
                 <groupId>commons-io</groupId>
@@ -222,10 +230,29 @@
                 <optional>true</optional>
             </dependency>
 
-            <!---->
+            <!--数据库分析-->
+            <dependency>
+                <groupId>p6spy</groupId>
+                <artifactId>p6spy</artifactId>
+                <version>RELEASE</version>
+                <optional>true</optional>
+            </dependency>
+            <!--各种ORM框架-->
             <dependency>
                 <groupId>com.baomidou</groupId>
                 <artifactId>mybatis-plus-boot-starter</artifactId>
+                <version>${mybatis.version}</version>
+                <optional>true</optional>
+            </dependency>
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-annotation</artifactId>
+                <version>${mybatis.version}</version>
+                <optional>true</optional>
+            </dependency>
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-extension</artifactId>
                 <version>${mybatis.version}</version>
                 <optional>true</optional>
             </dependency>
@@ -236,6 +263,14 @@
                 <version>${springboot.version}</version>
                 <optional>true</optional>
             </dependency>
+
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-jdbc</artifactId>
+                <version>${springboot.version}</version>
+                <optional>true</optional>
+            </dependency>
+
             <!--Springboot监控-->
             <dependency>
                 <groupId>de.codecentric</groupId>
@@ -243,6 +278,7 @@
                 <version>${springboot.version}</version>
                 <optional>true</optional>
             </dependency>
+
             <dependency>
                 <groupId>de.codecentric</groupId>
                 <artifactId>spring-boot-admin-starter-client</artifactId>
@@ -250,6 +286,7 @@
                 <optional>true</optional>
             </dependency>
 
+            <!--lombok注解支持-->
             <dependency>
                 <groupId>org.projectlombok</groupId>
                 <artifactId>lombok</artifactId>

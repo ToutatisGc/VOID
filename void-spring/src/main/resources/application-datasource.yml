@@ -1,5 +1,7 @@
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3307/VOID?serverTimezone=UTC&useUnicode=true&characterEncoding=utf-8
+#    p6spy SQL分析所需地址
+    url: jdbc:p6spy:mysql://localhost:3307/VOID?serverTimezone=UTC&useUnicode=true&characterEncoding=utf-8
+#    url: jdbc:mysql://localhost:3307/VOID?serverTimezone=UTC&useUnicode=true&characterEncoding=utf-8
     username: root
     password: root
