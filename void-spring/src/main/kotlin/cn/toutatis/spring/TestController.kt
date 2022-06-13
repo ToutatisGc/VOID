@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController
  * @date 2022/5/19 23:31
  * 测试swagger注解
  */
-@Api(tags = ["测试控制器","标签2测试"], description = "描述测试")
+@Api(tags = ["测试控制器"], description = "描述测试")
 @RestController
 @ApiSupport(order = 0, author = "Toutatis_Gc")
 class TestController {
@@ -63,6 +63,8 @@ class TestController {
     @RequestMapping("/e",method=[RequestMethod.GET])
     fun test5(): Person {
         val selectOne = personMapper.selectOne(QueryWrapper<Person>().eq("id", "a2dbc69b76ca57ad8ab24471a8acd1b2"))
+        selectOne.name = "CCD"
+        selectOne.updateById()
         return selectOne
     }
 
