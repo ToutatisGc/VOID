@@ -1,5 +1,5 @@
 server:
-  port: 10000
+  port: ${PORT:10000}
 spring:
   application:
     name: VOID-SPRING
