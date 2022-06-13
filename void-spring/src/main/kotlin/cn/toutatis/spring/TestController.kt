@@ -2,6 +2,7 @@ package cn.toutatis.spring
 
 import cn.toutatis.data.common.ProxyResult
 import cn.toutatis.data.common.ResultCode
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper
 import com.github.xiaoymin.knife4j.annotations.ApiSupport
 import io.swagger.annotations.Api
 import io.swagger.annotations.ApiOperation
@@ -16,13 +17,16 @@ import org.springframework.web.bind.annotation.RestController
  * @date 2022/5/19 23:31
  * 测试swagger注解
  */
-@Api(tags = ["测试控制器","标签2测试"], description = "描述测试")
+@Api(tags = ["测试控制器"], description = "描述测试")
 @RestController
 @ApiSupport(order = 0, author = "Toutatis_Gc")
 class TestController {
 
     @Autowired
     private lateinit var jdbcTemplate: JdbcTemplate
+
+    @Autowired
+    private lateinit var personMapper : PersonMapper
 
     @ApiOperation(value="获取用户信息",notes="注意问题点")
     @RequestMapping("/a",method=[RequestMethod.GET])
@@ -42,6 +46,26 @@ class TestController {
         /*成功链接*/
         val queryForMap = jdbcTemplate.queryForMap("select * from person")
         return ProxyResult(ResultCode.NORMAL_SUCCESS,"成功111",null)
+    }
+
+    @ApiOperation(value="测试mapper",notes="注意问题点")
+    @RequestMapping("/d",method=[RequestMethod.GET])
+    fun test4(): ProxyResult {
+        val selectList = personMapper.selectList(null)
+//        val person = Person()
+//        person.bindBaseProperties()
+//        person.name = "ABBC"
+//        person.insert()
+        return ProxyResult(ResultCode.NORMAL_SUCCESS,"成功22",selectList)
+    }
+
+    @ApiOperation(value="测试model",notes="注意问题点")
+    @RequestMapping("/e",method=[RequestMethod.GET])
+    fun test5(): Person {
+        val selectOne = personMapper.selectOne(QueryWrapper<Person>().eq("id", "a2dbc69b76ca57ad8ab24471a8acd1b2"))
+        selectOne.name = "CCD"
+        selectOne.updateById()
+        return selectOne
     }
 
 }
