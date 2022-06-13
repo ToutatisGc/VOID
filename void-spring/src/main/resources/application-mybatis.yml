@@ -16,5 +16,7 @@ mybatis-plus:
 #     默认ID策略
       id-type: ASSIGN_UUID
       logicDeleteField: logicDelete
+      logic-not-delete-value: SYS_OPEN_0000
+      logic-delete-value: SYS_CLOSE_0000
 #     表名前缀
-#      table-prefix: VB
+      table-prefix: vb_
