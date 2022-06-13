@@ -238,6 +238,7 @@
                 <optional>true</optional>
             </dependency>
             <!--各种ORM框架-->
+            <!--Mybatis-plus支持-->
             <dependency>
                 <groupId>com.baomidou</groupId>
                 <artifactId>mybatis-plus-boot-starter</artifactId>
