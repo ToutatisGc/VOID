@@ -1,6 +1,7 @@
 package cn.toutatis.spring
 
 import cn.toutatis.support.spring.annotations.VoidApplication
+import org.mybatis.spring.annotation.MapperScan
 import org.springframework.boot.autoconfigure.domain.EntityScan
 import org.springframework.boot.runApplication
 import org.springframework.context.ConfigurableApplicationContext
@@ -10,6 +11,7 @@ import org.springframework.context.annotation.ComponentScan
 //@EnableAdminServer
 @ComponentScan(basePackages = ["cn.toutatis"])
 @EntityScan(basePackages=["cn.toutatis"])
+@MapperScan(basePackages = ["cn.toutatis"])
 class VoidSpringApplication
 
 fun main(args: Array<String>) {
