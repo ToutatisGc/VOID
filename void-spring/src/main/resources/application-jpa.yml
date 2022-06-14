@@ -1,0 +1,13 @@
+spring:
+  jpa:
+    properties:
+      hibernate:
+        format_sql: true
+        hbm2ddl:
+          auto: update
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+      naming:
+        physical-strategy: cn.toutatis.spring.config.orm.jpa.VoidNamingStrategyStandardImpl
+    open-in-view: true

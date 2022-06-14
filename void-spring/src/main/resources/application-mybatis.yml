@@ -15,8 +15,8 @@ mybatis-plus:
     db-config:
 #     默认ID策略
       id-type: ASSIGN_UUID
-      logicDeleteField: logicDelete
-      logic-not-delete-value: SYS_OPEN_0000
-      logic-delete-value: SYS_CLOSE_0000
+      logicDeleteField: status
+      logic-not-delete-value: 0
+      logic-delete-value: 1
 #     表名前缀
-      table-prefix: vb_
+      table-prefix: ${void.global-orm-config.table-prefix}

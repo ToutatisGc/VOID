@@ -1,0 +1,6 @@
+void:
+  doc:
+    base-package: cn.toutatis
+  global-orm-config:
+    use-table-prefix: false
+    table-prefix: vb_

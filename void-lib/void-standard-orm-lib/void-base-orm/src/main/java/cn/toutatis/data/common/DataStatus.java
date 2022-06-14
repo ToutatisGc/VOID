@@ -12,16 +12,19 @@ public enum DataStatus {
     /**
      * 数据状态枚举
      */
-    SYS_OPEN("SYS_OPEN_0000","数据正常"),
-    SYS_DELETED("SYS_DELETED_0000","逻辑删除"),
+    SYS_OPEN_0000(0,"SYS_OPEN_0000","数据正常"),
+    SYS_DELETED_0000(1,"SYS_DELETED_0000","逻辑删除"),
     ;
 
     @EnumValue
-    private String code;
+    private final Integer index;
 
-    private String content;
+    private final String code;
 
-    DataStatus(String code, String content) {
+    private final String content;
+
+    DataStatus(Integer index, String code, String content) {
+        this.index = index;
         this.code = code;
         this.content = content;
     }
@@ -30,15 +33,11 @@ public enum DataStatus {
         return code;
     }
 
-    public void setCode(String code) {
-        this.code = code;
-    }
-
     public String getContent() {
         return content;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    public Integer getIndex() {
+        return index;
     }
 }
