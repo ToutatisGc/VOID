@@ -5,7 +5,4 @@ spring:
     name: VOID-SPRING
   profiles:
     active: dev
-    include: ["datasource","mybatis"]
-void:
-  doc:
-    base-package: cn.toutatis
+    include: ["void","datasource","jpa","mybatis"]

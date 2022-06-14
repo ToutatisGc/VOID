@@ -1,0 +1,18 @@
+{
+  "properties": [
+    {
+      "name": "void.doc.base-package",
+      "type": "java.lang.String",
+      "description": "设置swagger文档扫描位置."
+    },
+    {
+      "name": "void.global-orm-config.table-prefix",
+      "type": "java.lang.String",
+      "description": "设置ORM框架表前缀."
+    },
+    {
+      "name": "void.global-orm-config.use-table-prefix",
+      "type": "java.lang.Boolean",
+      "description": "是否使用全局表前缀."
+    }
+  ] }
