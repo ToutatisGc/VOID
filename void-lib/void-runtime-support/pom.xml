@@ -14,9 +14,13 @@
     <version>0.0.0-ALPHA</version>
     <packaging>pom</packaging>
     <modules>
+        <!--Kotlin开发环境支持-->
         <module>void-kotlin-runtime-support</module>
-        <module>void-spring-runtime-support</module>
+
         <module>void-vertx-runtime-support</module>
+
+        <module>void-spring-support</module>
+
     </modules>
 
 </project>
