@@ -52,17 +52,17 @@ class TestController {
     @RequestMapping("/d",method=[RequestMethod.GET])
     fun test4(): ProxyResult {
         val selectList = personMapper.selectList(null)
-//        val person = Person()
-//        person.bindBaseProperties()
-//        person.name = "ABBC"
-//        person.insert()
+        val person = Person()
+        person.bindBaseProperties()
+        person.name = "ABBC"
+        person.insert()
         return ProxyResult(ResultCode.NORMAL_SUCCESS,"成功22",selectList)
     }
 
     @ApiOperation(value="测试model",notes="注意问题点")
     @RequestMapping("/e",method=[RequestMethod.GET])
     fun test5(): Person {
-        val selectOne = personMapper.selectOne(QueryWrapper<Person>().eq("id", "a2dbc69b76ca57ad8ab24471a8acd1b2"))
+        val selectOne = personMapper.selectOne(QueryWrapper<Person>().eq("id", "de551ba2fa4510eb235da29b8d5d82f7"))
         selectOne.name = "CCD"
         selectOne.updateById()
         return selectOne
