@@ -9,6 +9,9 @@ import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
 
+/**
+ * 请求日志生成器
+ */
 @Component
 class RequestLogInterceptor : HandlerInterceptor {
 
