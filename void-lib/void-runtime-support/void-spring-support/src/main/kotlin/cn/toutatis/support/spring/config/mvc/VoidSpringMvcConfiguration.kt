@@ -1,4 +1,4 @@
-package cn.toutatis.support.spring.config
+package cn.toutatis.support.spring.config.mvc
 
 import cn.toutatis.support.spring.aop.interceptor.RequestLogInterceptor
 import org.springframework.beans.factory.annotation.Autowired

@@ -1,4 +1,4 @@
-package cn.toutatis.spring.core.config.orm.mybatisplus
+package cn.toutatis.support.spring.config.orm.mybatisplus
 
 import com.baomidou.mybatisplus.annotation.DbType
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor
@@ -21,10 +21,4 @@ class MybatisPlusConfiguration {
         return mybatisPlusInterceptor
     }
 
-//    @Bean
-//    fun customizer(): Jackson2ObjectMapperBuilderCustomizer {
-//        return Jackson2ObjectMapperBuilderCustomizer { builder: Jackson2ObjectMapperBuilder ->
-//            builder.featuresToEnable(SerializationFeature.WRITE_ENUMS_USING_TO_STRING)
-//        }
-//    }
 }

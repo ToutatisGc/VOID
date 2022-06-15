@@ -9,5 +9,5 @@ spring:
     hibernate:
       ddl-auto: update
       naming:
-        physical-strategy: cn.toutatis.spring.core.config.orm.jpa.VoidNamingStrategyStandardImpl
+        physical-strategy: cn.toutatis.support.spring.config.orm.jpa.VoidNamingStrategyStandardImpl
     open-in-view: true
