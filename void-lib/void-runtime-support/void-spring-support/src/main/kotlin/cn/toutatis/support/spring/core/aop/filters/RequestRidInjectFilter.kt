@@ -1,4 +1,4 @@
-package cn.toutatis.support.spring.aop.filters
+package cn.toutatis.support.spring.core.aop.filters
 
 import cn.hutool.core.util.IdUtil
 import cn.toutatis.common.standard.StandardFields

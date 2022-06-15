@@ -1,4 +1,4 @@
-package cn.toutatis.support.spring.aop.filters
+package cn.toutatis.support.spring.core.aop.filters
 
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.web.servlet.FilterRegistrationBean

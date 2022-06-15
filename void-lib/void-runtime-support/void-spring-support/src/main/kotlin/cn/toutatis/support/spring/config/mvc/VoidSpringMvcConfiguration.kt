@@ -1,6 +1,6 @@
 package cn.toutatis.support.spring.config.mvc
 
-import cn.toutatis.support.spring.aop.interceptor.RequestLogInterceptor
+import cn.toutatis.support.spring.core.aop.interceptor.RequestLogInterceptor
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.annotation.Configuration
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry
