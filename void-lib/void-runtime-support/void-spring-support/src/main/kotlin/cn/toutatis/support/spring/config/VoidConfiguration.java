@@ -10,13 +10,19 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 public class VoidConfiguration {
 
     /**
-     * 调试模式
+     * 是否开启调试模式
      */
     private Boolean debug = false;
+
+    /**
+     * 是否开启平台多用户模式
+     */
+    private Boolean platformMode = false;
 
     private VoidConfiguration.GlobalLogConfig globalLogConfig;
     private VoidConfiguration.DocConfig docConfig;
     private VoidConfiguration.GlobalOrmConfig globalOrmConfig;
+    private VoidConfiguration.GlobalServiceConfig globalServiceConfig;
 
     /**
      * 全局日志环境变量
@@ -153,6 +159,37 @@ public class VoidConfiguration {
         }
     }
 
+    public static class GlobalServiceConfig{
+
+        private Boolean autoConfig = true;
+
+        private Boolean useDetailedMode = true;
+
+        public Boolean getAutoConfig() {
+            return autoConfig;
+        }
+
+        public void setAutoConfig(Boolean autoConfig) {
+            this.autoConfig = autoConfig;
+        }
+
+        public Boolean getUseDetailedMode() {
+            return useDetailedMode;
+        }
+
+        public void setUseDetailedMode(Boolean useDetailedMode) {
+            this.useDetailedMode = useDetailedMode;
+        }
+    }
+
+    public GlobalServiceConfig getGlobalServiceConfig() {
+        return globalServiceConfig;
+    }
+
+    public void setGlobalServiceConfig(GlobalServiceConfig globalServiceConfig) {
+        this.globalServiceConfig = globalServiceConfig;
+    }
+
     public GlobalLogConfig getGlobalLogConfig() {
         return globalLogConfig;
     }
@@ -177,11 +214,21 @@ public class VoidConfiguration {
         this.globalOrmConfig = globalOrmConfig;
     }
 
+
+
     public Boolean getDebug() {
         return debug;
     }
 
     public void setDebug(Boolean debug) {
         this.debug = debug;
+    }
+
+    public Boolean getPlatformMode() {
+        return platformMode;
+    }
+
+    public void setPlatformMode(Boolean platformMode) {
+        this.platformMode = platformMode;
     }
 }

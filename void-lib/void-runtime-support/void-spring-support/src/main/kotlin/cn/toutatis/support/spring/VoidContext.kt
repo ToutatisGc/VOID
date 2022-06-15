@@ -2,7 +2,7 @@ package cn.toutatis.support.spring
 
 import cn.toutatis.common.annotations.database.AutoCreateDataObject
 import cn.toutatis.common.face.VoidContextInterface
-import cn.toutatis.support.spring.beans.AutoInsertDatabaseComponent
+import cn.toutatis.support.spring.enhance.AutoInsertDatabaseComponent
 import cn.toutatis.support.spring.config.VoidContextConfigBuilder
 import cn.toutatis.toolkit.clazz.AnnotationToolkit
 import cn.toutatis.toolkit.clazz.ClassScanner

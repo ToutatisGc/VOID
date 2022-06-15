@@ -1,28 +1,30 @@
-package cn.toutatis.support.spring.core;
+package cn.toutatis.support.spring.core
 
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
+import cn.toutatis.common.standard.StandardComponentPool
+import org.springframework.context.annotation.Bean
+import org.springframework.context.annotation.Configuration
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor
+import java.util.concurrent.ThreadPoolExecutor
 
-import java.util.concurrent.ThreadPoolExecutor;
-
+/**
+ * @author Toutatis_Gc
+ * 异步线程池配置
+ */
 @Configuration
-public class VoidAsyncPoolConfig {
+class VoidAsyncPoolConfig {
 
-    @Bean
-    public ThreadPoolTaskExecutor asyncThreadPoolTaskExecutor(){
-        ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
-        executor.setCorePoolSize(20);
-        executor.setMaxPoolSize(200);
-        executor.setQueueCapacity(25);
-        executor.setKeepAliveSeconds(200);
-        executor.setThreadNamePrefix("asyncThread");
-        executor.setWaitForTasksToCompleteOnShutdown(true);
-        executor.setAwaitTerminationSeconds(60);
-
-        executor.setRejectedExecutionHandler(new ThreadPoolExecutor.CallerRunsPolicy());
-
-        executor.initialize();
-        return executor;
+    @Bean(StandardComponentPool.VOID_ASYNC_THREAD_POOL)
+    fun voidAsyncThreadPoolTaskExecutor(): ThreadPoolTaskExecutor {
+        val executor = ThreadPoolTaskExecutor()
+        executor.corePoolSize = 20
+        executor.maxPoolSize = 200
+        executor.setQueueCapacity(25)
+        executor.keepAliveSeconds = 200
+        executor.setThreadNamePrefix("VoidAsync")
+        executor.setWaitForTasksToCompleteOnShutdown(true)
+        executor.setAwaitTerminationSeconds(60)
+        executor.setRejectedExecutionHandler(ThreadPoolExecutor.CallerRunsPolicy())
+        executor.initialize()
+        return executor
     }
 }

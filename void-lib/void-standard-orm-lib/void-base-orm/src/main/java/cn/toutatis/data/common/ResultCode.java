@@ -65,6 +65,7 @@ public enum ResultCode implements Cloneable {
     UNKNOWN_EXCEPTION("-1","-1",false,"未知请求","未知请求"),
     NULL_DIRECT_CODE("404001","404001",false,"未指定类型","没有指定MESSAGE"),
     MISSING_PARAMETER("404002","404002",false,"缺少参数","缺少参数"),
+    NOT_TENANT("404003","404003",false,"未绑定子账户","操作失败[平台下必须绑定子用户]"),
     NOT_FOUND("404000","404000",false,"请求未找到","请求未找到"),
     REQUEST_EXCEPTION("500000","500000",false,"发生错误","请求异常"),
     INNER_EXCEPTION("500001","500001",false,"内部错误","内部运行发生错误"),

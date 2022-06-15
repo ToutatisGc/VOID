@@ -1,4 +1,4 @@
-package cn.toutatis.support.spring.beans
+package cn.toutatis.support.spring.enhance
 
 import cn.toutatis.common.standard.StandardComponentPool
 import cn.toutatis.support.spring.VoidContext

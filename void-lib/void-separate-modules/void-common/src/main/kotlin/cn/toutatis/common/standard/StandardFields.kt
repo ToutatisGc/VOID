@@ -11,5 +11,7 @@ class StandardFields {
          * servlet filter 请求注入ID字段
          */
         const val FILTER_REQUEST_ID = "VOID_RID"
+
+        const val VOID_REQUEST_HEADER_MCH_ID = "Void-mchId"
     }
 }
