@@ -30,7 +30,7 @@ class ResponseResultDispatcherAdvice : ResponseBodyAdvice<Any>{
         if (body == null) return null
         if (body::class == ProxyResult::class.java){
             body as ProxyResult
-            val result: Result = if(body.isUseSimpleMode) SimpleResult() else DetailedResult()
+            val result: Result = if(body.useDetailedMode) SimpleResult() else DetailedResult()
             result.setResultCode(body.resultCode)
             return result
         }
