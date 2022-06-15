@@ -1,4 +1,4 @@
-package cn.toutatis.support.spring.aop.interceptor
+package cn.toutatis.support.spring.core.aop.interceptor
 
 import cn.toutatis.constant.Time
 import cn.toutatis.toolkit.log.LoggerToolkit

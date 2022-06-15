@@ -1,4 +1,4 @@
-package cn.toutatis.support.spring.aop.advice
+package cn.toutatis.support.spring.core.aop.advice
 
 import cn.toutatis.data.branch.DetailedResult
 import cn.toutatis.data.branch.SimpleResult

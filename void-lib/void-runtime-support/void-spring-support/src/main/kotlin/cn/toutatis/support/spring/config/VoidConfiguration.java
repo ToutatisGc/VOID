@@ -9,6 +9,11 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @ConfigurationProperties("void")
 public class VoidConfiguration {
 
+    /**
+     * 调试模式
+     */
+    private Boolean debug = false;
+
     private VoidConfiguration.GlobalLogConfig globalLogConfig;
     private VoidConfiguration.DocConfig docConfig;
     private VoidConfiguration.GlobalOrmConfig globalOrmConfig;
@@ -170,5 +175,13 @@ public class VoidConfiguration {
 
     public void setGlobalOrmConfig(GlobalOrmConfig globalOrmConfig) {
         this.globalOrmConfig = globalOrmConfig;
+    }
+
+    public Boolean getDebug() {
+        return debug;
+    }
+
+    public void setDebug(Boolean debug) {
+        this.debug = debug;
     }
 }

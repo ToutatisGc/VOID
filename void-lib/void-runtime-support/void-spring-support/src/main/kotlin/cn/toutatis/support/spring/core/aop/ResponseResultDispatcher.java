@@ -14,14 +14,8 @@
  *    limitations under the License.
  */
 
-package cn.toutatis.support.spring.aop;
+package cn.toutatis.support.spring.core.aop;
 
-import cn.toutatis.data.annotations.DataIgnore;
-import cn.toutatis.data.branch.DetailedResult;
-import cn.toutatis.data.branch.SimpleResult;
-import cn.toutatis.data.common.ProxyResult;
-import cn.toutatis.data.common.ResultCode;
-import cn.toutatis.data.implement.Result;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.MethodParameter;

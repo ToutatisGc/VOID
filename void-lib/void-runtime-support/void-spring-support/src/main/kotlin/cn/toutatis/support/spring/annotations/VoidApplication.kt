@@ -9,8 +9,8 @@ import org.springframework.scheduling.annotation.EnableScheduling
 /**
  *@author Toutatis_Gc
  *@date 2022/4/15 14:28
+ * SpringBoot启动类注解集合
  */
-
 @EnableAsync
 @EnableScheduling
 @EnableConfigurationProperties
