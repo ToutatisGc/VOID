@@ -12,7 +12,10 @@ import cn.toutatis.support.spring.config.orm.mybatisplus.support.PagingQuery;
 import cn.toutatis.support.spring.config.orm.mybatisplus.support.VService;
 import cn.toutatis.toolkit.objects.ObjectToolkit;
 import com.alibaba.fastjson.JSONObject;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,6 +57,7 @@ public class BaseControllerImpl<O extends EntityBasicAttribute<O>, SERVICE exten
     );
 
     @Override
+    @ApiOperation("获取实体列表")
     @RequestMapping(value = "/getList",method = RequestMethod.POST)
     public Result getList(PagingQuery pagingQuery, O obj) {
         String mchId = request.getHeader(StandardFields.VOID_REQUEST_HEADER_MCH_ID);
@@ -73,8 +77,21 @@ public class BaseControllerImpl<O extends EntityBasicAttribute<O>, SERVICE exten
     }
 
     @Override
+    @RequestMapping(value = "/getById",method = RequestMethod.POST)
     public Result getById(O entity) {
-        return null;
+        if (entity == null){ return new ProxyResult(ResultCode.NOT_HAVE_SELECT_DATA); }
+        QueryWrapper<O> oQueryWrapper = new QueryWrapper<>(entity);
+        if (platformMode){
+            String mchId = request.getHeader(StandardFields.VOID_REQUEST_HEADER_MCH_ID);
+            if (objectToolkit.strNotBlank(mchId)){
+                oQueryWrapper.eq("mchId",mchId);
+            }else {
+                return new ProxyResult(ResultCode.NOT_TENANT);
+            }
+        }
+        O one = service.getOne(oQueryWrapper);
+        result.setData(one,Actions.SELECT);
+        return result;
     }
 
     @Override
