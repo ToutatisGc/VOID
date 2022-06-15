@@ -7,7 +7,7 @@
 
     <parent>
         <groupId>cn.toutatis</groupId>
-        <artifactId>void-spring-runtime-support</artifactId>
+        <artifactId>void-runtime-support</artifactId>
         <version>0.0.0-ALPHA</version>
     </parent>
 
@@ -115,8 +115,6 @@
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>
-            <version>5.6.7.Final</version>
-            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>

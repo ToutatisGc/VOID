@@ -41,6 +41,7 @@
         <mybatis.version>3.5.2</mybatis.version>
         <swagger.version>1.5.22</swagger.version>
         <p6spy.version>3.9.1</p6spy.version>
+        <hibernate.version>5.6.7.Final</hibernate.version>
 
         <p.source.version>2.2.1</p.source.version>
         <p.javadoc.version>2.9.1</p.javadoc.version>
@@ -264,6 +265,13 @@
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-data-jpa</artifactId>
                 <version>${springboot.version}</version>
+                <optional>true</optional>
+            </dependency>
+
+            <dependency>
+                <groupId>org.hibernate</groupId>
+                <artifactId>hibernate-core</artifactId>
+                <version>${hibernate.version}</version>
                 <optional>true</optional>
             </dependency>
 

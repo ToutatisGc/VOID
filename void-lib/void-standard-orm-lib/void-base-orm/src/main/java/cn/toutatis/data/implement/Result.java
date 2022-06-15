@@ -16,7 +16,7 @@
 
 package cn.toutatis.data.implement;
 
-import cn.toutatis.data.common.ResultCode;
+import cn.toutatis.data.common.result.ResultCode;
 
 import java.io.Serializable;
 

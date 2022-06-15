@@ -1,6 +1,6 @@
 package cn.toutatis.support.spring.config.orm.mybatisplus.support;
 
-import cn.toutatis.data.common.DataStatus;
+import cn.toutatis.data.common.result.DataStatus;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;

@@ -1,4 +1,4 @@
-package cn.toutatis.data.common;
+package cn.toutatis.data.common.result;
 
 import cn.toutatis.data.implement.Result;
 import cn.toutatis.toolkit.log.LoggerToolkit;
