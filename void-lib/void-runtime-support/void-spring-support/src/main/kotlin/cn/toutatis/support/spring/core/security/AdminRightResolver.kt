@@ -21,13 +21,12 @@ class AdminRightResolver {
     /**
      * 是否是平台模式，平台模式下需要区分子用户
      */
-    private final val platformMode = voidConfiguration.platformMode
 
     fun <T> queryCondition(request: HttpServletRequest,wrapper:Wrapper<T>): Unit {
         /*TODO 必须先完成鉴权才能进行后续*/
-        if (platformMode){
-
-        }
+//        if (platformMode){
+//
+//        }
     }
 
 }

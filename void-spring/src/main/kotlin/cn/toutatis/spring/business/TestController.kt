@@ -1,7 +1,7 @@
 package cn.toutatis.spring.business
 
-import cn.toutatis.data.common.ProxyResult
-import cn.toutatis.data.common.ResultCode
+import cn.toutatis.data.common.result.ProxyResult
+import cn.toutatis.data.common.result.ResultCode
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper
 import com.github.xiaoymin.knife4j.annotations.ApiSupport
 import io.swagger.annotations.Api
@@ -37,7 +37,7 @@ class TestController {
     @ApiOperation(value="测试返回Result",notes="注意问题点")
     @RequestMapping("/b",method=[RequestMethod.GET])
     fun test2(): ProxyResult {
-        return ProxyResult(ResultCode.NORMAL_SUCCESS,"成功111",null)
+        return ProxyResult(ResultCode.NORMAL_SUCCESS, "成功111", null)
     }
 
     @ApiOperation(value="测试jdbc",notes="注意问题点")
@@ -45,7 +45,7 @@ class TestController {
     fun test3(): ProxyResult {
         /*成功链接*/
         val queryForMap = jdbcTemplate.queryForMap("select * from vb_person")
-        return ProxyResult(ResultCode.NORMAL_SUCCESS,"成功111",null)
+        return ProxyResult(ResultCode.NORMAL_SUCCESS, "成功111", null)
     }
 
     @ApiOperation(value="测试mapper",notes="注意问题点")
@@ -56,7 +56,9 @@ class TestController {
 //        person.bindBaseProperties()
         person.name = "ced"
         person.insert()
-        return ProxyResult(ResultCode.NORMAL_SUCCESS,"成功",selectList)
+        return ProxyResult(ResultCode.NORMAL_SUCCESS,
+            "成功",
+            selectList)
     }
 
     @ApiOperation(value="测试model",notes="注意问题点")
@@ -70,9 +72,9 @@ class TestController {
 
     @ApiOperation(value="测试error",notes="注意问题点")
     @RequestMapping("/f",method=[RequestMethod.GET])
-    fun test6():ProxyResult{
+    fun test6(): ProxyResult {
         val i = 1/0
-        return ProxyResult(ResultCode.NORMAL_SUCCESS,"成功",null)
+        return ProxyResult(ResultCode.NORMAL_SUCCESS, "成功", null)
     }
 
 }

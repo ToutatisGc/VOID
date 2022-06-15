@@ -1,10 +1,10 @@
 package cn.toutatis.support.spring.enhance.controller;
 
 import cn.toutatis.common.standard.StandardFields;
-import cn.toutatis.data.common.Actions;
+import cn.toutatis.data.common.result.Actions;
 import cn.toutatis.data.common.EntityBasicAttribute;
-import cn.toutatis.data.common.ProxyResult;
-import cn.toutatis.data.common.ResultCode;
+import cn.toutatis.data.common.result.ProxyResult;
+import cn.toutatis.data.common.result.ResultCode;
 import cn.toutatis.data.implement.Result;
 import cn.toutatis.support.spring.config.VoidConfiguration;
 import cn.toutatis.support.spring.config.orm.mybatisplus.support.CommonWrapper;
@@ -14,7 +14,6 @@ import cn.toutatis.toolkit.objects.ObjectToolkit;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

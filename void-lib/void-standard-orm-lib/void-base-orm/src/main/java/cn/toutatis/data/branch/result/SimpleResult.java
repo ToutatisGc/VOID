@@ -14,9 +14,9 @@
  *    limitations under the License.
  */
 
-package cn.toutatis.data.branch;
+package cn.toutatis.data.branch.result;
 
-import cn.toutatis.data.common.ResultCode;
+import cn.toutatis.data.common.result.ResultCode;
 import cn.toutatis.data.implement.Result;
 
 import java.util.Objects;

@@ -1,4 +1,4 @@
-package cn.toutatis.data.common;
+package cn.toutatis.data.common.result;
 
 /**
  *
