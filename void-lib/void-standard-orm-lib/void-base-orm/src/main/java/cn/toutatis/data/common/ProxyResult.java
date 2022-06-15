@@ -32,18 +32,24 @@ public class ProxyResult implements Result {
     private String requestId;
 
     @JsonIgnore
-    private Boolean useDetailedMode = false;
+    private Boolean useDetailedMode = null;
 
     @JsonIgnore
-    private boolean autoConfig = true;
+    private Boolean autoConfig = null;
+
+    @JsonIgnore
+    private Actions action = null;
 
     public ProxyResult(ResultCode resultCode) {
-        this.resultCode = resultCode;
-        this.message = resultCode.getInfo();
+       this(resultCode,resultCode.getInfo());
     }
 
     public ProxyResult(Object data) {
         this.setData(data);
+    }
+
+    public ProxyResult(ResultCode resultCode, Object data) {
+        this(resultCode,resultCode.getInfo(),data);
     }
 
     public ProxyResult(ResultCode resultCode, String message) {
@@ -100,6 +106,11 @@ public class ProxyResult implements Result {
         this.autoConfig = autoConfig;
     }
 
+    public void setData(Object data, Actions action){
+        this.setData(data);
+        this.action = action;
+    }
+
     public Object getData() {
         return data;
     }
@@ -111,5 +122,21 @@ public class ProxyResult implements Result {
     @Override
     public void setResultCode(ResultCode resultCode) {
         this.resultCode = resultCode;
+    }
+
+    public String getRequestId() {
+        return requestId;
+    }
+
+    public void setRequestId(String requestId) {
+        this.requestId = requestId;
+    }
+
+    public Actions getAction() {
+        return action;
+    }
+
+    public void setAction(Actions action) {
+        this.action = action;
     }
 }
