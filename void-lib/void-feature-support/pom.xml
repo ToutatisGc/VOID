@@ -40,6 +40,7 @@
         <cacheapi.version>1.1.0</cacheapi.version>
         <mybatis.version>3.5.2</mybatis.version>
         <swagger.version>1.5.22</swagger.version>
+        <p6spy.version>3.9.1</p6spy.version>
 
         <p.source.version>2.2.1</p.source.version>
         <p.javadoc.version>2.9.1</p.javadoc.version>
@@ -217,25 +218,25 @@
                 <optional>true</optional>
             </dependency>
             <!--本地缓存中间件-->
-            <dependency>
-                <groupId>org.ehcache</groupId>
-                <artifactId>ehcache</artifactId>
-                <version>${ehcache.version}</version>
-                <optional>true</optional>
-            </dependency>
-            <!--JSR-107支持-->
-            <dependency>
-                <groupId>javax.cache</groupId>
-                <artifactId>cache-api</artifactId>
-                <version>${cacheapi.version}</version>
-                <optional>true</optional>
-            </dependency>
+<!--            <dependency>-->
+<!--                <groupId>org.ehcache</groupId>-->
+<!--                <artifactId>ehcache</artifactId>-->
+<!--                <version>${ehcache.version}</version>-->
+<!--                <optional>true</optional>-->
+<!--            </dependency>-->
+<!--            &lt;!&ndash;JSR-107支持&ndash;&gt;-->
+<!--            <dependency>-->
+<!--                <groupId>javax.cache</groupId>-->
+<!--                <artifactId>cache-api</artifactId>-->
+<!--                <version>${cacheapi.version}</version>-->
+<!--                <optional>true</optional>-->
+<!--            </dependency>-->
 
             <!--数据库分析-->
             <dependency>
                 <groupId>p6spy</groupId>
                 <artifactId>p6spy</artifactId>
-                <version>RELEASE</version>
+                <version>${p6spy.version}</version>
                 <optional>true</optional>
             </dependency>
             <!--各种ORM框架-->
@@ -355,7 +356,7 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-gpg-plugin</artifactId>
-                    <version>1.6</version>
+                    <version>3.0.1</version>
                     <executions>
                         <execution>
                             <id>sign-artifacts</id>

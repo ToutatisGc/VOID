@@ -4,13 +4,15 @@
  * License: GNU Lesser General Public License (LGPL), version 2.1 or later.
  * See the lgpl.txt file in the root directory or <http://www.gnu.org/licenses/lgpl-2.1.html>.
  */
-package cn.toutatis.spring.core.config.orm.jpa;
+package cn.toutatis.support.spring.config.orm.jpa;
 
 import java.io.Serializable;
 
+import cn.toutatis.support.spring.config.VoidConfiguration;
 import org.hibernate.boot.model.naming.Identifier;
 import org.hibernate.boot.model.naming.PhysicalNamingStrategy;
 import org.hibernate.engine.jdbc.env.spi.JdbcEnvironment;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -22,16 +24,9 @@ import org.springframework.stereotype.Component;
 @Component
 public class VoidNamingStrategyStandardImpl implements PhysicalNamingStrategy, Serializable {
 
-	@Value("${void.global-orm-config.table-prefix}")
-	private String tablePrefix;
+	@Autowired
+	private VoidConfiguration voidConfiguration;
 
-	@Value("${void.global-orm-config.use-table-prefix}")
-	private Boolean useTablePrefix;
-
-	/**
-	 * Singleton access
-	 */
-	public static final VoidNamingStrategyStandardImpl INSTANCE = new VoidNamingStrategyStandardImpl();
 
 	@Override
 	public Identifier toPhysicalCatalogName(Identifier name, JdbcEnvironment context) {
@@ -45,8 +40,10 @@ public class VoidNamingStrategyStandardImpl implements PhysicalNamingStrategy, S
 
 	@Override
 	public Identifier toPhysicalTableName(Identifier name, JdbcEnvironment context) {
-		if (useTablePrefix){
-			return new Identifier(tablePrefix+name,false);
+		VoidConfiguration.GlobalOrmConfig globalOrmConfig = voidConfiguration.getGlobalOrmConfig();
+
+		if (globalOrmConfig.getUseTablePrefix()){
+			return new Identifier(globalOrmConfig.getTablePrefix()+name,false);
 		}else{
 			return name;
 		}

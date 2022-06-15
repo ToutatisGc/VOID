@@ -2,6 +2,7 @@ package cn.toutatis.support.spring.annotations
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.context.properties.EnableConfigurationProperties
+import org.springframework.boot.web.servlet.ServletComponentScan
 import org.springframework.scheduling.annotation.EnableAsync
 import org.springframework.scheduling.annotation.EnableScheduling
 
@@ -13,5 +14,6 @@ import org.springframework.scheduling.annotation.EnableScheduling
 @EnableAsync
 @EnableScheduling
 @EnableConfigurationProperties
+@ServletComponentScan
 @SpringBootApplication
 annotation class VoidApplication

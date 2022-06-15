@@ -1,6 +1,8 @@
 package cn.toutatis.support.spring.doc
 
+import cn.toutatis.support.spring.config.VoidConfiguration
 import org.springframework.beans.BeansException
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.beans.factory.config.BeanPostProcessor
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean
@@ -30,22 +32,23 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2
 @EnableWebMvc
 class VoidKnife4JConfiguration {
 
-    @Value("\${void.doc.base-package:cn.toutatis}")
-    private lateinit var apiDocBasePackage: String
+    @Autowired
+    private lateinit var voidConfiguration : VoidConfiguration
 
     @Bean("apiDocketBean")
     @ConditionalOnMissingBean
     fun apiDocketBean(): Docket {
+        val docConfig = voidConfiguration.docConfig
         return Docket(DocumentationType.SWAGGER_2)
             .apiInfo(ApiInfoBuilder()
-                .description("RESTful APIs")
-                .title("VOID文档")
+                .description(docConfig.description)
+                .title(docConfig.title)
                 .contact(Contact("Toutatis_Gc","www.xvoid.cn","gc@toutatis.cn"))
                 .version("0.0.0-ALPHA")
                 .build())
             .groupName("默认文档")
             .select()
-            .apis(RequestHandlerSelectors.basePackage(apiDocBasePackage))
+            .apis(RequestHandlerSelectors.basePackage(docConfig.basePackage))
             .paths(PathSelectors.any())
             .build()
     }

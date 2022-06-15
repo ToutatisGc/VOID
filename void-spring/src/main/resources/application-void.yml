@@ -1,6 +1,12 @@
 void:
-  doc:
-    base-package: cn.toutatis
+  global-log-config:
+    record-request: true
+    record-request-params: true
+    record-to-db: false
   global-orm-config:
     use-table-prefix: false
     table-prefix: vb_
+  doc-config:
+    description: VOID 文档接口
+    base-package: cn.toutatis
+    title: VOID文档

@@ -1,0 +1,174 @@
+package cn.toutatis.support.spring.config;
+
+import org.springframework.boot.context.properties.ConfigurationProperties;
+
+/**
+ * @author Toutatis_Gc
+ * Void环境下SpringBoot环境变量
+ */
+@ConfigurationProperties("void")
+public class VoidConfiguration {
+
+    private VoidConfiguration.GlobalLogConfig globalLogConfig;
+    private VoidConfiguration.DocConfig docConfig;
+    private VoidConfiguration.GlobalOrmConfig globalOrmConfig;
+
+    /**
+     * 全局日志环境变量
+     */
+    public static class GlobalLogConfig{
+
+        /**
+         * 记录每次请求的方法
+         */
+        private Boolean recordRequest = true;
+
+        /**
+         * 请求携带RID
+         */
+        private Boolean recordRequestId = true;
+
+        /**
+         * 记录请求参数到日志文件
+         */
+        private Boolean recordRequestParams = true;
+
+        /**
+         * 记录请求到数据库
+         */
+        private Boolean recordToDb = true;
+
+        public Boolean getRecordRequest() {
+            return recordRequest;
+        }
+
+        public void setRecordRequest(Boolean recordRequest) {
+            this.recordRequest = recordRequest;
+        }
+
+        public Boolean getRecordRequestId() {
+            return recordRequestId;
+        }
+
+        public void setRecordRequestId(Boolean recordRequestId) {
+            this.recordRequestId = recordRequestId;
+        }
+
+        public Boolean getRecordRequestParams() {
+            return recordRequestParams;
+        }
+
+        public void setRecordRequestParams(Boolean recordRequestParams) {
+            this.recordRequestParams = recordRequestParams;
+        }
+
+        public Boolean getRecordToDb() {
+            return recordToDb;
+        }
+
+        public void setRecordToDb(Boolean recordToDb) {
+            this.recordToDb = recordToDb;
+        }
+    }
+
+    /**
+     * swagger文档配置
+     */
+    public static class DocConfig{
+
+        /**
+         * 扫描包
+         */
+        private String basePackage = "cn.toutatis";
+
+        /**
+         * 文档描述
+         */
+        private String description = "VOID RESTFUL APIS";
+
+        /**
+         * 文档标题
+         */
+        private String title = "VOID文档";
+
+        public String getBasePackage() {
+            return basePackage;
+        }
+
+        public void setBasePackage(String basePackage) {
+            this.basePackage = basePackage;
+        }
+
+        public String getDescription() {
+            return description;
+        }
+
+        public void setDescription(String description) {
+            this.description = description;
+        }
+
+        public String getTitle() {
+            return title;
+        }
+
+        public void setTitle(String title) {
+            this.title = title;
+        }
+    }
+
+    /**
+     * ORM框架配置
+     */
+    public static class GlobalOrmConfig{
+
+        /**
+         * 使用表前缀
+         */
+        private Boolean useTablePrefix = false;
+
+        /**
+         * 表前缀名称
+         */
+        private String tablePrefix = "";
+
+        public Boolean getUseTablePrefix() {
+            return useTablePrefix;
+        }
+
+        public void setUseTablePrefix(Boolean useTablePrefix) {
+            this.useTablePrefix = useTablePrefix;
+        }
+
+        public String getTablePrefix() {
+            return tablePrefix;
+        }
+
+        public void setTablePrefix(String tablePrefix) {
+            this.tablePrefix = tablePrefix;
+        }
+    }
+
+    public GlobalLogConfig getGlobalLogConfig() {
+        return globalLogConfig;
+    }
+
+    public void setGlobalLogConfig(GlobalLogConfig globalLogConfig) {
+        this.globalLogConfig = globalLogConfig;
+    }
+
+    public DocConfig getDocConfig() {
+        return docConfig;
+    }
+
+    public void setDocConfig(DocConfig docConfig) {
+        this.docConfig = docConfig;
+    }
+
+    public GlobalOrmConfig getGlobalOrmConfig() {
+        return globalOrmConfig;
+    }
+
+    public void setGlobalOrmConfig(GlobalOrmConfig globalOrmConfig) {
+        this.globalOrmConfig = globalOrmConfig;
+    }
+}
