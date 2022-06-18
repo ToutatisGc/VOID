@@ -7,7 +7,11 @@ import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerIntercept
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 
-
+/**
+ * @author Toutatis_Gc
+ * https://baomidou.com/pages/2976a3/#mybatisplusinterceptor
+ * MybatisPlus插件配置
+ */
 @Configuration
 class MybatisPlusConfiguration {
 

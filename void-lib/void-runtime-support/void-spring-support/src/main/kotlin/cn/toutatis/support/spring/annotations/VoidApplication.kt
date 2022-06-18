@@ -5,6 +5,7 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.boot.web.servlet.ServletComponentScan
 import org.springframework.scheduling.annotation.EnableAsync
 import org.springframework.scheduling.annotation.EnableScheduling
+import org.springframework.transaction.annotation.EnableTransactionManagement
 
 /**
  *@author Toutatis_Gc
@@ -16,4 +17,7 @@ import org.springframework.scheduling.annotation.EnableScheduling
 @EnableConfigurationProperties
 @ServletComponentScan
 @SpringBootApplication
+@EnableTransactionManagement
+@MustBeDocumented
+@Target(AnnotationTarget.CLASS)
 annotation class VoidApplication

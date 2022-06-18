@@ -14,32 +14,25 @@
  *    limitations under the License.
  */
 
-package cn.toutatis.data.implement;
+package cn.toutatis.data.common.result.branch;
 
 import cn.toutatis.data.common.result.ResultCode;
+import cn.toutatis.data.common.result.Result;
 
-import java.io.Serializable;
+public class DetailedResult implements Result {
 
-/**
- * 如需统一RESTFUL API 则需要统一返回该对象的实例
- * @author Toutatis_Gc
- */
-public interface Result extends Serializable {
+    @Override
+    public Object serialize() {
+        return null;
+    }
 
-    /**
-     * @return 返回自定义序列化后的对象
-     */
-    Object serialize();
+    @Override
+    public void setData(java.lang.Object data) {
 
-    /**
-     * @param data 返回数据
-     */
-    void setData(Object data);
+    }
 
-    /**
-     * @param resultCode 结果代码
-     * 此方法用以设置返回的结果代码,不同的结果代码会返回不同效果
-     */
-    void setResultCode(ResultCode resultCode);
-
+    @Override
+    public void setResultCode(ResultCode resultCode) {
+        resultCode = resultCode;
+    }
 }

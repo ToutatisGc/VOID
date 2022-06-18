@@ -4,7 +4,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
  * @author Toutatis_Gc
- * Void环境下SpringBoot环境变量
+ * VOID环境下SpringBoot环境变量
  */
 @ConfigurationProperties("void")
 public class VoidConfiguration {
@@ -18,6 +18,11 @@ public class VoidConfiguration {
      * 是否开启平台多用户模式
      */
     private Boolean platformMode = false;
+
+    /**
+     * 是否开启展示模式，展示模式下所有数据不得操作
+     */
+    private Boolean showMode = false;
 
     private VoidConfiguration.GlobalLogConfig globalLogConfig;
     private VoidConfiguration.DocConfig docConfig;
@@ -230,5 +235,13 @@ public class VoidConfiguration {
 
     public void setPlatformMode(Boolean platformMode) {
         this.platformMode = platformMode;
+    }
+
+    public Boolean getShowMode() {
+        return showMode;
+    }
+
+    public void setShowMode(Boolean showMode) {
+        this.showMode = showMode;
     }
 }

@@ -1,6 +1,5 @@
 package cn.toutatis.data.common.result;
 
-import cn.toutatis.data.implement.Result;
 import cn.toutatis.toolkit.log.LoggerToolkit;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.annotations.ApiModel;
@@ -13,7 +12,7 @@ import org.slf4j.Logger;
  * ResponseResultDispatcherAdvice 请求返回前拦截并区别simpleMode然后分发继承类
  */
 @ApiModel(
-        value = "代理返回结果(最终返回结果为派生类)",
+        value = "代理返回结果(最终返回结果为Result的派生类)",
         description = "Controller标准返回结果,经过 ResponseResultDispatcherAdvice 分发到派生类")
 public class ProxyResult implements Result {
 
@@ -96,7 +95,7 @@ public class ProxyResult implements Result {
     @Override
     public void setData(Object data) {
         if (!autoConfig && resultCode == null){
-            logger.warn("返回结果返回码未标记会出现响应状态码异常[解决方案添加resultCode]");
+            logger.warn("返回结果返回码未标记会出现响应状态码异常[解决方案：添加resultCode]");
         }
         this.data = data;
     }
