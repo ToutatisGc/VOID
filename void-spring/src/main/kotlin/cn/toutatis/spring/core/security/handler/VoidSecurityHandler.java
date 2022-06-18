@@ -40,6 +40,11 @@ public class VoidSecurityHandler implements AuthenticationSuccessHandler,
 
     public static final String PERMISSION_DENIED_CODE = "971111";
 
+
+    @Override
+    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
+
+    }
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
 
@@ -55,15 +60,7 @@ public class VoidSecurityHandler implements AuthenticationSuccessHandler,
 
     }
 
-    @Override
-    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authentication) throws IOException, ServletException {
-        AuthenticationSuccessHandler.super.onAuthenticationSuccess(request, response, chain, authentication);
-    }
 
-    @Override
-    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
-
-    }
 
 //    @Autowired
 //    private SystemUserPermissionMapper systemUserPermissionMapper;
