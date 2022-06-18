@@ -74,7 +74,11 @@
             <version>0.0.0-ALPHA</version>
             <scope>compile</scope>
         </dependency>
-
+        <!--安全框架-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
         <!--各种ORM框架-->
         <dependency>
             <groupId>org.springframework.boot</groupId>

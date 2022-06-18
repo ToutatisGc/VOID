@@ -49,6 +49,15 @@ public class EntityBasicAttribute<O extends Model<?>> extends Model<O> {
     public LocalDateTime createTime;
 
     /**
+     * 创建操作人
+     */
+    @JsonIgnore
+    @TableField(value = "createBy")
+    @ApiModelProperty(value="创建操作人")
+    @Column(columnDefinition = "VARCHAR(32) DEFAULT 'SYSTEM' COMMENT '创建操作人'")
+    public String createBy;
+
+    /**
      * 最后更新日期
      */
     @JsonIgnore
@@ -57,6 +66,12 @@ public class EntityBasicAttribute<O extends Model<?>> extends Model<O> {
     @Column(nullable = false,columnDefinition = "DATETIME COMMENT '最后更新日期'")
     public LocalDateTime lastUpdateTime;
 
+    @JsonIgnore
+    @TableField(value = "updateBy")
+    @ApiModelProperty(value="更新操作人")
+    @Column(columnDefinition = "VARCHAR(32) DEFAULT 'SYSTEM' COMMENT '更新操作人'")
+    public String updateBy;
+
     /**
      * 版本号
      */
@@ -64,7 +79,7 @@ public class EntityBasicAttribute<O extends Model<?>> extends Model<O> {
     @Version
     @TableField(value = "version",fill = FieldFill.INSERT)
     @ApiModelProperty(value="数据版本号", required=true)
-    @Column(nullable = false,columnDefinition = "INT COMMENT '版本号'")
+    @Column(nullable = false,columnDefinition = "INT DEFAULT 0 COMMENT '版本号'")
     private Integer version;
 
     /**
@@ -82,7 +97,7 @@ public class EntityBasicAttribute<O extends Model<?>> extends Model<O> {
     @TableLogic
     @TableField(value = "logicDeleted",fill = FieldFill.INSERT)
     @ApiModelProperty(value="逻辑删除标志", required=true)
-    @Column(nullable = false,columnDefinition = "TINYINT COMMENT '0正常:1删除'")
+    @Column(nullable = false,columnDefinition = "TINYINT DEFAULT 0 COMMENT '0正常:1删除'")
     public DataStatus logicDeleted;
 
     /**
@@ -92,6 +107,16 @@ public class EntityBasicAttribute<O extends Model<?>> extends Model<O> {
     @ApiModelProperty(value="备注")
     @Column(columnDefinition = "VARCHAR(255) COMMENT '备注'")
     public String remark;
+
+    /**
+     * 归属
+     * 任何非中间表都应当有一个归属，举例如归属于上下级，归属于某渠道。
+     * 例如应用作为平台模式，平台下有多渠道商，各渠道商的数据需要靠归属标志区分各自数据。
+     */
+    @TableField("belongTo")
+    @ApiModelProperty(value="归属")
+    @Column(columnDefinition = "VARCHAR(32) DEFAULT 'SYSTEM' COMMENT '归属'")
+    public String belongTo;
 
     /**
      * 绑定初始数据
@@ -185,4 +210,27 @@ public class EntityBasicAttribute<O extends Model<?>> extends Model<O> {
         this.version = version;
     }
 
+    public String getCreateBy() {
+        return createBy;
+    }
+
+    public void setCreateBy(String createBy) {
+        this.createBy = createBy;
+    }
+
+    public String getUpdateBy() {
+        return updateBy;
+    }
+
+    public void setUpdateBy(String updateBy) {
+        this.updateBy = updateBy;
+    }
+
+    public String getBelongTo() {
+        return belongTo;
+    }
+
+    public void setBelongTo(String belongTo) {
+        this.belongTo = belongTo;
+    }
 }

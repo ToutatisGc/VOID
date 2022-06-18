@@ -8,7 +8,8 @@ import java.time.LocalDateTime
 
 /**
  * @author Toutatis_Gc
- * 元数据填充
+ * https://baomidou.com/pages/4c6bcf/
+ * MybatisPlus自动填充功能
  */
 @Component
 class MybatisPlusMetaObjectHandler : MetaObjectHandler {

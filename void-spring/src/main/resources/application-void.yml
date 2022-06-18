@@ -1,4 +1,5 @@
 void:
+  debug: true
   global-log-config:
     record-request: true
     record-request-params: true
@@ -10,4 +11,3 @@ void:
     description: VOID 文档接口
     base-package: cn.toutatis
     title: VOID文档
-  debug: true

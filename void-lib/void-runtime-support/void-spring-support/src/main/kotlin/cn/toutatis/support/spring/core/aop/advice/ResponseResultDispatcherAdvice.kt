@@ -1,9 +1,9 @@
 package cn.toutatis.support.spring.core.aop.advice
 
-import cn.toutatis.data.branch.result.DetailedResult
-import cn.toutatis.data.branch.result.SimpleResult
+import cn.toutatis.data.common.result.branch.DetailedResult
+import cn.toutatis.data.common.result.branch.SimpleResult
 import cn.toutatis.data.common.result.ProxyResult
-import cn.toutatis.data.implement.Result
+import cn.toutatis.data.common.result.Result
 import org.springframework.core.MethodParameter
 import org.springframework.http.MediaType
 import org.springframework.http.converter.HttpMessageConverter

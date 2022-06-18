@@ -1,6 +1,6 @@
 package cn.toutatis.support.spring.enhance.controller;
 
-import cn.toutatis.data.implement.Result;
+import cn.toutatis.data.common.result.Result;
 import cn.toutatis.support.spring.config.orm.mybatisplus.support.PagingQuery;
 import com.alibaba.fastjson.JSONObject;
 
