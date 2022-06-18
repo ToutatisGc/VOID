@@ -1,8 +1,8 @@
-package cn.toutatis.spring.core;
+package cn.toutatis.spring.core.security;
 
 import cn.toutatis.core.root.security.handler.LogOutHandler;
 
-import cn.toutatis.spring.core.handler.SecurityHandler;
+import cn.toutatis.spring.core.security.handler.VoidSecurityHandler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -34,7 +34,7 @@ public class Security extends WebSecurityConfigurerAdapter {
 //    SecurityAuthenticationService authenticationService;
 
     @Autowired
-    SecurityHandler securityHandler;
+    VoidSecurityHandler securityHandler;
 
     @Autowired
     LogOutHandler logOutHandler;

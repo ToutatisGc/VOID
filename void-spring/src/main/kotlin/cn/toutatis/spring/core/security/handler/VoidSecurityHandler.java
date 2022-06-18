@@ -1,12 +1,8 @@
-package cn.toutatis.spring.core.handler;
+package cn.toutatis.spring.core.security.handler;
 
-import com.alibaba.fastjson.JSON;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.AccessDeniedException;
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
@@ -17,17 +13,14 @@ import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author Toutatis_Gc
  *
  */
 @Component
-public class SecurityHandler implements AuthenticationSuccessHandler,
+public class VoidSecurityHandler implements AuthenticationSuccessHandler,
                                         AuthenticationFailureHandler,
           /*各种回调类*/                 AuthenticationEntryPoint,
                                         AccessDeniedHandler {
