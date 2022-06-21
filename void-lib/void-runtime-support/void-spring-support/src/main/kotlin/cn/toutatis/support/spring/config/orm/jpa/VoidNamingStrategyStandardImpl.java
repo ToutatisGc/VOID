@@ -17,9 +17,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 /**
- * Standard implementation of the PhysicalNamingStrategy contract.
- *
- * @author Steve Ebersole
+ * 带表前缀的命名策略
+ * @author Toutatis_Gc
  */
 @Component
 public class VoidNamingStrategyStandardImpl implements PhysicalNamingStrategy, Serializable {
