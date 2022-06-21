@@ -8,7 +8,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * 继承抽象服务
  * @param <T> 实体类
  */
-public interface VService<T> extends IService<T> {
+public interface VoidMybatisService<T> extends IService<T> {
 
     /**
      * @param pagingQuery 分页对象

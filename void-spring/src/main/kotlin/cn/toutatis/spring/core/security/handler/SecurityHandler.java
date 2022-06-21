@@ -20,7 +20,7 @@ import java.io.IOException;
  *
  */
 @Component
-public class VoidSecurityHandler implements AuthenticationSuccessHandler,
+public class SecurityHandler implements AuthenticationSuccessHandler,
                                         AuthenticationFailureHandler,
           /*各种回调类*/                 AuthenticationEntryPoint,
                                         AccessDeniedHandler {

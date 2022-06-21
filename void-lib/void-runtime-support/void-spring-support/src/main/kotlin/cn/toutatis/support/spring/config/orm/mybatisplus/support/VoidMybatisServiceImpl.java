@@ -12,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  * @param <M> 继承MybatisPlus的实体类
  * @param <T> 实体类
  */
-public class VServiceImpl<M extends BaseMapper<T>, T> extends ServiceImpl<M, T> implements VService<T> {
+public class VoidMybatisServiceImpl<M extends BaseMapper<T>, T> extends ServiceImpl<M, T> implements VoidMybatisService<T> {
 
     public CommonWrapper commonWrapper = CommonWrapper.getInstance();
 
