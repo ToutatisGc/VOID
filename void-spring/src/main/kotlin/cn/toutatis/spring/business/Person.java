@@ -6,8 +6,10 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.EqualsAndHashCode;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -23,6 +25,8 @@ import javax.persistence.Table;
 public class Person extends EntityBasicAttribute<Person> {
 
     @Id @TableId
+    @GeneratedValue(generator="UUID")
+    @GenericGenerator(name="UUID",strategy="UUID")
     private String id;
 
     @ApiModelProperty("姓名")
