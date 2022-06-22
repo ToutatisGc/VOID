@@ -80,14 +80,14 @@ class ClassScanner : ResourceLoaderAware {
     }
 
     @Throws(IOException::class)
-    private fun matches(metadataReader: MetadataReader?): Boolean {
+    private fun matches(metadataReader: MetadataReader): Boolean {
         for (tf in excludeFilters) {
-            if (tf.match(metadataReader!!, metadataReaderFactory)) {
+            if (tf.match(metadataReader, metadataReaderFactory)) {
                 return false
             }
         }
         for (tf in includeFilters) {
-            if (tf.match(metadataReader!!, metadataReaderFactory)) {
+            if (tf.match(metadataReader, metadataReaderFactory)) {
                 return true
             }
         }
@@ -99,11 +99,11 @@ class ClassScanner : ResourceLoaderAware {
     companion object {
 
         /*TODO ISSUE扫描多个包，着急用，不解决，下面的scan需要扫描到具体的包名*/
-        private fun scan(basePackages: Array<String>, vararg annotations: Class<out Annotation>?): Set<Class<*>> {
+        private fun scan(basePackages: Array<String>, vararg annotations: Class<out Annotation>): Set<Class<*>> {
             val scanner = ClassScanner()
             if (ArrayUtils.isNotEmpty(annotations)) {
                 for (annotation in annotations) {
-                    scanner.addIncludeFilter(AnnotationTypeFilter(annotation!!))
+                    scanner.addIncludeFilter(AnnotationTypeFilter(annotation))
                 }
             }
             val classes: MutableSet<Class<*>> = HashSet()
@@ -111,7 +111,7 @@ class ClassScanner : ResourceLoaderAware {
             return classes
         }
 
-        fun scan(basePackages: String, vararg annotations: Class<out Annotation>?): Set<Class<*>> {
+        fun scan(basePackages: String, vararg annotations: Class<out Annotation>): Set<Class<*>> {
             return ClassScanner.scan(StringUtils.tokenizeToStringArray(basePackages, ",; "),*annotations)
         }
 

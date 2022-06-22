@@ -4,8 +4,15 @@ import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.core.GrantedAuthority
 import com.baomidou.mybatisplus.annotation.TableField
 
-class BasicAuthDetails : UserDetails {
+/**
+ * @author Toutatis_Gc
+ * SpringBoot Security基础用户属性,需要继续向下派生子类
+ */
+abstract class BasicAuthDetails : UserDetails {
 
+    /**
+     * 用户权限列表
+     */
     private var authorities: Collection<GrantedAuthority>? = null
 
     @TableField(exist = false)
