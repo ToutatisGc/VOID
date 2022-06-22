@@ -58,6 +58,15 @@ object Time {
      */
     fun regexTime(format: String, time: Long): String = SimpleDateFormat(format).format(time)
 
+
+    /**
+     * @param str 字符串转Date
+     *
+     */
+    fun parseData(str :String) : Date{
+        return simpleDateFormat.parse(str)
+    }
+
     /**
      * ISSUE 暂留
      * @param pattern 格式化
@@ -65,4 +74,5 @@ object Time {
      * @return 忘了当时的调用逻辑了
      */
     fun isSameDay(pattern: String, time: Long): Boolean = regexTime(pattern, Date()) == regexTime(pattern, time)
+
 }

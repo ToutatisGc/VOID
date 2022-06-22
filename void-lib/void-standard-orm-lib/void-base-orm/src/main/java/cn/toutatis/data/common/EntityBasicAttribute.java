@@ -11,14 +11,27 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.annotations.ApiModelProperty;
 
 import javax.persistence.Column;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.MappedSuperclass;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-
+AuthType
 /**
  * @author Toutatis_Gc
+ * 每个实体类都要继承该类，该类包含了一些公共的属性并且
  * 每张建立表必须字段,除中间表可缺省，其余表不得缺省
+ * 注解解释
+ * MappedSuperclass hibernate的注解，用于指定继承的父类，并且该类会被映射到数据库表中
+ *
+ * TableField 和 Column 可以同时使用，
+ *      TableField 是指定MybatisPlus数据库表的字段名，
+ *      Column 是hibernate指定数据库表的字段类型
+ * ApiModelProperty 是swagger的注解，用于描述实体类的属性
+ * JsonIgnore 是jackson的注解，用于描述实体类的属性不被序列化
+ * Version 是mybatisPlus的注解，用于描述实体类的版本号
+ * TableLogic 是mybatisPlus的注解，用于描述实体类的逻辑删除字段
  */
 @MappedSuperclass
 public class EntityBasicAttribute<O extends Model<?>> extends Model<O> {
@@ -85,6 +98,7 @@ public class EntityBasicAttribute<O extends Model<?>> extends Model<O> {
     /**
      * 数据状态
      */
+    @Enumerated(EnumType.ORDINAL)
     @TableField(value = "`status`",fill = FieldFill.INSERT)
     @ApiModelProperty(value="数据状态标志", required=true)
     @Column(nullable = false,columnDefinition = "TINYINT COMMENT '数据状态'")
@@ -95,6 +109,7 @@ public class EntityBasicAttribute<O extends Model<?>> extends Model<O> {
      */
     @JsonIgnore
     @TableLogic
+    @Enumerated(EnumType.ORDINAL)
     @TableField(value = "logicDeleted",fill = FieldFill.INSERT)
     @ApiModelProperty(value="逻辑删除标志", required=true)
     @Column(nullable = false,columnDefinition = "TINYINT DEFAULT 0 COMMENT '0正常:1删除'")
