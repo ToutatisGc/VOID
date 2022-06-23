@@ -62,6 +62,20 @@ class VoidSecurityAuthenticationService : UserDetailsService {
             }catch(e:Exception){
                 throw UsernameNotFoundException("认证信息格式错误")
             }
+            if (identityObj != null && identityObj.isNotEmpty()){
+                val authTypeStr = identityObj.getString("authType")
+                if (authTypeStr != null){
+                    val authType = AuthType.valueOf(authTypeStr)
+                    when(authType){
+                        AuthType.ACCOUNT_CHECK ->{
+
+                        }
+                        else ->{
+
+                        }
+                    }
+                }
+            }
         }else{
             val illegalOperation = ResultCode.ILLEGAL_OPERATION
             val errorInfo = JSONObject()
