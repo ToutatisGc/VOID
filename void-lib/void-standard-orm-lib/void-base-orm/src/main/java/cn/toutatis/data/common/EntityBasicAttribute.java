@@ -17,7 +17,6 @@ import javax.persistence.MappedSuperclass;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-AuthType
 /**
  * @author Toutatis_Gc
  * 每个实体类都要继承该类，该类包含了一些公共的属性并且
