@@ -1,5 +1,6 @@
 package cn.toutatis.toolkit.json
 
+import cn.toutatis.xvoid.toolkit.json.JsonToolkit
 import com.alibaba.fastjson.JSONObject
 import org.junit.Assert
 import org.junit.Test
@@ -19,7 +20,7 @@ class JSONTest {
         val jsonObject2 = JSONObject()
         jsonObject2.put("name","abc")
         System.err.println(jsonObject2.hashCode())
-        Assert.assertEquals(16,JsonToolkit.DEFAULT_MAX_RECORD)
+        Assert.assertEquals(16, JsonToolkit.DEFAULT_MAX_RECORD)
     }
 
     @Test

@@ -12,5 +12,6 @@ interface ValidationMessage {
         const val CONNECT_EXPIRED = "认证已过期"
         const val WRONG_ISSUER = "签发人错误"
         const val DEV_MODE_LOGIN = "仅开发模式使用"
+        const val AUTH_EXCEPTION_LOGIN = "认证异常"
     }
 }
