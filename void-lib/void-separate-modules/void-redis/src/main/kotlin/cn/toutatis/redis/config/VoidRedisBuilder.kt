@@ -3,9 +3,9 @@ package cn.toutatis.redis.config
 import cn.toutatis.redis.client.VoidRedisClient
 import cn.toutatis.redis.client.inherit.jedis.VoidJedisClient
 import cn.toutatis.redis.client.inherit.jedis.VoidJedisPoolClient
-import cn.toutatis.toolkit.file.FileToolkit
-import cn.toutatis.toolkit.json.getItBoolean
-import cn.toutatis.toolkit.json.getItInteger
+import cn.toutatis.xvoid.toolkit.file.FileToolkit
+import cn.toutatis.xvoid.toolkit.json.getItBoolean
+import cn.toutatis.xvoid.toolkit.json.getItInteger
 import com.alibaba.fastjson.JSONObject
 import org.slf4j.LoggerFactory
 import redis.clients.jedis.*

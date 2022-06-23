@@ -1,6 +1,6 @@
 package cn.toutatis.data.common.result;
 
-import cn.toutatis.toolkit.log.LoggerToolkit;
+import cn.toutatis.xvoid.toolkit.log.LoggerToolkit;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
