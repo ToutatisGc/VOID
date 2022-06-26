@@ -15,7 +15,7 @@ class CacheTest {
     @Test
     fun cacheTest() : Unit {
 
-        VoidEhCacheManager().init(fileToolkit.getRuntimePath(javaClass),"VOID-TEST-PERSISTENCE")
+        VoidEhCacheManager().init(fileToolkit.getRuntimePath(javaClass),"VOID-TEST-PERSISTENCE",null)
     }
 
 }
