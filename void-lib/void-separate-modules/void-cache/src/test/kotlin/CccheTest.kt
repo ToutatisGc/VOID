@@ -1,5 +1,6 @@
 
-import cn.toutatis.xvoid.cache.core.VoidEhCacheManager
+import cn.toutatis.xvoid.cache.core.ehcache.VoidEhCacheManager
+import cn.toutatis.xvoid.toolkit.file.FileToolkit
 import org.junit.jupiter.api.Test
 
 /**
@@ -9,9 +10,12 @@ import org.junit.jupiter.api.Test
  */
 class CacheTest {
 
+    private val fileToolkit = FileToolkit.INSTANCE
+
     @Test
     fun cacheTest() : Unit {
-        VoidEhCacheManager().cla()
+
+        VoidEhCacheManager().init(fileToolkit.getRuntimePath(javaClass),"VOID-TEST-PERSISTENCE")
     }
 
 }
