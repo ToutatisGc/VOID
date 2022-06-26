@@ -2,7 +2,7 @@
 <configuration scan="true" scanPeriod="60 seconds" debug="false">
 
 <!--    模块名-->
-    <property name="MODULE_NAME" value="VOID-CRYSTAL"/>
+    <property name="MODULE_NAME" value="VOID-SPRING"/>
 <!--    日志路径-->
     <property name="MODULE_LOG_PATH" value="VOID_LOG"/>
 <!--    日志记录包-->
