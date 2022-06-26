@@ -47,6 +47,15 @@ enum class FileToolkit {
     }
 
     /**
+     * Gets the run path of the javaClass.
+     */
+    fun getRuntimePath(clazz: Class<*>): String {
+        val codeSource = clazz.protectionDomain.codeSource
+        val runPath = File(codeSource.location.toURI().path)
+        return runPath.path
+    }
+
+    /**
      * Get the resource files in the JAR package.
      */
     fun getJarResource(filename:String): URL? {

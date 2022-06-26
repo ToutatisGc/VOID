@@ -2,9 +2,9 @@ package cn.toutatis.spring.core.security
 
 import cn.toutatis.data.common.result.ResultCode
 import cn.toutatis.spring.core.security.ValidationMessage.Companion.VALIDATION_SESSION_KEY
-import cn.toutatis.xvoid.support.spring.config.VoidConfiguration
 import cn.toutatis.xvoid.http.RequestToolkit
 import cn.toutatis.xvoid.objects.ObjectToolkit
+import cn.toutatis.xvoid.support.spring.config.VoidConfiguration
 import com.alibaba.fastjson.JSON
 import com.alibaba.fastjson.JSONObject
 import org.springframework.beans.factory.annotation.Autowired
@@ -55,36 +55,44 @@ class VoidSecurityAuthenticationService : UserDetailsService {
      * 出现异常情况只会在开发调试阶段，所以线上服务出现违规操作说明有渗透情况，需要及时排查
      */
     override fun loadUserByUsername(identity: String): UserDetails {
-        val identityObj:JSONObject
+        var identityObj = JSONObject(0)
         if (objectToolkit.strNotBlank(identity)){
             try {
                 identityObj = JSON.parseObject(identity)
             }catch(e:Exception){
-                throw UsernameNotFoundException("认证信息格式错误")
+                e.printStackTrace()
+                this.throwIllegalOperation("认证信息格式错误")
             }
-            if (identityObj != null && identityObj.isNotEmpty()){
+            if (identityObj.isNotEmpty()){
                 val authTypeStr = identityObj.getString("authType")
                 if (authTypeStr != null){
-                    val authType = AuthType.valueOf(authTypeStr)
-                    when(authType){
+                    when(AuthType.valueOf(authTypeStr)){
                         AuthType.ACCOUNT_CHECK ->{
 
                         }
                         else ->{
-
+                            this.throwIllegalOperation("未开放的认证方式")
                         }
                     }
                 }
             }
         }else{
-            val illegalOperation = ResultCode.ILLEGAL_OPERATION
-            val errorInfo = JSONObject()
-            errorInfo["name"] = illegalOperation.name
-            errorInfo["message"] = "认证信息为空"
-            errorInfo["ip"] = RequestToolkit.getIpAddr(request)
-            throwInfo(MessageType.JSON,errorInfo)
+            this.throwIllegalOperation("认证信息为空")
         }
         TODO("Not yet implemented")
+    }
+
+    /**
+     * @param msg 抛出违规操作异常,并且在handler中记录
+     * @see cn.toutatis.spring.core.security.handler.SecurityHandler 认证失败处理器
+     */
+    private fun throwIllegalOperation(msg:String){
+        val illegalOperation = ResultCode.ILLEGAL_OPERATION
+        val errorInfo = JSONObject()
+        errorInfo["name"] = illegalOperation.name
+        errorInfo["message"] = msg
+        errorInfo["ip"] = RequestToolkit.getIpAddr(request)
+        throwInfo(MessageType.JSON,errorInfo)
     }
 
     /**

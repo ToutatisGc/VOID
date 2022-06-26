@@ -32,18 +32,6 @@
         </dependencies>
     </dependencyManagement>
 
-    <modules>
-        <!--通用工具包-->
-        <module>void-toolkit</module>
-        <!--redis模块-->
-        <module>void-redis</module>
-        <!--websocket模块-->
-        <module>void-websocket</module>
-        <module>void-common</module>
-        <!--公共部分-->
-
-    </modules>
-
     <dependencies>
         <dependency>
             <groupId>cn.toutatis</groupId>
@@ -52,6 +40,21 @@
             <type>pom</type>
         </dependency>
     </dependencies>
+
+    <modules>
+        <!--通用工具包-->
+        <module>void-toolkit</module>
+        <!--redis模块-->
+        <module>void-redis</module>
+        <!--缓存-->
+        <module>void-cache</module>
+        <!--websocket模块-->
+        <module>void-websocket</module>
+        <!--公共部分-->
+        <module>void-common</module>
+
+    </modules>
+
 
 
 </project>
