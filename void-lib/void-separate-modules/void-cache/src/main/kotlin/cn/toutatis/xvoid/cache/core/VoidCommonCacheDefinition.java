@@ -1,5 +1,7 @@
 package cn.toutatis.xvoid.cache.core;
 
+import java.io.Serializable;
+
 /**
  * @author Toutatis_Gc
  * @date 2022/6/26 18:51
@@ -14,7 +16,7 @@ public enum VoidCommonCacheDefinition {
      */
     VOID_SECURITY_CODE_CACHE(
             "VOID_SECURITY_CODE_CACHE",String.class,String.class,
-            DataExpiredPolicy.EXPIRED_CREATED,300L,false),
+            DataExpiredPolicy.EXPIRED_CREATED,300L,true),
 
     ;
 
@@ -24,14 +26,14 @@ public enum VoidCommonCacheDefinition {
     private final String cacheName;
 
     /**
-     * 值序列化类型
+     * 健序列化类型
      */
-    private final Class<?> keyClazz;
+    private final Class<? extends Serializable> keyClazz;
 
     /**
      * 值序列化类型
      */
-    private final Class<?> valueClazz;
+    private final Class<? extends Serializable> valueClazz;
 
     /**
      * 缓存过期策略
@@ -50,7 +52,8 @@ public enum VoidCommonCacheDefinition {
 
 
     VoidCommonCacheDefinition(String cacheName,
-                              Class<?> keyClazz, Class<?> valueClazz,
+                              Class<? extends Serializable> keyClazz,
+                              Class<? extends Serializable> valueClazz,
                               DataExpiredPolicy expiredPolicy, Long expiredTime,
                               Boolean persistent) {
         this.cacheName = cacheName;
@@ -69,11 +72,11 @@ public enum VoidCommonCacheDefinition {
         return cacheName;
     }
 
-    public Class<?> getKeyClazz() {
+    public Class<? extends Serializable> getKeyClazz() {
         return keyClazz;
     }
 
-    public Class<?> getValueClazz() {
+    public Class<? extends Serializable> getValueClazz() {
         return valueClazz;
     }
 

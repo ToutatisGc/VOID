@@ -1,15 +1,20 @@
 package cn.toutatis.xvoid.cache.core.ehcache
 
+import cn.toutatis.xvoid.cache.core.VCache
 import cn.toutatis.xvoid.cache.core.VoidCommonCacheDefinition
+import org.ehcache.Cache
 import org.ehcache.CacheManager
 import org.ehcache.PersistentCacheManager
 import org.ehcache.config.builders.CacheConfigurationBuilder
 import org.ehcache.config.builders.CacheManagerBuilder
 import org.ehcache.config.builders.ExpiryPolicyBuilder
 import org.ehcache.config.builders.ResourcePoolsBuilder
+import org.ehcache.config.units.EntryUnit
+import org.ehcache.config.units.MemoryUnit
 import org.ehcache.expiry.ExpiryPolicy
 import org.ehcache.xml.XmlConfiguration
 import java.io.File
+import java.io.Serializable
 import java.net.URL
 import java.time.Duration
 
@@ -23,7 +28,7 @@ import java.time.Duration
  * 常被查询、数据量中等的数据存放在堆外缓存，几个G就好了，不用担心服务器的重启，有持久化机制；
  * 不常用、大量的数据、但又不想占用数据库IO的数据，放在Disk缓存，容量自便；
  */
-class VoidEhCacheManager {
+class VoidEhCacheManager : VCache{
 
     /**
      * 持久化缓存管理器
@@ -39,19 +44,25 @@ class VoidEhCacheManager {
 
         val cacheManagerBuilder: CacheManagerBuilder<CacheManager> = CacheManagerBuilder.newCacheManagerBuilder()
 
+        val persistentCacheManagerBuilder: CacheManagerBuilder<PersistentCacheManager> = cacheManagerBuilder.with(
+            CacheManagerBuilder.persistence(File(path, fileName))
+        )
+
         if (configFile != null) {
-            defaultCacheManager = CacheManagerBuilder.newCacheManager(XmlConfiguration(configFile))
+            /*TODO 看怎么可以把xml配置合并成一个cacheManager*/
+            defaultCacheManager =  CacheManagerBuilder.newCacheManager(XmlConfiguration(configFile))
             defaultCacheManager.init()
         }else{
             defaultCacheManager = cacheManagerBuilder.build(true)
         }
 
-        persistentCacheManager = cacheManagerBuilder.with(
-            CacheManagerBuilder.persistence(File(path, fileName))
-        ).build(true)
+        persistentCacheManager = persistentCacheManagerBuilder.build(true)
 
         for (cacheDefinition in VoidCommonCacheDefinition.values()) {
-            val resourcePoolsBuilder = ResourcePoolsBuilder.heap(10)
+            val resourcePoolsBuilder = ResourcePoolsBuilder.newResourcePoolsBuilder()
+                .heap(10, EntryUnit.ENTRIES)
+                .offheap(1, MemoryUnit.MB)
+                .disk(20, MemoryUnit.MB, true)
             val cacheConfiguration = CacheConfigurationBuilder.newCacheConfigurationBuilder(
                 cacheDefinition.keyClazz, cacheDefinition.valueClazz, resourcePoolsBuilder
             )
@@ -73,7 +84,7 @@ class VoidEhCacheManager {
                     throw IllegalArgumentException("不支持的缓存过期策略")
                 }
             }
-            cacheConfiguration.build()
+
             when(cacheDefinition.persistent){
                 true -> persistentCacheManager.createCache(cacheDefinition.cacheName,cacheConfiguration)
                 false -> defaultCacheManager.createCache(cacheDefinition.cacheName,cacheConfiguration)
@@ -81,6 +92,46 @@ class VoidEhCacheManager {
 
         }
 
+
+
+    }
+
+
+    fun <T> getValue(definition: VoidCommonCacheDefinition, key: String): T? {
+        val cache = getCache(definition)
+        return cache.get(key) as T?
+    }
+
+    fun getCache(definition:VoidCommonCacheDefinition): Cache<in Serializable, in Serializable> {
+        val keyClazz = definition.keyClazz as Class< Serializable>
+        val valueClazz = definition.valueClazz as Class<Serializable>
+        val cache : Cache<in Serializable,in Serializable> = when(definition.persistent){
+            true -> persistentCacheManager.getCache(definition.cacheName,keyClazz, valueClazz)
+            false -> defaultCacheManager.getCache(definition.cacheName,keyClazz, valueClazz)
+        }
+        return cache
+    }
+
+    fun putValue(definition: VoidCommonCacheDefinition,key: Serializable,value:Serializable) {
+        val cache = getCache(definition)
+        cache.put(key,value)
+//        persistentCacheManager.
+//        persistentCacheManager.close()
+    }
+
+
+
+    override fun getValue() {
+        TODO("Not yet implemented")
+    }
+
+    fun close(): Unit {
+        persistentCacheManager.close()
+        defaultCacheManager.close()
+    }
+
+    fun getCache(definition: String) : Cache<String,String> {
+       return persistentCacheManager.getCache(definition,String::class.java,String::class.java)
     }
 
 }

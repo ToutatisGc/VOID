@@ -38,6 +38,11 @@ public class VoidCacheConfiguration {
     public static class CacheFileConfig {
 
         /**
+         * 是否使用配置文件
+         */
+        private Boolean useFileConfig = false;
+
+        /**
          * 配置文件存储路径
          */
         private String configPath;
@@ -61,6 +66,14 @@ public class VoidCacheConfiguration {
 
         public void setConfigName(String configName) {
             this.configName = configName;
+        }
+
+        public Boolean getUseFileConfig() {
+            return useFileConfig;
+        }
+
+        public void setUseFileConfig(Boolean useFileConfig) {
+            this.useFileConfig = useFileConfig;
         }
     }
 

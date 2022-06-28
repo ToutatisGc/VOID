@@ -8,7 +8,7 @@ import java.io.Serializable
  * @date 2022/6/26 14:34
  *
  */
-class VoidCache {
+class VoidCache constructor(private val cache: VCache) {
 
     private val cacheMap = HashMap<String,Cache<String,Serializable>>()
 
