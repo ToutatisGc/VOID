@@ -40,7 +40,10 @@ class VoidEhCacheManager : VCache{
      */
     private lateinit var defaultCacheManager : CacheManager
 
-    fun init(path:String, fileName:String,configFile: URL?): Unit {
+    /**
+     * 缓存初始化
+     */
+    fun init(path:String, fileName:String,configFile: URL?) {
 
         val cacheManagerBuilder: CacheManagerBuilder<CacheManager> = CacheManagerBuilder.newCacheManagerBuilder()
 
@@ -89,23 +92,27 @@ class VoidEhCacheManager : VCache{
                 true -> persistentCacheManager.createCache(cacheDefinition.cacheName,cacheConfiguration)
                 false -> defaultCacheManager.createCache(cacheDefinition.cacheName,cacheConfiguration)
             }
-
         }
-
-
 
     }
 
 
+    /**
+     * 获取缓存
+     * @param definition 缓存定义
+     * @return 缓存值
+     * 当缓存不存在时，会报错缓存不存在
+     */
     fun <T> getValue(definition: VoidCommonCacheDefinition, key: String): T? {
         val cache = getCache(definition)
         return cache.get(key) as T?
     }
 
     fun getCache(definition:VoidCommonCacheDefinition): Cache<in Serializable, in Serializable> {
-        val keyClazz = definition.keyClazz as Class< Serializable>
+        /*ISSUE kotlin的型变和Java的对应不上?*/
+        val keyClazz = definition.keyClazz as Class<Serializable>
         val valueClazz = definition.valueClazz as Class<Serializable>
-        val cache : Cache<in Serializable,in Serializable> = when(definition.persistent){
+        val cache : Cache<Serializable,Serializable> = when(definition.persistent){
             true -> persistentCacheManager.getCache(definition.cacheName,keyClazz, valueClazz)
             false -> defaultCacheManager.getCache(definition.cacheName,keyClazz, valueClazz)
         }
@@ -115,8 +122,6 @@ class VoidEhCacheManager : VCache{
     fun putValue(definition: VoidCommonCacheDefinition,key: Serializable,value:Serializable) {
         val cache = getCache(definition)
         cache.put(key,value)
-//        persistentCacheManager.
-//        persistentCacheManager.close()
     }
 
 

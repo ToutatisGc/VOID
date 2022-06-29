@@ -1,6 +1,7 @@
 import cn.toutatis.xvoid.cache.core.VoidCommonCacheDefinition
 import cn.toutatis.xvoid.cache.core.ehcache.VoidEhCacheManager
 import cn.toutatis.xvoid.toolkit.file.FileToolkit
+import kotlinx.coroutines.*
 import org.ehcache.Cache
 import org.ehcache.PersistentCacheManager
 import org.ehcache.config.builders.CacheConfigurationBuilder
@@ -61,4 +62,16 @@ class CacheTest {
         persistentCacheManager.close()
     }
 
+
+    @Test
+    fun conTest() =  runBlocking { // this: CoroutineScope
+        repeat(100_000) { // 启动大量的协程
+            launch {
+                delay(5000L)
+                print(".")
+            }
+        }
+    }
+
+    
 }

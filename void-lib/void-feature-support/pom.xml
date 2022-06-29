@@ -12,13 +12,22 @@
     <packaging>pom</packaging>
 
     <properties>
+        <void.version>0.0.0-ALPHA</void.version>
+
         <java8.version>1.8</java8.version>
         <java11.version>11</java11.version>
-        <void.version>0.0.0-ALPHA</void.version>
+
+        <kotlin.version>1.6.10</kotlin.version>
+        <kotlinx.version>1.6.3</kotlinx.version>
+        <kotlin.code.style>official</kotlin.code.style>
+
         <springboot.version>2.6.6</springboot.version>
         <spring.version>5.3.12</spring.version>
         <spring.security.version>5.5.1</spring.security.version>
         <spring-cloud.version>Hoxton.SR2</spring-cloud.version>
+
+        <vertx.version>4.2.4</vertx.version>
+
         <guava.version>31.0.1-jre</guava.version>
         <druid.version>1.2.8</druid.version>
         <commons-lang.version>3.12.0</commons-lang.version>
@@ -27,12 +36,7 @@
         <fastjson.version>1.2.80</fastjson.version>
         <jackson.version>2.13.1</jackson.version>
         <servlet.version>4.0.1</servlet.version>
-        <maven.compiler.source>8</maven.compiler.source>
-        <maven.compiler.target>8</maven.compiler.target>
-        <vertx.version>4.2.4</vertx.version>
-        <kotlin.version>1.6.10</kotlin.version>
         <junit-jupiter.version>5.7.0</junit-jupiter.version>
-        <kotlin.code.style>official</kotlin.code.style>
         <junit.version>4.12</junit.version>
         <logback.version>1.2.11</logback.version>
         <aspectj.version>1.9.9.1</aspectj.version>
@@ -43,6 +47,8 @@
         <p6spy.version>3.9.1</p6spy.version>
         <hibernate.version>5.6.7.Final</hibernate.version>
 
+        <maven.compiler.source>8</maven.compiler.source>
+        <maven.compiler.target>8</maven.compiler.target>
         <p.source.version>2.2.1</p.source.version>
         <p.javadoc.version>2.9.1</p.javadoc.version>
         <p.nexus-staging.version>1.6.7</p.nexus-staging.version>
@@ -124,6 +130,13 @@
                 <groupId>org.jetbrains.kotlin</groupId>
                 <artifactId>kotlin-stdlib-jdk8</artifactId>
                 <version>${kotlin.version}</version>
+                <optional>true</optional>
+            </dependency>
+            <dependency>
+                <groupId>org.jetbrains.kotlinx</groupId>
+                <artifactId>kotlinx-coroutines-core</artifactId>
+                <version>${kotlinx.version}</version>
+                <type>pom</type>
                 <optional>true</optional>
             </dependency>
             <!--Kotlin测试库-->
