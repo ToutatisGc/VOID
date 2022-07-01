@@ -31,6 +31,8 @@
         <!--独立模块-->
         <module>void-separate-modules</module>
 
+        <module>void-aspect</module>
+
         <!--工具类-->
 <!--        <module>void-common</module>-->
     </modules>

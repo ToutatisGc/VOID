@@ -1,6 +1,6 @@
 package cn.toutatis.redis
 
-import cn.toutatis.redis.client.inherit.jedis.AOPKotlinTest
+import cn.toutatis.redis.aop.AOPTest
 import cn.toutatis.redis.config.ClientType
 import cn.toutatis.redis.config.RedisConnectInfo
 import cn.toutatis.redis.config.VoidRedisBuilder
@@ -35,10 +35,10 @@ class ClientTest {
         logger.info("Jedis连接池测试连接成功")
     }
 
-//    @Test
+    @Test
     fun aopTest(){
-//        VoidAOPTest().test1()
-        AOPKotlinTest().test()
+        AOPTest().test()
+
     }
 
 

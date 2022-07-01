@@ -1,18 +1,14 @@
-package cn.toutatis.redis.aop;
+package cn.toutatis.xvoid.aop;
 
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 
-/**
- * @author Toutatis_Gc
- * @date 2022/5/21 21:06
- */
 @Aspect
-public class VoidRedisTransactionAspect {
+public class AspectP {
 
-    @Pointcut("execution(* cn.toutatis.redis.aop.AOPTest.test(..))")
+    @Pointcut("execution(public * *(..))")
     public void pointCut(){}
 
     @Around("pointCut()")
@@ -25,6 +21,5 @@ public class VoidRedisTransactionAspect {
         }
         return null;
     }
-
 
 }
