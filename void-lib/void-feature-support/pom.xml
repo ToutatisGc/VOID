@@ -238,6 +238,12 @@
                 <version>${ehcache.version}</version>
                 <optional>true</optional>
             </dependency>
+            <dependency>
+                <groupId>org.ehcache</groupId>
+                <artifactId>ehcache-transactions</artifactId>
+                <version>${ehcache.version}</version>
+                <optional>true</optional>
+            </dependency>
             <!--Cache JSR-107支持-->
             <dependency>
                 <groupId>javax.cache</groupId>

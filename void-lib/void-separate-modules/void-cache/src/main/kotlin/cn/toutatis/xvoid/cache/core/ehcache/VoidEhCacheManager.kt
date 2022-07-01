@@ -45,6 +45,8 @@ class VoidEhCacheManager : VCache{
      */
     fun init(path:String, fileName:String,configFile: URL?) {
 
+//        val transactionManager = TransactionManagerServices.getTransactionManager()
+
         val cacheManagerBuilder: CacheManagerBuilder<CacheManager> = CacheManagerBuilder.newCacheManagerBuilder()
 
         val persistentCacheManagerBuilder: CacheManagerBuilder<PersistentCacheManager> = cacheManagerBuilder.with(
@@ -63,7 +65,7 @@ class VoidEhCacheManager : VCache{
 
         for (cacheDefinition in VoidCommonCacheDefinition.values()) {
             val resourcePoolsBuilder = ResourcePoolsBuilder.newResourcePoolsBuilder()
-                .heap(10, EntryUnit.ENTRIES)
+                .heap(200, EntryUnit.ENTRIES)
                 .offheap(1, MemoryUnit.MB)
                 .disk(20, MemoryUnit.MB, true)
             val cacheConfiguration = CacheConfigurationBuilder.newCacheConfigurationBuilder(
