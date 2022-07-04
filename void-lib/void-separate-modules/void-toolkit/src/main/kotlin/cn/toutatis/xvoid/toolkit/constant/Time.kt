@@ -1,4 +1,4 @@
-package cn.toutatis.xvoid.constant
+package cn.toutatis.xvoid.toolkit.constant
 
 import java.text.SimpleDateFormat
 import java.time.LocalDateTime

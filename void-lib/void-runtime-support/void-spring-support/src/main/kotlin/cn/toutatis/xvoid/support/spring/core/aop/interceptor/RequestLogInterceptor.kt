@@ -1,6 +1,6 @@
 package cn.toutatis.xvoid.support.spring.core.aop.interceptor
 
-import cn.toutatis.xvoid.constant.Time
+import cn.toutatis.xvoid.toolkit.constant.Time
 import cn.toutatis.xvoid.toolkit.log.LoggerToolkit
 import org.springframework.stereotype.Component
 import org.springframework.web.method.HandlerMethod

@@ -7,6 +7,8 @@ public class AopTest {
     }
 
     public static void main(String[] args) {
+//        AopTest aNew = AopTest::new;
+        System.err.println();
         new AopTest().test();
     }
 

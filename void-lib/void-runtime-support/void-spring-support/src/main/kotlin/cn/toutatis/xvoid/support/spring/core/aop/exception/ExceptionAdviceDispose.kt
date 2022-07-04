@@ -1,7 +1,7 @@
 package cn.toutatis.spring.core.exception
 
 import cn.toutatis.common.standard.StandardFields
-import cn.toutatis.xvoid.constant.Time
+import cn.toutatis.xvoid.toolkit.constant.Time
 import cn.toutatis.data.common.result.ProxyResult
 import cn.toutatis.data.common.result.ResultCode
 import cn.toutatis.xvoid.support.spring.config.VoidConfiguration

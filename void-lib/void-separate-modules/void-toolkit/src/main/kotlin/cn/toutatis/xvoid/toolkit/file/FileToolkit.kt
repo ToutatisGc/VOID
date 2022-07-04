@@ -3,6 +3,7 @@ package cn.toutatis.xvoid.toolkit.file
 import org.apache.commons.io.IOUtils
 import org.slf4j.LoggerFactory
 import sun.security.util.Resources
+//import sun.security.util.Resources
 import java.io.File
 import java.io.FileNotFoundException
 import java.io.InputStream

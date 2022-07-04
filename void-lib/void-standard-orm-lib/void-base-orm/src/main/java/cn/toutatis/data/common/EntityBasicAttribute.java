@@ -1,6 +1,6 @@
 package cn.toutatis.data.common;
 
-import cn.toutatis.xvoid.constant.Time;
+import cn.toutatis.xvoid.toolkit.constant.Time;
 import cn.toutatis.data.common.result.DataStatus;
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;

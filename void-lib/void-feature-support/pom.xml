@@ -16,6 +16,7 @@
 
         <java8.version>1.8</java8.version>
         <java11.version>11</java11.version>
+        <java17.version>17</java17.version>
 
         <kotlin.version>1.6.10</kotlin.version>
         <kotlinx.version>1.6.3</kotlinx.version>

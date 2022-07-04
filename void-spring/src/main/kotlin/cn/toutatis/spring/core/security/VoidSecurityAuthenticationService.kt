@@ -2,8 +2,8 @@ package cn.toutatis.spring.core.security
 
 import cn.toutatis.data.common.result.ResultCode
 import cn.toutatis.spring.core.security.ValidationMessage.Companion.VALIDATION_SESSION_KEY
-import cn.toutatis.xvoid.http.RequestToolkit
-import cn.toutatis.xvoid.objects.ObjectToolkit
+import cn.toutatis.xvoid.toolkit.http.RequestToolkit
+import cn.toutatis.xvoid.toolkit.objects.ObjectToolkit
 import cn.toutatis.xvoid.support.spring.config.VoidConfiguration
 import com.alibaba.fastjson.JSON
 import com.alibaba.fastjson.JSONObject

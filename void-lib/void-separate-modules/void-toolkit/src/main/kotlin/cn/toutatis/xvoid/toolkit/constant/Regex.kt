@@ -1,4 +1,4 @@
-package cn.toutatis.xvoid.constant
+package cn.toutatis.xvoid.toolkit.constant
 
 /**
  * @author Toutatis_Gc
