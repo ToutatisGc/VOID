@@ -1,7 +1,9 @@
 package cn.toutatis.xvoid.cache.core.ehcache
 
+import cn.toutatis.xvoid.PkgInfo
 import cn.toutatis.xvoid.cache.core.VCache
 import cn.toutatis.xvoid.cache.core.VoidCommonCacheDefinition
+import cn.toutatis.xvoid.toolkit.log.LoggerToolkit
 import org.ehcache.Cache
 import org.ehcache.CacheManager
 import org.ehcache.PersistentCacheManager
@@ -29,6 +31,8 @@ import java.time.Duration
  * 不常用、大量的数据、但又不想占用数据库IO的数据，放在Disk缓存，容量自便；
  */
 class VoidEhCacheManager : VCache{
+
+    private val logger  = LoggerToolkit.getLogger(javaClass)
 
     /**
      * 持久化缓存管理器
@@ -67,7 +71,7 @@ class VoidEhCacheManager : VCache{
             val resourcePoolsBuilder = ResourcePoolsBuilder.newResourcePoolsBuilder()
                 .heap(200, EntryUnit.ENTRIES)
                 .offheap(1, MemoryUnit.MB)
-                .disk(20, MemoryUnit.MB, true)
+                .disk(20, MemoryUnit.MB, cacheDefinition.persistent)
             val cacheConfiguration = CacheConfigurationBuilder.newCacheConfigurationBuilder(
                 cacheDefinition.keyClazz, cacheDefinition.valueClazz, resourcePoolsBuilder
             )
@@ -99,17 +103,6 @@ class VoidEhCacheManager : VCache{
     }
 
 
-    /**
-     * 获取缓存
-     * @param definition 缓存定义
-     * @return 缓存值
-     * 当缓存不存在时，会报错缓存不存在
-     */
-    fun <T> getValue(definition: VoidCommonCacheDefinition, key: String): T? {
-        val cache = getCache(definition)
-        return cache.get(key) as T?
-    }
-
     fun getCache(definition:VoidCommonCacheDefinition): Cache<in Serializable, in Serializable> {
         /*ISSUE kotlin的型变和Java的对应不上?*/
         val keyClazz = definition.keyClazz as Class<Serializable>
@@ -121,24 +114,51 @@ class VoidEhCacheManager : VCache{
         return cache
     }
 
-    fun putValue(definition: VoidCommonCacheDefinition,key: Serializable,value:Serializable) {
+
+
+    override fun getCache(definition: String) : Cache<Serializable,Serializable>? {
+        VoidCommonCacheDefinition.values().forEach {
+            if(it.cacheName == definition){
+                return when(it.persistent){
+                    true -> persistentCacheManager.getCache(definition,it.keyClazz as Class<Serializable>,it.valueClazz as Class<Serializable>)
+                    false -> defaultCacheManager.getCache(definition,it.keyClazz as Class<Serializable>,it.valueClazz as Class<Serializable>)
+                }
+            }
+        }
+        return null
+    }
+
+    override fun setValue(definition: String, key: Serializable, value: Serializable):Boolean {
         val cache = getCache(definition)
-        cache.put(key,value)
+        val success:Boolean = if(cache != null){
+            cache.put(key,value)
+            true
+        }else{
+            logger.error("[${PkgInfo.MODULE_NAME}]缓存不存在,缓存名称:$definition")
+            false
+        }
+        return success
+    }
+
+    override fun <T> getValue(definition: String, key: String): T? {
+        val cache = getCache(definition)
+        return cache?.get(key) as T?
     }
 
 
-
-    override fun getValue() {
-        TODO("Not yet implemented")
+    /**
+     * 获取缓存
+     * @param definition 缓存定义
+     * @return 缓存值
+     * 当缓存不存在时，会报错缓存不存在
+     */
+    fun <T> getValue(definition: VoidCommonCacheDefinition, key: String): T? {
+        return getValue(definition.cacheName,key)
     }
 
-    fun close(): Unit {
+    override fun close(): Unit {
         persistentCacheManager.close()
         defaultCacheManager.close()
-    }
-
-    fun getCache(definition: String) : Cache<String,String> {
-       return persistentCacheManager.getCache(definition,String::class.java,String::class.java)
     }
 
 }

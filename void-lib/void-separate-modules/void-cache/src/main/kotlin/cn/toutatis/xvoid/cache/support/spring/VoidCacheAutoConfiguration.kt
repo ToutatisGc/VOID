@@ -1,10 +1,11 @@
 package cn.toutatis.xvoid.cache.support.spring
 
+import cn.toutatis.xvoid.PkgInfo
 import cn.toutatis.xvoid.cache.core.VCache
 import cn.toutatis.xvoid.cache.core.VoidCache
 import cn.toutatis.xvoid.cache.core.ehcache.VoidEhCacheManager
 import cn.toutatis.xvoid.cache.support.CacheType
-import cn.toutatis.xvoid.objects.ObjectToolkit
+import cn.toutatis.xvoid.toolkit.objects.ObjectToolkit
 import cn.toutatis.xvoid.toolkit.file.FileToolkit
 import cn.toutatis.xvoid.toolkit.log.LoggerToolkit
 import org.springframework.beans.factory.annotation.Autowired
@@ -36,7 +37,7 @@ class VoidCacheAutoConfiguration {
     @Bean
     fun getVoidCache(): VoidCache {
         val vCache: VCache
-        logger.info("[VOID-CACHE] 初始化缓存管理器,缓存类型:${voidCacheConfiguration.cacheType}")
+        logger.info("[${PkgInfo.MODULE_NAME}] 初始化缓存管理器,缓存类型:${voidCacheConfiguration.cacheType}")
         when (voidCacheConfiguration.cacheType) {
             CacheType.LOCAL -> {
                 val path: String = voidCacheConfiguration.persistentPath ?: fileToolkit.getRuntimePath(javaClass)
@@ -50,12 +51,12 @@ class VoidCacheAutoConfiguration {
                     configPath = fileToolkit.getRuntimePath(javaClass)
                 }
                 val file = File(configPath + "/" + cacheFileConfig.configName)
-                logger.info("[VOID-CACHE] 初始化缓存管理器,缓存配置文件路径:${file.path}")
+                logger.info("[${PkgInfo.MODULE_NAME}] 初始化缓存管理器,缓存配置文件路径:${file.path}")
                 if (file.exists()) {
                     voidEhCacheManager.init(path, voidCacheConfiguration.persistentName, file.toURI().toURL())
                 } else {
                     if(cacheFileConfig.useFileConfig){
-                        logger.error("[VOID-CACHE] 初始化缓存管理器,缓存配置文件不存在,请检查配置文件路径:${file.path}")
+                        logger.error("[${PkgInfo.MODULE_NAME}] 初始化缓存管理器,缓存配置文件不存在,请检查配置文件路径:${file.path}")
                         throw FileNotFoundException("${file.path} not found")
                     }
                     voidEhCacheManager.init(path, voidCacheConfiguration.persistentName,null)
@@ -69,7 +70,7 @@ class VoidCacheAutoConfiguration {
                 throw IllegalArgumentException("cacheType must be LOCAL or REDIS")
             }
         }
-        logger.info("[VOID-CACHE] 初始化缓存管理器完成")
+        logger.info("[${PkgInfo.MODULE_NAME}] 初始化缓存管理器完成")
         return VoidCache(vCache)
     }
 

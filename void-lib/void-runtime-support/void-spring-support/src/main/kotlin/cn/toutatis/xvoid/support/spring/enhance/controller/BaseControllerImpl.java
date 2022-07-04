@@ -6,7 +6,7 @@ import cn.toutatis.data.common.EntityBasicAttribute;
 import cn.toutatis.data.common.result.ProxyResult;
 import cn.toutatis.data.common.result.ResultCode;
 import cn.toutatis.data.common.result.Result;
-import cn.toutatis.xvoid.objects.ObjectToolkit;
+import cn.toutatis.xvoid.toolkit.objects.ObjectToolkit;
 import cn.toutatis.xvoid.support.spring.config.VoidConfiguration;
 import cn.toutatis.xvoid.support.spring.config.orm.mybatisplus.support.CommonWrapper;
 import cn.toutatis.xvoid.support.spring.config.orm.mybatisplus.support.PagingQuery;
