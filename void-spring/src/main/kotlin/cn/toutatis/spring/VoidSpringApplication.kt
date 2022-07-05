@@ -1,7 +1,6 @@
 package cn.toutatis.spring
 
 import cn.toutatis.xvoid.support.spring.annotations.VoidApplication
-import org.mybatis.spring.annotation.MapperScan
 import org.springframework.boot.autoconfigure.domain.EntityScan
 import org.springframework.boot.runApplication
 import org.springframework.context.ConfigurableApplicationContext
