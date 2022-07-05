@@ -6,7 +6,7 @@
 <!--    日志路径-->
     <property name="MODULE_LOG_PATH" value="VOID_LOG"/>
 <!--    日志记录包-->
-    <logger name="cn.toutatis.crystal.api" level="info"/>
+    <logger name="cn.toutatis" level="info"/>
 
     <property name="LOG_PATH" value="${LOG_PATH:-.}"/>
     <!-- 彩色日志 -->
