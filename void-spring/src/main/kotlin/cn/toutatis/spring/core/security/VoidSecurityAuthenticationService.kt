@@ -2,9 +2,11 @@ package cn.toutatis.spring.core.security
 
 import cn.toutatis.data.common.result.ResultCode
 import cn.toutatis.spring.core.security.ValidationMessage.Companion.VALIDATION_SESSION_KEY
-import cn.toutatis.xvoid.toolkit.http.RequestToolkit
-import cn.toutatis.xvoid.toolkit.objects.ObjectToolkit
+import cn.toutatis.spring.core.security.entity.mapper.SystemUserLoginMapper
 import cn.toutatis.xvoid.support.spring.config.VoidConfiguration
+import cn.toutatis.xvoid.toolkit.http.RequestToolkit
+import cn.toutatis.xvoid.toolkit.log.LoggerToolkit
+import cn.toutatis.xvoid.toolkit.objects.ObjectToolkit
 import com.alibaba.fastjson.JSON
 import com.alibaba.fastjson.JSONObject
 import org.springframework.beans.factory.annotation.Autowired
@@ -25,9 +27,20 @@ import javax.servlet.http.HttpSession
 @Service
 class VoidSecurityAuthenticationService : UserDetailsService {
 
+    companion object{
+
+        /**
+         * 验证码session key
+         */
+        const val VALIDATION_SECURITY_CODE_SESSION_KEY = "VOID_VALIDATION_SECURITY_CODE_SESSION_KEY"
+    }
+
     private val objectToolkit  =  ObjectToolkit.getInstance()
 
-//    private val logger = LoggerToolkit.getLogger(javaClass)
+    private val logger = LoggerToolkit.getLogger(javaClass)
+
+    @Autowired
+    private lateinit var systemUserLoginMapper: SystemUserLoginMapper
 
     @Autowired
     private lateinit var session: HttpSession
@@ -39,6 +52,9 @@ class VoidSecurityAuthenticationService : UserDetailsService {
     private lateinit var voidConfiguration: VoidConfiguration
 
 
+    /**
+     * handler中获取的消息类型
+     */
     enum class MessageType {
         /**
          * 字符串和JSON类型
@@ -54,45 +70,90 @@ class VoidSecurityAuthenticationService : UserDetailsService {
      * 因为按照正常调用的话只会在浏览器或内部系统中进行认证，并且格式是固定的，
      * 出现异常情况只会在开发调试阶段，所以线上服务出现违规操作说明有渗透情况，需要及时排查
      */
+    @Throws(UsernameNotFoundException::class)
     override fun loadUserByUsername(identity: String): UserDetails {
-        var identityObj = JSONObject(0)
         if (objectToolkit.strNotBlank(identity)){
+            val identityObj: JSONObject
             try {
                 identityObj = JSON.parseObject(identity)
             }catch(e:Exception){
                 e.printStackTrace()
-                this.throwIllegalOperation("认证信息格式错误")
+                throw this.throwIllegalOperation(ValidationMessage.WRONG_IDENTIFY_FORMAT)
             }
-            if (identityObj.isNotEmpty()){
+            if (identityObj != null && identityObj.isNotEmpty()){
                 val authTypeStr = identityObj.getString("authType")
                 if (authTypeStr != null){
                     when(AuthType.valueOf(authTypeStr)){
                         AuthType.ACCOUNT_CHECK ->{
-
+                            return findAccountCheckUser(identityObj)
                         }
                         else ->{
-                            this.throwIllegalOperation("未开放的认证方式")
+                            throw this.throwIllegalOperation("未开放的认证方式")
                         }
                     }
+                }else{
+                    throw this.throwIllegalOperation("认证类型为空")
                 }
+            }else{
+                throw this.throwIllegalOperation("认证信息空载荷")
             }
         }else{
-            this.throwIllegalOperation("认证信息为空")
+            throw this.throwIllegalOperation("认证信息为空")
         }
-        TODO("Not yet implemented")
+    }
+
+    /**
+     * 账号密码认证
+     * @param identityObj 认证信息
+     *        account 账号
+     *        password 密码
+     *        securityCode 验证码
+     * @return 认证结果
+     */
+    @Throws(UsernameNotFoundException::class)
+    private fun findAccountCheckUser(identityObj:JSONObject):UserDetails{
+        val check = checkCodeEquals(identityObj.getString("securityCode"))
+        if (check) {
+            val username = identityObj.getString("username")
+
+//            return UserDetails
+            TODO("账号密码认证")
+        }else{
+            throw this.throwInfo(ValidationMessage.CHECK_CODE_ERROR)
+        }
+    }
+
+    /**
+     * @param securityCode 验证码
+     * 验证码校验
+     * 验证码存储在session中
+     * @return 是否通过验证
+     */
+    private fun checkCodeEquals(securityCode: String?): Boolean {
+        if (objectToolkit.strIsBlank(securityCode)) {
+            return false
+        }
+        val session: HttpSession = request.session
+        val sessionSecurityCode = session.getAttribute(VALIDATION_SECURITY_CODE_SESSION_KEY) as String?
+        session.removeAttribute(VALIDATION_SECURITY_CODE_SESSION_KEY)
+        if (objectToolkit.strIsBlank(sessionSecurityCode)) {
+            return false
+        }
+        return sessionSecurityCode.equals(securityCode, ignoreCase = true)
     }
 
     /**
      * @param msg 抛出违规操作异常,并且在handler中记录
      * @see cn.toutatis.spring.core.security.handler.SecurityHandler 认证失败处理器
      */
-    private fun throwIllegalOperation(msg:String){
+    @Throws(UsernameNotFoundException::class)
+    private fun throwIllegalOperation(msg:String):UsernameNotFoundException{
         val illegalOperation = ResultCode.ILLEGAL_OPERATION
         val errorInfo = JSONObject()
         errorInfo["name"] = illegalOperation.name
         errorInfo["message"] = msg
         errorInfo["ip"] = RequestToolkit.getIpAddr(request)
-        throwInfo(MessageType.JSON,errorInfo)
+        return throwInfo(MessageType.JSON,errorInfo)
     }
 
     /**
@@ -102,24 +163,33 @@ class VoidSecurityAuthenticationService : UserDetailsService {
      * @param o 额外携带的信息
      * @param type 消息类型，传入JSON就会转为JSON字符串
      */
-    private fun throwInfo(validationMessage: Any, o: Any?, type: MessageType) {
+    @Throws(UsernameNotFoundException::class)
+    private fun throwInfo(validationMessage: Any, o: Any?, type: MessageType) :UsernameNotFoundException{
         val message: String = when (type) {
-            MessageType.JSON -> JSON.toJSONString(validationMessage)
-            else -> validationMessage.toString()
+            MessageType.JSON -> "J+"+JSON.toJSONString(validationMessage)
+            else -> "S+$validationMessage"
         }
-        throwInfo(message, o)
+        return throwInfo(message, o)
     }
 
-    private fun throwInfo(type: MessageType,validationMessage: Any ) {
-        throwInfo(validationMessage, null,type)
+    @Throws(UsernameNotFoundException::class)
+    private fun throwInfo(validationMessage: String) :UsernameNotFoundException{
+        return throwInfo(validationMessage, null, MessageType.STRING)
     }
 
-    private fun throwInfo(type: MessageType,validationMessage: String ) {
-        throwInfo(validationMessage, null,type)
+    @Throws(UsernameNotFoundException::class)
+    private fun throwInfo(type: MessageType,validationMessage: Any ):UsernameNotFoundException {
+        return throwInfo(validationMessage, null,type)
     }
 
-    private fun throwInfo(validationMessage: String, obj: Any?) {
+    @Throws(UsernameNotFoundException::class)
+    private fun throwInfo(type: MessageType,validationMessage: String ):UsernameNotFoundException {
+       return throwInfo(validationMessage, null,type)
+    }
+
+    @Throws(UsernameNotFoundException::class)
+    private fun throwInfo(validationMessage: String, obj: Any?):UsernameNotFoundException {
         if (obj != null) session.setAttribute(VALIDATION_SESSION_KEY, obj)
-        throw UsernameNotFoundException(validationMessage)
+        return UsernameNotFoundException(validationMessage)
     }
 }

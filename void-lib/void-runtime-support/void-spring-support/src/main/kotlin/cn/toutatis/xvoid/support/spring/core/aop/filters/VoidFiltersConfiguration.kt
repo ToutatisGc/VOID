@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Configuration
  * ServletFilters Servlet过滤器注册
  */
 @Configuration
-class VoidFiltersConfiguration {
+open class VoidFiltersConfiguration {
 
     @Autowired
     private lateinit var requestRidInjectFilter:RequestRidInjectFilter

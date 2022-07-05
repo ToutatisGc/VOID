@@ -3,6 +3,7 @@ package cn.toutatis.xvoid.support.spring.annotations
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.boot.web.servlet.ServletComponentScan
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories
 import org.springframework.scheduling.annotation.EnableAsync
 import org.springframework.scheduling.annotation.EnableScheduling
 import org.springframework.transaction.annotation.EnableTransactionManagement
@@ -20,4 +21,5 @@ import org.springframework.transaction.annotation.EnableTransactionManagement
 @EnableTransactionManagement
 @MustBeDocumented
 @Target(AnnotationTarget.CLASS)
+@EnableJpaRepositories
 annotation class VoidApplication

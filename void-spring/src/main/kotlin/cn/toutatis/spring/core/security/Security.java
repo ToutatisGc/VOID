@@ -30,14 +30,14 @@ public class Security extends WebSecurityConfigurerAdapter {
     @Value("${void.dev-mode:true}")
     private boolean devMode;
 
-//    @Autowired
-//    SecurityAuthenticationService authenticationService;
+    @Autowired
+    private VoidSecurityAuthenticationService authenticationService;
 
     @Autowired
-    SecurityHandler securityHandler;
+    private SecurityHandler securityHandler;
 
     @Autowired
-    LogOutHandler logOutHandler;
+    private LogOutHandler logOutHandler;
 
 //    @Override
 //    public void init(WebSecurity web) throws Exception {
@@ -86,7 +86,7 @@ public class Security extends WebSecurityConfigurerAdapter {
     public DaoAuthenticationProvider daoAuthenticationProvider(){
         DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
         daoAuthenticationProvider.setHideUserNotFoundExceptions(false);
-//        daoAuthenticationProvider.setUserDetailsService(authenticationService);
+        daoAuthenticationProvider.setUserDetailsService(authenticationService);
         daoAuthenticationProvider.setPasswordEncoder(new BCryptPasswordEncoder());
         return daoAuthenticationProvider;
     }

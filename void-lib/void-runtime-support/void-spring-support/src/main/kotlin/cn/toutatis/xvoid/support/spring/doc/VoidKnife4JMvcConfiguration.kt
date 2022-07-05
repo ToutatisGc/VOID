@@ -10,7 +10,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer
  * 配置knife4j资源路径
  */
 @Configuration
-class VoidKnife4JMvcConfiguration : WebMvcConfigurer {
+open class VoidKnife4JMvcConfiguration : WebMvcConfigurer {
 
     override fun addResourceHandlers(registry: ResourceHandlerRegistry) {
 

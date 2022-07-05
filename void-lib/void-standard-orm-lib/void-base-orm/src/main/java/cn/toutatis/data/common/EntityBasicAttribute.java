@@ -9,11 +9,9 @@ import com.baomidou.mybatisplus.annotation.Version;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
 
-import javax.persistence.Column;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.MappedSuperclass;
+import javax.persistence.*;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -32,6 +30,7 @@ import java.time.format.DateTimeFormatter;
  * Version 是mybatisPlus的注解，用于描述实体类的版本号
  * TableLogic 是mybatisPlus的注解，用于描述实体类的逻辑删除字段
  */
+@Data
 @MappedSuperclass
 public class EntityBasicAttribute<O extends Model<?>> extends Model<O> {
 
@@ -184,10 +183,12 @@ public class EntityBasicAttribute<O extends Model<?>> extends Model<O> {
         this.logicDeleted = logicDeleted;
     }
 
+    @Transient
     public String getCreateTimeStr() {
         return createTime == null ? "" : createTime.format(DateTimeFormatter.ofPattern(Time.DATE_FORMAT_REGEX));
     }
 
+    @Transient
     public long getCreateTimeMs() {
         return createTime == null ? 0L :  Timestamp.valueOf(createTime).getTime()/1000;
     }
@@ -200,10 +201,12 @@ public class EntityBasicAttribute<O extends Model<?>> extends Model<O> {
         this.lastUpdateTime = lastUpdateTime == null ? LocalDateTime.now() : lastUpdateTime;
     }
 
+    @Transient
     public String getLastUpdateTimeStr() {
         return lastUpdateTime == null ? "" : lastUpdateTime.format(DateTimeFormatter.ofPattern(Time.DATE_FORMAT_REGEX));
     }
 
+    @Transient
     public long getLastUpdateTimeMs() {
         return lastUpdateTime == null ? 0L : Timestamp.valueOf(lastUpdateTime).getTime()/1000;
     }

@@ -11,7 +11,7 @@ import java.util.concurrent.ThreadPoolExecutor
  * 异步线程池配置
  */
 @Configuration
-class VoidAsyncPoolConfig {
+open class VoidAsyncPoolConfig {
 
     @Bean(StandardComponentPool.VOID_ASYNC_THREAD_POOL)
     fun voidAsyncThreadPoolTaskExecutor(): ThreadPoolTaskExecutor {

@@ -31,7 +31,11 @@ public class ObjectToolkit {
 
     public boolean strIsBlank(Object o){
         String s = String.valueOf(o);
-        return s == null || "".equals(s) || "null".equals(s) || "undefined".equals(s);
+        if (s == null){
+            return true;
+        }
+        String trim = s.trim().toLowerCase();
+        return trim.length() == 0 || "null".equals(trim) || "undefined".equals(trim);
     }
 
     /**

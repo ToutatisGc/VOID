@@ -6,16 +6,18 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.ToString;
+import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 /**
  * @author Toutatis_Gc
  */
+@Data
+@ToString(callSuper = true)
 @Entity
 @ApiModel(
         value = "SystemUserLogin 系统用户类",
@@ -32,6 +34,8 @@ public class SystemUserLogin extends EntityBasicAttribute<SystemUserLogin> {
             value="主键ID",required = true,
             example = "1111222233334444")
     @Column(name="id",columnDefinition = "VARCHAR(32) COMMENT '主键ID'")
+    @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
+    @GeneratedValue(generator = "UUID")
     private String id;
 
     @TableField("`account`")
