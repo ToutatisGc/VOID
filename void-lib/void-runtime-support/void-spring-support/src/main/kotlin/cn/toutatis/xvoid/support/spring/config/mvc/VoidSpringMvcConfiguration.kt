@@ -7,7 +7,7 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer
 
 @Configuration
-class VoidSpringMvcConfiguration : WebMvcConfigurer {
+open class VoidSpringMvcConfiguration : WebMvcConfigurer {
 
     @Autowired
     private lateinit var requestLogInterceptor: RequestLogInterceptor

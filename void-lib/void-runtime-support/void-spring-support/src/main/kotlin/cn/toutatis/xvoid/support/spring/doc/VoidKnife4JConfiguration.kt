@@ -29,7 +29,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2
 @Configuration
 @EnableSwagger2
 @EnableWebMvc
-class VoidKnife4JConfiguration {
+open class VoidKnife4JConfiguration {
 
     @Autowired
     private lateinit var voidConfiguration : VoidConfiguration

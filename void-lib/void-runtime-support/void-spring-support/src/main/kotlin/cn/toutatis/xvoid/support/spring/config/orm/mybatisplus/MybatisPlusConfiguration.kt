@@ -13,7 +13,7 @@ import org.springframework.context.annotation.Configuration
  * MybatisPlus插件配置
  */
 @Configuration
-class MybatisPlusConfiguration {
+open class MybatisPlusConfiguration {
 
     @Bean
     fun mybatisPlusInterceptor(): MybatisPlusInterceptor {

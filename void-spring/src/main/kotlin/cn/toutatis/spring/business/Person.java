@@ -24,9 +24,9 @@ import javax.persistence.Table;
 @org.hibernate.annotations.Table(appliesTo = "vb_person", comment = "测试类")
 public class Person extends EntityBasicAttribute<Person> {
 
-    @Id @TableId
-    @GeneratedValue(generator="UUID")
-    @GenericGenerator(name="UUID",strategy="UUID")
+    @TableId
+//    @GeneratedValue(generator="UUID")
+//    @GenericGenerator(name="UUID",strategy="UUID")
     private String id;
 
     @ApiModelProperty("姓名")
@@ -35,6 +35,9 @@ public class Person extends EntityBasicAttribute<Person> {
     private String age;
 
 
+    @Id
+//    @GeneratedValue(generator = "uuid")
+//    @GenericGenerator(name = "uuid", strategy = "uuid")
     public String getId() {
         return id;
     }

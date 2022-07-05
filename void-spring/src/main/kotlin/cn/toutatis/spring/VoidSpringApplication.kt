@@ -11,7 +11,7 @@ import org.springframework.context.annotation.ComponentScan
 //@EnableAdminServer
 @ComponentScan(basePackages = ["cn.toutatis"])
 @EntityScan(basePackages=["cn.toutatis"])
-@MapperScan(basePackages = ["cn.toutatis"])
+//@MapperScan(basePackages = ["cn.toutatis"])
 class VoidSpringApplication
 
 fun main(args: Array<String>) {
