@@ -6,9 +6,6 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.AntPathMatcher;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.regex.Pattern;
 
 /**
  * @author Toutatis_Gc
@@ -19,6 +16,8 @@ public class AntUrlService {
     private final AntPathMatcher antPathMatcher = new AntPathMatcher();
 
     public boolean hasPermission(HttpServletRequest request, Authentication authentication) {
+
+        System.err.println(request);
         System.err.println("AntUrlService.hasPermission");
         return true;
 //        String remoteCall = request.getHeader(VoidHeader.VOID_REMOTE_CALL);

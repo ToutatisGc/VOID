@@ -1,10 +1,8 @@
 package cn.toutatis.spring.core.security;
 
 import cn.toutatis.core.root.security.handler.LogOutHandler;
-
 import cn.toutatis.spring.core.security.handler.SecurityHandler;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -26,9 +24,6 @@ import java.util.*;
  */
 @Configuration
 public class Security extends WebSecurityConfigurerAdapter {
-
-    @Value("${void.dev-mode:true}")
-    private boolean devMode;
 
     @Autowired
     private VoidSecurityAuthenticationService voidAuthenticationService;

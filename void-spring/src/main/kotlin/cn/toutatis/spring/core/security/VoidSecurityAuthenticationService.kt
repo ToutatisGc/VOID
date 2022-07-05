@@ -14,7 +14,6 @@ import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.core.userdetails.UsernameNotFoundException
 import org.springframework.stereotype.Service
 import org.springframework.web.context.request.RequestContextHolder
-import org.springframework.web.context.request.ServletRequestAttributes
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpSession
 
@@ -76,7 +75,8 @@ class VoidSecurityAuthenticationService : UserDetailsService {
      */
     @Throws(UsernameNotFoundException::class)
     override fun loadUserByUsername(identity: String): UserDetails {
-        RequestContextHolder.currentRequestAttributes()
+        val currentRequestAttributes = RequestContextHolder.currentRequestAttributes()
+        System.err.println(request.getParameter("identity"))
         if (objectToolkit.strNotBlank(identity)){
             val identityObj: JSONObject
             try {

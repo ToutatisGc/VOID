@@ -29,7 +29,7 @@ class TestController {
     private lateinit var personMapper : PersonMapper
 
     @ApiOperation(value="获取用户信息",notes="注意问题点")
-    @RequestMapping("/a",method=[RequestMethod.GET])
+    @RequestMapping("/a",method=[RequestMethod.POST])
     fun test1():String{
         return "annotation"
     }
