@@ -31,7 +31,7 @@ public class Security extends WebSecurityConfigurerAdapter {
     private boolean devMode;
 
     @Autowired
-    private VoidSecurityAuthenticationService authenticationService;
+    private VoidSecurityAuthenticationService voidAuthenticationService;
 
     @Autowired
     private SecurityHandler securityHandler;
@@ -50,13 +50,11 @@ public class Security extends WebSecurityConfigurerAdapter {
 //        禁止csrfFilter
         http.csrf().disable();
 //
-//        http.headers()
-//                .addHeaderWriter(VoidResponse.Companion::cors)
-//                .frameOptions().disable();
+        http.headers()
+                .addHeaderWriter(VoidResponse.Companion::cors)
+                .frameOptions().disable();
 //        禁用弹框
         http.httpBasic().disable();
-
-//        http.headers().a
 //        表单认证
         http.formLogin()
                 .loginPage("/auth/authPage")
@@ -86,7 +84,7 @@ public class Security extends WebSecurityConfigurerAdapter {
     public DaoAuthenticationProvider daoAuthenticationProvider(){
         DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
         daoAuthenticationProvider.setHideUserNotFoundExceptions(false);
-        daoAuthenticationProvider.setUserDetailsService(authenticationService);
+        daoAuthenticationProvider.setUserDetailsService(voidAuthenticationService);
         daoAuthenticationProvider.setPasswordEncoder(new BCryptPasswordEncoder());
         return daoAuthenticationProvider;
     }

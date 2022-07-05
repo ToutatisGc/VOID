@@ -4,7 +4,6 @@ import cn.toutatis.data.common.result.ResultCode
 import cn.toutatis.spring.core.security.ValidationMessage.Companion.VALIDATION_SESSION_KEY
 import cn.toutatis.spring.core.security.entity.mapper.SystemUserLoginMapper
 import cn.toutatis.xvoid.support.spring.config.VoidConfiguration
-import cn.toutatis.xvoid.toolkit.http.RequestToolkit
 import cn.toutatis.xvoid.toolkit.log.LoggerToolkit
 import cn.toutatis.xvoid.toolkit.objects.ObjectToolkit
 import com.alibaba.fastjson.JSON
@@ -14,6 +13,8 @@ import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.core.userdetails.UsernameNotFoundException
 import org.springframework.stereotype.Service
+import org.springframework.web.context.request.RequestContextHolder
+import org.springframework.web.context.request.ServletRequestAttributes
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpSession
 
@@ -43,10 +44,13 @@ class VoidSecurityAuthenticationService : UserDetailsService {
     private lateinit var systemUserLoginMapper: SystemUserLoginMapper
 
     @Autowired
-    private lateinit var session: HttpSession
+   lateinit var session: HttpSession
 
     @Autowired
-    private lateinit var request: HttpServletRequest
+    lateinit var request: HttpServletRequest
+
+//    @Autowired
+//    lateinit var listener:RequestContextListener
 
     @Autowired
     private lateinit var voidConfiguration: VoidConfiguration
@@ -72,6 +76,7 @@ class VoidSecurityAuthenticationService : UserDetailsService {
      */
     @Throws(UsernameNotFoundException::class)
     override fun loadUserByUsername(identity: String): UserDetails {
+        RequestContextHolder.currentRequestAttributes()
         if (objectToolkit.strNotBlank(identity)){
             val identityObj: JSONObject
             try {
@@ -152,7 +157,7 @@ class VoidSecurityAuthenticationService : UserDetailsService {
         val errorInfo = JSONObject()
         errorInfo["name"] = illegalOperation.name
         errorInfo["message"] = msg
-        errorInfo["ip"] = RequestToolkit.getIpAddr(request)
+//        errorInfo["ip"] = RequestToolkit.getIpAddr(request)
         return throwInfo(MessageType.JSON,errorInfo)
     }
 
