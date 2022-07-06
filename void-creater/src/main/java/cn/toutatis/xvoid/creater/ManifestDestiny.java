@@ -4,6 +4,10 @@ import cn.toutatis.xvoid.creater.exception.ConfigFileMissingException;
 import cn.toutatis.xvoid.creater.tools.ConfigurationTable;
 import cn.toutatis.xvoid.creater.tools.ManifestToolkit;
 
+import com.formdev.flatlaf.FlatDarculaLaf;
+import com.formdev.flatlaf.FlatDarkLaf;
+import com.formdev.flatlaf.FlatIntelliJLaf;
+import com.formdev.flatlaf.FlatLightLaf;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.log4j.Logger;
@@ -73,9 +77,10 @@ public class ManifestDestiny {
         try {
             //使用主题和初始化样式
             //二次开发或缺少依赖请把目录下的beautyeye_lnf.jar添加到lib
-            BeautyEyeLNFHelper.debug = false;
-            BeautyEyeLNFHelper.frameBorderStyle = BeautyEyeLNFHelper.FrameBorderStyle.osLookAndFeelDecorated;
-            BeautyEyeLNFHelper.launchBeautyEyeLNF();
+//            BeautyEyeLNFHelper.debug = false;
+//            BeautyEyeLNFHelper.frameBorderStyle = BeautyEyeLNFHelper.FrameBorderStyle.osLookAndFeelDecorated;
+//            BeautyEyeLNFHelper.launchBeautyEyeLNF();
+            FlatIntelliJLaf.setup();
             configProperties.load(new FileInputStream(CONFIG_FILE));
             logger.info("[初始化]加载config.properties配置文件完成.");
         } catch (IOException e) {
@@ -179,7 +184,7 @@ public class ManifestDestiny {
     }
 
 
-    private static final Integer FIELD_WEIGHT = 40;
+    private static final Integer FIELD_WEIGHT = 30;
     /**
      * @param parentComponent 父组件，暂时无用
      */
@@ -250,6 +255,7 @@ public class ManifestDestiny {
                 PreparedStatement preparedStatement = connect.prepareStatement("select table_name from information_schema.tables where table_schema= ?");
                 preparedStatement.setString(1,connect.getCatalog());
                 ResultSet resultSet = preparedStatement.executeQuery();
+                tableList.clear();
                 while (resultSet.next()){
                     tableList.add(resultSet.getString("table_name"));
                 }

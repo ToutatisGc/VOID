@@ -9,8 +9,8 @@ import java.io.Serializable;
 public enum ConfigurationTable implements Serializable {
 
 //    项目信息
-    APP_NAME("昭昭天命"),
-    COPY_RIGHT_INFO("开发基于Apache 2.0 协议,版权归属Toutatis_Gc@联系邮箱:toutatis_gc@foxmail.com"),
+    APP_NAME("XVOID开发工具包"),
+    COPY_RIGHT_INFO("开发基于Apache 2.0 协议"),
     COPY_RIGHT_INFO_DETAILS(COPY_RIGHT_INFO.info),
     AUTHOR_NAME("Toutatis_Gc"),
 //    框体颜色
