@@ -2,7 +2,7 @@ package cn.toutatis.spring.core.security
 
 import cn.toutatis.data.common.result.ResultCode
 import cn.toutatis.spring.core.security.ValidationMessage.Companion.VALIDATION_SESSION_KEY
-import cn.toutatis.spring.core.security.entity.mapper.SystemUserLoginMapper
+import cn.toutatis.spring.core.security.access.persistence.SystemUserLoginMapper
 import cn.toutatis.xvoid.support.spring.config.VoidConfiguration
 import cn.toutatis.xvoid.toolkit.log.LoggerToolkit
 import cn.toutatis.xvoid.toolkit.objects.ObjectToolkit
@@ -13,7 +13,6 @@ import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.core.userdetails.UsernameNotFoundException
 import org.springframework.stereotype.Service
-import org.springframework.web.context.request.RequestContextHolder
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpSession
 
@@ -75,7 +74,6 @@ class VoidSecurityAuthenticationService : UserDetailsService {
      */
     @Throws(UsernameNotFoundException::class)
     override fun loadUserByUsername(identity: String): UserDetails {
-        val currentRequestAttributes = RequestContextHolder.currentRequestAttributes()
         System.err.println(request.getParameter("identity"))
         if (objectToolkit.strNotBlank(identity)){
             val identityObj: JSONObject

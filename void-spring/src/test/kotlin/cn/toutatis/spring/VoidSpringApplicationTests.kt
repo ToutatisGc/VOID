@@ -1,8 +1,8 @@
 package cn.toutatis.spring
 
 import cn.toutatis.data.common.security.SystemUserLogin
-import cn.toutatis.spring.core.security.entity.mapper.SystemUserLoginMapper
-import cn.toutatis.spring.core.security.entity.mapper.SystemUserLoginRepository
+import cn.toutatis.spring.core.security.access.persistence.SystemUserLoginMapper
+import cn.toutatis.spring.core.security.access.persistence.SystemUserLoginRepository
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest

@@ -1,4 +1,4 @@
-package cn.toutatis.spring.core.security.entity.mapper;
+package cn.toutatis.spring.core.security.access.persistence;
 
 import cn.toutatis.data.common.security.SystemUserLogin;
 import org.springframework.data.jpa.repository.JpaRepository;
