@@ -28,6 +28,12 @@
     <dependencies>
 
         <dependency>
+            <groupId>com.formdev</groupId>
+            <artifactId>flatlaf</artifactId>
+            <version>2.3</version>
+        </dependency>
+
+        <dependency>
             <groupId>cn.toutatis</groupId>
             <artifactId>beauty</artifactId>
             <version>1.0.0</version>
