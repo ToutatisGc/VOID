@@ -205,8 +205,28 @@ class ManifestDestinyComponent {
     static JPanel mainContentPanel(){
         JPanel content = new JPanel(new GridLayout(1,1));
         JTabbedPane jTabbedPane = new JTabbedPane();
-        JPanel tableStructPanel = new JPanel();
-        tableStructPanel.add(new JTextArea("表结构"));
+        JPanel tableStructPanel = new JPanel(new GridLayout(5, 1));
+        tableStructPanel.setBackground(Color.blue);
+        JPanel selectTableRow = new JPanel(new GridLayout(1, 3));
+        selectTableRow.setBackground(Color.RED);
+        selectTableRow.add(new JLabel(ConfigurationTable.GENERATE_PACKAGE_INFO_LABEL.getInfo(), SwingConstants.CENTER));
+        JTextField packagePath = new JTextField(60);
+        packagePath.setText(manifestToolkit.getConfigProperties("packagePath"));
+        Document packagePathDocument = packagePath.getDocument();
+        packagePathDocument.addDocumentListener(new DocumentListener() {
+            private void updatePackagePath(){manifestToolkit.saveConfiguration("packagePath",packagePath.getText());}
+            @Override public void insertUpdate(DocumentEvent e) {
+                updatePackagePath();
+            }
+            @Override public void removeUpdate(DocumentEvent e) {
+                updatePackagePath();
+            }
+            @Override public void changedUpdate(DocumentEvent e) {
+                updatePackagePath();
+            }
+        });
+        selectTableRow.add(packagePath);
+        tableStructPanel.add(selectTableRow);
         JPanel tableStructPanel2 = new JPanel();
         jTabbedPane.addTab("表结构生成",tableStructPanel);
         jTabbedPane.addTab("项目结构生成",tableStructPanel2);
