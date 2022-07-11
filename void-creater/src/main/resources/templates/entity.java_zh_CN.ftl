@@ -14,6 +14,10 @@ import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
     </#if>
 </#if>
+<#if usePersistence>
+import javax.persistence.*;
+</#if>
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.IdType;
 import java.text.SimpleDateFormat;
@@ -44,9 +48,18 @@ import java.text.SimpleDateFormat;
 <#if table.convert>
 @TableName("${table.name}")
 </#if>
-<#if swagger2>
-@ApiModel(value="${entity}对象", description="${table.comment!}")
+<#if usePersistence>
+@Entity
+@Table(name="${entity}")
+@org.hibernate.annotations.Table(appliesTo = "${entity}", comment = "${table.comment:''}")
 </#if>
+<#if swagger2>
+    @ApiModel(
+    value="${entity}对象",
+    description="${table.comment!}"<#if superEntityClass??>,
+    parent = ${superEntityClass}</#if>)
+</#if>
+@JsonIgnoreProperties({"reservedString","reservedInt"})
 <#if superEntityClass??>
 public class ${entity} extends ${superEntityClass}<#if activeRecord><${entity}></#if> {
 <#elseif activeRecord>
