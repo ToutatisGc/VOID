@@ -6,26 +6,24 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.ToString;
+import org.hibernate.Hibernate;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 /**
  * @author Toutatis_Gc
  */
-@Data
 @ToString(callSuper = true)
-@Entity
 @ApiModel(
         value = "SystemUserLogin 系统用户类",
         description = "系统用户实体类",
         parent = EntityBasicAttribute.class)
-@EqualsAndHashCode(callSuper = true)
 @JsonIgnoreProperties({"reservedString","reservedInt"})
 @Table(name="vb_system_user_login")
+@Entity
 @org.hibernate.annotations.Table(appliesTo = "vb_system_user_login", comment = "系统用户类")
 public class SystemUserLogin extends EntityBasicAttribute<SystemUserLogin> {
 
@@ -79,4 +77,16 @@ public class SystemUserLogin extends EntityBasicAttribute<SystemUserLogin> {
     @Column(name="secret",columnDefinition = "VARCHAR(255) COMMENT '登录密文'")
     private String secret;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        SystemUserLogin that = (SystemUserLogin) o;
+        return id != null && Objects.equals(id, that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 }
