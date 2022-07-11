@@ -3,20 +3,16 @@ package cn.toutatis.xvoid.creater;
 
 
 import cn.toutatis.xvoid.creater.mapper.BasicMapper;
-import cn.toutatis.xvoid.creater.tools.CodeGenerator;
 import cn.toutatis.xvoid.creater.tools.ConfigurationTable;
 import cn.toutatis.xvoid.creater.tools.ManifestToolkit;
 import cn.toutatis.xvoid.creater.tools.Parameter;
 import org.apache.log4j.Logger;
 
 import javax.swing.*;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 import javax.swing.filechooser.FileSystemView;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableColumn;
-import javax.swing.text.Document;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
@@ -33,15 +29,15 @@ import java.util.*;
  */
 class ManifestDestinyComponent {
 
-    private static Logger logger = Logger.getLogger(ManifestDestinyComponent.class);
+    public static Logger logger = Logger.getLogger(ManifestDestinyComponent.class);
 
-    private static ManifestToolkit manifestToolkit = ManifestToolkit.getInstance();
+    public static ManifestToolkit manifestToolkit = ManifestToolkit.getInstance();
 
-    private static Connection connect = ManifestDestiny.connect;
+    public static Connection connect = ManifestDestiny.connect;
 
-    private static JTextArea selectedTable = new JTextArea("",3,40);
+    public static JTextArea selectedTable = new JTextArea("",3,40);
 
-    private static JList leftList = new JList<String>();
+    public static JList<String> leftList = new JList<String>();
 
     static {
         leftList.setModel(new DefaultListModel());
@@ -203,121 +199,15 @@ class ManifestDestinyComponent {
      * @return 右侧主窗口内容
      */
     static JPanel mainContentPanel(){
+        selectedTable.setWrapStyleWord(true);
+        selectedTable.setLineWrap(true);
+        selectedTable.setEditable(false);
+        selectedTable.setBackground(Color.WHITE);
         JPanel content = new JPanel(new GridLayout(1,1));
         JTabbedPane jTabbedPane = new JTabbedPane();
-        JPanel tableStructPanel = new JPanel(new GridLayout(5, 1));
-        tableStructPanel.setBackground(Color.blue);
-        JPanel selectTableRow = new JPanel(new GridLayout(1, 3));
-        selectTableRow.setBackground(Color.RED);
-        selectTableRow.add(new JLabel(ConfigurationTable.GENERATE_PACKAGE_INFO_LABEL.getInfo(), SwingConstants.CENTER));
-        JTextField packagePath = new JTextField(60);
-        packagePath.setText(manifestToolkit.getConfigProperties("packagePath"));
-        Document packagePathDocument = packagePath.getDocument();
-        packagePathDocument.addDocumentListener(new DocumentListener() {
-            private void updatePackagePath(){manifestToolkit.saveConfiguration("packagePath",packagePath.getText());}
-            @Override public void insertUpdate(DocumentEvent e) {
-                updatePackagePath();
-            }
-            @Override public void removeUpdate(DocumentEvent e) {
-                updatePackagePath();
-            }
-            @Override public void changedUpdate(DocumentEvent e) {
-                updatePackagePath();
-            }
-        });
-        selectTableRow.add(packagePath);
-        tableStructPanel.add(selectTableRow);
-        JPanel tableStructPanel2 = new JPanel();
-        jTabbedPane.addTab("表结构生成",tableStructPanel);
-        jTabbedPane.addTab("项目结构生成",tableStructPanel2);
+        JPanel rootPanel = new TableStructWidget().rootPanel;
+        jTabbedPane.addTab("表结构生成",rootPanel);
         content.add(jTabbedPane);
-//        GroupLayout groupLayout = new GroupLayout(content);
-//        // 自动创建组件之间的间隙
-//        groupLayout.setAutoCreateGaps(true);
-//        // 自动创建容器与触到容器边框的组件之间的间隙
-//        groupLayout.setAutoCreateContainerGaps(true);
-//
-//        GroupLayout.SequentialGroup tablePackageGroup = groupLayout.createSequentialGroup();
-//        tablePackageGroup.addComponent(new JLabel(ConfigurationTable.GENERATE_PACKAGE_INFO_LABEL.getInfo()));
-//        JTextField packagePath = new JTextField(60);
-//        packagePath.setText(manifestToolkit.getConfigProperties("packagePath"));
-//        Document packagePathDocument = packagePath.getDocument();
-//        packagePathDocument.addDocumentListener(new DocumentListener() {
-//            private void updatePackagePath(){manifestToolkit.saveConfiguration("packagePath",packagePath.getText());}
-//            @Override public void insertUpdate(DocumentEvent e) {
-//                updatePackagePath();
-//            }
-//            @Override public void removeUpdate(DocumentEvent e) {
-//                updatePackagePath();
-//            }
-//            @Override public void changedUpdate(DocumentEvent e) {
-//                updatePackagePath();
-//            }
-//        });
-//        tablePackageGroup.addComponent(packagePath);
-//
-//        parameterSetting(groupLayout);
-//
-//        GroupLayout.SequentialGroup cacheGroup = groupLayout.createSequentialGroup();
-//        Vector<String> classify =  new Vector<>(2);
-//        classify.add("kotlin");
-//        classify.add("java");
-//        String devLangValue = manifestToolkit.getConfigProperties("devLang");
-//        int classifyIndex = 0;
-//        for (int i = 0; i < classify.size(); i++) {
-//            if (devLangValue.equals(classify.get(i))){
-//                classifyIndex = i;
-//                break;
-//            }
-//        }
-//        JLabel devLang = new JLabel(ConfigurationTable.DEV_LANG_LABEL.getInfo());
-//        cacheGroup.addComponent(devLang);
-//        JComboBox<String> classifyBox = new JComboBox<>(classify);
-//        classifyBox.setSelectedIndex(classifyIndex);
-//        classifyBox.addItemListener(e -> {
-//            if (e.getStateChange() == ItemEvent.SELECTED){
-//                int selectedIndex = classifyBox.getSelectedIndex();
-//                String select = classify.get(selectedIndex);
-//                manifestToolkit.saveConfiguration("devLang",select);
-//            }
-//        });
-//        cacheGroup.addComponent(classifyBox);
-//        JPanel jPanel = new JPanel();
-//        jPanel.add(new JButton("生成基础框架（暂无）"));
-//        jPanel.add(new JButton("启用缓存（暂无）"));
-//        jPanel.add(new JButton("选择LOGO信息（暂无）"));
-//        cacheGroup.addComponent(jPanel);
-//        GroupLayout.ParallelGroup tableNameGroup = groupLayout.createParallelGroup();
-//        tableNameGroup.addComponent(new JLabel(ConfigurationTable.SELECTED_DATABASE_LIST_LABEL.getInfo()));
-//        selectedTable.setWrapStyleWord(true);
-//        selectedTable.setLineWrap(true);
-//        selectedTable.setEditable(false);
-//        JScrollPane jScrollPane = new JScrollPane(selectedTable);
-//        tableNameGroup.addComponent(jScrollPane);
-//        JButton tableNameDetails = new JButton("生成表结构");
-//        tableNameDetails.setBackground(new Color(0, 175, 255));
-//        tableNameDetails.setOpaque(true);
-////        tableNameDetails.setBorderPainted(false);
-//        tableNameDetails.setForeground(new Color(0, 175, 255));
-//        tableNameDetails.addActionListener(actionEvent -> {
-//            String selectedTableText = selectedTable.getText();
-//            String[] tableNameArrays = selectedTableText.replace(" ", "").split(",");
-//            List<String> tableNames = Arrays.asList(tableNameArrays);
-//            if (!"".equals(selectedTableText) && tableNames.size()>0){
-////                SqlSession sqlExecutorWithConnection = manifestToolkit.getSQLExecutorWithConnection();
-////                ConstructionBuilder constructionBuilder = new ConstructionBuilder(sqlExecutorWithConnection);
-////                tableNames.forEach(constructionBuilder::getTableField);
-//                //TODO 生成
-//                CodeGenerator.tableGenerate(tableNameArrays);
-//            }else {
-//                JOptionPane.showConfirmDialog(ManifestDestiny.manifest,ConfigurationTable.NULL_SELECT_TABLE_HINT.getInfo(),ConfigurationTable.NOTIFY_WINDOW_TITLE.getInfo(),JOptionPane.CLOSED_OPTION);
-//            }
-//        });
-//        tableNameGroup.addComponent(tableNameDetails);
-//        tableNameGroup.addComponent(new JButton("生成项目结构"));
-//        GroupLayout.SequentialGroup sequentialGroup = groupLayout.createSequentialGroup()
-//                .addGroup(tableNameGroup).addGroup(tablePackageGroup).addGroup(cacheGroup);
-//        groupLayout.setVerticalGroup(tablePackageGroup);
         return content;
     }
 

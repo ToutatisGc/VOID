@@ -25,7 +25,6 @@ public class CodeGenerator {
         // 全局配置
         GlobalConfig globalConfig = new GlobalConfig();
         globalConfig.setActiveRecord(true);
-//        String projectPath = System.getProperty("user.dir");
         String currentChoosePath = manifestToolkit.getConfigProperties("currentChoosePath");
         String devLang = manifestToolkit.getConfigProperties("devLang");
         globalConfig.setOutputDir(currentChoosePath + String.format("/src/main/%s/",devLang));
@@ -34,7 +33,7 @@ public class CodeGenerator {
 
 //        文件覆盖
         globalConfig.setFileOverride(true);
-        globalConfig.setSwagger2(Boolean.parseBoolean(manifestToolkit.getConfigProperties("openSwagger2")));
+        globalConfig.setSwagger2(Boolean.parseBoolean(manifestToolkit.getConfigProperties("useSwagger")));
         globalConfig.setServiceName("%sService");
         autoGenerator.setGlobalConfig(globalConfig);
 
@@ -103,7 +102,9 @@ public class CodeGenerator {
 //        strategy.setSuperControllerClass("你自己的父类控制器,没有就不用设置!");
         // 写于父类中的公共字段
         strategyConfig.setSuperEntityClass(EntityBasicAttribute.class);
-        strategyConfig.setSuperEntityColumns("reservedId","reservedMsg","createTime","status","lastUpdateTime","remark");
+        strategyConfig.setSuperEntityColumns(
+                "reservedInt","reservedString","createTime","status","logicDeleted",
+                "createBy","lastUpdateTime","updateBy","version","remark","belongTo");
         strategyConfig.setInclude(tableListArrayString);
         strategyConfig.setControllerMappingHyphenStyle(false);
         strategyConfig.setTablePrefix(packageConfig.getModuleName() + "_");
