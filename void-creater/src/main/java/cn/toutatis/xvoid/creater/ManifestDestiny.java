@@ -113,6 +113,8 @@ public class ManifestDestiny {
         //窗体宽度和高度
          manifest = ManifestDestinyComponent.manifest(connect);
 
+//         manifest.setContentPane;
+
         String databaseUrlConfig = configProperties.getProperty("databaseUrl");
         String userConfig = configProperties.getProperty("user");
         String passwordConfig = configProperties.getProperty("password");

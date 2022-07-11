@@ -1,4 +1,4 @@
-package cn.toutatis.spring.core.exception
+package cn.toutatis.xvoid.spring.core.exception
 
 import cn.toutatis.common.standard.StandardFields
 import cn.toutatis.xvoid.toolkit.constant.Time
