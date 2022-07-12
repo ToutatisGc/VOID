@@ -1,5 +1,6 @@
-package cn.toutatis.xvoid.creater;
+package cn.toutatis.xvoid.creater.ui;
 
+import cn.toutatis.xvoid.creater.ManifestDestiny;
 import cn.toutatis.xvoid.creater.tools.CodeGenerator;
 import cn.toutatis.xvoid.creater.tools.ConfigurationTable;
 import cn.toutatis.xvoid.creater.tools.ManifestToolkit;
@@ -8,14 +9,12 @@ import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.text.Document;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Vector;
 
-import static cn.toutatis.xvoid.creater.ManifestDestinyComponent.selectedTable;
+import static cn.toutatis.xvoid.creater.ui.ManifestDestinyComponent.selectedTable;
 
 /**
  * @author Toutatis_Gc

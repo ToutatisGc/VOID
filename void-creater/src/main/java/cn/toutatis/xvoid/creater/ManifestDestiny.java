@@ -4,14 +4,11 @@ import cn.toutatis.xvoid.creater.exception.ConfigFileMissingException;
 import cn.toutatis.xvoid.creater.tools.ConfigurationTable;
 import cn.toutatis.xvoid.creater.tools.ManifestToolkit;
 
-import com.formdev.flatlaf.FlatDarculaLaf;
-import com.formdev.flatlaf.FlatDarkLaf;
+import cn.toutatis.xvoid.creater.ui.ManifestDestinyComponent;
 import com.formdev.flatlaf.FlatIntelliJLaf;
-import com.formdev.flatlaf.FlatLightLaf;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.log4j.Logger;
-import org.jb2011.lnf.beautyeye.BeautyEyeLNFHelper;
 
 
 import javax.swing.*;
@@ -31,7 +28,7 @@ import java.util.List;
 public class ManifestDestiny {
 
 
-    enum DirClassify{BLANK,POM}
+    public enum DirClassify{BLANK,POM}
 
     private static Logger logger = Logger.getLogger(ManifestDestiny.class);
     /**
@@ -41,8 +38,8 @@ public class ManifestDestiny {
     /**
      * 窗体配置
      */
-    static final Integer DIALOG_WEIGHT = 900;
-    static final Integer DIALOG_HEIGHT = 600;
+    public static final Integer DIALOG_WEIGHT = 900;
+    public static final Integer DIALOG_HEIGHT = 600;
     private static final String COPY_INFO = ConfigurationTable.COPY_RIGHT_INFO.getInfo();
     /**
      * 颜色配置
@@ -59,8 +56,8 @@ public class ManifestDestiny {
     private static final File CONFIG_FILE = new File(ROOT_PATH+"/config.properties");
     private static Properties configProperties = new Properties();
 
-    static String dirClassify;
-    static String initPath;
+    public static String dirClassify;
+    public static String initPath;
     private static Boolean initComplete = false;
 
     private static Vector<String> tableList = new Vector<>();
@@ -69,7 +66,7 @@ public class ManifestDestiny {
     /**
      * 初始化窗体
      */
-    static JFrame manifest;
+    public static JFrame manifest;
     public static List<String> selectTableList = new ArrayList<>();
 
 
@@ -102,7 +99,7 @@ public class ManifestDestiny {
         logger.info("[初始化]ManifestDestiny初始化完成.");
     }
 
-    static Connection connect = null;
+    public static Connection connect = null;
     private static SqlSession sqlExecutor = null;
 
 

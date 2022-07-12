@@ -16,6 +16,7 @@ import lombok.experimental.Accessors;
 </#if>
 <#if usePersistence>
 import javax.persistence.*;
+import org.hibernate.annotations.GenericGenerator;
 </#if>
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -50,22 +51,22 @@ import java.text.SimpleDateFormat;
 </#if>
 <#if usePersistence>
 @Entity
-@Table(name="${entity}")
-@org.hibernate.annotations.Table(appliesTo = "${entity}", comment = "${table.comment:''}")
+@Table(name="${realTableName}")
+@org.hibernate.annotations.Table(appliesTo = "${realTableName}", comment = "${table.comment!}")
 </#if>
 <#if swagger2>
     @ApiModel(
-    value="${entity}对象",
+    value="${realName}对象",
     description="${table.comment!}"<#if superEntityClass??>,
-    parent = ${superEntityClass}</#if>)
+    parent = ${superEntityClass}.class</#if>)
 </#if>
 @JsonIgnoreProperties({"reservedString","reservedInt"})
 <#if superEntityClass??>
-public class ${entity} extends ${superEntityClass}<#if activeRecord><${entity}></#if> {
+public class ${realName} extends ${superEntityClass}<#if activeRecord><${realName}></#if> {
 <#elseif activeRecord>
-public class ${entity} extends Model<${entity}> {
+public class ${realName} extends Model<${realName}> {
 <#else>
-public class ${entity} implements Serializable {
+public class ${realName} implements Serializable {
 </#if>
 
 <#if entitySerialVersionUID>
@@ -87,6 +88,12 @@ public class ${entity} implements Serializable {
         </#if>
     </#if>
     <#if field.propertyName == 'uuid' || field.propertyName == 'id'>
+        <#if usePersistence>
+    @Id
+            <#if field.propertyName == 'uuid'>
+            <#else>
+            </#if>
+        </#if>
         <#if field.propertyName == 'uuid'>
     @TableId(value = "uuid",type = IdType.ASSIGN_UUID)
         <#else>
