@@ -131,7 +131,7 @@
                   </grid>
                 </constraints>
                 <properties>
-                  <toolTipText value="TEST"/>
+                  <toolTipText value="路径为包名 cn.toutatis.demo.xxx.xxx"/>
                 </properties>
               </component>
               <component id="d5596" class="javax.swing.JLabel" binding="choosePackageLabel">

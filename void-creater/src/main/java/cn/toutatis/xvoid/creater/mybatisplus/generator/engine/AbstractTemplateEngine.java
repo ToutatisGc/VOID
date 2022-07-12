@@ -15,6 +15,7 @@
  */
 package cn.toutatis.xvoid.creater.mybatisplus.generator.engine;
 
+import cn.toutatis.xvoid.creater.tools.ManifestToolkit;
 import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
 import com.baomidou.mybatisplus.core.toolkit.StringPool;
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
@@ -47,6 +48,7 @@ public abstract class AbstractTemplateEngine {
      */
     private ConfigBuilder configBuilder;
 
+    private static ManifestToolkit manifestToolkit = ManifestToolkit.getInstance();
 
     /**
      * 模板引擎初始化
@@ -84,6 +86,23 @@ public abstract class AbstractTemplateEngine {
                 }
                 // Mp.java
                 String entityName = tableInfo.getEntityName();
+                String mapperName = tableInfo.getMapperName();
+                String xmlName = tableInfo.getXmlName();
+                String serviceName = tableInfo.getServiceName();
+                String serviceImplName = tableInfo.getServiceImplName();
+                String controllerName = tableInfo.getControllerName();
+                String indexName = tableInfo.getIndexName();
+                String tablePrefix = manifestToolkit.getConfigProperties("tablePrefix");
+                if (StringUtils.isNotBlank(tablePrefix)) {
+                    String removeSignature = tablePrefix.replace("_", "");
+                    entityName = entityName.substring(removeSignature.length());
+                    mapperName = mapperName.substring(removeSignature.length());
+                    xmlName = xmlName.substring(removeSignature.length());
+                    serviceName = serviceName.substring(removeSignature.length());
+                    serviceImplName = serviceImplName.substring(removeSignature.length());
+                    controllerName = controllerName.substring(removeSignature.length());
+                    indexName = indexName.substring(removeSignature.length());
+                }
                 if (null != entityName && null != pathInfo.get(ConstVal.ENTITY_PATH)) {
                     String entityFile = String.format((pathInfo.get(ConstVal.ENTITY_PATH) + File.separator + "%s" + suffixJavaOrKt()), entityName);
                     if (isCreate(FileType.ENTITY, entityFile)) {
@@ -92,47 +111,46 @@ public abstract class AbstractTemplateEngine {
                 }
                 // MpMapper.java
                 if (null != tableInfo.getMapperName() && null != pathInfo.get(ConstVal.MAPPER_PATH)) {
-                    String mapperFile = String.format((pathInfo.get(ConstVal.MAPPER_PATH) + File.separator + tableInfo.getMapperName() + suffixJavaOrKt()), entityName);
+                    String mapperFile = String.format((pathInfo.get(ConstVal.MAPPER_PATH) + File.separator + mapperName + suffixJavaOrKt()), entityName);
                     if (isCreate(FileType.MAPPER, mapperFile)) {
                         writer(objectMap, templateFilePath(template.getMapper()), mapperFile);
                     }
                 }
                 // MpMapper.xml
                 if (null != tableInfo.getXmlName() && null != pathInfo.get(ConstVal.XML_PATH)) {
-                    String xmlFile = String.format((pathInfo.get(ConstVal.XML_PATH) + File.separator + tableInfo.getXmlName() + ConstVal.XML_SUFFIX), entityName);
+                    String xmlFile = String.format((pathInfo.get(ConstVal.XML_PATH) + File.separator + xmlName + ConstVal.XML_SUFFIX), entityName);
                     if (isCreate(FileType.XML, xmlFile)) {
                         writer(objectMap, templateFilePath(template.getXml()), xmlFile);
                     }
                 }
                 // IMpService.java
                 if (null != tableInfo.getServiceName() && null != pathInfo.get(ConstVal.SERVICE_PATH)) {
-                    String serviceFile = String.format((pathInfo.get(ConstVal.SERVICE_PATH) + File.separator + tableInfo.getServiceName() + suffixJavaOrKt()), entityName);
+                    String serviceFile = String.format((pathInfo.get(ConstVal.SERVICE_PATH) + File.separator + serviceName + suffixJavaOrKt()), entityName);
                     if (isCreate(FileType.SERVICE, serviceFile)) {
                         writer(objectMap, templateFilePath(template.getService()), serviceFile);
                     }
                 }
                 // MpServiceImpl.java
                 if (null != tableInfo.getServiceImplName() && null != pathInfo.get(ConstVal.SERVICE_IMPL_PATH)) {
-                    String implFile = String.format((pathInfo.get(ConstVal.SERVICE_IMPL_PATH) + File.separator + tableInfo.getServiceImplName() + suffixJavaOrKt()), entityName);
+                    String implFile = String.format((pathInfo.get(ConstVal.SERVICE_IMPL_PATH) + File.separator + serviceImplName + suffixJavaOrKt()), entityName);
                     if (isCreate(FileType.SERVICE_IMPL, implFile)) {
                         writer(objectMap, templateFilePath(template.getServiceImpl()), implFile);
                     }
                 }
                 // MpController.java
                 if (null != tableInfo.getControllerName() && null != pathInfo.get(ConstVal.CONTROLLER_PATH)) {
-                    String controllerFile = String.format((pathInfo.get(ConstVal.CONTROLLER_PATH) + File.separator + tableInfo.getControllerName() + suffixJavaOrKt()), entityName);
+                    String controllerFile = String.format((pathInfo.get(ConstVal.CONTROLLER_PATH) + File.separator + controllerName + suffixJavaOrKt()), entityName);
                     if (isCreate(FileType.CONTROLLER, controllerFile)) {
                         writer(objectMap, templateFilePath(template.getController()), controllerFile);
                     }
                 }
                 //页面文件
                 if (null != tableInfo.getIndexName() && null != pathInfo.get(ConstVal.INDEX_PATH)) {
-                    String indexFile = String.format((pathInfo.get(ConstVal.INDEX_PATH) + File.separator + tableInfo.getIndexName() + ".ftlh"), entityName);
+                    String indexFile = String.format((pathInfo.get(ConstVal.INDEX_PATH) + File.separator + indexName + ".ftlh"), entityName);
                     if (isCreate(FileType.OTHER, indexFile)) {
                         writer(objectMap, templateFilePath(template.getIndex()), indexFile);
                     }
                 }
-
             }
         } catch (Exception e) {
             logger.error("无法创建文件，请检查配置信息！", e);
@@ -209,6 +227,7 @@ public abstract class AbstractTemplateEngine {
         objectMap.put("config", config);
         objectMap.put("package", config.getPackageInfo());
         GlobalConfig globalConfig = config.getGlobalConfig();
+        ManifestToolkit manifestToolkit = globalConfig.getManifestToolkit();
         objectMap.put("author", globalConfig.getAuthor());
         objectMap.put("idType", globalConfig.getIdType() == null ? null : globalConfig.getIdType().toString());
         objectMap.put("logicDeleteFieldName", config.getStrategyConfig().getLogicDeleteFieldName());
@@ -216,6 +235,16 @@ public abstract class AbstractTemplateEngine {
         objectMap.put("activeRecord", globalConfig.isActiveRecord());
         objectMap.put("kotlin", globalConfig.isKotlin());
         objectMap.put("swagger2", globalConfig.isSwagger2());
+        objectMap.put("usePersistence", Boolean.parseBoolean(manifestToolkit.getConfigProperties("usePersistence")));
+        String tablePrefix = manifestToolkit.getConfigProperties("tablePrefix");
+        String entityName = tableInfo.getEntityName();
+        String name = tableInfo.getName();
+        if (StringUtils.isNotBlank(tablePrefix)) {
+            String removeSignature = tablePrefix.replace("_", "");
+            entityName = entityName.substring(removeSignature.length());
+        }
+        objectMap.put("realTableName", name);
+        objectMap.put("realName", entityName);
         objectMap.put("date", new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
         objectMap.put("table", tableInfo);
         objectMap.put("enableCache", globalConfig.isEnableCache());

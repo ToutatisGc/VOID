@@ -206,8 +206,10 @@ public class ManifestDestinyComponent {
         selectedTable.setBackground(Color.WHITE);
         JPanel content = new JPanel(new GridLayout(1,1));
         JTabbedPane jTabbedPane = new JTabbedPane();
-        JPanel rootPanel = new TableStructWidget().rootPanel;
-        jTabbedPane.addTab("表结构生成",rootPanel);
+        JPanel tableStructPanel = new TableStructWidget().rootPanel;
+        JPanel advanceOptionsPanel = new AdvanceOptionsWidget().rootPanel;
+        jTabbedPane.addTab("表结构生成",tableStructPanel);
+        jTabbedPane.addTab("高级配置",advanceOptionsPanel);
         content.add(jTabbedPane);
         return content;
     }
