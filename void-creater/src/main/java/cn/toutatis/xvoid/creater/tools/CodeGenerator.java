@@ -49,6 +49,7 @@ public class CodeGenerator {
         String packagePathTemp = packagePath.substring(0, lastIndexOfPoint);
         packageConfig.setModuleName(endWith);
         packageConfig.setParent(packagePathTemp);
+        packageConfig.setMapper("persistence");
 //        packageConfig.setXml("");
         autoGenerator.setPackageInfo(packageConfig);
 

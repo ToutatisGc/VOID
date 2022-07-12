@@ -91,7 +91,11 @@ public class ${realName} implements Serializable {
         <#if usePersistence>
     @Id
             <#if field.propertyName == 'uuid'>
+    @Column(name="id",columnDefinition = "VARCHAR(32) COMMENT '主键ID'")
+    @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
+    @GeneratedValue(generator = "UUID")
             <#else>
+    @Column(name="id",columnDefinition = "INT COMMENT '主键ID'")
             </#if>
         </#if>
         <#if field.propertyName == 'uuid'>
@@ -111,13 +115,11 @@ public class ${realName} implements Serializable {
     <#elseif field.convert>
     @TableField("${field.annotationColumnName}")
     </#if>
-    <#-- 乐观锁注解 -->
-    <#if (versionFieldName!"") == field.name>
-    @Version
+    <#if usePersistence>
+    @Column(name="${field.propertyName}",columnDefinition = "COMMENT '${field.comment}'")
     </#if>
-    <#-- 逻辑删除注解 -->
-    <#if (logicDeleteFieldName!"") == field.name>
-    @TableLogic
+    <#if swagger2>
+    @ApiModelProperty(value="${field.comment}")
     </#if>
     private ${field.propertyType} ${field.propertyName};
 </#list>
@@ -187,6 +189,21 @@ public class ${realName} implements Serializable {
         </#if>
     </#list>
         "}";
+    }
+</#if>
+
+<#if usePersistence>
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) { return true; }
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) { return false; }
+        ${realName} that = (${realName}) o;
+        return id != null && Objects.equals(id, that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
     }
 </#if>
 }
