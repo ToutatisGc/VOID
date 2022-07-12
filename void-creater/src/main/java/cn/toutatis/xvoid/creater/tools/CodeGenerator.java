@@ -103,7 +103,7 @@ public class CodeGenerator {
         // 写于父类中的公共字段
         strategyConfig.setSuperEntityClass(EntityBasicAttribute.class);
         strategyConfig.setSuperEntityColumns(
-                "reservedInt","reservedString","createTime","status","logicDeleted",
+                "rInt","rStr","createTime","status","logicDeleted",
                 "createBy","lastUpdateTime","updateBy","version","remark","belongTo");
         strategyConfig.setInclude(tableListArrayString);
         strategyConfig.setControllerMappingHyphenStyle(false);

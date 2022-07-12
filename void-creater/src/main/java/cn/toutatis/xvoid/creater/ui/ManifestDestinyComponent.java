@@ -1,7 +1,8 @@
-package cn.toutatis.xvoid.creater;
+package cn.toutatis.xvoid.creater.ui;
 
 
 
+import cn.toutatis.xvoid.creater.ManifestDestiny;
 import cn.toutatis.xvoid.creater.mapper.BasicMapper;
 import cn.toutatis.xvoid.creater.tools.ConfigurationTable;
 import cn.toutatis.xvoid.creater.tools.ManifestToolkit;
@@ -27,7 +28,7 @@ import java.util.*;
  * @author Gc
  *
  */
-class ManifestDestinyComponent {
+public class ManifestDestinyComponent {
 
     public static Logger logger = Logger.getLogger(ManifestDestinyComponent.class);
 
@@ -45,7 +46,7 @@ class ManifestDestinyComponent {
     /**
      * @return 头部菜单栏
      */
-    static JMenuBar menuBar(){
+    public static JMenuBar menuBar(){
         JMenuBar menuBar = new JMenuBar();
         JMenu fileMenu = new JMenu("首选项");
 //        JMenuItem newMenuItem = new JMenuItem("新建");
@@ -67,7 +68,7 @@ class ManifestDestinyComponent {
     /**
      * @return 右侧主窗口
      */
-    static JPanel mainPanel(){
+    public static JPanel mainPanel(){
         JPanel main = new JPanel(new BorderLayout());
         main.setPreferredSize(new Dimension(ManifestDestiny.DIALOG_WEIGHT-250, 500));
         JPanel chooseAppPath = chooseAppPath();
@@ -78,7 +79,7 @@ class ManifestDestinyComponent {
     /**
      * @return 左侧数据库表栏
      */
-    static JPanel leftPanel(Vector<String> tableList,List<String> selectTableList){
+    public static JPanel leftPanel(Vector<String> tableList,List<String> selectTableList){
         JPanel leftPanel = new JPanel(new BorderLayout());
         JPanel text = new JPanel();
         JLabel dataBaseLabel = new JLabel(ConfigurationTable.LEFT_PANEL_DATABASE_LIST_TITLE.getInfo());
@@ -165,7 +166,7 @@ class ManifestDestinyComponent {
         return leftPanel;
     }
 
-     static JFrame manifest(Connection connect) throws IOException {
+    public static JFrame manifest(Connection connect) throws IOException {
         JFrame manifest = new JFrame(ConfigurationTable.APP_NAME.getInfo());
 
         File iconFile = new File(manifestToolkit.getRootPath()+ "img/darkStar.png");
@@ -198,7 +199,7 @@ class ManifestDestinyComponent {
     /**
      * @return 右侧主窗口内容
      */
-    static JPanel mainContentPanel(){
+    public static JPanel mainContentPanel(){
         selectedTable.setWrapStyleWord(true);
         selectedTable.setLineWrap(true);
         selectedTable.setEditable(false);
@@ -209,32 +210,6 @@ class ManifestDestinyComponent {
         jTabbedPane.addTab("表结构生成",rootPanel);
         content.add(jTabbedPane);
         return content;
-    }
-
-    private static void parameterSetting(GroupLayout parent){
-        GroupLayout.SequentialGroup parameterSettingGroup = parent.createSequentialGroup();
-        parameterSettingGroup.addComponent(new JLabel("  参数设置  "));
-        JCheckBox openSwagger2 = new JCheckBox("是否启用SWAGGER2文档");
-        String openSwagger2Flag = manifestToolkit.getConfigProperties("openSwagger2");
-        openSwagger2.setSelected(Boolean.parseBoolean(openSwagger2Flag));
-        openSwagger2.addChangeListener(changeEvent -> {
-            manifestToolkit.saveConfiguration("openSwagger2",openSwagger2.isSelected()+"");
-        });
-        JCheckBox openLombok = new JCheckBox("是否启用lombok模型");
-        String openLombokFlag = manifestToolkit.getConfigProperties("openLombok");
-        openLombok.setSelected(Boolean.parseBoolean(openLombokFlag));
-        openLombok.addChangeListener(changeEvent -> {
-            manifestToolkit.saveConfiguration("openLombok",openLombok.isSelected()+"");
-        });
-        JCheckBox openGenerateController = new JCheckBox("是否生成控制器");
-        String openGenerateControllerFlag = manifestToolkit.getConfigProperties("openGenerateController");
-        openGenerateController.setSelected(Boolean.parseBoolean(openGenerateControllerFlag));
-        openGenerateController.addChangeListener(changeEvent -> {
-            manifestToolkit.saveConfiguration("openGenerateController",openGenerateController.isSelected()+"");
-        });
-        parameterSettingGroup.addComponent(openSwagger2);
-        parameterSettingGroup.addComponent(openLombok);
-        parameterSettingGroup.addComponent(openGenerateController);
     }
 
     // 根据内容自动调节表格的列宽度
@@ -318,7 +293,7 @@ class ManifestDestinyComponent {
      * @param info 版权信息
      * @return 底部信息
      */
-    static JPanel copyRightPanel(String info){
+    public static JPanel copyRightPanel(String info){
         JPanel line = new JPanel();
         JLabel text = new JLabel(info);
         line.add(text);
@@ -340,11 +315,11 @@ class ManifestDestinyComponent {
         }
     }
 
-    static void changeListData(Vector<String> dataList){
+    public static void changeListData(Vector<String> dataList){
         DefaultListModel oldModel = (DefaultListModel) leftList.getModel();
 //        TODO 移除旧列表
         DefaultListModel<String> model = new DefaultListModel<>();
-        dataList.forEach(item -> model.addElement(item));
+        dataList.forEach(model::addElement);
         leftList.setModel(model);
         leftList.updateUI();
     }
