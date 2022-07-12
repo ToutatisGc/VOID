@@ -92,17 +92,17 @@ public abstract class AbstractTemplateEngine {
                 String serviceImplName = tableInfo.getServiceImplName();
                 String controllerName = tableInfo.getControllerName();
                 String indexName = tableInfo.getIndexName();
-                String tablePrefix = manifestToolkit.getConfigProperties("tablePrefix");
-                if (StringUtils.isNotBlank(tablePrefix)) {
-                    String removeSignature = tablePrefix.replace("_", "");
-                    entityName = entityName.substring(removeSignature.length());
-                    mapperName = mapperName.substring(removeSignature.length());
-                    xmlName = xmlName.substring(removeSignature.length());
-                    serviceName = serviceName.substring(removeSignature.length());
-                    serviceImplName = serviceImplName.substring(removeSignature.length());
-                    controllerName = controllerName.substring(removeSignature.length());
-                    indexName = indexName.substring(removeSignature.length());
-                }
+//                String tablePrefix = manifestToolkit.getConfigProperties("tablePrefix");
+//                if (StringUtils.isNotBlank(tablePrefix)) {
+//                    String removeSignature = tablePrefix.replace("_", "");
+//                    entityName = entityName.substring(removeSignature.length());
+//                    mapperName = mapperName.substring(removeSignature.length());
+//                    xmlName = xmlName.substring(removeSignature.length());
+//                    serviceName = serviceName.substring(removeSignature.length());
+//                    serviceImplName = serviceImplName.substring(removeSignature.length());
+//                    controllerName = controllerName.substring(removeSignature.length());
+//                    indexName = indexName.substring(removeSignature.length());
+//                }
                 if (null != entityName && null != pathInfo.get(ConstVal.ENTITY_PATH)) {
                     String entityFile = String.format((pathInfo.get(ConstVal.ENTITY_PATH) + File.separator + "%s" + suffixJavaOrKt()), entityName);
                     if (isCreate(FileType.ENTITY, entityFile)) {
@@ -239,10 +239,10 @@ public abstract class AbstractTemplateEngine {
         String tablePrefix = manifestToolkit.getConfigProperties("tablePrefix");
         String entityName = tableInfo.getEntityName();
         String name = tableInfo.getName();
-        if (StringUtils.isNotBlank(tablePrefix)) {
-            String removeSignature = tablePrefix.replace("_", "");
-            entityName = entityName.substring(removeSignature.length());
-        }
+//        if (StringUtils.isNotBlank(tablePrefix)) {
+//            String removeSignature = tablePrefix.replace("_", "");
+//            entityName = entityName.substring(removeSignature.length());
+//        }
         objectMap.put("realTableName", name);
         objectMap.put("realName", entityName);
         objectMap.put("date", new SimpleDateFormat("yyyy-MM-dd").format(new Date()));

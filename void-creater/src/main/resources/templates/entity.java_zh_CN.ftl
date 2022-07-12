@@ -8,14 +8,21 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 </#if>
 <#if entityLombokModel>
+    <#if usePersistence>
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+        <#else>
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+    </#if>
     <#if chainModel>
 import lombok.experimental.Accessors;
     </#if>
 </#if>
 <#if usePersistence>
 import javax.persistence.*;
+import org.hibernate.Hibernate;
 import org.hibernate.annotations.GenericGenerator;
 </#if>
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -36,15 +43,21 @@ import java.text.SimpleDateFormat;
  * @since ${date}
  */
 <#if entityLombokModel>
+    <#if usePersistence>
+@Getter
+@Setter
+        <#else>
 @Data
-    <#if superEntityClass??>
+        <#if superEntityClass??>
 @EqualsAndHashCode(callSuper = true)
-    <#else>
+        <#else>
 @EqualsAndHashCode(callSuper = false)
+        </#if>
     </#if>
     <#if chainModel>
 @Accessors(chain = true)
     </#if>
+@ToString(callSuper = true)
 </#if>
 <#if table.convert>
 @TableName("${table.name}")
@@ -90,13 +103,10 @@ public class ${realName} implements Serializable {
     <#if field.propertyName == 'uuid' || field.propertyName == 'id'>
         <#if usePersistence>
     @Id
-            <#if field.propertyName == 'uuid'>
-    @Column(name="id",columnDefinition = "VARCHAR(32) COMMENT '主键ID'")
+           <#if field.propertyType == 'String'>
     @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
     @GeneratedValue(generator = "UUID")
-            <#else>
-    @Column(name="id",columnDefinition = "INT COMMENT '主键ID'")
-            </#if>
+           </#if>
         </#if>
         <#if field.propertyName == 'uuid'>
     @TableId(value = "uuid",type = IdType.ASSIGN_UUID)
@@ -116,10 +126,9 @@ public class ${realName} implements Serializable {
     @TableField("${field.annotationColumnName}")
     </#if>
     <#if usePersistence>
+        <#if field.propertyName != 'uuid' || field.propertyName != 'id'>
     @Column(name="${field.propertyName}",columnDefinition = "COMMENT '${field.comment}'")
-    </#if>
-    <#if swagger2>
-    @ApiModelProperty(value="${field.comment}")
+        </#if>
     </#if>
     private ${field.propertyType} ${field.propertyName};
 </#list>

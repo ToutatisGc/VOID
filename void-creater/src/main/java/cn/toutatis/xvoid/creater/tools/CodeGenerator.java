@@ -28,7 +28,7 @@ public class CodeGenerator {
         String currentChoosePath = manifestToolkit.getConfigProperties("currentChoosePath");
         String devLang = manifestToolkit.getConfigProperties("devLang");
         globalConfig.setOutputDir(currentChoosePath + String.format("/src/main/%s/",devLang));
-        globalConfig.setAuthor(ConfigurationTable.AUTHOR_NAME.getInfo());
+        globalConfig.setAuthor(manifestToolkit.getConfigProperties("author"));
         globalConfig.setOpen(false);
 
 //        文件覆盖
@@ -81,7 +81,7 @@ public class CodeGenerator {
         // 配置模板
         TemplateConfig templateConfig = new TemplateConfig();
 //        勾选不生成controller
-        if (!Boolean.parseBoolean(manifestToolkit.getConfigProperties("openGenerateController"))){
+        if (!Boolean.parseBoolean(manifestToolkit.getConfigProperties("useGenerateController"))){
             templateConfig.disable(TemplateType.CONTROLLER);
         }
         // 配置自定义输出模板
@@ -93,7 +93,7 @@ public class CodeGenerator {
         strategyConfig.setNaming(NamingStrategy.underline_to_camel);
         strategyConfig.setColumnNaming(NamingStrategy.underline_to_camel);
 //        strategy.setSuperEntityClass("你自己的父类实体,没有就不用设置!");
-        strategyConfig.setEntityLombokModel(Boolean.parseBoolean(manifestToolkit.getConfigProperties("openLombok")));
+        strategyConfig.setEntityLombokModel(Boolean.parseBoolean(manifestToolkit.getConfigProperties("useLombok")));
         strategyConfig.setRestControllerStyle(true);
 
 
@@ -108,7 +108,7 @@ public class CodeGenerator {
                 "createBy","lastUpdateTime","updateBy","version","remark","belongTo");
         strategyConfig.setInclude(tableListArrayString);
         strategyConfig.setControllerMappingHyphenStyle(false);
-        strategyConfig.setTablePrefix(packageConfig.getModuleName() + "_");
+        strategyConfig.setTablePrefix(manifestToolkit.getConfigProperties("tablePrefix"));
         autoGenerator.setStrategy(strategyConfig);
 
         autoGenerator.setTemplateEngine(new FreemarkerTemplateEngine());
