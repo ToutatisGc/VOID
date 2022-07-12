@@ -358,6 +358,13 @@ public class ConfigBuilder {
             } else {
                 entityName = NamingStrategy.capitalFirst(processName(tableInfo.getName(), config.getNaming(), tablePrefix));
             }
+//            String tablePrefixCustom = manifestToolkit.getConfigProperties("tablePrefix");
+//            String entityName = tableInfo.getEntityName();
+//            String name = tableInfo.getName();
+//            if (StringUtils.isNotBlank(tablePrefixCustom)) {
+//                String removeSignature = tablePrefixCustom.replace("_", "");
+//                entityName = entityName.substring(removeSignature.length());
+//            }
             if (StringUtils.isNotBlank(globalConfig.getEntityName())) {
                 tableInfo.setConvert(true);
                 tableInfo.setEntityName(String.format(globalConfig.getEntityName(), entityName));

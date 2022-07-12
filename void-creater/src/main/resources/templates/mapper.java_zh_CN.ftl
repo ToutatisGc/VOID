@@ -6,12 +6,12 @@ import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
 /**
-* <p>
-    * ${table.comment!} Mapper 接口
-    * </p>
-*
-* @author ${author}
-* @since ${date}
+ * <p>
+ * ${table.comment!} Mapper 接口
+ * </p>
+ *
+ * @author ${author}
+ * @since ${date}
 */
 <#if kotlin>
 interface ${table.mapperName} : ${superMapperClass}<${entity}>

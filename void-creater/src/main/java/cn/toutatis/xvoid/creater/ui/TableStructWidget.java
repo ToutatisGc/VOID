@@ -88,6 +88,10 @@ public class TableStructWidget {
             String[] tableNameArrays = selectedTableText.replace(" ", "").split(",");
             List<String> tableNames = Arrays.asList(tableNameArrays);
             if (!"".equals(selectedTableText) && tableNames.size()>0){
+                if (selectPackPath.getText().length()<1){
+                    JOptionPane.showMessageDialog(rootPanel, "请输入包路径！");
+                    return;
+                }
                 CodeGenerator.tableGenerate(tableNameArrays);
             }else {
                 JOptionPane.showConfirmDialog(ManifestDestiny.manifest,
@@ -128,11 +132,11 @@ public class TableStructWidget {
         classify.add("Kotlin");
         classify.add("Java");
         String devLangValue = manifestToolkit.getConfigProperties("devLang");
-        if ("kotlin".equalsIgnoreCase(devLangValue)) {
-            useLombok.setEnabled(false);
-            useLombok.setSelected(false);
-            manifestToolkit.saveConfiguration("useLombok","false");
-        }
+//        if ("kotlin".equalsIgnoreCase(devLangValue)) {
+//            useLombok.setEnabled(false);
+//            useLombok.setSelected(false);
+//            manifestToolkit.saveConfiguration("useLombok","false");
+//        }
         int classifyIndex = 0;
         for (int i = 0; i < classify.size(); i++) {
             if (devLangValue.equalsIgnoreCase(classify.get(i))){
@@ -146,11 +150,11 @@ public class TableStructWidget {
                 int selectedIndex = useDevLang.getSelectedIndex();
                 String select = classify.get(selectedIndex);
                 if ("kotlin".equalsIgnoreCase(select)) {
-                    useLombok.setEnabled(false);
-                    useLombok.setSelected(false);
+//                    useLombok.setEnabled(false);
+//                    useLombok.setSelected(false);
                     manifestToolkit.saveConfiguration("useLombok","false");
                 }else {
-                    useLombok.setEnabled(true);
+//                    useLombok.setEnabled(true);
                     useLombok.setSelected(Boolean.parseBoolean(manifestToolkit.getConfigProperties("useLombok")));
                 }
                 manifestToolkit.saveConfiguration("devLang",select.toLowerCase());

@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
-import cn.toutatis.core.root.systemService.service.SystemDictionaryService;
+<#--import cn.toutatis.core.root.systemService.service.SystemDictionaryService;-->
 <#--import org.springframework.context.annotation.Scope;-->
 <#--import org.springframework.transaction.annotation.Transactional;-->
 <#if restControllerStyle>
@@ -47,13 +47,13 @@ public class ${table.controllerName} extends ${superControllerClass} {
 public class ${table.controllerName} extends BaseControllerImpl<${entity}, ${table.serviceName}> {
 </#if>
 
-    @Autowired
-    SystemDictionaryService dictionaryService;
+<#--    @Autowired-->
+<#--    SystemDictionaryService dictionaryService;-->
 
     @RequestMapping(value = "/index",method = RequestMethod.GET)
     public ModelAndView index(){
         ModelAndView modelAndView = new ModelAndView("page/${entity}Index");
-        modelAndView.addObject("status",dictionaryService.staticDic("SYSTEM_STATUS_0000"));
+<#--        modelAndView.addObject("status",dictionaryService.staticDic("SYSTEM_STATUS_0000"));-->
         return modelAndView;
     }
 
