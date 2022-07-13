@@ -1,8 +1,11 @@
 package cn.toutatis.data.common.security;
 
 import cn.toutatis.data.common.EntityBasicAttribute;
+import cn.toutatis.xvoid.toolkit.constant.Time;
+import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -13,6 +16,9 @@ import org.hibernate.Hibernate;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
 /**
@@ -54,6 +60,7 @@ public class SystemUserLogin extends EntityBasicAttribute<SystemUserLogin> {
     @Column(name="username",columnDefinition = "VARCHAR(32) COMMENT '用户名'")
     private String username;
 
+    @TableField("phoneCode")
     @ApiModelProperty(
             value="电话号码",required = false,
             example = "19902351234")
@@ -80,6 +87,22 @@ public class SystemUserLogin extends EntityBasicAttribute<SystemUserLogin> {
             example = "******")
     @Column(name="secret",columnDefinition = "VARCHAR(255) COMMENT '登录密文'")
     private String secret;
+
+    @JsonIgnore
+    @TableField(value = "expiredTime")
+    @ApiModelProperty(value="过期时间", required=false)
+    @Column(nullable = true,columnDefinition = "DATETIME COMMENT '过期时间'")
+    private LocalDateTime expiredTime;
+
+    @Transient
+    public String getExpiredTimeStr() {
+        return expiredTime == null ? "" : expiredTime.format(DateTimeFormatter.ofPattern(Time.DATE_FORMAT_REGEX));
+    }
+
+    @Transient
+    public long getExpiredTimeMs() {
+        return expiredTime == null ? 0L :  Timestamp.valueOf(expiredTime).getTime()/1000;
+    }
 
     @Override
     public boolean equals(Object o) {

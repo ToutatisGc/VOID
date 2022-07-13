@@ -24,6 +24,7 @@ import lombok.experimental.Accessors;
 import javax.persistence.*;
 import org.hibernate.Hibernate;
 import org.hibernate.annotations.GenericGenerator;
+import java.util.Objects;
 </#if>
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -177,7 +178,7 @@ public class ${realName} implements Serializable {
 </#if>
 <#if activeRecord>
     @Override
-    protected Serializable pkVal() {
+    public Serializable pkVal() {
     <#if keyPropertyName??>
         return this.${keyPropertyName};
     <#else>

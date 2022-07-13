@@ -14,13 +14,16 @@ import cn.toutatis.xvoid.support.spring.config.orm.mybatisplus.support.VoidMybat
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.*;
@@ -33,32 +36,44 @@ import java.util.*;
 @Transactional(rollbackFor = Exception.class)
 public class BaseControllerImpl<O extends EntityBasicAttribute<O>, SERVICE extends VoidMybatisService<O>> implements BaseController<O> {
 
-    public Logger logger = LoggerFactory.getLogger(getClass());
+    private final Logger logger = LoggerFactory.getLogger(getClass());
 
     private final ObjectToolkit objectToolkit = ObjectToolkit.getInstance();
 
     @Autowired
-    HttpServletRequest request;
+    private HttpServletRequest request;
 
     @Autowired
-    public SERVICE service;
+    private SERVICE service;
 
     @Autowired
     private VoidConfiguration voidConfiguration;
 
-    private final Boolean platformMode = voidConfiguration.getPlatformMode();
+    private Boolean platformMode;
 
-    public CommonWrapper<O> commonWrapper = CommonWrapper.getInstance();
+    private CommonWrapper<O> commonWrapper = CommonWrapper.getInstance();
 
-    public ProxyResult result = new ProxyResult(
-            voidConfiguration.getGlobalServiceConfig().getUseDetailedMode(),
-            voidConfiguration.getGlobalServiceConfig().getAutoConfig()
-    );
+    private ProxyResult result;
+
+    public BaseControllerImpl(VoidConfiguration voidConfiguration) {
+        this.voidConfiguration = voidConfiguration;
+        platformMode = voidConfiguration.getPlatformMode();
+        result = new ProxyResult(
+                voidConfiguration.getGlobalServiceConfig().getUseDetailedMode(),
+                voidConfiguration.getGlobalServiceConfig().getAutoConfig()
+        );
+    }
 
     @Override
     @ApiOperation("获取实体列表")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name="pagingQuery",value="分页对象",required=true,paramType="query",dataTypeClass = PagingQuery.class),
+            @ApiImplicitParam(name="obj",value="操作对象",required=true,paramType="query",dataTypeClass = Object.class)
+    })
     @RequestMapping(value = "/getList",method = RequestMethod.POST)
-    public Result getList(PagingQuery pagingQuery, O obj) {
+    public Result getList(@RequestParam PagingQuery pagingQuery,
+                          @RequestParam O obj
+    ) {
         String mchId = request.getHeader(StandardFields.VOID_REQUEST_HEADER_MCH_ID);
         Page<O> page;
         if (platformMode && objectToolkit.strIsBlank(mchId)){
@@ -76,6 +91,9 @@ public class BaseControllerImpl<O extends EntityBasicAttribute<O>, SERVICE exten
     }
 
     @Override
+    @ApiImplicitParams({
+            @ApiImplicitParam(name="entity",value="操作对象",required=true,paramType="query",dataTypeClass = EntityBasicAttribute.class),
+    })
     @RequestMapping(value = "/getById",method = RequestMethod.POST)
     public Result getById(O entity) {
         if (entity == null){ return new ProxyResult(ResultCode.NOT_HAVE_SELECT_DATA); }
@@ -93,38 +111,38 @@ public class BaseControllerImpl<O extends EntityBasicAttribute<O>, SERVICE exten
         return result;
     }
 
-    @Override
-    public Result updateStatus(O entity) {
-        return null;
-    }
-
-    @Override
-    public Result batchDeleteReal(List<O> entities, String id) {
-        return null;
-    }
-
-    @Override
-    public Result tombstone(List<O> entities) {
-        return null;
-    }
-
-    @Override
-    public Result tombstoneOne(O entity) {
-        return null;
-    }
-
-    @Override
-    public Result saveRecord(O entity) {
-        return null;
-    }
-
-    @Override
-    public Result search(JSONObject object) {
-        return null;
-    }
-
-    @Override
-    public Result check(O entity, String remark) {
-        return null;
-    }
+//    @Override
+//    public Result updateStatus(@RequestParam O entity) {
+//        return null;
+//    }
+//
+//    @Override
+//    public Result batchDeleteReal(@RequestParam List<O> entities,@RequestParam String id) {
+//        return null;
+//    }
+//
+//    @Override
+//    public Result tombstone(@RequestParam List<O> entities) {
+//        return null;
+//    }
+//
+//    @Override
+//    public Result tombstoneOne(@RequestParam O entity) {
+//        return null;
+//    }
+//
+//    @Override
+//    public Result saveRecord(@RequestParam O entity) {
+//        return null;
+//    }
+//
+//    @Override
+//    public Result search(@RequestParam JSONObject object) {
+//        return null;
+//    }
+//
+//    @Override
+//    public Result check(@RequestParam O entity,@RequestParam String remark) {
+//        return null;
+//    }
 }

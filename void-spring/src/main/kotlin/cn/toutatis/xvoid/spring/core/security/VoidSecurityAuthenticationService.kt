@@ -1,13 +1,17 @@
 package cn.toutatis.xvoid.spring.core.security
 
+import cn.toutatis.data.common.result.DataStatus
 import cn.toutatis.data.common.result.ResultCode
+import cn.toutatis.data.common.security.SystemUserLogin
 import cn.toutatis.xvoid.spring.core.security.ValidationMessage.Companion.VALIDATION_SESSION_KEY
+import cn.toutatis.xvoid.spring.core.security.access.entity.AccountCheckUserDetails
 import cn.toutatis.xvoid.spring.core.security.access.persistence.SystemUserLoginMapper
 import cn.toutatis.xvoid.support.spring.config.VoidConfiguration
 import cn.toutatis.xvoid.toolkit.log.LoggerToolkit
 import cn.toutatis.xvoid.toolkit.objects.ObjectToolkit
 import com.alibaba.fastjson.JSON
 import com.alibaba.fastjson.JSONObject
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.core.userdetails.UserDetailsService
@@ -118,9 +122,23 @@ class VoidSecurityAuthenticationService : UserDetailsService {
         val check = checkCodeEquals(identityObj.getString("securityCode"))
         if (check) {
             val username = identityObj.getString("username")
-
-//            return UserDetails
-            TODO("账号密码认证")
+            if (objectToolkit.strIsBlank(username)){
+                throw this.throwInfo(ValidationMessage.USERNAME_BLANK)
+            }
+            /*用户可以使用邮箱/手机号/账号登录*/
+            val queryWrapper = QueryWrapper<SystemUserLogin>()
+            queryWrapper
+                .eq("username", username)
+                .or().eq("email", username)
+                .or().eq("phone", username)
+            val user = systemUserLoginMapper.selectOne(queryWrapper)
+            if (user != null){
+                val accountCheckUserDetails = user as AccountCheckUserDetails
+                accountCheckUserDetails.isEnabled = user.status == DataStatus.SYS_OPEN_0000
+                return accountCheckUserDetails
+            }else{
+                throw this.throwInfo(ValidationMessage.USER_NOT_EXIST)
+            }
         }else{
             throw this.throwInfo(ValidationMessage.CHECK_CODE_ERROR)
         }
