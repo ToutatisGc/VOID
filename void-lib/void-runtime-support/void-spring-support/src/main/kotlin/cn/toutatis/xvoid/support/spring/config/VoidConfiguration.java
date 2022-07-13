@@ -24,10 +24,10 @@ public class VoidConfiguration {
      */
     private Boolean showMode = false;
 
-    private VoidConfiguration.GlobalLogConfig globalLogConfig;
-    private VoidConfiguration.DocConfig docConfig;
-    private VoidConfiguration.GlobalOrmConfig globalOrmConfig;
-    private VoidConfiguration.GlobalServiceConfig globalServiceConfig;
+    private VoidConfiguration.GlobalLogConfig globalLogConfig = new GlobalLogConfig();
+    private VoidConfiguration.DocConfig docConfig = new DocConfig();
+    private VoidConfiguration.GlobalOrmConfig globalOrmConfig = new GlobalOrmConfig();
+    private VoidConfiguration.GlobalServiceConfig globalServiceConfig = new GlobalServiceConfig();
 
     /**
      * 全局日志环境变量
@@ -95,7 +95,7 @@ public class VoidConfiguration {
         /**
          * 扫描包
          */
-        private String basePackage = "cn.toutatis";
+        private String basePackage = "cn.toutatis.xvoid";
 
         /**
          * 文档描述

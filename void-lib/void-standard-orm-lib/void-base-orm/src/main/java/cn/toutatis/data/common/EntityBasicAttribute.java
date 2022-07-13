@@ -8,6 +8,7 @@ import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.Version;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 
@@ -32,6 +33,7 @@ import java.time.format.DateTimeFormatter;
  */
 @Data
 @MappedSuperclass
+@ApiModel(value = "EntityBasicAttribute", description = "基础实体类")
 public class EntityBasicAttribute<O extends Model<?>> extends Model<O> {
 
     /**

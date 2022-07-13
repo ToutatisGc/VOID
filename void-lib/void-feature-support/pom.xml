@@ -22,7 +22,7 @@
         <kotlinx.version>1.6.3</kotlinx.version>
         <kotlin.code.style>official</kotlin.code.style>
 
-        <springboot.version>2.6.6</springboot.version>
+        <springboot.version>2.7.1</springboot.version>
         <spring.version>5.3.12</spring.version>
         <spring.security.version>5.5.1</spring.security.version>
         <spring-cloud.version>Hoxton.SR2</spring-cloud.version>

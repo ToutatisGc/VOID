@@ -10,6 +10,10 @@ import java.util.Collection;
 import java.util.List;
 
 
+/**
+ * 账号登录用户信息
+ * @author Toutatis_Gc
+ */
 public class AccountCheckUserDetails extends SystemUserLogin implements UserDetails {
 
     private Collection<? extends GrantedAuthority> authorities;
@@ -31,7 +35,7 @@ public class AccountCheckUserDetails extends SystemUserLogin implements UserDeta
     private boolean accountNonLocked;
 
     @TableField(exist = false)
-    private boolean credentialsNonExpired;
+    private boolean credentialsNonExpired = true;
 
     @TableField(exist = false)
     private boolean enabled;

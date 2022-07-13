@@ -9,14 +9,19 @@ import org.springframework.web.servlet.ModelAndView;
 <#--import org.springframework.context.annotation.Scope;-->
 <#--import org.springframework.transaction.annotation.Transactional;-->
 <#if restControllerStyle>
-import cn.toutatis.common.controllerDepand.BaseControllerImpl;
+import cn.toutatis.xvoid.support.spring.enhance.controller.BaseControllerImpl;
 import ${package.Service}.${table.serviceName};
 import ${package.Entity}.${entity};
-import cn.toutatis.common.controllerDepand.Polymerization;
-import cn.toutatis.common.log.LogBackHandle;
+import cn.toutatis.xvoid.support.spring.annotations.Polymerization;
+import cn.toutatis.xvoid.support.spring.annotations.LogHandle;
 <#--import org.springframework.web.bind.annotation.RestController;-->
 <#else>
 import org.springframework.stereotype.Controller;
+</#if>
+<#if swagger2>
+import com.github.xiaoymin.knife4j.annotations.ApiSupport;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 </#if>
 <#if superControllerClassPackage??>
 import ${superControllerClassPackage};
@@ -24,7 +29,8 @@ import ${superControllerClassPackage};
 
 /**
  * <p>
- * ${table.comment!} 前端控制器
+ * ${entity} 前端控制器
+ * ${table.comment!}
  * </p>
  *
  * @author ${author}
@@ -33,7 +39,9 @@ import ${superControllerClassPackage};
 <#if restControllerStyle>
 <#--@RestController-->
 @Polymerization
-@LogBackHandle("${table.controllerName} ${table.comment!}")
+@LogHandle("${table.controllerName} ${table.comment!}")
+@Api(tags = "${entity}前端控制器",description = "${table.controllerName}'s APIs")
+@ApiSupport(author = "${author}")
 <#else>
 @Controller
 </#if>
@@ -50,6 +58,7 @@ public class ${table.controllerName} extends BaseControllerImpl<${entity}, ${tab
 <#--    @Autowired-->
 <#--    SystemDictionaryService dictionaryService;-->
 
+    @ApiOperation(value="${entity}导航页面",notes="${table.comment!}导航页面")
     @RequestMapping(value = "/index",method = RequestMethod.GET)
     public ModelAndView index(){
         ModelAndView modelAndView = new ModelAndView("page/${entity}Index");

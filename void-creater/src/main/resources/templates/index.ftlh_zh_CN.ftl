@@ -13,7 +13,7 @@
          toField = RequestParameters.toField!>
 </#noparse>
 <#list table.fields as field>
-<#if field.propertyName != 'id' && field.propertyName != 'uuid'>
+<#if field.propertyName == 'id' || field.propertyName == 'uuid'>
 <#noparse>
 <#assign idName="</#noparse>${field.propertyName}"/>
 </#if>

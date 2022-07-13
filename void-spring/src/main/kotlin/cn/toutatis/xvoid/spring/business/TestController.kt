@@ -18,8 +18,8 @@ import org.springframework.web.bind.annotation.RestController
  * 测试swagger注解
  */
 @Api(tags = ["测试控制器"], description = "描述测试")
-@RestController
 @ApiSupport(order = 0, author = "Toutatis_Gc")
+@RestController
 class TestController {
 
     @Autowired

@@ -16,6 +16,8 @@ interface ValidationMessage {
 
         const val USER_NOT_EXIST = "用户%s不存在"
 
+        const val USERNAME_BLANK = "用户名不能为空"
+
         const val WRONG_IDENTIFY_FORMAT = "认证格式错误"
 
         const val AUTH_NOT_FOUND = "权限未识别"
