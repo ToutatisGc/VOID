@@ -1,7 +1,7 @@
 package cn.toutatis.xvoid.support.spring.enhance
 
 import cn.toutatis.common.standard.StandardComponentPool
-import cn.toutatis.xvoid.VoidContext
+import cn.toutatis.xvoid.support.VoidContext
 import org.springframework.stereotype.Component
 
 @Component(StandardComponentPool.VOID_AUTO_INSERT_OBJS_COMPONENT)

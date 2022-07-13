@@ -1,4 +1,4 @@
-package cn.toutatis.xvoid
+package cn.toutatis.xvoid.support
 
 import cn.toutatis.common.annotations.database.AutoCreateDataObject
 import cn.toutatis.common.face.VoidContextInterface

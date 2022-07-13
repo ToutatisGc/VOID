@@ -67,13 +67,14 @@ public class BaseControllerImpl<O extends EntityBasicAttribute<O>, SERVICE exten
     @Override
     @ApiOperation("获取实体列表")
     @ApiImplicitParams({
-            @ApiImplicitParam(name="pagingQuery",value="分页对象",required=true,paramType="query",dataTypeClass = PagingQuery.class),
-            @ApiImplicitParam(name="obj",value="操作对象",required=true,paramType="query",dataTypeClass = Object.class)
+            @ApiImplicitParam(name="pagingQuery",value="分页对象",required=false,paramType="query",dataTypeClass = PagingQuery.class),
+            @ApiImplicitParam(name="obj",value="操作对象",required=false,paramType="query",dataTypeClass = Object.class)
     })
     @RequestMapping(value = "/getList",method = RequestMethod.POST)
-    public Result getList(@RequestParam PagingQuery pagingQuery,
-                          @RequestParam O obj
+    public Result getList(@RequestParam(required = false) PagingQuery pagingQuery,
+                          @RequestParam(required = false) O obj
     ) {
+        if (pagingQuery == null){ pagingQuery = new PagingQuery(); }
         String mchId = request.getHeader(StandardFields.VOID_REQUEST_HEADER_MCH_ID);
         Page<O> page;
         if (platformMode && objectToolkit.strIsBlank(mchId)){
@@ -91,11 +92,12 @@ public class BaseControllerImpl<O extends EntityBasicAttribute<O>, SERVICE exten
     }
 
     @Override
+    @ApiOperation("获取单个实体")
     @ApiImplicitParams({
-            @ApiImplicitParam(name="entity",value="操作对象",required=true,paramType="query",dataTypeClass = EntityBasicAttribute.class),
+            @ApiImplicitParam(name="entity",value="操作对象",required=true,paramType="query",dataTypeClass = Object.class),
     })
     @RequestMapping(value = "/getById",method = RequestMethod.POST)
-    public Result getById(O entity) {
+    public Result getById(@ModelAttribute O entity) {
         if (entity == null){ return new ProxyResult(ResultCode.NOT_HAVE_SELECT_DATA); }
         QueryWrapper<O> oQueryWrapper = new QueryWrapper<>(entity);
         if (platformMode){
