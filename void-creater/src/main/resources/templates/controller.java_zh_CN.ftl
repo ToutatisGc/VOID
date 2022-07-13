@@ -14,6 +14,7 @@ import ${package.Service}.${table.serviceName};
 import ${package.Entity}.${entity};
 import cn.toutatis.xvoid.support.spring.annotations.Polymerization;
 import cn.toutatis.xvoid.support.spring.annotations.LogHandle;
+import cn.toutatis.xvoid.support.spring.config.VoidConfiguration;
 <#--import org.springframework.web.bind.annotation.RestController;-->
 <#else>
 import org.springframework.stereotype.Controller;
@@ -55,6 +56,11 @@ public class ${table.controllerName} extends ${superControllerClass} {
 public class ${table.controllerName} extends BaseControllerImpl<${entity}, ${table.serviceName}> {
 </#if>
 
+    /**
+    * 构造器注入配置
+    * @param voidConfiguration
+    */
+    public SystemUserLoginController(VoidConfiguration voidConfiguration) { super(voidConfiguration); }
 <#--    @Autowired-->
 <#--    SystemDictionaryService dictionaryService;-->
 

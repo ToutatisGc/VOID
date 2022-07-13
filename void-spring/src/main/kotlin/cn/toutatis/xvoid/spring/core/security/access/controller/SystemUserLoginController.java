@@ -36,6 +36,10 @@ import javax.servlet.http.HttpServletRequest;
 @RequestMapping("/security/systemUserLogin")
 public class SystemUserLoginController extends BaseControllerImpl<SystemUserLogin, SystemUserLoginService> {
 
+    /**
+     * 构造器注入配置
+     * @param voidConfiguration
+     */
     public SystemUserLoginController(VoidConfiguration voidConfiguration) { super(voidConfiguration); }
 
     @ApiOperation(value="SystemUserLogin导航页面",notes="系统用户类导航页面")
