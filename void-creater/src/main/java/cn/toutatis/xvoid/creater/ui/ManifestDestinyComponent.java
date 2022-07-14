@@ -104,7 +104,7 @@ public class ManifestDestinyComponent {
                         BasicMapper mapper = (BasicMapper) manifestToolkit.getMapper(BasicMapper.class);
                         Parameter parameter = new Parameter();
                         parameter.put("tableName",leftList.getSelectedValue());
-                        List<Map> tableInfo = mapper.getTableInfo(parameter);
+                        List<Map<String,Object>> tableInfo = mapper.getTableInfo(parameter);
                         Object[] columnNames = {"序号","字段名","数据类型","允许NULL","列键","字符集","注释"};
                         Object[][] rowData = new Object[tableInfo.size()][7];
                         for (int i = 0; i < tableInfo.size(); i++) {
@@ -208,7 +208,9 @@ public class ManifestDestinyComponent {
         JTabbedPane jTabbedPane = new JTabbedPane();
         JPanel tableStructPanel = new TableStructWidget().rootPanel;
         JPanel advanceOptionsPanel = new AdvanceOptionsWidget().rootPanel;
+        JPanel JpaEntityFormWidget = new JpaEntityFormWidget().rootPanel;
         jTabbedPane.addTab("表结构生成",tableStructPanel);
+        jTabbedPane.addTab("JPA实体生成",JpaEntityFormWidget);
         jTabbedPane.addTab("高级配置",advanceOptionsPanel);
         content.add(jTabbedPane);
         return content;

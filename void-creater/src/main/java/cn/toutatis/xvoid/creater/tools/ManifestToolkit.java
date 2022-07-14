@@ -120,6 +120,7 @@ public class ManifestToolkit {
      * @param value properties值
      */
     public void saveConfiguration(Properties properties, File outputFile, String key, String value){
+        toolkitLogger.info("[配置文件]保存配置KEY:"+key+",VALUE:"+value);
         properties.setProperty(key,value);
         FileOutputStream fileOutputStream = null;
         try {
