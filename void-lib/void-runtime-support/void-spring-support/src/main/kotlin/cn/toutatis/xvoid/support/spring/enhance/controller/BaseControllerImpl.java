@@ -17,6 +17,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
+import springfox.documentation.annotations.ApiIgnore;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.*;
@@ -91,13 +93,10 @@ public class BaseControllerImpl<O extends EntityBasicAttribute<O>, SERVICE exten
         return result;
     }
 
+    @ApiIgnore
     @Override
-    @ApiOperation("获取单个实体")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name="entity",value="操作对象",required=true,paramType="query",dataTypeClass = Object.class),
-    })
     @RequestMapping(value = "/getById",method = RequestMethod.POST)
-    public Result getById(@ModelAttribute O entity) {
+    public Result getById(O entity) {
         if (entity == null){ return new ProxyResult(ResultCode.NOT_HAVE_SELECT_DATA); }
         QueryWrapper<O> oQueryWrapper = new QueryWrapper<>(entity);
         if (platformMode){

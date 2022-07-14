@@ -9,6 +9,8 @@ import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import javax.swing.text.Document;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.util.Arrays;
 import java.util.List;
@@ -103,29 +105,27 @@ public class TableStructWidget {
 
         /*绑定是否使用Swagger*/
         useSwagger.setSelected(Boolean.parseBoolean(manifestToolkit.getConfigProperties("useSwagger")));
-        useSwagger.addChangeListener(changeEvent -> {
+        useSwagger.addActionListener(e -> {
             manifestToolkit.saveConfiguration("useSwagger",useSwagger.isSelected()+"");
         });
         /*绑定是否使用Lombok*/
         useLombok.setSelected(Boolean.parseBoolean(manifestToolkit.getConfigProperties("useLombok")));
-        useLombok.addChangeListener(changeEvent -> {
+        useLombok.addActionListener(e -> {
             manifestToolkit.saveConfiguration("useLombok",useLombok.isSelected()+"");
         });
         /*绑定是否使用Persistence*/
         usePersistence.setSelected(Boolean.parseBoolean(manifestToolkit.getConfigProperties("usePersistence")));
-        usePersistence.addChangeListener(changeEvent -> {
+        usePersistence.addActionListener(e -> {
             manifestToolkit.saveConfiguration("usePersistence",usePersistence.isSelected()+"");
         });
         /*绑定是否生成Controller*/
         createController.setSelected(Boolean.parseBoolean(manifestToolkit.getConfigProperties("useGenerateController")));
-        createController.addChangeListener(changeEvent -> {
+        createController.addActionListener(e -> {
             manifestToolkit.saveConfiguration("useGenerateController",createController.isSelected()+"");
         });
         /*绑定是否使用JPA*/
         useGenerateJpa.setSelected(Boolean.parseBoolean(manifestToolkit.getConfigProperties("useGenerateJpa")));
-        useGenerateJpa.addChangeListener(changeEvent -> {
-            manifestToolkit.saveConfiguration("useGenerateJpa",useGenerateJpa.isSelected()+"");
-        });
+        useGenerateJpa.addActionListener(e -> manifestToolkit.saveConfiguration("useGenerateJpa",useGenerateJpa.isSelected()+""));
 
         /*绑定开发语言模型*/
         Vector<String> classify =  new Vector<>(2);

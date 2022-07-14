@@ -9,7 +9,7 @@ import java.io.Serializable;
 public enum ConfigurationTable implements Serializable {
 
 //    项目信息
-    APP_NAME("XVOID开发工具包"),
+    APP_NAME("VOID开发工具"),
     COPY_RIGHT_INFO("开发基于Apache 2.0 协议"),
     COPY_RIGHT_INFO_DETAILS(COPY_RIGHT_INFO.info),
     AUTHOR_NAME("Toutatis_Gc"),
@@ -19,7 +19,7 @@ public enum ConfigurationTable implements Serializable {
 //    窗体文字
     ERROR_WINDOW_TITLE("错误信息"),
     NOTIFY_WINDOW_TITLE("提示信息"),
-    LEFT_PANEL_DATABASE_LIST_TITLE("数据库表名"),
+    LEFT_PANEL_DATABASE_LIST_TITLE("数据库表名(双击查看表详情信息)"),
     GENERATE_PACKAGE_INFO_LABEL("生成package路径"),
     SELECTED_DATABASE_LIST_LABEL("当前选择数据表"),
     LEFT_PANEL_DATABASE_CONFIGURATION_BUTTON("数据源配置"),
