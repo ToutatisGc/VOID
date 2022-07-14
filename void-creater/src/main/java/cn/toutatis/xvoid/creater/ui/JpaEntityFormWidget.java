@@ -1,5 +1,6 @@
 package cn.toutatis.xvoid.creater.ui;
 
+import cn.toutatis.xvoid.toolkit.objects.ObjectToolkit;
 import com.alibaba.fastjson.JSONObject;
 
 import javax.swing.*;
@@ -48,7 +49,7 @@ public class JpaEntityFormWidget {
     private JTextField defaultValue;
     private JLabel defaultLabel;
     private JCheckBox extendsBaseProperties;
-    private JCheckBox 自增CheckBox;
+    private JCheckBox autoIncrement;
 
     private final LinkedHashMap<String, JSONObject> fieldMap = new LinkedHashMap<>();
 
@@ -56,12 +57,15 @@ public class JpaEntityFormWidget {
 
         ArrayList<String> strings = new ArrayList<>();
         addFieldButton.addActionListener(actionEvent -> {
+            if ("".equals(fieldName.getText())){ return; }
             JSONObject jsonObject = new JSONObject();
             jsonObject.put("type",fieldType.getSelectedItem());
             jsonObject.put("length",fieldLength.getValue());
             jsonObject.put("isPrim",isPrimKey.isSelected());
             jsonObject.put("nullable",fieldNullable.isSelected());
             jsonObject.put("unique",fieldUnique.isSelected());
+            jsonObject.put("autoIncrement",autoIncrement.isSelected());
+            jsonObject.put("default",defaultValue.getText());
             jsonObject.put("comment",comment.getText());
             fieldMap.put(fieldName.getText(),jsonObject);
             fieldList.setListData(fieldMap.keySet().toArray());
@@ -83,6 +87,8 @@ public class JpaEntityFormWidget {
                 isPrimKey.setSelected(jsonObject.getBoolean("isPrim"));
                 fieldNullable.setSelected(jsonObject.getBoolean("nullable"));
                 fieldUnique.setSelected(jsonObject.getBoolean("unique"));
+                autoIncrement.setSelected(jsonObject.getBoolean("autoIncrement"));
+                defaultValue.setText(jsonObject.getString("default"));
                 comment.setText(jsonObject.getString("comment"));
                 addFieldButton.setText("覆盖保存");
             }
@@ -96,7 +102,9 @@ public class JpaEntityFormWidget {
             isPrimKey.setSelected(false);
             fieldNullable.setSelected(false);
             fieldUnique.setSelected(false);
+            autoIncrement.setSelected(false);
             comment.setText("");
+            defaultValue.setText("");
             fieldList.setListData(fieldMap.keySet().toArray());
             addFieldButton.setText("添加字段");
         });
@@ -117,13 +125,80 @@ public class JpaEntityFormWidget {
         );
 
         generateButton.addActionListener(actionEvent -> {
-            try (Connection connect = manifestToolkit.getConnect();
-                 PreparedStatement preparedStatement = connect.prepareStatement("");
-            ) {
-
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
+            StringBuilder ddl = new StringBuilder("CREATE TABLE ");
+            ddl.append(tableNameText.getText()).append(" (");
+            Object[] keys = fieldMap.keySet().toArray();
+            ArrayList<String> primKeyList = new ArrayList<>();
+            ArrayList<String> uniqueList = new ArrayList<>();
+            for (int i = 0; i < keys.length; i++) {
+                String key = keys[i].toString();
+                JSONObject value = fieldMap.get(key);
+                ddl.append("`").append(key).append("` ");
+                String type = value.getString("type");
+                switch (type){
+                    case "INT":
+                        ddl.append(type);
+                        break;
+                    case "VARCHAR":
+                    default:
+                        ddl.append(type).append("(").append(value.getIntValue("length")).append(") ");
+                        break;
+                }
+                if (value.getBoolean("nullable")){ ddl.append("NOT NULL "); }
+                if (value.getBoolean("autoIncrement")){ ddl.append("AUTO_INCREMENT "); }
+                String aDefault = value.getString("default");
+                if (ObjectToolkit.getInstance().strNotBlank(aDefault)){
+                    ddl.append("DEFAULT ");
+                    if ("VARCHAR".equals(type)){
+                        ddl.append("'").append(aDefault).append("'");
+                    }else{
+                        ddl.append(aDefault);
+                    }
+                }
+                if (i != keys.length -1){
+                    ddl.append(",");
+                }
+                if(value.getBoolean("isPrim")){
+                    primKeyList.add(key);
+                }
+                if(value.getBoolean("unique")){
+                    uniqueList.add(key);
+                }
             }
+            if (primKeyList.size() > 0){
+                ddl.append("PRIMARY KEY (");
+                for (int i = 0; i < primKeyList.size(); i++) {
+                    String key = primKeyList.get(i);
+                    ddl.append("`").append(key).append("`");
+                    if (i != keys.length -1){
+                        ddl.append(",");
+                    }
+                }
+                ddl.append(")");
+                if (uniqueList.size() > 0){
+                    ddl.append(",");
+                }
+            }
+            if (uniqueList.size() > 0){
+                ddl.append("UNIQUE INDEX (");
+                for (int i = 0; i < uniqueList.size(); i++) {
+                    String key = uniqueList.get(i);
+                    ddl.append("`").append(key).append("`");
+                    if (i != keys.length -1){
+                        ddl.append(",");
+                    }
+                }
+                ddl.append(")");
+            }
+            ddl.append(") COMMENT = '").append(tableComment.getText()).append("';");
+            System.err.println(ddl.toString());
+//            try (Connection connect = manifestToolkit.getConnect();
+//                 PreparedStatement preparedStatement = connect.prepareStatement(ddl.toString());
+//            ) {
+//                preparedStatement.execute();
+//            } catch (SQLException throwables) {
+//                throwables.printStackTrace();
+//            }
         });
 
     }
