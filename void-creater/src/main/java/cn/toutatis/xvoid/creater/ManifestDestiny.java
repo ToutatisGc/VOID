@@ -60,7 +60,7 @@ public class ManifestDestiny {
     public static String initPath;
     private static Boolean initComplete = false;
 
-    private static Vector<String> tableList = new Vector<>();
+    public static Vector<String> tableList = new Vector<>();
 
 
     /**
@@ -251,14 +251,7 @@ public class ManifestDestiny {
                 connect = manifestToolkit.getConnect();
                 sqlExecutorFactory = manifestToolkit.getSQLExecutorFactory();
                 sqlExecutor = sqlExecutorFactory.openSession(connect);
-                PreparedStatement preparedStatement = connect.prepareStatement("select table_name from information_schema.tables where table_schema= ?");
-                preparedStatement.setString(1,connect.getCatalog());
-                ResultSet resultSet = preparedStatement.executeQuery();
-                tableList.clear();
-                while (resultSet.next()){
-                    tableList.add(resultSet.getString("table_name"));
-                }
-                ManifestDestinyComponent.changeListData(tableList);
+                refreshTableList();
             } catch (SQLException e) {
                 manifestToolkit.saveConfiguration("lastTimeIsSuccessful","0");
                 manifestToolkit.saveConfiguration("databaseUrl","");
@@ -267,6 +260,15 @@ public class ManifestDestiny {
                 e.printStackTrace();
                 logger.error(e.getMessage());
                 JOptionPane.showMessageDialog(manifest,e.getMessage(),ConfigurationTable.ERROR_WINDOW_TITLE.getInfo(),JOptionPane.ERROR_MESSAGE);
+            }finally {
+                if (connect != null){
+                    try {
+                        connect.close();
+                    } catch (SQLException e) {
+                        e.printStackTrace();
+                        logger.error(e.getMessage());
+                    }
+                }
             }
         });
 
@@ -288,6 +290,23 @@ public class ManifestDestiny {
         dataBaseConfigFrame.setLocationRelativeTo(manifest);
         dataBaseConfigFrame.setVisible(true);
         dataBaseConfigFrame.setAlwaysOnTop(true);
+    }
+
+    public static void refreshTableList(){
+        PreparedStatement preparedStatement = null;
+        try {
+            preparedStatement = connect.prepareStatement("select table_name from information_schema.tables where table_schema= ?");
+            preparedStatement.setString(1,connect.getCatalog());
+            ResultSet resultSet = preparedStatement.executeQuery();
+            tableList.clear();
+            while (resultSet.next()){
+                tableList.add(resultSet.getString("table_name"));
+            }
+            ManifestDestinyComponent.changeListData(tableList);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
     }
 
 }

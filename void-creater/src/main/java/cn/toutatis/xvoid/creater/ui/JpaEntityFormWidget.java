@@ -1,5 +1,6 @@
 package cn.toutatis.xvoid.creater.ui;
 
+import cn.toutatis.xvoid.creater.ManifestDestiny;
 import cn.toutatis.xvoid.toolkit.objects.ObjectToolkit;
 import com.alibaba.fastjson.JSONObject;
 
@@ -123,6 +124,10 @@ public class JpaEntityFormWidget {
         generateStructSameTime.addActionListener(e ->
                 manifestToolkit.saveConfiguration("generateStructSameTime",generateStructSameTime.isSelected()+"")
         );
+        extendsBaseProperties.setSelected(Boolean.parseBoolean(manifestToolkit.getConfigProperties("extendsBaseProperties")));
+        extendsBaseProperties.addActionListener(e ->
+                manifestToolkit.saveConfiguration("extendsBaseProperties",extendsBaseProperties.isSelected()+"")
+        );
 
         generateButton.addActionListener(actionEvent -> {
             StringBuilder ddl = new StringBuilder("CREATE TABLE ");
@@ -137,7 +142,7 @@ public class JpaEntityFormWidget {
                 String type = value.getString("type");
                 switch (type){
                     case "INT":
-                        ddl.append(type);
+                        ddl.append(type).append(" ");
                         break;
                     case "VARCHAR":
                     default:
@@ -155,9 +160,7 @@ public class JpaEntityFormWidget {
                         ddl.append(aDefault);
                     }
                 }
-                if (i != keys.length -1){
-                    ddl.append(",");
-                }
+                ddl.append(",\n");
                 if(value.getBoolean("isPrim")){
                     primKeyList.add(key);
                 }
@@ -165,12 +168,27 @@ public class JpaEntityFormWidget {
                     uniqueList.add(key);
                 }
             }
+            if(Boolean.parseBoolean(manifestToolkit.getConfigProperties("extendsBaseProperties"))){
+                ddl.append(
+                        "rInt int null comment '预留整形值',\n" +
+                        "rStr varchar(255) null comment '预留字符串',\n" +
+                        "createTime datetime not null comment '创建日期',\n" +
+                        "createBy varchar(32)  default 'SYSTEM' null comment '创建操作人',\n" +
+                        "lastUpdateTime datetime not null comment '最后更新日期',\n" +
+                        "updateBy varchar(32) default 'SYSTEM' null comment '更新操作人',\n" +
+                        "version int default 0 not null comment '版本号',\n" +
+                        "status tinyint not null comment '数据状态',\n" +
+                        "logicDeleted tinyint default 0 not null comment '0正常:1删除',\n" +
+                        "remark varchar(255) null comment '备注',\n" +
+                        "belongTo varchar(255) default 'SYSTEM' null comment '归属',"
+                );
+            }
             if (primKeyList.size() > 0){
                 ddl.append("PRIMARY KEY (");
                 for (int i = 0; i < primKeyList.size(); i++) {
                     String key = primKeyList.get(i);
                     ddl.append("`").append(key).append("`");
-                    if (i != keys.length -1){
+                    if (i != primKeyList.size() - 1){
                         ddl.append(",");
                     }
                 }
@@ -184,7 +202,7 @@ public class JpaEntityFormWidget {
                 for (int i = 0; i < uniqueList.size(); i++) {
                     String key = uniqueList.get(i);
                     ddl.append("`").append(key).append("`");
-                    if (i != keys.length -1){
+                    if (i != uniqueList.size() -1){
                         ddl.append(",");
                     }
                 }
@@ -192,13 +210,17 @@ public class JpaEntityFormWidget {
             }
             ddl.append(") COMMENT = '").append(tableComment.getText()).append("';");
             System.err.println(ddl.toString());
-//            try (Connection connect = manifestToolkit.getConnect();
-//                 PreparedStatement preparedStatement = connect.prepareStatement(ddl.toString());
-//            ) {
-//                preparedStatement.execute();
-//            } catch (SQLException throwables) {
-//                throwables.printStackTrace();
-//            }
+            try (Connection connect = manifestToolkit.getConnect();
+                 PreparedStatement preparedStatement = connect.prepareStatement(ddl.toString());
+            ) {
+                preparedStatement.execute();
+                JOptionPane.showMessageDialog(null, "生成表["+tableNameText.getText()+"]成功");
+                ManifestDestiny.tableList.add(tableNameText.getText());
+                ManifestDestinyComponent.changeListData(ManifestDestiny.tableList);
+            } catch (SQLException throwables) {
+                throwables.printStackTrace();
+                JOptionPane.showMessageDialog(null, throwables.getMessage(),"生成失败", JOptionPane.ERROR_MESSAGE);
+            }
         });
 
     }
