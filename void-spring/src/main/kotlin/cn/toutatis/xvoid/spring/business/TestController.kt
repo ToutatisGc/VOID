@@ -11,6 +11,7 @@ import org.springframework.jdbc.core.JdbcTemplate
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestMethod
 import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.servlet.ModelAndView
 
 /**
  * @author Toutatis_Gc
@@ -75,6 +76,12 @@ class TestController {
     fun test6(): ProxyResult {
         val i = 1/0
         return ProxyResult(ResultCode.NORMAL_SUCCESS, "成功", null)
+    }
+
+    @RequestMapping("/idx",method=[RequestMethod.GET])
+    fun test7(): ModelAndView {
+        val modelAndView = ModelAndView("index")
+        return modelAndView
     }
 
 }

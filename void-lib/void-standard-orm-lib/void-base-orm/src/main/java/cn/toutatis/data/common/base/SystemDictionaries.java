@@ -16,17 +16,17 @@ import javax.persistence.*;
 /**
  * @author Toutatis_Gc
  */
-@Getter
-@Setter
-@ToString(callSuper = true)
-@ApiModel(
-        value = "SystemDictionaries 系统字典实体类",
-        description = "系统字典实体类",
-        parent = EntityBasicAttribute.class)
-@Table(name="vb_system_dictionaries")
-@Entity
-@JsonIgnoreProperties({"reservedString","reservedInt"})
-@org.hibernate.annotations.Table(appliesTo = "vb_system_dictionaries", comment = "系统用户类")
+//@Getter
+//@Setter
+//@ToString(callSuper = true)
+//@ApiModel(
+//        value = "SystemDictionaries 系统字典实体类",
+//        description = "系统字典实体类",
+//        parent = EntityBasicAttribute.class)
+//@Table(name="vb_system_dictionaries")
+//@Entity
+//@JsonIgnoreProperties({"reservedString","reservedInt"})
+//@org.hibernate.annotations.Table(appliesTo = "vb_system_dictionaries", comment = "系统用户类")
 public class SystemDictionaries extends EntityBasicAttribute<SystemDictionaries> {
 
     @Id @TableId
