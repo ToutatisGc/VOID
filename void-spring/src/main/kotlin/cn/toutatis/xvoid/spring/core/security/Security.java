@@ -1,7 +1,11 @@
 package cn.toutatis.xvoid.spring.core.security;
 
 import cn.toutatis.core.root.security.handler.LogOutHandler;
+import cn.toutatis.xvoid.spring.PkgInfo;
 import cn.toutatis.xvoid.spring.core.security.handler.SecurityHandler;
+import cn.toutatis.xvoid.toolkit.file.FileToolkit;
+import cn.toutatis.xvoid.toolkit.log.LoggerToolkit;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,6 +20,7 @@ import org.springframework.util.ClassUtils;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.*;
 
 /**
@@ -24,6 +29,8 @@ import java.util.*;
  */
 @Configuration
 public class Security extends WebSecurityConfigurerAdapter {
+
+    private Logger logger = LoggerToolkit.INSTANCE.getLogger(Security.class);
 
     @Autowired
     private VoidSecurityAuthenticationService voidAuthenticationService;
@@ -44,11 +51,10 @@ public class Security extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
 //        禁止csrfFilter
         http.csrf().disable();
-//
         http.headers()
                 .addHeaderWriter(VoidResponse.Companion::cors)
                 .frameOptions().disable();
-//        禁用弹框
+//        禁用Basic Auth
         http.httpBasic().disable();
 //        表单认证
         http.formLogin()
@@ -58,11 +64,14 @@ public class Security extends WebSecurityConfigurerAdapter {
                 .passwordParameter("secret")
                 .successHandler(securityHandler)
                 .failureHandler(securityHandler);
-        http.authorizeRequests().antMatchers(this.getOpenMapping()).permitAll()
-                .and()
-                .authorizeRequests().anyRequest()
+        /*开放路径*/
+        http.authorizeRequests()
+                .antMatchers(this.getOpenMapping())
+                .permitAll();
+        /*基于path的认证*/
+        http.authorizeRequests()
+                .anyRequest()
                 .access("@AntUrlService.hasPermission(request,authentication)");
-
         http.exceptionHandling()
                 .authenticationEntryPoint(securityHandler)
                 .accessDeniedHandler(securityHandler);
@@ -90,30 +99,35 @@ public class Security extends WebSecurityConfigurerAdapter {
     private String[] getOpenMapping(){
         Properties properties = new Properties();
         String[] openMappings = new String[0];
-        String path = Objects.requireNonNull(Objects.requireNonNull(ClassUtils.getDefaultClassLoader()).getResource("")).getPath();
-        File file = new File(path+"openMapping.properties");
+        File file = null;
         try {
-            FileInputStream fileInputStream = new FileInputStream(file);
-            properties.load(fileInputStream);
-            List<String> opens = new ArrayList<>();
-//            String checkTextPath = wechatProperties.getCheckTextPath();
-//            if (!"".equals(checkTextPath)){
-//                opens.add(checkTextPath);
-//            }
-            Set<String> propertyNames = properties.stringPropertyNames();
-            Iterator<String> iterator = propertyNames.iterator();
-            String isOpenField = "OPEN";
-            while (iterator.hasNext()){
-                String next = iterator.next();
-                String isOpen = properties.getProperty(next);
-                if (isOpenField.equalsIgnoreCase(isOpen)){
-                    opens.add(next);
+            file = new File(Objects.requireNonNull(
+                    FileToolkit.INSTANCE.getResourcesFile("openMapping.properties")).toURI()
+            );
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
+        if (file != null && file.exists() && file.isFile()) {
+            try {
+                FileInputStream fileInputStream = new FileInputStream(file);
+                properties.load(fileInputStream);
+                List<String> opens = new ArrayList<>();
+                Set<String> propertyNames = properties.stringPropertyNames();
+                Iterator<String> iterator = propertyNames.iterator();
+                String isOpenField = "OPEN";
+                while (iterator.hasNext()){
+                    String next = iterator.next();
+                    String isOpen = properties.getProperty(next);
+                    if (isOpenField.equalsIgnoreCase(isOpen)){
+                        opens.add(next);
+                        logger.info("["+ PkgInfo.MODULE_NAME+"] 添加开放路径："+next);
+                    }
                 }
+                openMappings = opens.toArray(openMappings);
+            } catch (IOException e) {
+                System.out.println("openMapping.properties not found , replace empty String[]");
+                openMappings = new String[0];
             }
-            openMappings = opens.toArray(openMappings);
-        } catch (IOException e) {
-            System.out.println("openMapping.properties not found , replace empty String[]");
-            openMappings = new String[0];
         }
         return openMappings;
     }
