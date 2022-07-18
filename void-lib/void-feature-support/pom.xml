@@ -47,6 +47,7 @@
         <swagger.version>1.5.22</swagger.version>
         <p6spy.version>3.9.1</p6spy.version>
         <hibernate.version>5.6.7.Final</hibernate.version>
+        <poi.version>5.2.2</poi.version>
 
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
@@ -301,19 +302,19 @@
             </dependency>
             <!--Springboot监控-->
             <!--服务端-->
-            <dependency>
-                <groupId>de.codecentric</groupId>
-                <artifactId>spring-boot-admin-starter-server</artifactId>
-                <version>${springboot.version}</version>
-                <optional>true</optional>
-            </dependency>
-            <!--客户端-->
-            <dependency>
-                <groupId>de.codecentric</groupId>
-                <artifactId>spring-boot-admin-starter-client</artifactId>
-                <version>${springboot.version}</version>
-                <optional>true</optional>
-            </dependency>
+<!--            <dependency>-->
+<!--                <groupId>de.codecentric</groupId>-->
+<!--                <artifactId>spring-boot-admin-starter-server</artifactId>-->
+<!--                <version>${springboot.version}</version>-->
+<!--                <optional>true</optional>-->
+<!--            </dependency>-->
+<!--            &lt;!&ndash;客户端&ndash;&gt;-->
+<!--            <dependency>-->
+<!--                <groupId>de.codecentric</groupId>-->
+<!--                <artifactId>spring-boot-admin-starter-client</artifactId>-->
+<!--                <version>${springboot.version}</version>-->
+<!--                <optional>true</optional>-->
+<!--            </dependency>-->
             <!--lombok注解支持-->
             <dependency>
                 <groupId>org.projectlombok</groupId>
@@ -327,6 +328,18 @@
                 <groupId>io.swagger</groupId>
                 <artifactId>swagger-annotations</artifactId>
                 <version>${swagger.version}</version>
+                <optional>true</optional>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.poi</groupId>
+                <artifactId>poi</artifactId>
+                <version>${poi.version}</version>
+                <optional>true</optional>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.poi</groupId>
+                <artifactId>poi-ooxml</artifactId>
+                <version>${poi.version}</version>
                 <optional>true</optional>
             </dependency>
         </dependencies>
