@@ -18,29 +18,14 @@ public class AccountCheckUserDetails extends SystemUserLogin implements UserDeta
 
     private Collection<? extends GrantedAuthority> authorities;
 
-    private List<JSONObject> remoteDoubleCheckPermissionList;
-
-    public List<JSONObject> getRemoteDoubleCheckPermissionList() {
-        return remoteDoubleCheckPermissionList;
-    }
-
-    public void setRemoteDoubleCheckPermissionList(List<JSONObject> remoteDoubleCheckPermissionList) {
-        this.remoteDoubleCheckPermissionList = remoteDoubleCheckPermissionList;
-    }
-
-    @TableField(exist = false)
     private boolean accountNonExpired;
 
-    @TableField(exist = false)
     private boolean accountNonLocked;
 
-    @TableField(exist = false)
     private boolean credentialsNonExpired = true;
 
-    @TableField(exist = false)
     private boolean enabled;
 
-    @TableField(exist = false)
     private List<String> permissions;
 
     @Override

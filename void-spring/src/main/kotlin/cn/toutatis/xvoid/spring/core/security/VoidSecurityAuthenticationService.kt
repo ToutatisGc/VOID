@@ -135,6 +135,7 @@ class VoidSecurityAuthenticationService : UserDetailsService {
             if (user != null){
                 val accountCheckUserDetails = user as AccountCheckUserDetails
                 accountCheckUserDetails.isEnabled = user.status == DataStatus.SYS_OPEN_0000
+//                accountCheckUserDetails.
                 return accountCheckUserDetails
             }else{
                 throw this.throwInfo(ValidationMessage.USER_NOT_EXIST)
