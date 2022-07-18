@@ -14,7 +14,7 @@ import java.util.List;
  * 账号登录用户信息
  * @author Toutatis_Gc
  */
-public class AccountCheckUserDetails extends SystemUserLogin implements UserDetails {
+public class AccountCheckUserDetails extends SystemUserLogin implements UserDetails,LoginInfo {
 
     private Collection<? extends GrantedAuthority> authorities;
 
@@ -98,6 +98,7 @@ public class AccountCheckUserDetails extends SystemUserLogin implements UserDeta
         this.enabled = enabled;
     }
 
+    @Override
     public List<String> getPermissions() {
         return permissions;
     }
