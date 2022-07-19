@@ -4,12 +4,9 @@ import cn.hutool.core.util.ReflectUtil;
 import cn.toutatis.xvoid.toolkit.file.FileToolkit;
 import cn.toutatis.xvoid.toolkit.log.LoggerToolkit;
 import com.alibaba.fastjson.JSONObject;
-import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.poi.ss.usermodel.*;
-import org.apache.poi.ss.util.CellReference;
 import org.apache.poi.xssf.streaming.SXSSFSheet;
 import org.apache.poi.xssf.streaming.SXSSFWorkbook;
-import org.junit.Assert;
 import org.slf4j.Logger;
 
 import java.io.File;
@@ -25,15 +22,15 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * <p>
- *     POI导出工具类
+ *     数据导出工具类
  *     可以导出Excel、CSV、JSON、XML等格式的文件
  * <p>
  * @author Toutatis_Gc
  * @since  0.0.0-ALPHA
  */
-public class PoiExporter {
+public class DataExporter {
 
-    private static Logger logger = LoggerToolkit.INSTANCE.getLogger(PoiExporter.class);
+    private static Logger logger = LoggerToolkit.INSTANCE.getLogger(DataExporter.class);
 
     public static Sheet defaultStyleSheet(Workbook workbook,String sheetName,PoiStandardModel model) {
         if (workbook instanceof SXSSFWorkbook) {
@@ -73,7 +70,7 @@ public class PoiExporter {
         return cellStyle;
     }
 
-    public static final Integer DEFAULT_THREAD_NUM = 100;
+    public static final Integer DEFAULT_THREAD_NUM = 10;
 
     public static void export(String fileName,String sheetName,PoiStandardModel model){
         long startT = System.currentTimeMillis();
@@ -197,7 +194,7 @@ public class PoiExporter {
         headers.put("name","姓名");
         headers.put("random","随机测试");
         List<JSONObject> data = new ArrayList<>();
-        for (int i = 0; i < 10000; i++) {
+        for (int i = 0; i < 5000; i++) {
             JSONObject jsonObject = new JSONObject(2);
             jsonObject.put("id",i);
             jsonObject.put("name","张三"+i);
