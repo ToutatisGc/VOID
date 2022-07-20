@@ -48,6 +48,7 @@
         <p6spy.version>3.9.1</p6spy.version>
         <hibernate.version>5.6.7.Final</hibernate.version>
         <poi.version>5.2.2</poi.version>
+        <csv.version>1.9.0</csv.version>
 
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
@@ -330,6 +331,7 @@
                 <version>${swagger.version}</version>
                 <optional>true</optional>
             </dependency>
+            <!--文档操作-->
             <dependency>
                 <groupId>org.apache.poi</groupId>
                 <artifactId>poi</artifactId>
@@ -340,6 +342,12 @@
                 <groupId>org.apache.poi</groupId>
                 <artifactId>poi-ooxml</artifactId>
                 <version>${poi.version}</version>
+                <optional>true</optional>
+            </dependency>
+            <dependency>
+                <groupId>org.apache.commons</groupId>
+                <artifactId>commons-csv</artifactId>
+                <version>${csv.version}</version>
                 <optional>true</optional>
             </dependency>
         </dependencies>
