@@ -1,11 +1,15 @@
 package cn.toutatis.xvoid.support.spring.config.orm.mybatisplus.support;
 
 import cn.toutatis.data.common.result.DataStatus;
+import cn.toutatis.xvoid.support.SheetExportType;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+
+import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 /**
  * @author Toutatis_Gc
@@ -45,4 +49,10 @@ public class VoidMybatisServiceImpl<M extends BaseMapper<T>, T> extends ServiceI
             return page;
         }
     }
+
+    @Override
+    public void export(HttpServletResponse response, SheetExportType sheetExportType, List<T> data, String fileName) {
+
+    }
+
 }

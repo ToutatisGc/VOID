@@ -162,7 +162,7 @@ public class ManifestDestiny {
         JComponent leftPanel = ManifestDestinyComponent.leftPanel(tableList,selectTableList);
         leftPanel.setBorder(lineBorder);
         manifest.add(leftPanel, BorderLayout.WEST);
-//        设置顶部菜单栏
+//        设置顶部菜单栏1
         JMenuBar menuBar = ManifestDestinyComponent.menuBar();
         manifest.setJMenuBar(menuBar);
 //        右侧主页面
