@@ -4,25 +4,32 @@ import { LAYOUT } from '/@/router/constant';
 import { t } from '/@/hooks/web/useI18n';
 
 const dashboard: AppRouteModule = {
-  path: '/about',
-  name: 'About',
+  path: '/control',
+  name: 'Control',
   component: LAYOUT,
-  redirect: '/about/index',
+  redirect: '/control/index',
   meta: {
-    hideChildrenInMenu: true,
-    icon: 'simple-icons:about-dot-me',
-    title: t('routes.dashboard.about'),
+    icon: 'material-symbols:view-in-ar-outline-sharp',
+    title: t('routes.basic.control.index'),
     orderNo: 100000,
   },
   children: [
     {
-      path: 'index',
+      path: 'menuSetting',
+      name: 'MenuSetting',
+      component: () => import('/@/views/sys/control/index.vue'),
+      meta: {
+        title: t('routes.basic.control.menuSetting'),
+        icon: 'material-symbols:view-timeline-outline-sharp',
+      },
+    },
+    {
+      path: 'about',
       name: 'AboutPage',
       component: () => import('/@/views/sys/about/index.vue'),
       meta: {
         title: t('routes.dashboard.about'),
         icon: 'simple-icons:about-dot-me',
-        hideMenu: true,
       },
     },
   ],
