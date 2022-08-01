@@ -15,7 +15,7 @@ import { primaryColor } from '../../build/config/themeConfig';
 // ! You need to clear the browser cache after the change
 const setting: ProjectConfig = {
   // Whether to show the configuration button
-  showSettingButton: true,
+  showSettingButton: false,
 
   // Whether to show the theme switch button
   showDarkModeToggle: true,
@@ -32,6 +32,7 @@ const setting: ProjectConfig = {
   // Session timeout processing
   sessionTimeoutProcessing: SessionTimeoutProcessingEnum.ROUTE_JUMP,
 
+  /*主体色*/
   // color
   themeColor: primaryColor,
 
@@ -51,7 +52,7 @@ const setting: ProjectConfig = {
   showLogo: true,
 
   // Whether to show footer
-  showFooter: false,
+  showFooter: true,
 
   // Header configuration
   headerSetting: {
@@ -68,7 +69,7 @@ const setting: ProjectConfig = {
     // Whether to show the full screen button
     showFullScreen: true,
     // Whether to show the document button
-    showDoc: true,
+    showDoc: false,
     // Whether to show the notification button
     showNotice: true,
     // Whether to display the menu search
@@ -118,7 +119,7 @@ const setting: ProjectConfig = {
 
   // Multi-label
   multiTabsSetting: {
-    cache: false,
+    cache: true,
     // Turn on
     show: true,
     // Is it possible to drag and drop sorting tabs
@@ -145,7 +146,7 @@ const setting: ProjectConfig = {
     openPageLoading: true,
 
     // Whether to open the top progress bar
-    openNProgress: false,
+    openNProgress: true,
   },
 
   // Whether to enable KeepAlive cache is best to close during development, otherwise the cache needs to be cleared every time
