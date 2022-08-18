@@ -1,6 +1,5 @@
 package cn.toutatis.xvoid.spring
 
-import cn.toutatis.data.common.security.SystemUserLogin
 import cn.toutatis.xvoid.spring.core.security.access.persistence.SystemUserLoginRepository
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired

@@ -14,10 +14,10 @@
  *    limitations under the License.
  */
 
-package cn.toutatis.data.common.result.branch;
+package cn.toutatis.xvoid.data.common.result.branch;
 
-import cn.toutatis.data.common.result.ResultCode;
-import cn.toutatis.data.common.result.Result;
+import cn.toutatis.xvoid.data.common.result.ResultCode;
+import cn.toutatis.xvoid.data.common.result.Result;
 
 import java.util.Objects;
 

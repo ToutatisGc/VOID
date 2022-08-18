@@ -2,8 +2,8 @@ package cn.toutatis.xvoid.spring.core.exception
 
 import cn.toutatis.common.standard.StandardFields
 import cn.toutatis.xvoid.toolkit.constant.Time
-import cn.toutatis.data.common.result.ProxyResult
-import cn.toutatis.data.common.result.ResultCode
+import cn.toutatis.xvoid.data.common.result.ProxyResult
+import cn.toutatis.xvoid.data.common.result.ResultCode
 import cn.toutatis.xvoid.support.spring.config.VoidConfiguration
 import cn.toutatis.xvoid.toolkit.log.LoggerToolkit
 import com.alibaba.fastjson.JSONObject

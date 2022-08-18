@@ -14,13 +14,30 @@
  *    limitations under the License.
  */
 
-package cn.toutatis.data.annotations;
+package cn.toutatis.xvoid.data.common.result;
 
-import java.lang.annotation.*;
+import java.io.Serializable;
 
-@Documented
-@Retention(RetentionPolicy.RUNTIME)
-@Target({ElementType.METHOD})
-public @interface DataIgnore {
+/**
+ * 如需统一RESTFUL API 则需要统一返回该对象的实例
+ * @author Toutatis_Gc
+ */
+public interface Result extends Serializable {
+
+    /**
+     * @return 返回自定义序列化后的对象
+     */
+    Object serialize();
+
+    /**
+     * @param data 返回数据
+     */
+    void setData(Object data);
+
+    /**
+     * @param resultCode 结果代码
+     * 此方法用以设置返回的结果代码,不同的结果代码会返回不同效果
+     */
+    void setResultCode(ResultCode resultCode);
 
 }

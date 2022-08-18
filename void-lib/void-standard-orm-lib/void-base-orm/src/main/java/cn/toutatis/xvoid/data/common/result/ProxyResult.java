@@ -1,4 +1,4 @@
-package cn.toutatis.data.common.result;
+package cn.toutatis.xvoid.data.common.result;
 
 import cn.toutatis.xvoid.toolkit.log.LoggerToolkit;
 import com.fasterxml.jackson.annotation.JsonIgnore;

@@ -1,8 +1,8 @@
 package cn.toutatis.xvoid.spring.core.security
 
-import cn.toutatis.data.common.result.DataStatus
-import cn.toutatis.data.common.result.ResultCode
-import cn.toutatis.data.common.security.SystemUserLogin
+import cn.toutatis.xvoid.data.common.result.DataStatus
+import cn.toutatis.xvoid.data.common.result.ResultCode
+import cn.toutatis.xvoid.data.common.security.SystemUserLogin
 import cn.toutatis.xvoid.spring.core.security.ValidationMessage.Companion.VALIDATION_SESSION_KEY
 import cn.toutatis.xvoid.spring.core.security.access.entity.AccountCheckUserDetails
 import cn.toutatis.xvoid.spring.core.security.access.persistence.SystemUserLoginMapper

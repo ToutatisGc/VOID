@@ -1,8 +1,6 @@
 package cn.toutatis.xvoid.spring.core.security.access.entity;
 
-import cn.toutatis.data.common.security.SystemUserLogin;
-import com.alibaba.fastjson.JSONObject;
-import com.baomidou.mybatisplus.annotation.TableField;
+import cn.toutatis.xvoid.data.common.security.SystemUserLogin;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
