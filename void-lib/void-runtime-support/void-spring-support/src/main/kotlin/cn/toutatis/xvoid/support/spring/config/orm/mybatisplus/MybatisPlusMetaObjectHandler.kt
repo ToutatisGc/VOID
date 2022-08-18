@@ -1,6 +1,6 @@
 package cn.toutatis.xvoid.support.spring.config.orm.mybatisplus
 
-import cn.toutatis.data.common.result.DataStatus
+import cn.toutatis.xvoid.data.common.result.DataStatus
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler
 import org.apache.ibatis.reflection.MetaObject
 import org.springframework.stereotype.Component

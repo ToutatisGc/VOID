@@ -1,7 +1,7 @@
 package cn.toutatis.xvoid.spring.business
 
-import cn.toutatis.data.common.result.ProxyResult
-import cn.toutatis.data.common.result.ResultCode
+import cn.toutatis.xvoid.data.common.result.ProxyResult
+import cn.toutatis.xvoid.data.common.result.ResultCode
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper
 import com.github.xiaoymin.knife4j.annotations.ApiSupport
 import io.swagger.annotations.Api

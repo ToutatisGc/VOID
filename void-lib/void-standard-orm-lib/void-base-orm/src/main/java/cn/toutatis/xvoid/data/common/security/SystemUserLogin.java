@@ -1,8 +1,7 @@
-package cn.toutatis.data.common.security;
+package cn.toutatis.xvoid.data.common.security;
 
-import cn.toutatis.data.common.EntityBasicAttribute;
+import cn.toutatis.xvoid.data.common.EntityBasicAttribute;
 import cn.toutatis.xvoid.toolkit.constant.Time;
-import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.fasterxml.jackson.annotation.JsonIgnore;

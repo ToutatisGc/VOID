@@ -15,7 +15,7 @@
  */
 
 
-package cn.toutatis.data.common.result;
+package cn.toutatis.xvoid.data.common.result;
 
 /**
  * @author Toutatis_Gc

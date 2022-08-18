@@ -1,4 +1,4 @@
-package cn.toutatis.data.common.result;
+package cn.toutatis.xvoid.data.common.result;
 
 import com.baomidou.mybatisplus.annotation.EnumValue;
 

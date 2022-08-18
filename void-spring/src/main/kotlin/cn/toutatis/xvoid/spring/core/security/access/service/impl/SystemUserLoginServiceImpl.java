@@ -1,6 +1,6 @@
 package cn.toutatis.xvoid.spring.core.security.access.service.impl;
 
-import cn.toutatis.data.common.security.SystemUserLogin;
+import cn.toutatis.xvoid.data.common.security.SystemUserLogin;
 import cn.toutatis.xvoid.spring.core.security.access.persistence.SystemUserLoginMapper;
 import cn.toutatis.xvoid.spring.core.security.access.service.SystemUserLoginService;
 import cn.toutatis.xvoid.support.spring.config.orm.mybatisplus.support.VoidMybatisServiceImpl;

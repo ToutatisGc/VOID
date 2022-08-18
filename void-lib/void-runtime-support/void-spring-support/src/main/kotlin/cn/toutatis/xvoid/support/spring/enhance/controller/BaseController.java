@@ -1,10 +1,7 @@
 package cn.toutatis.xvoid.support.spring.enhance.controller;
 
-import cn.toutatis.data.common.result.Result;
+import cn.toutatis.xvoid.data.common.result.Result;
 import cn.toutatis.xvoid.support.spring.config.orm.mybatisplus.support.PagingQuery;
-import com.alibaba.fastjson.JSONObject;
-
-import java.util.List;
 
 /**
  * @author Toutatis_Gc

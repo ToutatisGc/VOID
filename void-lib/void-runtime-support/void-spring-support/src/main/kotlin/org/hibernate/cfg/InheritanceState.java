@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Map;
 import javax.persistence.*;
 
-import cn.toutatis.data.common.EntityBasicAttribute;
+import cn.toutatis.xvoid.data.common.EntityBasicAttribute;
 import org.hibernate.AnnotationException;
 import org.hibernate.annotations.common.reflection.XAnnotatedElement;
 import org.hibernate.annotations.common.reflection.XClass;

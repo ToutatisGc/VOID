@@ -1,6 +1,6 @@
 package cn.toutatis.xvoid.support.spring.config.orm.mybatisplus.support;
 
-import cn.toutatis.data.common.result.DataStatus;
+import cn.toutatis.xvoid.data.common.result.DataStatus;
 import cn.toutatis.xvoid.support.SheetExportType;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;

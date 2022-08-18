@@ -1,15 +1,9 @@
-package cn.toutatis.data.common.base;
+package cn.toutatis.xvoid.data.common.base;
 
-import cn.toutatis.data.common.EntityBasicAttribute;
+import cn.toutatis.xvoid.data.common.EntityBasicAttribute;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
-import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 
