@@ -15,6 +15,7 @@ const currentState = ref(LoginStateEnum.LOGIN);
 
 export function useLoginState() {
   function setLoginState(state: LoginStateEnum) {
+    console.log(state);
     currentState.value = state;
   }
 
