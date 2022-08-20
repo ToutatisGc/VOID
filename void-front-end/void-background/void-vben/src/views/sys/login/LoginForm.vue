@@ -1,7 +1,7 @@
 <template>
   <LoginFormTitle v-show="getShow" class="enter-x" />
   <Form
-    class="p-4 enter-x"
+    class="p-4 enter-x bg-grey-500"
     :model="formData"
     :rules="getFormRules"
     ref="formRef"
@@ -48,27 +48,27 @@
       <Button type="primary" size="large" block @click="handleLogin" :loading="loading">
         {{ t('sys.login.loginButton') }}
       </Button>
-      <Button size="large" class="mt-4 enter-x" block @click="handleRegister">
+       <Button size="large" class="mt-4 enter-x" block @click="setLoginState(LoginStateEnum.REGISTER)">
         {{ t('sys.login.registerButton') }}
       </Button>
     </FormItem>
-<!--    <ARow class="enter-x">
-      <ACol :md="8" :xs="24">
+    <ARow class="enter-x flex justify-center">
+      <ACol :md="11" :xs="24">
         <Button block @click="setLoginState(LoginStateEnum.MOBILE)">
           {{ t('sys.login.mobileSignInFormTitle') }}
         </Button>
       </ACol>
-      <ACol :md="8" :xs="24" class="!my-2 !md:my-0 xs:mx-0 md:mx-2">
+      <ACol :md="11" :xs="24" class="!my-2 !md:my-0 xs:mx-0 md:mx-2">
         <Button block @click="setLoginState(LoginStateEnum.QR_CODE)">
           {{ t('sys.login.qrSignInFormTitle') }}
         </Button>
       </ACol>
-      <ACol :md="7" :xs="24">
-        <Button block @click="setLoginState(LoginStateEnum.REGISTER)">
-          {{ t('sys.login.registerButton') }}
-        </Button>
-      </ACol>
-    </ARow>-->
+<!--      <ACol :md="7" :xs="24">-->
+<!--        <Button block @click="setLoginState(LoginStateEnum.REGISTER)">-->
+<!--          {{ t('sys.login.registerButton') }}-->
+<!--        </Button>-->
+<!--      </ACol>-->
+    </ARow>
 
     <Divider class="enter-x">{{ t('sys.login.otherSignIn') }}</Divider>
 

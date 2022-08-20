@@ -68,7 +68,7 @@ export function configThemePlugin(isBuild: boolean): Plugin[] {
         'item-active-bg': '#111b26',
         'app-content-background': '#1e1e1e',
         'tree-node-selected-bg': '#11263c',
-
+        'dialog':'#000000',
         'alert-success-border-color': '#274916',
         'alert-success-bg-color': '#162312',
         'alert-success-icon-color': '#49aa19',
