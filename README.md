@@ -2,7 +2,7 @@
 
 #### Author:Toutatis_Gc
 
-![banner](docs/asserts/images/banner.jpg)Void帮助您创建以Spring Boot/Vert.x为基础驱动的生产级Web服务，它对Spring Boot/Vert.x平台采取了支持和增强的功能,以便新用户和现有用户可以快速搭建服务.
+![banner](docs/asserts/images/banner.jpg)VOID帮助您创建以Spring Boot/Vert.X为基础驱动的生产级Web服务，它对Spring Boot/Vert.X平台采取了支持和增强的功能,以便新用户和现有用户可以快速搭建服务.
 
 
 
@@ -27,7 +27,7 @@
 
 ## #安装和开始
 
-​		每一个子包下都有对于该包的说明,具体可以参考每一个包下的README.md文件.
+每一个子包下都有对于该包的说明,具体可以参考每一个包下的README.md文件.
 
 
 
@@ -39,8 +39,6 @@
 暂无
 ```
 
-
-
 2.编写启动类
 
 [SpringBoot]
@@ -49,7 +47,7 @@
 暂无
 ```
 
-[Vert.x]
+[Vert.X]
 
 ```
 暂无
@@ -81,7 +79,7 @@
 
 ​		使用VOID不需要从源代码开始构建,如果您想尝试或改进版本,可以使用Maven 3+构建并发布到本地Maven缓存中.
 
-​		您还需要JDK 1.8或以上
+​		您还需要JDK 1.8或以上版本
 
 ```bash
 #void-lib目录下
@@ -94,35 +92,20 @@ mvn clean install -Dgpg.skip
 
 ​		VOID中的模块在此快速的概述.
 
-#### void-lib ↓ 
-
-库根目录,包含了所有模块
-
-##### 	void-feature-support
-
-​	此库提供了对Spring Boot,Spring Cloud,Vert.x的依赖管理器,相关插件以及必要依赖包.
-
-##### 	void-runtime-support → void-vertx-runtime-support
-
-​	Vert.x相关支持
-
-##### 	void-common[未上传]
-
-​	此库包含了常用函数以及部分增强功能.
-
-
-
-#### void-vertx
-
-此库包含了Vert.x可运行基础服务.
+|    模块名称    | 完成情况    | 用途                                                         |
+| :------------: | :---------- | :----------------------------------------------------------- |
+|      docs      | ❗[不断补充] | [文档资源]文档资源以及使用说明                               |
+|  void-creater  | ❗[进行中]   | [框架生成器]已经完成了后端类的生成,前端应当可生成多种模板    |
+| void-front-end | ❗🔽[进行中]  | [前端部分]正在完善后台 [[文档地址]](./void-front-end/README.md) |
+|    void-lib    | ❗🔽[进行中]  | [依赖以及库支持]库根目录,包含了所有底层模块 [[文档地址]](./void-lib/README.md) |
+|  void-spring   | ❗[进行中]   | [基础框架]SpringBoot基础框架,拆箱即用                        |
+|   void-vertx   | ❗[进行中]   | [基础框架]Vert.X基础框架,拆箱即用                            |
 
 
 
 ## #示例[暂无]
 
-void-samples 提供了相关功能的示例,要运行示例,请下载相关文件夹并且导入IDE 查阅相关使用和查看依赖关系.
-
-
+docs 提供了相关功能的示例,要运行示例,请下载相关文件夹并且导入IDE 查阅相关使用和查看依赖关系.
 
 ## #许可证
 
