@@ -48,11 +48,11 @@
       <Button type="primary" size="large" block @click="handleLogin" :loading="loading">
         {{ t('sys.login.loginButton') }}
       </Button>
-      <!-- <Button size="large" class="mt-4 enter-x" block @click="handleRegister">
+      <Button size="large" class="mt-4 enter-x" block @click="handleRegister">
         {{ t('sys.login.registerButton') }}
-      </Button> -->
+      </Button>
     </FormItem>
-    <ARow class="enter-x">
+<!--    <ARow class="enter-x">
       <ACol :md="8" :xs="24">
         <Button block @click="setLoginState(LoginStateEnum.MOBILE)">
           {{ t('sys.login.mobileSignInFormTitle') }}
@@ -68,16 +68,14 @@
           {{ t('sys.login.registerButton') }}
         </Button>
       </ACol>
-    </ARow>
+    </ARow>-->
 
     <Divider class="enter-x">{{ t('sys.login.otherSignIn') }}</Divider>
 
     <div class="flex justify-evenly enter-x" :class="`${prefixCls}-sign-in-way`">
-      <GithubFilled />
       <WechatFilled />
       <AlipayCircleFilled />
-      <GoogleCircleFilled />
-      <TwitterCircleFilled />
+<!--      <GithubFilled />-->
     </div>
   </Form>
 </template>
