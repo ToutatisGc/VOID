@@ -44,14 +44,16 @@
     <modules>
         <!--通用工具包-->
         <module>void-toolkit</module>
+        <!--公共部分-->
+        <module>void-common</module>
         <!--redis模块-->
         <module>void-redis</module>
         <!--缓存-->
         <module>void-cache</module>
         <!--websocket模块-->
         <module>void-websocket</module>
-        <!--公共部分-->
-        <module>void-common</module>
+        <!--爬虫-->
+        <module>void-creeper</module>
 
     </modules>
 
