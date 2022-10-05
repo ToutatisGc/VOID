@@ -1,4 +1,4 @@
-package cn.toutatis.common.face
+package cn.toutatis.xvoid.common.face
 
 interface VoidContextInterface {
 

@@ -1,6 +1,6 @@
 package cn.toutatis.xvoid.support.spring.enhance.controller;
 
-import cn.toutatis.common.standard.StandardFields;
+import cn.toutatis.xvoid.common.standard.StandardFields;
 import cn.toutatis.xvoid.data.common.result.Actions;
 import cn.toutatis.xvoid.data.common.EntityBasicAttribute;
 import cn.toutatis.xvoid.data.common.result.ProxyResult;

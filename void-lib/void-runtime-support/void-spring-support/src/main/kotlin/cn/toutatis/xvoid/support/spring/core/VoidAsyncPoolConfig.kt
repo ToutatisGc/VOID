@@ -1,6 +1,6 @@
 package cn.toutatis.xvoid.support.spring.core
 
-import cn.toutatis.common.standard.StandardComponentPool
+import cn.toutatis.xvoid.common.standard.StandardComponentPool
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor

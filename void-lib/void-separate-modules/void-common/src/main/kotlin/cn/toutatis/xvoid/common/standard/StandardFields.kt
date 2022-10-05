@@ -1,4 +1,4 @@
-package cn.toutatis.common.standard
+package cn.toutatis.xvoid.common.standard
 
 /**
  * 标准使用字段
