@@ -3,7 +3,7 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>void-lib</artifactId>
+        <artifactId>void-separate-modules</artifactId>
         <groupId>cn.toutatis</groupId>
         <version>0.0.0-ALPHA</version>
     </parent>
@@ -12,9 +12,25 @@
     <artifactId>void-thirdparty</artifactId>
 
     <properties>
+        <xvoid.version>0.0.0-ALPHA</xvoid.version>
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
+<!--        <kotlin.version>1.6.10</kotlin.version>-->
     </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>cn.toutatis</groupId>
+            <artifactId>void-toolkit</artifactId>
+            <version>${xvoid.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>cn.toutatis</groupId>
+            <artifactId>void-common</artifactId>
+            <version>${xvoid.version}</version>
+        </dependency>
+    </dependencies>
 
     <build>
         <sourceDirectory>${project.basedir}/src/main/kotlin</sourceDirectory>

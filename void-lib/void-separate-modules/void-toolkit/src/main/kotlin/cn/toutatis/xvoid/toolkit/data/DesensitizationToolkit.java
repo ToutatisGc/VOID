@@ -1,4 +1,4 @@
-package cn.toutatis.xvoid.toolkit.objects;
+package cn.toutatis.xvoid.toolkit.data;
 
 
 import cn.hutool.core.util.ReflectUtil;
