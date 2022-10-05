@@ -1,7 +1,7 @@
 package cn.toutatis.xvoid.support.spring.core.aop.filters
 
 import cn.hutool.core.util.IdUtil
-import cn.toutatis.common.standard.StandardFields
+import cn.toutatis.xvoid.common.standard.StandardFields
 import cn.toutatis.xvoid.support.spring.config.VoidConfiguration
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component

@@ -1,15 +1,13 @@
 package cn.toutatis.xvoid.support.spring.core.aop.interceptor
 
-import cn.toutatis.common.standard.StandardFields
+import cn.toutatis.xvoid.common.standard.StandardFields
 import cn.toutatis.xvoid.support.PkgInfo.MODULE_NAME
 import cn.toutatis.xvoid.support.spring.config.VoidConfiguration
 import cn.toutatis.xvoid.toolkit.constant.Time
 import cn.toutatis.xvoid.toolkit.log.LoggerToolkit
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 import org.springframework.web.method.HandlerMethod
 import org.springframework.web.servlet.HandlerInterceptor
-import javax.annotation.PostConstruct
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 

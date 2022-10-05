@@ -1,6 +1,6 @@
 package cn.toutatis.xvoid.support.spring.enhance
 
-import cn.toutatis.common.standard.StandardComponentPool
+import cn.toutatis.xvoid.common.standard.StandardComponentPool
 import cn.toutatis.xvoid.support.VoidContext
 import org.springframework.stereotype.Component
 

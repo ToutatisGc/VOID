@@ -1,7 +1,7 @@
 package cn.toutatis.xvoid.support
 
-import cn.toutatis.common.annotations.database.AutoCreateDataObject
-import cn.toutatis.common.face.VoidContextInterface
+import cn.toutatis.xvoid.common.annotations.database.AutoCreateDataObject
+import cn.toutatis.xvoid.common.face.VoidContextInterface
 import cn.toutatis.xvoid.support.spring.enhance.AutoInsertDatabaseComponent
 import cn.toutatis.xvoid.support.spring.config.VoidContextConfigBuilder
 import cn.toutatis.xvoid.toolkit.clazz.AnnotationToolkit

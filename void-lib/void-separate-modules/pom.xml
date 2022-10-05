@@ -54,6 +54,8 @@
         <module>void-websocket</module>
         <!--爬虫-->
         <module>void-creeper</module>
+        <!--第三方接入-->
+        <module>void-thirdparty</module>
 
     </modules>
 

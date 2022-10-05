@@ -1,4 +1,4 @@
-package cn.toutatis.common.annotations.database
+package cn.toutatis.xvoid.common.annotations.database
 
 import java.lang.annotation.Inherited
 
