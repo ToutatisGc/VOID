@@ -50,6 +50,7 @@
         <poi.version>5.2.2</poi.version>
         <csv.version>1.9.0</csv.version>
         <jsoup.version>1.15.2</jsoup.version>
+        <okhttp.version>5.0.0-alpha.10</okhttp.version>
 
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
@@ -158,6 +159,12 @@
                 <version>${junit.version}</version>
                 <optional>true</optional>
                 <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.squareup.okhttp3</groupId>
+                <artifactId>okhttp</artifactId>
+                <version>${okhttp.version}</version>
+                <optional>true</optional>
             </dependency>
             <!--Google工具包-->
             <dependency>

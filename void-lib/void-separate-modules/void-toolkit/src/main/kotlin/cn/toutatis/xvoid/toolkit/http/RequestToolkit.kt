@@ -35,7 +35,7 @@ object RequestToolkit {
      * @param request servlet请求对象
      * @return 获取真实ip地址,不返回内网地址
      */
-    fun getIpAddr(request: HttpServletRequest): String {
+    fun getIpAddress(request: HttpServletRequest): String {
         var ip: String = request.getHeader("X-Real-IP")
         if ("" != ip && !"unknown".equals(ip, ignoreCase = true)) return ip
         ip = request.getHeader("X-Forwarded-For")
