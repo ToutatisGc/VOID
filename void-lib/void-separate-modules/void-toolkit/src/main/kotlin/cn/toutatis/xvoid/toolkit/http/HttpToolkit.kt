@@ -1,7 +1,11 @@
 package cn.toutatis.xvoid.toolkit.http
 
 import cn.toutatis.xvoid.toolkit.log.LoggerToolkit
+import okhttp3.OkHttpClient
+import okhttp3.Request
 import org.slf4j.Logger
+import java.io.IOException
+import java.util.*
 
 
 /**
@@ -13,26 +17,73 @@ object HttpToolkit {
 
     private val logger: Logger = LoggerToolkit.getLogger(HttpToolkit::class.java)
 
+    private lateinit var httpClient:OkHttpClient
+
+    init {
+        /*TODO 获取环境配置*/
+        httpClient = OkHttpClient()
+    }
+
+    /**
+     * 同步GET请求
+     */
+    fun syncGet(url:String,params:Map<String,String>?,headers:Map<String,String>? = null):String?{
+        val builder: Request.Builder = Request.Builder()
+        val urlWithParams = concatMapParameters(url, params)
+        builder.url(urlWithParams)
+        this.addHeader(builder,headers)
+        val request: Request = builder.build()
+        val responseBody = getResponseBody(request)
+        System.err.println(responseBody)
+        return  responseBody
+    }
+
+    fun asyncGet(){
+
+    }
 
     /**
      * @param url get地址
      * @param queries get参数
      * @return 拼接get的请求地址和参数
      */
-    fun concatMapParameters(url: String?, queries: Map<String, String>?): String {
+    private fun concatMapParameters(url: String, queries: Map<String, String>?): String {
         val stringBuilder = StringBuilder(url)
-        if (queries != null && queries.keys.size > 0) {
-            var firstFlag = true
+        if (queries != null && queries.isNotEmpty()) {
+            var firstParameterFlag = true
             for ((key, value) in queries) {
-                if (firstFlag) {
+                if (firstParameterFlag) {
                     stringBuilder.append("?$key=$value")
-                    firstFlag = false
+                    firstParameterFlag = false
                 } else {
                     stringBuilder.append("&$key=$value")
                 }
             }
         }
         return stringBuilder.toString()
+    }
+
+    /**
+     * @param request 请求
+     * @return 获取请求内容
+     */
+    private fun getResponseBody(request: Request): String? {
+        var message: String? = null
+        try {
+            httpClient.newCall(request).execute().use { response ->
+                if (response.isSuccessful) message = Objects.requireNonNull(response.body).string()
+            }
+        } catch (e: IOException) {
+            logger.error("对外请求失败,请查询原因[URL:" + request.url.toString() + "]")
+        }
+        return message
+    }
+
+    /**
+     * 填充头部
+     */
+    private fun addHeader(request: Request.Builder,headers:Map<String,String>?){
+        headers?.forEach { (k, v) -> request.addHeader(k, v) }
     }
 
 }
