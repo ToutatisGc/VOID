@@ -78,7 +78,9 @@ public object Validator {
      * @return 对象是否为空
      */
     fun objIsNull(o: Any?): Boolean {
-        return o == null
+        if (o == null) return true
+        return if (o is Map<*,*> && o.isEmpty()) true
+        else o is List<*> && o.isEmpty()
     }
 
     /**
