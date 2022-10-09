@@ -6,11 +6,11 @@ import cn.toutatis.xvoid.data.common.EntityBasicAttribute;
 import cn.toutatis.xvoid.data.common.result.ProxyResult;
 import cn.toutatis.xvoid.data.common.result.ResultCode;
 import cn.toutatis.xvoid.data.common.result.Result;
-import cn.toutatis.xvoid.toolkit.objects.ObjectToolkit;
 import cn.toutatis.xvoid.support.spring.config.VoidConfiguration;
 import cn.toutatis.xvoid.support.spring.config.orm.mybatisplus.support.CommonWrapper;
 import cn.toutatis.xvoid.support.spring.config.orm.mybatisplus.support.PagingQuery;
 import cn.toutatis.xvoid.support.spring.config.orm.mybatisplus.support.VoidMybatisService;
+import cn.toutatis.xvoid.toolkit.validator.Validator;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.annotations.ApiImplicitParam;
@@ -35,8 +35,6 @@ import java.util.*;
 public class BaseControllerImpl<O extends EntityBasicAttribute<O>, SERVICE extends VoidMybatisService<O>> implements BaseController<O> {
 
     private final Logger logger = LoggerFactory.getLogger(getClass());
-
-    private final ObjectToolkit objectToolkit = ObjectToolkit.getInstance();
 
     @Autowired
     private HttpServletRequest request;
@@ -75,7 +73,7 @@ public class BaseControllerImpl<O extends EntityBasicAttribute<O>, SERVICE exten
         if (pagingQuery == null){ pagingQuery = new PagingQuery(); }
         String mchId = request.getHeader(StandardFields.VOID_REQUEST_HEADER_MCH_ID);
         Page<O> page;
-        if (platformMode && objectToolkit.strIsBlank(mchId)){
+        if (platformMode && Validator.strIsBlank(mchId)){
             return new ProxyResult(ResultCode.NOT_TENANT);
         }else if(!platformMode){
             page = service.getList(pagingQuery,obj);
@@ -97,7 +95,7 @@ public class BaseControllerImpl<O extends EntityBasicAttribute<O>, SERVICE exten
         QueryWrapper<O> oQueryWrapper = new QueryWrapper<>(entity);
         if (platformMode){
             String mchId = request.getHeader(StandardFields.VOID_REQUEST_HEADER_MCH_ID);
-            if (objectToolkit.strNotBlank(mchId)){
+            if (Validator.strNotBlank(mchId)){
                 oQueryWrapper.eq("mchId",mchId);
             }else {
                 return new ProxyResult(ResultCode.NOT_TENANT);

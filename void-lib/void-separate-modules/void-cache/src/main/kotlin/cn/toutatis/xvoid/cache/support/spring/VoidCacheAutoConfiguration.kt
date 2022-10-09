@@ -5,9 +5,9 @@ import cn.toutatis.xvoid.cache.core.VCache
 import cn.toutatis.xvoid.cache.core.VoidCache
 import cn.toutatis.xvoid.cache.core.ehcache.VoidEhCacheManager
 import cn.toutatis.xvoid.cache.support.CacheType
-import cn.toutatis.xvoid.toolkit.objects.ObjectToolkit
 import cn.toutatis.xvoid.toolkit.file.FileToolkit
 import cn.toutatis.xvoid.toolkit.log.LoggerToolkit
+import cn.toutatis.xvoid.toolkit.validator.Validator
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Bean
@@ -27,9 +27,8 @@ class VoidCacheAutoConfiguration {
     @Autowired
     private lateinit var voidCacheConfiguration: VoidCacheConfiguration
 
-    private val fileToolkit = FileToolkit.INSTANCE
+    private val fileToolkit = FileToolkit
 
-    private val objectToolkit = ObjectToolkit.getInstance()
 
     /**
      * 初始化缓存管理器
@@ -47,7 +46,7 @@ class VoidCacheAutoConfiguration {
                     throw IllegalArgumentException("cacheFileConfig.configName must end with .xml")
                 }
                 var configPath = cacheFileConfig.configPath
-                if (objectToolkit.strIsBlank(configPath)) {
+                if (Validator.strIsBlank(configPath)) {
                     configPath = fileToolkit.getRuntimePath(javaClass)
                 }
                 val file = File(configPath + "/" + cacheFileConfig.configName)

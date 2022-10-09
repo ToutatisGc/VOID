@@ -27,7 +27,7 @@ class VoidRedisBuilder{
      */
     private var configPath = "void-redis.json"
 
-    private val fileToolkit = FileToolkit.INSTANCE
+    private val fileToolkit = FileToolkit
 
     /**
      * 默认使用Lettuce作为客户端

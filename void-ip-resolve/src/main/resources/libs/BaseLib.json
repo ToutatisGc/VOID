@@ -1,0 +1,28 @@
+{
+  "HELP": {
+    "type": "command",
+    "description": "获取帮助信息",
+    "class": "cn.toutatis.xvoid.resolve.ip.commands.commandLib.BaseLib",
+    "method": "help",
+    "args": {
+      "s": {
+        "required": true,
+        "description": "显示精简命令"
+      }
+    }
+  },
+  "H": {
+    "type": "alias",
+    "value": "HELP"
+  },
+  "EXIT": {
+    "type": "command",
+    "description": "退出程序",
+    "class": "cn.toutatis.xvoid.resolve.ip.commands.commandLib.BaseLib",
+    "method": "exit"
+  },
+  "Q":{
+    "type": "alias",
+    "value": "EXIT"
+  }
+}
