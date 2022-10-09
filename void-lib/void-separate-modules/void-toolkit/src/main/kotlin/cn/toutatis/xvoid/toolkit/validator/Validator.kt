@@ -23,6 +23,7 @@ public object Validator {
      * @param o 可转String的object
      * @return 返回自然情况下是否为空
      */
+    @JvmStatic
     fun strNotBlank(o: Any?): Boolean {
         if(o == null){ return false }
         val s = o.toString().trim()
@@ -33,6 +34,7 @@ public object Validator {
      * @param o 可转String的object
      * @return 返回是否是空
      */
+    @JvmStatic
     fun strIsBlank(o: Any?): Boolean {
         val s = o.toString() ?: return true
         val trim = s.trim { it <= ' ' }.lowercase()
@@ -44,6 +46,7 @@ public object Validator {
      * @param obj 实体类
      * @return 字段是否为空
      */
+    @JvmStatic
     fun objFieldNotNull(obj: Any?): Boolean {
         if (obj != null) {
             val objClass: Class<*> = obj.javaClass
@@ -77,6 +80,7 @@ public object Validator {
      * @param o 实体类
      * @return 对象是否为空
      */
+    @JvmStatic
     fun objIsNull(o: Any?): Boolean {
         if (o == null) return true
         return if (o is Map<*,*> && o.isEmpty()) true
@@ -87,6 +91,7 @@ public object Validator {
      * @param o 实体类
      * @return 对象是否不为空
      */
+    @JvmStatic
     fun objNotNull(o: Any?): Boolean {
         return !objIsNull(o)
     }
@@ -95,6 +100,7 @@ public object Validator {
      * @param params 多个判断参数
      * @return 查询参数中是否有Null值或者空白
      */
+    @JvmStatic
     fun parametersHaveNull(vararg params: Any): Boolean {
         var b = false
         for (o in params) {
@@ -110,6 +116,7 @@ public object Validator {
      * @param str 字符串
      * @return 字符串是否为数字
      */
+    @JvmStatic
     fun strIsNumber(str:String): Boolean {
         val m: Matcher = numPattern.matcher(str)
         return m.matches()

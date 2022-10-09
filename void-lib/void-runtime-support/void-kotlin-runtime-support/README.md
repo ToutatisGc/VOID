@@ -7,8 +7,8 @@
     <plugin>
             <groupId>org.jetbrains.kotlin</groupId>
             <artifactId>kotlin-maven-plugin</artifactId>
-        <plugins>
-<plugin>
+    <plugin>
+<plugins>
 `
 
 如果作为dependency引入,应当在build标签下配置为完整的kotlin插件配置

@@ -14,9 +14,7 @@ import java.util.*
  * @author Toutatis_Gc
  * 文件工具箱
  */
-enum class FileToolkit {
-
-    INSTANCE;
+object FileToolkit {
 
     private val logger = LoggerFactory.getLogger(FileToolkit::class.java)
 
