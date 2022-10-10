@@ -29,7 +29,7 @@ import java.util.concurrent.*;
  */
 public class DataExporter {
 
-    private static Logger logger = LoggerToolkit.INSTANCE.getLogger(DataExporter.class);
+    private static Logger logger = LoggerToolkit.getLogger(DataExporter.class);
 
     public static Sheet defaultStyleSheet(Workbook workbook,String sheetName,PoiStandardModel model) {
         if (workbook instanceof SXSSFWorkbook) {

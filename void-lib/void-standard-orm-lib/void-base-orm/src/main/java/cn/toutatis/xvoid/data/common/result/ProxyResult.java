@@ -16,7 +16,7 @@ import org.slf4j.Logger;
         description = "Controller标准返回结果,经过 ResponseResultDispatcherAdvice 分发到派生类")
 public class ProxyResult implements Result {
 
-    private final Logger logger = LoggerToolkit.INSTANCE.getLogger(this.getClass());
+    private final Logger logger = LoggerToolkit.getLogger(this.getClass());
 
     @ApiModelProperty(name="状态码",required=true,example = "NORMAL_SUCCESS")
     private ResultCode resultCode;
