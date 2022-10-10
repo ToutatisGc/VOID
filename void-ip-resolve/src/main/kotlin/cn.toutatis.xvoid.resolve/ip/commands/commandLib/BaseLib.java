@@ -15,7 +15,7 @@ import static cn.toutatis.xvoid.resolve.ip.PkgInfo.MODULE_NAME;
  */
 public class BaseLib extends CommandHelper implements BaseCommand {
 
-    private final static Logger logger = LoggerToolkit.INSTANCE.getLogger(BaseLib.class);
+    private final static Logger logger = LoggerToolkit.getLogger(BaseLib.class);
 
     public static void exit(String target,Object args){
         boolean modea = IPResolver.Companion.getModea();
