@@ -1,4 +1,4 @@
-package cn.toutatis.ip.scan
+package cn.toutatis.xvoid.resolve.ip.scan
 
 import cn.toutatis.xvoid.resolve.ip.IPResolver.Companion.config
 import com.alibaba.fastjson.JSONArray
@@ -10,7 +10,9 @@ import java.util.concurrent.TimeUnit
 import java.util.regex.Matcher
 import java.util.regex.Pattern
 
-
+/**
+ * 第三方解析IP
+ */
 class UrlPoolScanner constructor(private val urlPool:JSONArray) {
 
     companion object{

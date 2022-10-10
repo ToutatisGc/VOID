@@ -1,6 +1,5 @@
 package cn.toutatis.xvoid.resolve.ip.commands
 
-import cn.toutatis.xvoid.toolkit.validator.Validator
 import com.alibaba.fastjson.JSONObject
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
@@ -70,20 +69,8 @@ class CommandInterpreter(private val commandTable:JSONObject) {
             }
             val clazz = Class.forName(commandStruct.getString("class"))
             val methodName = commandStruct.getOrDefault("method", "execute") as String
-            val declaredMethod : Method
-            if (Validator.strNotBlank(target) && Validator.objIsNull(args)){
-                declaredMethod = clazz.getDeclaredMethod(methodName,String::class.java)
-                declaredMethod.invoke(null,target)
-            }else if (Validator.strNotBlank(target) && Validator.objNotNull(args)){
-                declaredMethod = clazz.getDeclaredMethod(methodName,String::class.java,Any::class.java)
-                declaredMethod.invoke(null,target,args)
-            }else if(Validator.strIsBlank(target) && Validator.objNotNull(args)){
-                declaredMethod = clazz.getDeclaredMethod(methodName,Any::class.java)
-                declaredMethod.invoke(null,args)
-            }else{
-                declaredMethod = clazz.getDeclaredMethod(methodName)
-                declaredMethod.invoke(null)
-            }
+            val declaredMethod : Method = clazz.getDeclaredMethod(methodName,String::class.java,Any::class.java)
+            declaredMethod.invoke(null,target,args)
         }else{
             finalPrintOut("未实现的命令 $head")
         }
@@ -99,6 +86,7 @@ class CommandInterpreter(private val commandTable:JSONObject) {
 //        }else{
 //
 //        }
+
     }
 
     /**

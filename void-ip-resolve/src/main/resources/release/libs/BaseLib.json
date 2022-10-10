@@ -7,6 +7,7 @@
     "args": {
       "s": {
         "required": true,
+        "fullName": "shortDetails",
         "description": "显示精简命令"
       }
     }

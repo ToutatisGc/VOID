@@ -1,4 +1,4 @@
-package cn.toutatis.ip.commands.commandLib.dns.ali
+package cn.toutatis.xvoid.resolve.ip.commands.commandLib.dns.ali
 
 data class AliCloudDnsObj(val recordId :String, val name:String,val domain:String,val value:String,val type:String,val remark:String?){
 

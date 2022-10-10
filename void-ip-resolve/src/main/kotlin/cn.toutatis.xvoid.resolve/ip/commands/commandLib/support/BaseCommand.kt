@@ -1,8 +1,13 @@
-package cn.toutatis.ip.commands.commandLib.support
+package cn.toutatis.xvoid.resolve.ip.commands.commandLib.support
 
 interface BaseCommand {
 
-    fun execute(target:String?,args:Any?): Any?
+    companion object{
 
-    fun execute(): Any?
+        fun execute(target:String?,args:Any?): Any?{
+            System.err.println("cmd")
+            return null
+        }
+    }
+
 }
