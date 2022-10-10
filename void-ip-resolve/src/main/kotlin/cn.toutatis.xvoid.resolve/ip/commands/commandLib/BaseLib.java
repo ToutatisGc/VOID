@@ -1,8 +1,8 @@
 package cn.toutatis.xvoid.resolve.ip.commands.commandLib;
 
+import cn.toutatis.xvoid.resolve.ip.IPResolver;
 import cn.toutatis.xvoid.resolve.ip.commands.commandLib.support.BaseCommand;
 import cn.toutatis.xvoid.resolve.ip.commands.commandLib.support.CommandHelper;
-import cn.toutatis.xvoid.resolve.ip.IPResolver;
 import cn.toutatis.xvoid.toolkit.log.LoggerToolkit;
 import com.alibaba.fastjson.JSONObject;
 import org.slf4j.Logger;
@@ -38,7 +38,7 @@ public class BaseLib extends CommandHelper implements BaseCommand {
                         StringBuilder sb = new StringBuilder("\t\t-");
                         sb.append(akey);
                         JSONObject arg = innerArgs.getJSONObject(akey);
-                        Boolean required = arg.getBoolean("required");
+                        Boolean required =(Boolean) arg.getOrDefault("required",false);
                         if (required){
                             sb.append("[*]");
                         }
