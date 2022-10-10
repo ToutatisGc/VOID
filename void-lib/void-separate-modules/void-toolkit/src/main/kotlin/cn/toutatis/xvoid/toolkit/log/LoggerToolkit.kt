@@ -9,10 +9,12 @@ import org.slf4j.LoggerFactory
  */
 object LoggerToolkit {
 
+    @JvmStatic
     fun getLogger(name: String): Logger{
         return LoggerFactory.getLogger(name)
     }
 
+    @JvmStatic
     fun getLogger(clazz: Class<*>): Logger{
         return LoggerFactory.getLogger(clazz)
     }

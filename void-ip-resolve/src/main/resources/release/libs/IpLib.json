@@ -1,0 +1,13 @@
+{
+  "SCAN": {
+    "type": "command",
+    "description": "获取公网IP地址",
+    "class": "cn.toutatis.xvoid.resolve.ip.commands.commandLib.dns.IpLib",
+    "args": {
+      "p": {
+        "fullName": "pingIp",
+        "description": "获取公网IP后是否ping公网IP"
+      }
+    }
+  }
+}

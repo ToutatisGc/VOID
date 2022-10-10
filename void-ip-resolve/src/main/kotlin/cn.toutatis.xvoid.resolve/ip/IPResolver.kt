@@ -23,7 +23,7 @@ import kotlin.system.exitProcess
  * 在此文件运行main方法
  * */
 fun main(args: Array<String>) {
-    IPResolver(true)
+    IPResolver(false)
 }
 
 internal object PkgInfo {
@@ -125,12 +125,9 @@ class IPResolver(mode: Boolean, private val params: Map<String, String>? = null)
         commandInterpreter.execute(command)
     }
 
-
-
     private fun loadCommandLibrary():CommandInterpreter{
         val fileList = ArrayList<File>()
-        val libsUrl = fileToolkit.getResourcesFile("libs")
-        val libs = File(libsUrl!!.toURI())
+        val libs = this.getFile("libs")
         this.findFiles(fileList,libs)
         val tmpLib = JSONObject(16)
         val keySort = ArrayList<String>(16)
@@ -204,6 +201,16 @@ class IPResolver(mode: Boolean, private val params: Map<String, String>? = null)
         }
     }
 
+    fun getFile(filename:String):File{
+        val file:File = if (runTypeIsJar){
+            val runtimePath = fileToolkit.getRuntimePath(true)
+            File("${runtimePath}/${RELEASE_DIR}/${filename}")
+        }else{
+            File(fileToolkit.getResourcesFile("${RELEASE_DIR}/${filename}")!!.toURI())
+        }
+        return file
+    }
+
     /**
      * 加载必要配置文件
      */
@@ -251,6 +258,14 @@ class IPResolver(mode: Boolean, private val params: Map<String, String>? = null)
                     val name = innerFile.name
                     if (name.startsWith("${RELEASE_DIR}/") && !name.endsWith("/")){
                         val jarResourcesStream = fileToolkit.getJarResourceAsStream(name)!!
+                        val split = name.split("/")
+                        var path = runtimePath
+                        for (i in split.indices){
+                            if (i != split.lastIndex){
+                                path+= "/${split[i]}"
+                                File(path).let { if (!it.exists()){ it.mkdir() } }
+                            }
+                        }
                         val nFile = File("$runtimePath/${name}")
                         if (!nFile.exists()){
                             val fileOutputStream = FileOutputStream(nFile)

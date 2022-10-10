@@ -20,7 +20,7 @@
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
-        <main.class>cn.toutatis.IPRefreshTaskKt</main.class>
+        <main.class>cn.toutatis.xvoid.resolve.ip.IPResolverKt</main.class>
         <kotlin.compiler.incremental>true</kotlin.compiler.incremental>
     </properties>
 
@@ -54,6 +54,12 @@
             <plugin>
                 <groupId>org.jetbrains.kotlin</groupId>
                 <artifactId>kotlin-maven-plugin</artifactId>
+                <version>1.6.10</version>
+                <configuration>
+                    <args>
+                        <arg>-Xjvm-default=enable</arg>
+                    </args>
+                </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

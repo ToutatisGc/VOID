@@ -2,7 +2,7 @@ package cn.toutatis.ip.tools
 
 import java.util.*
 
-enum class OSTools {
+enum class OSToolkit {
 
     INSTANCE;
 
