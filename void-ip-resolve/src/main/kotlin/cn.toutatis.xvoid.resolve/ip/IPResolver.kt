@@ -192,6 +192,7 @@ class IPResolver(mode: Boolean, private val params: Map<String, String>? = null)
                             try {
                                 execute(input)
                             }catch (e:Exception){
+                                e.printStackTrace()
                                 logger.info("${e.javaClass }:" + e.message)
                             }
                         }
