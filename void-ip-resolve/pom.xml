@@ -7,7 +7,7 @@
     <parent>
         <artifactId>void-kotlin-runtime-support</artifactId>
         <groupId>cn.toutatis</groupId>
-        <version>1.6.10</version>
+        <version>1.6.21</version>
     </parent>
 
     <groupId>cn.toutatis</groupId>
@@ -54,7 +54,6 @@
             <plugin>
                 <groupId>org.jetbrains.kotlin</groupId>
                 <artifactId>kotlin-maven-plugin</artifactId>
-                <version>1.6.10</version>
                 <configuration>
                     <args>
                         <arg>-Xjvm-default=enable</arg>

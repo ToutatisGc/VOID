@@ -4,7 +4,7 @@ package cn.toutatis.xvoid.resolve.ip.commands.commandLib.dns.ali
 
 import cn.toutatis.xvoid.resolve.ip.IPResolver.Companion.commandInterpreter
 import cn.toutatis.xvoid.resolve.ip.IPResolver.Companion.config
-import cn.toutatis.xvoid.resolve.ip.commands.commandLib.dns.IpLib
+import cn.toutatis.xvoid.toolkit.validator.Validator
 import com.alibaba.fastjson.JSONObject
 import com.aliyun.alidns20150109.Client
 import com.aliyun.alidns20150109.models.DescribeDomainRecordInfoRequest
@@ -36,9 +36,9 @@ class AliCloudDNS {
         client = Client(config)
     }
 
-    fun getDescribeDomainRecordsRequest(params:JSONObject): Unit {
-        val domainName = params.getString("d")
-        if (domainName != null){
+    fun getDescribeDomainRecordsRequest(): Unit {
+        val domainName = config.getProperty("Resolve-Domain")
+        if (Validator.strNotBlank(domainName)){
             val describeDomainRecordsRequest = DescribeDomainRecordsRequest()
             describeDomainRecordsRequest.domainName = domainName
             val describeDomainRecords = client.describeDomainRecords(describeDomainRecordsRequest)
@@ -54,7 +54,7 @@ class AliCloudDNS {
             alreadyCheck = domainName
             this.getLastRecords()
         }else{
-            logger.info("必要参数 domain [-d] 不存在.")
+            logger.info("必要配置[Resolve-Domain]不存在")
         }
     }
 
@@ -109,7 +109,7 @@ class AliCloudDNS {
             if (value != null){
                 updateDomainRecordRequest.value = value
             }else{
-                val lastRecord = IpLib.getLastRecord()
+                val lastRecord = AliIntervene.getLastRecord()
                 if (lastRecord != null){
                     updateDomainRecordRequest.value = lastRecord
                 }else{

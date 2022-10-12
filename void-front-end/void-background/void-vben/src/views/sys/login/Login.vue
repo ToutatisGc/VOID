@@ -7,6 +7,7 @@
     </span>
     <div :class="`${prefixCls}_dark`" class="relative lg:top-1/3 top-15 lg:w-500px lg:h-auto py-5 mx-auto px-6
      bg-gray-100 rounded-2xl shadow-md">
+      <div style="background-color:red;height:50px;width:50px;position:absolute;right:15px"></div>
       <LoginForm />
       <RegisterForm />
       <ForgetPasswordForm />
