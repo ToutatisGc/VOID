@@ -7,10 +7,18 @@ import com.alibaba.fastjson.JSONObject;
 
 public class DNSLib extends CommandHelper implements BaseCommand {
 
-    private AliCloudDNS aliCloudDNS = new AliCloudDNS();
+    private static AliCloudDNS aliCloudDNS = new AliCloudDNS();
 
     public static void execute(String target, Object args){
         JSONObject analysisArgs = analysisArgs(args);
+        if(analysisArgs.getBooleanValue("last")){
+            aliCloudDNS.getLastRecords();
+        }else{
+            aliCloudDNS.getDescribeDomainRecordsRequest();
+        }
     }
 
+    public static void childMenuUpdateDNS(String target, Object args){
+        aliCloudDNS.modifyRecord(target,analysisArgs(args));
+    }
 }

@@ -8,11 +8,11 @@
 
     <groupId>cn.toutatis</groupId>
     <artifactId>void-kotlin-runtime-support</artifactId>
-    <version>1.6.10</version>
+    <version>1.6.21</version>
     <packaging>pom</packaging>
 
     <properties>
-        <kotlin.version>1.6.10</kotlin.version>
+        <kotlin.version>1.6.21</kotlin.version>
     </properties>
 
     <dependencyManagement>
