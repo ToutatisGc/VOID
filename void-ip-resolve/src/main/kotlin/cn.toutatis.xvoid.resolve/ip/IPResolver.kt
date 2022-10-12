@@ -24,7 +24,7 @@ import kotlin.system.exitProcess
  * 在此文件运行main方法
  * */
 fun main(args: Array<String>) {
-    IPResolver(false)
+    IPResolver(true)
 }
 
 internal object PkgInfo {
@@ -75,6 +75,16 @@ class IPResolver(mode: Boolean, private val params: Map<String, String>? = null)
         var statusSign = 0
 
         var modea: Boolean = false
+
+        fun getFile(filename:String):File{
+            val file:File = if (runTypeIsJar){
+                val runtimePath = fileToolkit.getRuntimePath(true)
+                File("${runtimePath}/${RELEASE_DIR}/${filename}")
+            }else{
+                File(fileToolkit.getResourcesFile("${RELEASE_DIR}/${filename}")!!.toURI())
+            }
+            return file
+        }
     }
 
     init {
@@ -112,7 +122,7 @@ class IPResolver(mode: Boolean, private val params: Map<String, String>? = null)
 
     private fun createCircleTask(): Runnable{
         return Runnable {
-            commandInterpreter.auto("auto-resolve.playbook")
+            commandInterpreter.play("simple-auto-resolve.playbook")
         }
     }
 
@@ -130,7 +140,7 @@ class IPResolver(mode: Boolean, private val params: Map<String, String>? = null)
 
     private fun loadCommandLibrary():CommandInterpreter{
         val fileList = ArrayList<File>()
-        val libs = this.getFile("libs")
+        val libs = getFile("libs")
         this.findFiles(fileList,libs)
         val tmpLib = JSONObject(16)
         val keySort = ArrayList<String>(16)
@@ -205,15 +215,6 @@ class IPResolver(mode: Boolean, private val params: Map<String, String>? = null)
         }
     }
 
-    fun getFile(filename:String):File{
-        val file:File = if (runTypeIsJar){
-            val runtimePath = fileToolkit.getRuntimePath(true)
-            File("${runtimePath}/${RELEASE_DIR}/${filename}")
-        }else{
-            File(fileToolkit.getResourcesFile("${RELEASE_DIR}/${filename}")!!.toURI())
-        }
-        return file
-    }
 
     /**
      * 加载必要配置文件

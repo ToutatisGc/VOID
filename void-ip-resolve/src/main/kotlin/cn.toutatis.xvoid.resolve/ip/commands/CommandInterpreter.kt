@@ -1,6 +1,10 @@
 package cn.toutatis.xvoid.resolve.ip.commands
 
+import cn.toutatis.xvoid.resolve.ip.IPResolver
+import cn.toutatis.xvoid.resolve.ip.PkgInfo.MODULE_NAME
+import cn.toutatis.xvoid.toolkit.validator.Validator
 import com.alibaba.fastjson.JSONObject
+import com.alibaba.fastjson.parser.Feature
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import java.lang.reflect.Method
@@ -83,14 +87,18 @@ class CommandInterpreter(private val commandTable:JSONObject) {
     /**
      *
      */
-    fun auto(playbook: String) {
-        System.err.println(playbook)
-//        if (IPResolver.runTypeIsJar){
-//            IPResolver.fileToolkit.getResourcesFile("")
-//        }else{
-//
-//        }
-
+    fun play(playbook: String) {
+        logger.info("[${MODULE_NAME}]加载剧本:${playbook}")
+        val playbook = JSONObject.parseObject(IPResolver.getFile("/playbook/$playbook").readText(Charsets.UTF_8), Feature.OrderedField)
+        playbook.forEach { k, v ->
+            v as JSONObject
+            val args = v.getString("args")
+            var cmd = k
+            if (Validator.strNotBlank(args)){
+                cmd+= " $args"
+            }
+            IPResolver.commandInterpreter.execute(cmd)
+        }
     }
 
     /**
