@@ -1,0 +1,44 @@
+{
+  "DNS": {
+    "type": "command",
+    "description": "获取阿里云解析域名地址",
+    "class": "cn.toutatis.xvoid.resolve.ip.commands.commandLib.dns.DNSLib",
+    "args": {
+      "l": {
+        "fullName": "last",
+        "description": "获取最后解析地址"
+      },
+      "a": {
+        "fullName": "all",
+        "description": "获取全部解析记录,包括没有备注的地址"
+      }
+    },
+    "next": {
+      "command": "UPDNS",
+      "args": {
+
+      }
+    }
+  },
+  "UPDNS": {
+    "type": "command",
+    "description": "更新阿里云解析域名地址",
+    "class": "cn.toutatis.xvoid.resolve.ip.commands.commandLib.dns.DNSLib",
+    "method": "updateDNS",
+    "args": {
+      "s": {
+        "required": true,
+        "fullName": "serialNumber",
+        "description": "dns命令解析地址的序号"
+      },
+      "f": {
+        "fullName": "force",
+        "description": "强制修改没有备注的解析地址"
+      },
+      "a": {
+        "fullName": "address",
+        "description": "将云解析的地址修改为此地址,缺省则使用scan命令获取的外网地址"
+      }
+    }
+  }
+}

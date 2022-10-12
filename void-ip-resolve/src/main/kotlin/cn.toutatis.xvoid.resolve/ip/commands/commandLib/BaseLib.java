@@ -48,8 +48,17 @@ public class BaseLib extends CommandHelper implements BaseCommand {
                     });
                 }
             }
+//            System.out.println();
         });
     }
+
+//    public static void next(String target,Object args){
+//        StringBuilder sb = new StringBuilder("输入命令[");
+//        JSONObject commandTable = IPResolver.Companion.getCommandInterpreter().getCommandTable();
+//        JSONObject targetCommand = commandTable.getJSONObject(target);
+//        JSONObject next = targetCommand.getJSONObject("next");
+//        logger.info(sb.toString());
+//    }
 
 
 }

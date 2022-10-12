@@ -75,6 +75,10 @@ class CommandInterpreter(private val commandTable:JSONObject) {
             finalPrintOut("未实现的命令 $head")
         }
     }
+//
+//    fun getNext(command: String){
+//
+//    }
 
     /**
      *
