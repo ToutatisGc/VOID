@@ -1,7 +1,6 @@
 package cn.toutatis.xvoid.resolve.ip.commands.commandLib.dns.ali
 
-
-
+import cn.toutatis.xvoid.resolve.ip.IPResolver
 import cn.toutatis.xvoid.resolve.ip.IPResolver.Companion.commandInterpreter
 import cn.toutatis.xvoid.resolve.ip.IPResolver.Companion.config
 import cn.toutatis.xvoid.toolkit.validator.Validator
@@ -36,7 +35,10 @@ class AliCloudDNS {
         client = Client(config)
     }
 
-    fun getDescribeDomainRecordsRequest(): Unit {
+    /**
+     * 获取阿里云云解析域名带有_CROSS_备注的记录
+     */
+    fun getDescribeDomainRecordsRequest(args: JSONObject): Unit {
         val domainName = config.getProperty("Resolve-Domain")
         if (Validator.strNotBlank(domainName)){
             val describeDomainRecordsRequest = DescribeDomainRecordsRequest()
@@ -49,7 +51,11 @@ class AliCloudDNS {
             for (index in 0 until size){
                 val record = domainRecords.record[index]
                 val aliCloudDnsObj = AliCloudDnsObj(record.recordId,record.RR,record.domainName,record.value,record.type,record.remark)
-                lastRequestRecords[index+1] = aliCloudDnsObj
+                if ("_CROSS_" == record.remark){
+                    lastRequestRecords[index+1] = aliCloudDnsObj
+                }else if (args.getBooleanValue("a")){
+                    lastRequestRecords[index+1] = aliCloudDnsObj
+                }
             }
             alreadyCheck = domainName
             this.getLastRecords()
@@ -64,11 +70,9 @@ class AliCloudDNS {
                 logger.info("[ ${entry.key} ]${entry.value}")
             }
             logger.info("${alreadyCheck}下有${lastRequestRecords.size}条记录.")
-            logger.info("输入命令 updns -ali <序号> [-auto 自动修改(传入时间 例如 24H)] \r\n" +
-                    " [-name 主机记录][-domain 域名(默认使用ipscan命令所得值)][-value 记录值][-type 类型]")
         }else{
             if (alreadyCheck == ""){
-                logger.info("请使用dns <-d 域名> 查询域名下解析记录.")
+                logger.info("请使用[dns]命令查询域名下解析记录.")
             }else{
                 logger.info("${alreadyCheck}所属域名没有记录.")
             }
@@ -76,14 +80,14 @@ class AliCloudDNS {
     }
 
     fun modifyRecord(n0: String?, args: JSONObject): Unit {
-        val orderNum = args.getInteger("ali")
+        val orderNum = args.getInteger("s")
         if (orderNum == null || orderNum > lastRequestRecords.size){
             logger.info("请检查序号是否正确.")
         }else{
             if (orderNum == 0){
                 args["allChange"] = true
                 lastRequestRecords.entries.forEach {
-                    args["ali"] = it.key
+                    args["s"] = it.key
                     this.modifyOneRecord(args)
                 }
             }else{
@@ -94,7 +98,7 @@ class AliCloudDNS {
     }
 
     private fun modifyOneRecord(args: JSONObject): Unit {
-        val orderNum = args.getInteger("ali")
+        val orderNum = args.getInteger("s")
         val dnsObj = lastRequestRecords[orderNum]
         if (dnsObj == null){
             logger.info("未查询到此条目.")
@@ -103,17 +107,17 @@ class AliCloudDNS {
             logger.info("选择条目：$dnsObj")
         }
         val remark = dnsObj.remark
-        if (remark?.startsWith("PN") == true || args.getBooleanValue("f")){
+        if (remark?.startsWith("_CROSS_") == true || args.getBooleanValue("f")){
             val updateDomainRecordRequest = UpdateDomainRecordRequest()
-            val value = args.getString("value")
-            if (value != null){
-                updateDomainRecordRequest.value = value
+            val address = args.getString("a")
+            if (address != null){
+                updateDomainRecordRequest.value = address
             }else{
-                val lastRecord = AliIntervene.getLastRecord()
-                if (lastRecord != null){
+                val lastRecord = IPResolver.lastRecord
+                if (Validator.strNotBlank(lastRecord)){
                     updateDomainRecordRequest.value = lastRecord
                 }else{
-                    commandInterpreter.execute("ipscan -p false")
+                    commandInterpreter.execute("scan")
                     this.modifyOneRecord(args)
                     return
                 }

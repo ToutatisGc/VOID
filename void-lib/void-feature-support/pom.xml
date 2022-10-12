@@ -18,8 +18,8 @@
         <java11.version>11</java11.version>
         <java17.version>17</java17.version>
 
-        <kotlin.version>1.6.10</kotlin.version>
-        <kotlinx.version>1.6.3</kotlinx.version>
+        <kotlin.version>1.6.21</kotlin.version>
+        <kotlinx.version>1.6.4</kotlinx.version>
         <kotlin.code.style>official</kotlin.code.style>
 
         <springboot.version>2.7.1</springboot.version>

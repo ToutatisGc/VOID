@@ -3,6 +3,7 @@ package cn.toutatis.xvoid.resolve.ip
 import cn.toutatis.xvoid.resolve.ip.PkgInfo.MODULE_NAME
 import cn.toutatis.xvoid.resolve.ip.commands.CommandInterpreter
 import cn.toutatis.xvoid.toolkit.file.FileToolkit
+import cn.toutatis.xvoid.toolkit.validator.Validator
 import com.alibaba.fastjson.JSON
 import com.alibaba.fastjson.JSONArray
 import com.alibaba.fastjson.JSONObject
@@ -39,6 +40,8 @@ class IPResolver(mode: Boolean, private val params: Map<String, String>? = null)
 
     companion object{
 
+        var lastRecord: String? = null
+
         /*日志*/
         private val logger: Logger = LoggerFactory.getLogger(IPResolver::class.java)
 
@@ -54,7 +57,7 @@ class IPResolver(mode: Boolean, private val params: Map<String, String>? = null)
         private const val RELEASE_DIR = "release"
 
         /*命令库前缀*/
-        private const val CMD_SUFFIX = ".json"
+        private const val CMD_SUFFIX = ".lib"
 
         /*运行类型是否为jar包*/
         var runTypeIsJar = true
@@ -241,6 +244,12 @@ class IPResolver(mode: Boolean, private val params: Map<String, String>? = null)
         val properties = Properties()
         config?.let { if (it.exists()){ properties.load(FileInputStream(it)) } }
         params?.forEach { (t, u) -> properties.setProperty(t,u) }
+        if (Validator.strIsBlank(properties.getProperty("Ali-Access-Key-Id"))
+            || Validator.strIsBlank(properties.getProperty("ALi-Access-Key-Secret"))
+            || Validator.strIsBlank(properties.getProperty("Resolve-Domain"))){
+            logger.error("[${MODULE_NAME}]请检查配置文件缺失值")
+            exitProcess(-1)
+        }
         Companion.config = properties
     }
 

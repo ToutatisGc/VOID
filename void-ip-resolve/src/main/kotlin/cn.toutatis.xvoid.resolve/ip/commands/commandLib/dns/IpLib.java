@@ -23,9 +23,6 @@ public class IpLib extends CommandHelper {
 
     private final static Logger logger = LoggerToolkit.getLogger(IpLib.class);
 
-
-    private static String lastRecord = null;
-
     private static final UrlPoolScanner urlPoolScanner = new UrlPoolScanner(IPResolver.urlPool);
 
     public static void execute(String target,Object args) {
@@ -36,9 +33,9 @@ public class IpLib extends CommandHelper {
             if (ipGroup.size() == 1){
                 Map.Entry<String, Integer> ip = (Map.Entry<String, Integer>) ipGroup.get(0);
                 logger.info("当前公网IP为["+ip.getKey()+"]");
-                lastRecord = ip.getKey();
+                IPResolver.Companion.setLastRecord(ip.getKey());
                 if (choosePingIp){
-                    pingIP(lastRecord);
+                    pingIP( IPResolver.Companion.getLastRecord());
                 }
             }else{
                 logger.info("当前命中目标"+ipGroup.size()+"个,按优先级排列.");
@@ -48,7 +45,7 @@ public class IpLib extends CommandHelper {
                     String defaultChooseFirstAddress = IPResolver.config.getProperty("Default-Choose-First-Address");
                     if (Boolean.parseBoolean(defaultChooseFirstAddress)){
                         logger.info("当前公网IP为["+ip.getKey()+"]");
-                        lastRecord = ip.getKey();
+                        IPResolver.Companion.setLastRecord(ip.getKey());
                     }
                 }
             }
@@ -57,14 +54,10 @@ public class IpLib extends CommandHelper {
         }
     }
 
-    public static String getLastRecord() {
-        return lastRecord;
-    }
-
-
     private static void pingIP(String lastRecord){
         logger.info("WAITING PING URL:"+lastRecord);
         try {
+            // ISSUE linux ping
             Process process = Runtime.getRuntime().exec("ping "+lastRecord);
             BufferedReader br = new BufferedReader(new InputStreamReader(process.getInputStream(), Charset.forName("GBK")));
             String line = br.readLine();

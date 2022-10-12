@@ -11,14 +11,14 @@ public class DNSLib extends CommandHelper implements BaseCommand {
 
     public static void execute(String target, Object args){
         JSONObject analysisArgs = analysisArgs(args);
-        if(analysisArgs.getBooleanValue("last")){
+        if(analysisArgs.getBooleanValue("l")){
             aliCloudDNS.getLastRecords();
         }else{
-            aliCloudDNS.getDescribeDomainRecordsRequest();
+            aliCloudDNS.getDescribeDomainRecordsRequest(analysisArgs);
         }
     }
 
-    public static void childMenuUpdateDNS(String target, Object args){
+    public static void updateDNS(String target, Object args){
         aliCloudDNS.modifyRecord(target,analysisArgs(args));
     }
 }

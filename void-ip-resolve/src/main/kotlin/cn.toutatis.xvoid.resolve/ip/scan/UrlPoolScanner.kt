@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONArray
 import okhttp3.*
 import org.slf4j.LoggerFactory
 import java.io.IOException
+import java.net.SocketTimeoutException
 import java.util.*
 import java.util.concurrent.TimeUnit
 import java.util.regex.Matcher
@@ -63,19 +64,24 @@ class UrlPoolScanner constructor(private val urlPool:JSONArray) {
             val call = httpClient.newCall(request)
             call.enqueue(object : Callback {
                 override fun onResponse(call: Call, response: Response) {
-                    val responseBody = response.body!!.string()
-                    val pattern: Pattern = Pattern.compile(IP_REGEX)
-                    val matcher: Matcher = pattern.matcher(responseBody)
-                    if (matcher.find()){
-                        val group = matcher.group()
-                        if (timesHash.containsKey(group)){
-                            timesHash[group] = timesHash[group]!!+1
-                        }else{
-                            timesHash[group] = 1
+                    try {
+                        val responseBody = response.body.string()
+                        val pattern: Pattern = Pattern.compile(IP_REGEX)
+                        val matcher: Matcher = pattern.matcher(responseBody)
+                        if (matcher.find()){
+                            val group = matcher.group()
+                            if (timesHash.containsKey(group)){
+                                timesHash[group] = timesHash[group]!!+1
+                            }else{
+                                timesHash[group] = 1
+                            }
                         }
+                        requestFinishNum++
+                        logger.info("解析成功 [${call.request().url}] RATE:${requestFinishNum}/${urlPool.size} √")
+                    }catch (e: SocketTimeoutException){
+                        requestFinishNum++
+                        logger.warn("解析失败 [${call.request().url}] RATE:${requestFinishNum}/${urlPool.size} ×")
                     }
-                    requestFinishNum++
-                    logger.info("解析成功 [${call.request().url}] RATE:${requestFinishNum}/${urlPool.size} √")
                 }
 
                 override fun onFailure(call: Call, e: IOException) {
