@@ -3,6 +3,7 @@ package cn.toutatis.xvoid.resolve.ip.commands.commandLib.dns.ali
 import cn.toutatis.xvoid.resolve.ip.IPResolver
 import cn.toutatis.xvoid.resolve.ip.IPResolver.Companion.commandInterpreter
 import cn.toutatis.xvoid.resolve.ip.IPResolver.Companion.config
+import cn.toutatis.xvoid.resolve.ip.PkgInfo.MODULE_NAME
 import cn.toutatis.xvoid.toolkit.validator.Validator
 import com.alibaba.fastjson.JSONObject
 import com.aliyun.alidns20150109.Client
@@ -115,6 +116,10 @@ class AliCloudDNS {
             }else{
                 val lastRecord = IPResolver.lastRecord
                 if (Validator.strNotBlank(lastRecord)){
+                    if (lastRecord == dnsObj.value){
+                        logger.info("[${MODULE_NAME}]OLD:${dnsObj.hashCode()}[STATUS:=]")
+                        return
+                    }
                     updateDomainRecordRequest.value = lastRecord
                 }else{
                     commandInterpreter.execute("scan")
@@ -131,7 +136,7 @@ class AliCloudDNS {
             val describeDomainRecordInfo = client.describeDomainRecordInfo(describeDomainRecordInfoRequest)
             val body = describeDomainRecordInfo.body
             val newRecord = AliCloudDnsObj(body.recordId, body.RR, body.domainName, body.value, body.type, dnsObj.remark)
-            logger.info("OLD:${dnsObj.hashCode()},NEW:${newRecord.hashCode()}[STATUS:${if (dnsObj.hashCode() != newRecord.hashCode()) "√" else "×"}]")
+            logger.info("[${MODULE_NAME}]OLD:${dnsObj.hashCode()},NEW:${newRecord.hashCode()}[STATUS:${if (dnsObj.hashCode() != newRecord.hashCode()) "√" else "×"}]")
             if (dnsObj.hashCode() != newRecord.hashCode()){
                 lastRequestRecords[orderNum] = newRecord
             }
