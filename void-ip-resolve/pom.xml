@@ -56,7 +56,7 @@
                 <artifactId>kotlin-maven-plugin</artifactId>
                 <configuration>
                     <args>
-                        <arg>-Xjvm-default=enable</arg>
+                        <arg>-Xjvm-default=all</arg>
                     </args>
                 </configuration>
             </plugin>

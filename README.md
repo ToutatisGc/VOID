@@ -2,7 +2,9 @@
 
 #### Author:Toutatis_Gc
 
-![banner](docs/asserts/images/banner.jpg)VOID帮助您创建以Spring Boot/Vert.X为基础驱动的生产级Web服务，它对Spring Boot/Vert.X平台采取了支持和增强的功能,以便新用户和现有用户可以快速搭建服务.
+![banner](docs/asserts/images/banner.jpg)
+
+VOID帮助您创建以Spring Boot/Vert.X为基础驱动的生产级Web服务，它对Spring Boot/Vert.X平台采取了支持和增强的功能,以便新用户和现有用户可以快速搭建服务.
 
 
 
@@ -92,14 +94,15 @@ mvn clean install -Dgpg.skip
 
 ​		VOID中的模块在此快速的概述.
 
-|    模块名称    | 完成情况    | 用途                                                         |
-| :------------: | :---------- | :----------------------------------------------------------- |
-|      docs      | ❗[不断补充] | [文档资源]文档资源以及使用说明                               |
-|  void-creater  | ❗[进行中]   | [框架生成器]已经完成了后端类的生成,前端应当可生成多种模板    |
-| void-front-end | ❗🔽[进行中]  | [前端部分]正在完善后台 [[文档地址]](./void-front-end/README.md) |
-|    void-lib    | ❗🔽[进行中]  | [依赖以及库支持]库根目录,包含了所有底层模块 [[文档地址]](./void-lib/README.md) |
-|  void-spring   | ❗[进行中]   | [基础框架]SpringBoot基础框架,拆箱即用                        |
-|   void-vertx   | ❗[进行中]   | [基础框架]Vert.X基础框架,拆箱即用                            |
+|    模块名称     | 完成情况    | 用途                                                         |
+| :-------------: | :---------- | :----------------------------------------------------------- |
+|      docs       | ♻️[资源目录] | [文档资源]文档资源以及使用说明                               |
+| void-ip-resolve | ✅[可运行]   | [私网转公网地址解析] 向运营商申请公网IP后云解析地址 [[文档地址]](./void-ip-resolve/README.md) |
+|  void-creater   | ❗[进行中]   | [框架生成器]已经完成了后端类的生成,前端应当可生成多种模板    |
+| void-front-end  | ❗🔽[进行中]  | [前端部分]正在完善后台 [[文档地址]](./void-front-end/README.md) |
+|    void-lib     | ❗🔽[进行中]  | [依赖以及库支持]库根目录,包含了所有底层模块 [[文档地址]](./void-lib/README.md) |
+|   void-spring   | ❗[进行中]   | [基础框架]SpringBoot基础框架,拆箱即用                        |
+|   void-vertx    | ❗[进行中]   | [基础框架]Vert.X基础框架,拆箱即用                            |
 
 
 
