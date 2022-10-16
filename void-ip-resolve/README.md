@@ -24,7 +24,7 @@ mvn clean compile package
 
 ```
 #!/bin/bash
-java -server -Xms16M -Xmx32M -XX:+UseParallelGC -jar void_ip_resolve-jar-with-dependencies.jar & 
+java -server -Xms16M -Xmx32M -XX:+UseParallelGC -jar void_ip_resolve-jar-with-dependencies.jar true & 
 ```
 
 3.将jar文件和脚本放进同一文件夹并运行脚本
