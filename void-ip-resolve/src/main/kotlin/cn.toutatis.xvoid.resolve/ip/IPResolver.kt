@@ -24,7 +24,7 @@ import kotlin.system.exitProcess
  * 在此文件运行main方法
  * */
 fun main(args: Array<String>) {
-    IPResolver(true)
+    IPResolver(args[0].toBoolean())
 }
 
 internal object PkgInfo {
