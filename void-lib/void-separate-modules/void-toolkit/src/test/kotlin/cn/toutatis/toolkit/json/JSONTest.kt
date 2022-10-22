@@ -1,6 +1,6 @@
 package cn.toutatis.toolkit.json
 
-import cn.toutatis.xvoid.toolkit.json.JsonToolkit
+import cn.toutatis.xvoid.toolkit.formatting.JsonToolkit
 import com.alibaba.fastjson.JSONObject
 import org.junit.Assert
 import org.junit.Test

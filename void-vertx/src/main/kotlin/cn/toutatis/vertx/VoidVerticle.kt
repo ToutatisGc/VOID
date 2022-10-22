@@ -36,12 +36,12 @@ class VoidVerticle : AbstractVerticle() {
       .requestHandler { req ->
         req.response()
           .putHeader("content-type", "text/plain;charset=UTF-8")
-          .end("Hello from Vert.x! 啊阿斯顿阿萨大1111","UTF-8")
+          .end("Hello from Vert.x! 啊阿斯顿阿萨大1111asd","UTF-8")
       }
-      .listen(config.getInteger("http.port",8080)) { http ->
+      .listen(config.getInteger("http.port",20080)) { http ->
         if (http.succeeded()) {
           startPromise.complete()
-          println("HTTP server started on port 8888")
+          println("HTTP server started on port 20080")
         } else {
           startPromise.fail(http.cause());
         }

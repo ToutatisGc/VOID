@@ -1,4 +1,4 @@
-package cn.toutatis.xvoid.toolkit.json
+package cn.toutatis.xvoid.toolkit.formatting
 
 import com.alibaba.fastjson.JSONObject
 import org.slf4j.LoggerFactory
@@ -42,6 +42,7 @@ object JsonToolkit {
      *      }
      * }
      */
+   @JvmStatic
     fun <T> getValue(obj : JSONObject, key: String, type:Class<T>): T? {
         if (obj.isEmpty()) return null
         //只有一个key直接返回值
@@ -78,18 +79,22 @@ object JsonToolkit {
         return tmpJSONObject!!.getObject(split[split.lastIndex],type)
     }
 
+    @JvmStatic
     fun getInnerMap(): HashMap<String,JSONObject> {
         return recordJsonHash
     }
 
+    @JvmStatic
     fun getString(obj : JSONObject, key: String): String? {
         return getValue(obj,key,String::class.java)
     }
 
+    @JvmStatic
     fun getInteger(obj : JSONObject, key: String): Int? {
         return getValue(obj,key,Int::class.java)
     }
 
+    @JvmStatic
     fun getBoolean(obj : JSONObject, key: String): Boolean? {
         return getValue(obj,key,Boolean::class.java)
     }
@@ -98,6 +103,7 @@ object JsonToolkit {
      * Change the maximum record value of recordJSONMap
      * @param num Allows the size of a map to be recorded
      */
+    @JvmStatic
     fun setMaxRecordNum(num:Int): Unit {
         if (!alreadySetMaxRecord){
             callRecordNumMethodClassName = Thread.currentThread().stackTrace[2].className
