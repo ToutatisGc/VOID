@@ -35,6 +35,7 @@
         <hutool.version>5.8.2</hutool.version>
         <commons-io.version>2.11.0</commons-io.version>
         <fastjson.version>1.2.80</fastjson.version>
+        <snakeyaml.version>1.33</snakeyaml.version>
         <jackson.version>2.13.1</jackson.version>
         <servlet.version>4.0.1</servlet.version>
         <junit-jupiter.version>5.7.0</junit-jupiter.version>
@@ -180,11 +181,16 @@
                 <version>${druid.version}</version>
                 <optional>true</optional>
             </dependency>
-            <!--json序列化工具-->
             <dependency>
                 <groupId>com.alibaba</groupId>
                 <artifactId>fastjson</artifactId>
                 <version>${fastjson.version}</version>
+                <optional>true</optional>
+            </dependency>
+            <dependency>
+                <groupId>org.yaml</groupId>
+                <artifactId>snakeyaml</artifactId>
+                <version>${snakeyaml.version}</version>
                 <optional>true</optional>
             </dependency>
             <!--通用工具包-->
