@@ -6,7 +6,7 @@
     <parent>
         <artifactId>void-kotlin-runtime-support</artifactId>
         <groupId>cn.toutatis</groupId>
-        <version>1.6.10</version>
+        <version>1.6.21</version>
         <relativePath>../../void-runtime-support/void-kotlin-runtime-support/pom.xml</relativePath>
     </parent>
 
@@ -80,7 +80,7 @@
             <plugin>
                 <groupId>org.jetbrains.kotlin</groupId>
                 <artifactId>kotlin-maven-plugin</artifactId>
-                <version>1.6.10</version>
+                <version>1.6.21</version>
             </plugin>
         </plugins>
     </build>
