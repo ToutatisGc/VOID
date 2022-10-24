@@ -17,7 +17,7 @@ object HttpToolkit {
 
     private val logger: Logger = LoggerToolkit.getLogger(HttpToolkit::class.java)
 
-    private lateinit var httpClient:OkHttpClient
+    private var httpClient:OkHttpClient
 
     init {
         /*TODO 获取环境配置*/
@@ -27,6 +27,7 @@ object HttpToolkit {
     /**
      * 同步GET请求
      */
+    @JvmStatic
     fun syncGet(url:String,params:Map<String,String>?,headers:Map<String,String>? = null):String?{
         val builder: Request.Builder = Request.Builder()
         val urlWithParams = concatMapParameters(url, params)

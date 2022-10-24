@@ -8,7 +8,7 @@ import cn.toutatis.xvoid.spring.core.security.access.entity.AccountCheckUserDeta
 import cn.toutatis.xvoid.spring.core.security.access.persistence.SystemUserLoginMapper
 import cn.toutatis.xvoid.support.spring.config.VoidConfiguration
 import cn.toutatis.xvoid.toolkit.log.LoggerToolkit
-import cn.toutatis.xvoid.toolkit.objects.ObjectToolkit
+import cn.toutatis.xvoid.toolkit.validator.Validator
 import com.alibaba.fastjson.JSON
 import com.alibaba.fastjson.JSONObject
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper
@@ -38,7 +38,6 @@ class VoidSecurityAuthenticationService : UserDetailsService {
         const val VALIDATION_SECURITY_CODE_SESSION_KEY = "VOID_VALIDATION_SECURITY_CODE_SESSION_KEY"
     }
 
-    private val objectToolkit  =  ObjectToolkit.getInstance()
 
     private val logger = LoggerToolkit.getLogger(javaClass)
 
@@ -79,7 +78,7 @@ class VoidSecurityAuthenticationService : UserDetailsService {
     @Throws(UsernameNotFoundException::class)
     override fun loadUserByUsername(identity: String): UserDetails {
         System.err.println(request.getParameter("identity"))
-        if (objectToolkit.strNotBlank(identity)){
+        if (Validator.strNotBlank(identity)){
             val identityObj: JSONObject
             try {
                 identityObj = JSON.parseObject(identity)
@@ -122,7 +121,7 @@ class VoidSecurityAuthenticationService : UserDetailsService {
         val check = checkCodeEquals(identityObj.getString("securityCode"))
         if (check) {
             val username = identityObj.getString("username")
-            if (objectToolkit.strIsBlank(username)){
+            if (Validator.strIsBlank(username)){
                 throw this.throwInfo(ValidationMessage.USERNAME_BLANK)
             }
             /*用户可以使用邮箱/手机号/账号登录*/
@@ -152,13 +151,13 @@ class VoidSecurityAuthenticationService : UserDetailsService {
      * @return 是否通过验证
      */
     private fun checkCodeEquals(securityCode: String?): Boolean {
-        if (objectToolkit.strIsBlank(securityCode)) {
+        if (Validator.strIsBlank(securityCode)) {
             return false
         }
         val session: HttpSession = request.session
         val sessionSecurityCode = session.getAttribute(VALIDATION_SECURITY_CODE_SESSION_KEY) as String?
         session.removeAttribute(VALIDATION_SECURITY_CODE_SESSION_KEY)
-        if (objectToolkit.strIsBlank(sessionSecurityCode)) {
+        if (Validator.strIsBlank(sessionSecurityCode)) {
             return false
         }
         return sessionSecurityCode.equals(securityCode, ignoreCase = true)

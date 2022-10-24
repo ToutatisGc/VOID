@@ -17,7 +17,7 @@ import java.util.List;
 @Component("AntUrlService")
 public class AntUrlService {
 
-    private final Logger logger =  LoggerToolkit.INSTANCE.getLogger(AntUrlService.class);
+    private final Logger logger =  LoggerToolkit.getLogger(AntUrlService.class);
 
     private final AntPathMatcher antPathMatcher = new AntPathMatcher();
 

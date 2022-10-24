@@ -20,7 +20,7 @@ open class VoidSpringMvcConfiguration : WebMvcConfigurer {
     }
 
     @Bean
-    fun requestContextListener(): RequestContextListener {
+    open fun requestContextListener(): RequestContextListener {
         System.err.println("requestContextListener")
         return RequestContextListener()
     }

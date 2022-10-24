@@ -5,11 +5,6 @@
  * See the lgpl.txt file in the root directory or <http://www.gnu.org/licenses/lgpl-2.1.html>.
  */
 package org.hibernate.cfg;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import javax.persistence.*;
-
 import cn.toutatis.xvoid.data.common.EntityBasicAttribute;
 import org.hibernate.AnnotationException;
 import org.hibernate.annotations.common.reflection.XAnnotatedElement;
@@ -18,6 +13,11 @@ import org.hibernate.annotations.common.reflection.XProperty;
 import org.hibernate.boot.spi.MetadataBuildingContext;
 import org.hibernate.cfg.annotations.EntityBinder;
 import org.hibernate.mapping.PersistentClass;
+
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 解决hibernate父类属性顺序和当前类属性混乱
@@ -235,7 +235,10 @@ public class InheritanceState {
 				ArrayList<PropertyData> tempElements = new ArrayList<PropertyData>();
 				int start = -1;
 				for (int i = elements.size() - 1; i >= 0; i--) {
+					/*TODO BUG*/
 					PropertyData propertyData = elements.get(i);
+					System.err.println(propertyData.getDeclaringClass().getName());
+					System.err.println(EntityBasicAttribute.class.getName());
 					if (propertyData.getDeclaringClass().getName().equals(EntityBasicAttribute.class.getName())){
 						start = i+1;
 						break;

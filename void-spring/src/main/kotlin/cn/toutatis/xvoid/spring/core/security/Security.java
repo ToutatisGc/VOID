@@ -15,7 +15,6 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.util.ClassUtils;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -30,7 +29,7 @@ import java.util.*;
 @Configuration
 public class Security extends WebSecurityConfigurerAdapter {
 
-    private Logger logger = LoggerToolkit.INSTANCE.getLogger(Security.class);
+    private Logger logger = LoggerToolkit.getLogger(Security.class);
 
     @Autowired
     private VoidSecurityAuthenticationService voidAuthenticationService;
