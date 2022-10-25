@@ -1,0 +1,8 @@
+void:
+  wechat:
+    original-id:
+    official-account-config:
+      app-id:
+      app-secret:
+      token:
+      encoding-aes-key:

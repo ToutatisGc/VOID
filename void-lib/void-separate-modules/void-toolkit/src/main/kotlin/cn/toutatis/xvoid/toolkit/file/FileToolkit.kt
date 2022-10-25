@@ -18,6 +18,7 @@ object FileToolkit {
 
     private val logger = LoggerFactory.getLogger(FileToolkit::class.java)
 
+    @JvmStatic
     fun getResourcesFileAsString(filename:String): String? {
         return getResourcesFile(filename)?.readText(Charsets.UTF_8)
     }
@@ -25,6 +26,7 @@ object FileToolkit {
     /**
      * Gets the files in the run directory.
      */
+    @JvmStatic
     fun getResourcesFile(filename:String): URL?{
         return Thread.currentThread().contextClassLoader.getResource(filename)
     }
@@ -32,6 +34,7 @@ object FileToolkit {
     /**
      * Get the Properties file in the run directory.
      */
+    @JvmStatic
     fun getResourcesProperties(filename:String): ResourceBundle {
         return Resources.getBundle(filename)
     }
@@ -39,6 +42,7 @@ object FileToolkit {
     /**
      * Gets the run path of the JAR.
      */
+    @JvmStatic
     fun getRuntimePath(returnDir:Boolean): String {
         val codeSource = this.javaClass.protectionDomain.codeSource
         val runPath = File(codeSource.location.toURI().path)
@@ -48,6 +52,7 @@ object FileToolkit {
     /**
      * Gets the run path of the javaClass.
      */
+    @JvmStatic
     fun getRuntimePath(clazz: Class<*>): String {
         val codeSource = clazz.protectionDomain.codeSource
         val runPath = File(codeSource.location.toURI().path)
@@ -57,6 +62,7 @@ object FileToolkit {
     /**
      * Get the resource files in the JAR package.
      */
+    @JvmStatic
     fun getJarResource(filename:String): URL? {
         return this.javaClass.classLoader.getResource(filename)
     }
@@ -64,6 +70,7 @@ object FileToolkit {
     /**
      * Get the resource files in the JAR package.
      */
+    @JvmStatic
     fun getJarResourceAsStream(filename:String) : InputStream?{
         return this.javaClass.classLoader.getResourceAsStream(filename)
     }
@@ -71,10 +78,12 @@ object FileToolkit {
     /**
      * Convert a file to a string.
      */
+    @JvmStatic
     fun getFileContent(file:File): String{
         return IOUtils.toString(file.toURI(),Charsets.UTF_8)
     }
 
+    @JvmStatic
     fun findFileInPossibleLocation(path:String): File {
         if (File(path).exists()){
             return File(path).apply {

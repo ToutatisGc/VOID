@@ -6,7 +6,6 @@ import cn.toutatis.xvoid.spring.core.security.handler.SecurityHandler;
 import cn.toutatis.xvoid.toolkit.file.FileToolkit;
 import cn.toutatis.xvoid.toolkit.log.LoggerToolkit;
 import org.slf4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -29,16 +28,19 @@ import java.util.*;
 @Configuration
 public class Security extends WebSecurityConfigurerAdapter {
 
-    private Logger logger = LoggerToolkit.getLogger(Security.class);
+    private final Logger logger = LoggerToolkit.getLogger(Security.class);
 
-    @Autowired
-    private VoidSecurityAuthenticationService voidAuthenticationService;
+    private final VoidSecurityAuthenticationService voidAuthenticationService;
 
-    @Autowired
-    private SecurityHandler securityHandler;
+    private final SecurityHandler securityHandler;
 
-    @Autowired
-    private LogOutHandler logOutHandler;
+    private final LogOutHandler logOutHandler;
+
+    public Security(VoidSecurityAuthenticationService voidAuthenticationService, SecurityHandler securityHandler, LogOutHandler logOutHandler) {
+        this.voidAuthenticationService = voidAuthenticationService;
+        this.securityHandler = securityHandler;
+        this.logOutHandler = logOutHandler;
+    }
 
 //    @Override
 //    public void init(WebSecurity web) throws Exception {
@@ -101,7 +103,7 @@ public class Security extends WebSecurityConfigurerAdapter {
         File file = null;
         try {
             file = new File(Objects.requireNonNull(
-                    FileToolkit.INSTANCE.getResourcesFile("openMapping.properties")).toURI()
+                    FileToolkit.getResourcesFile("openMapping.properties")).toURI()
             );
         } catch (URISyntaxException e) {
             e.printStackTrace();

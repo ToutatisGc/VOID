@@ -237,8 +237,8 @@ public class InheritanceState {
 				for (int i = elements.size() - 1; i >= 0; i--) {
 					/*TODO BUG*/
 					PropertyData propertyData = elements.get(i);
-					System.err.println(propertyData.getDeclaringClass().getName());
-					System.err.println(EntityBasicAttribute.class.getName());
+//					System.err.println(propertyData.getDeclaringClass().getName());
+//					System.err.println(EntityBasicAttribute.class.getName());
 					if (propertyData.getDeclaringClass().getName().equals(EntityBasicAttribute.class.getName())){
 						start = i+1;
 						break;

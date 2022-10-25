@@ -17,6 +17,4 @@ import java.lang.annotation.*;
 @RestController
 @Scope("prototype")
 @Transactional(rollbackFor = Exception.class)
-public @interface Polymerization {
-
-}
+public @interface VoidController { }

@@ -1,5 +1,5 @@
 server:
-  port: ${PORT:10001}
+  port: ${PORT:20080}
 # SpringBoot 优雅停机 http://events.jianshu.io/p/199e419c025e
   shutdown: GRACEFUL
 spring:
@@ -7,6 +7,6 @@ spring:
     name: VOID-SPRING
   profiles:
     active: dev
-    include: ["void","datasource","jpa","mybatis"]
+    include: ["void","datasource","jpa","mybatis","third"]
   lifecycle:
     timeout-per-shutdown-phase: 30s

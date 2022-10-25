@@ -1,6 +1,7 @@
 package cn.toutatis.xvoid.toolkit.http
 
 import cn.toutatis.xvoid.toolkit.log.LoggerToolkit
+import okhttp3.FormBody
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import org.slf4j.Logger
@@ -28,7 +29,7 @@ object HttpToolkit {
      * 同步GET请求
      */
     @JvmStatic
-    fun syncGet(url:String,params:Map<String,String>?,headers:Map<String,String>? = null):String?{
+    fun syncGet(url:String,params:Map<String,String>? = null ,headers:Map<String,String>? = null):String?{
         val builder: Request.Builder = Request.Builder()
         val urlWithParams = concatMapParameters(url, params)
         builder.url(urlWithParams)
@@ -41,6 +42,28 @@ object HttpToolkit {
 
     fun asyncGet(){
 
+    }
+
+
+    /**
+     * @param url post请求地址
+     * @param parameters 参数
+     * @return 请求响应体
+     */
+    fun post(url: String, parameters: Map<String,String>? = null,headers:Map<String,String>? = null): String? {
+        val builder = FormBody.Builder()
+        if (parameters != null && parameters.isNotEmpty()) {
+            for (key in parameters.keys) {
+                parameters[key]?.let { builder.add(key, it) }
+            }
+        }
+        val requestBuilder = Request.Builder()
+        this.addHeader(requestBuilder,headers)
+        val request: Request = requestBuilder
+                .url(url)
+                .post(builder.build())
+                .build()
+        return getResponseBody(request)
     }
 
     /**

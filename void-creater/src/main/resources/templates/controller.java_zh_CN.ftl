@@ -12,7 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 import cn.toutatis.xvoid.support.spring.enhance.controller.BaseControllerImpl;
 import ${package.Service}.${table.serviceName};
 import ${package.Entity}.${entity};
-import cn.toutatis.xvoid.support.spring.annotations.Polymerization;
+import cn.toutatis.xvoid.support.spring.annotations.VoidController;
 import cn.toutatis.xvoid.support.spring.annotations.LogHandle;
 import cn.toutatis.xvoid.support.spring.config.VoidConfiguration;
 <#--import org.springframework.web.bind.annotation.RestController;-->

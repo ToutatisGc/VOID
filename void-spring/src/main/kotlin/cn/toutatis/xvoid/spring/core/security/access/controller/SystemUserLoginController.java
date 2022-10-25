@@ -2,13 +2,13 @@ package cn.toutatis.xvoid.spring.core.security.access.controller;
 
 
 import cn.toutatis.xvoid.data.common.security.SystemUserLogin;
+import cn.toutatis.xvoid.support.spring.annotations.VoidController;
 import cn.toutatis.xvoid.support.spring.config.VoidConfiguration;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import cn.toutatis.xvoid.support.spring.enhance.controller.BaseControllerImpl;
 import cn.toutatis.xvoid.spring.core.security.access.service.SystemUserLoginService;
-import cn.toutatis.xvoid.support.spring.annotations.Polymerization;
 import cn.toutatis.xvoid.support.spring.annotations.LogHandle;
 import com.github.xiaoymin.knife4j.annotations.ApiSupport;
 import io.swagger.annotations.Api;
@@ -23,7 +23,7 @@ import io.swagger.annotations.ApiOperation;
  * @author Toutatis_Gc
  * @since 2022-07-13
  */
-@Polymerization
+@VoidController
 @LogHandle("SystemUserLoginController 系统用户类")
 @Api(tags = "SystemUserLogin前端控制器",description = "SystemUserLoginController's APIs")
 @ApiSupport(author = "Toutatis_Gc")
