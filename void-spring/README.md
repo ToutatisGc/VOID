@@ -1,6 +1,8 @@
-## [VOID-SPRING]使用说明
+# [VOID-SPRING]使用说明
 
-#### [Module based by SpringBoot]Author@Toutatis_Gc
+## Module based by SpringBoot
+
+##### Author@Toutatis_Gc
 
 ### # 重要文件说明
 
@@ -12,6 +14,16 @@
 | resources/logback-spring.xml     | 日志配置文件 Logback官方文档 [[Logback官方文档]](https://logback.qos.ch/documentation.html) |
 | resources/openMapping.properties | 强访问权限,清单不存在条目则禁止访问                          |
 
-
+------
 
 ### # 常见问题
+
+##### 1.ERROR com.alibaba.druid.pool.DruidDataSource - testWhileIdle is true, validationQuery not set
+
+该问题是引入了p6spy监控SQL所引发的，在开发模式下不影响使用，**线上生产应当将jdbc连接的p6spy移除**
+
+------
+
+##### 2.Configuration problem: @Bean method 'XXX' must not be private or final; change the method's modifiers to continue
+
+该问题是因Kotlin默认class为final类所引起，kotlin编译时已apply spring plugin，可能有时出现编译时问题，**重新编译或手动添加open关键字**
