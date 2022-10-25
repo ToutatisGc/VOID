@@ -1,9 +1,12 @@
 package cn.toutatis.xvoid.support.spring.toolkits
 
+import cn.toutatis.xvoid.common.standard.StandardFields
+import cn.toutatis.xvoid.toolkit.validator.Validator
 import org.springframework.beans.BeansException
 import org.springframework.context.ApplicationContext
 import org.springframework.context.ApplicationContextAware
 import org.springframework.stereotype.Component
+import javax.servlet.http.HttpServletRequest
 
 
 /**
@@ -30,6 +33,11 @@ class VoidSpringToolkit : ApplicationContextAware {
 
     fun <T> getBeansOfType(baseType: Class<T>): Map<String?, T> {
         return applicationContext.getBeansOfType(baseType)
+    }
+
+    fun getRid(httpServletRequest: HttpServletRequest):String{
+        val rid = httpServletRequest.getAttribute(StandardFields.FILTER_REQUEST_ID) as String
+        return if (Validator.strIsBlank(rid)){ "-" }else{ rid }
     }
 
 }

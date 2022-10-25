@@ -27,7 +27,7 @@ public object Validator {
     fun strNotBlank(o: Any?): Boolean {
         if(o == null){ return false }
         val s = o.toString().trim()
-        return "" != s && "null" != s.lowercase()
+        return s.isNotEmpty() && "" != s && "null" != s.lowercase()
     }
 
     /**
@@ -36,6 +36,7 @@ public object Validator {
      */
     @JvmStatic
     fun strIsBlank(o: Any?): Boolean {
+        if (o == null) return true
         val s = o.toString() ?: return true
         val trim = s.trim { it <= ' ' }.lowercase()
         return trim.isEmpty() || "null" == trim || "undefined" == trim
@@ -110,6 +111,26 @@ public object Validator {
             }
         }
         return b
+    }
+
+    @JvmStatic
+    fun stringsHasNull(vararg o: String): Boolean {
+        for (s in o) {
+            if (strIsBlank(s)){
+                return true
+            }
+        }
+        return false
+    }
+
+    @JvmStatic
+    fun stringsNotNull(vararg o: String): Boolean{
+        for (s in o) {
+            if (strIsBlank(s)){
+                return false
+            }
+        }
+        return true
     }
 
     /**

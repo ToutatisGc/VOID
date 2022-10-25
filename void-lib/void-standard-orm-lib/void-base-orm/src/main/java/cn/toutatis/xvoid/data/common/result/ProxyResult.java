@@ -34,7 +34,7 @@ public class ProxyResult implements Result {
     private Boolean useDetailedMode = null;
 
     @JsonIgnore
-    private Boolean autoConfig = null;
+    private Boolean autoConfig = true;
 
     @JsonIgnore
     private Actions action = null;
