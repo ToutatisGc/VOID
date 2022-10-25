@@ -1,6 +1,9 @@
 package cn.toutatis.xvoid.toolkit.http
 
+import java.net.InetAddress
+import java.net.UnknownHostException
 import javax.servlet.http.HttpServletRequest
+
 
 /**
  * @author Toutatis_Gc
@@ -35,15 +38,47 @@ object RequestToolkit {
      * @param request servlet请求对象
      * @return 获取真实ip地址,不返回内网地址
      */
-    fun getIpAddress(request: HttpServletRequest): String {
-        var ip: String = request.getHeader("X-Real-IP")
-        if ("" != ip && !"unknown".equals(ip, ignoreCase = true)) return ip
-        ip = request.getHeader("X-Forwarded-For")
-        //取不到真实ip则返回空，不能返回内网地址。
-        return if (ip != null && "" != ip && !"unknown".equals(ip, ignoreCase = true)) {
-            val index = ip.indexOf(',')
-            if (index != -1) ip.substring(0, index) else ip
-        } else ""
+//    fun getIpAddress(request: HttpServletRequest): String {
+//        var ip: String? = request.getHeader("X-Real-IP")
+//        if (Validator.strNotBlank(ip) && !"unknown".equals(ip, ignoreCase = true)) return ip!!
+//        ip = request.getHeader("X-Forwarded-For")
+//        return if (Validator.strNotBlank(ip) && !"unknown".equals(ip, ignoreCase = true)) {
+//            val index = ip.indexOf(',')
+//            if (index != -1) ip.substring(0, index) else ip
+//        } else "-"
+//    }
+
+    fun getIpAddress(request: HttpServletRequest): String? {
+        var ipAddress: String?
+        try {
+            ipAddress = request.getHeader("x-forwarded-for")
+            if (ipAddress == null || ipAddress.isEmpty() || "unknown".equals(ipAddress, ignoreCase = true)) {
+                ipAddress = request.getHeader("Proxy-Client-IP")
+            }
+            if (ipAddress == null || ipAddress.isEmpty() || "unknown".equals(ipAddress, ignoreCase = true)) {
+                ipAddress = request.getHeader("WL-Proxy-Client-IP")
+            }
+            if (ipAddress == null || ipAddress.isEmpty() || "unknown".equals(ipAddress, ignoreCase = true)) {
+                ipAddress = request.remoteAddr
+                if (ipAddress == "127.0.0.1") {
+                    var inet: InetAddress? = null
+                    try {
+                        inet = InetAddress.getLocalHost()
+                    } catch (e: UnknownHostException) {
+                        e.printStackTrace()
+                    }
+                    ipAddress = inet!!.hostAddress
+                }
+            }
+            if (ipAddress != null && ipAddress.length > 15) {
+                if (ipAddress.indexOf(",") > 0) {
+                    ipAddress = ipAddress.substring(0, ipAddress.indexOf(","))
+                }
+            }
+        } catch (e: Exception) {
+            ipAddress = ""
+        }
+        return ipAddress
     }
 
 }

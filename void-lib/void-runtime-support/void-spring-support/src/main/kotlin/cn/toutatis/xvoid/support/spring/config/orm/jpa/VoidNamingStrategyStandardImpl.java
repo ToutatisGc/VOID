@@ -6,14 +6,13 @@
  */
 package cn.toutatis.xvoid.support.spring.config.orm.jpa;
 
-import java.io.Serializable;
-
 import cn.toutatis.xvoid.support.spring.config.VoidConfiguration;
 import org.hibernate.boot.model.naming.Identifier;
 import org.hibernate.boot.model.naming.PhysicalNamingStrategy;
 import org.hibernate.engine.jdbc.env.spi.JdbcEnvironment;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import java.io.Serializable;
 
 /**
  * 带表前缀的命名策略
@@ -22,8 +21,11 @@ import org.springframework.stereotype.Component;
 @Component
 public class VoidNamingStrategyStandardImpl implements PhysicalNamingStrategy, Serializable {
 
-	@Autowired
-	private VoidConfiguration voidConfiguration;
+	private final VoidConfiguration voidConfiguration;
+
+	public VoidNamingStrategyStandardImpl(VoidConfiguration voidConfiguration) {
+		this.voidConfiguration = voidConfiguration;
+	}
 
 
 	@Override

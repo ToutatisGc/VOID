@@ -40,6 +40,11 @@ public class VoidConfiguration {
         private Boolean recordRequest = true;
 
         /**
+         * 记录静态文件访问
+         */
+        private Boolean recordStaticResource = true;
+
+        /**
          * 请求携带RID
          */
         private Boolean recordRequestId = true;
@@ -60,6 +65,14 @@ public class VoidConfiguration {
 
         public void setRecordRequest(Boolean recordRequest) {
             this.recordRequest = recordRequest;
+        }
+
+        public Boolean getRecordStaticResource() {
+            return recordStaticResource;
+        }
+
+        public void setRecordStaticResource(Boolean recordStaticResource) {
+            this.recordStaticResource = recordStaticResource;
         }
 
         public Boolean getRecordRequestId() {

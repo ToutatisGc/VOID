@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.springframework.web.context.request.RequestContextListener
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer
 
 @Configuration
@@ -17,6 +18,14 @@ open class VoidSpringMvcConfiguration : WebMvcConfigurer {
     override fun addInterceptors(registry: InterceptorRegistry) {
         registry.addInterceptor(requestLogInterceptor)
         super.addInterceptors(registry)
+    }
+
+    /**
+     * 添加静态资源映射
+     */
+    override fun addResourceHandlers(registry: ResourceHandlerRegistry) {
+        registry.addResourceHandler("/static/**").addResourceLocations("/static/", "classpath:/static/")
+        registry.addResourceHandler("/favicon.ico").addResourceLocations("classpath:/favicon.ico")
     }
 
     @Bean
