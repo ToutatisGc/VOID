@@ -7,7 +7,7 @@ spring:
     livereload:
       enabled: true
   application:
-    name: VOID
+    name: VOID-SPRING | 春野
 #    模板引擎
   freemarker:
     charset: UTF-8
