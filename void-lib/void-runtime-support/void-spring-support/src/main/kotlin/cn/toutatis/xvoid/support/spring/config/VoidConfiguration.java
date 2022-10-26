@@ -12,7 +12,7 @@ public class VoidConfiguration {
     /**
      * 是否开启调试模式
      */
-    private Boolean debug = false;
+    private RunMode mode = RunMode.DEV;
 
     /**
      * 是否开启平台多用户模式
@@ -232,14 +232,12 @@ public class VoidConfiguration {
         this.globalOrmConfig = globalOrmConfig;
     }
 
-
-
-    public Boolean getDebug() {
-        return debug;
+    public RunMode getMode() {
+        return mode;
     }
 
-    public void setDebug(Boolean debug) {
-        this.debug = debug;
+    public void setMode(RunMode mode) {
+        this.mode = mode;
     }
 
     public Boolean getPlatformMode() {
