@@ -26,4 +26,7 @@
 
 ##### 2.Configuration problem: @Bean method 'XXX' must not be private or final; change the method's modifiers to continue
 
-该问题是因Kotlin默认class为final类所引起，kotlin编译时已apply spring plugin，可能有时出现编译时问题，**重新编译或手动添加open关键字**
+该问题是因Kotlin默认class为final类所引起，kotlin编译时已apply spring plugin无需关注，但可能有时出现编译时问题，**解决方法为重新编译或手动添加open关键字**
+
+------
+

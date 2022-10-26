@@ -4,7 +4,7 @@ server:
   shutdown: GRACEFUL
 spring:
   application:
-    name: VOID-SPRING
+    name: VOID-SPRING | 春野
   profiles:
     active: dev
     include: ["void","datasource","jpa","mybatis","third"]

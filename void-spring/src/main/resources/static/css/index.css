@@ -1,0 +1,11 @@
+
+*{
+    margin: 0;
+    padding: 0;
+}
+
+.base-background{
+    background-color: #e8e8e8;
+    width: 100%;
+    height: 100vh;
+}
