@@ -1,10 +1,11 @@
 package cn.toutatis.xvoid.spring.core.exception
 
 import cn.toutatis.xvoid.common.standard.StandardFields
-import cn.toutatis.xvoid.toolkit.constant.Time
 import cn.toutatis.xvoid.data.common.result.ProxyResult
 import cn.toutatis.xvoid.data.common.result.ResultCode
+import cn.toutatis.xvoid.support.spring.config.RunMode
 import cn.toutatis.xvoid.support.spring.config.VoidConfiguration
+import cn.toutatis.xvoid.toolkit.constant.Time
 import cn.toutatis.xvoid.toolkit.log.LoggerToolkit
 import com.alibaba.fastjson.JSONObject
 import org.springframework.beans.factory.annotation.Autowired
@@ -28,14 +29,13 @@ class ExceptionAdviceDispose {
     @ResponseBody
     @ExceptionHandler(Exception::class)
     fun errorMsg(request: HttpServletRequest, response: HttpServletResponse, e: Exception): ProxyResult {
-        logger.error("请求错误地址:{}",request.requestURI)
-        val debug = voidConfiguration.debug
+        logger.error("请求错误地址:{}",request.requestURL)
         val proxyResult = ProxyResult(ResultCode.REQUEST_EXCEPTION)
 
         val requestId = request.getAttribute(StandardFields.FILTER_REQUEST_ID)
         if (requestId != null) proxyResult.requestId = requestId as String
 
-        if (debug) {
+        if (voidConfiguration.mode == RunMode.DEBUG) {
             e.printStackTrace()
             val exceptionObj = JSONObject(3)
             exceptionObj["createTime"] = Time.currentTime

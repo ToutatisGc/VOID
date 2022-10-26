@@ -3,7 +3,10 @@ package cn.toutatis.xvoid.spring.core.security;
 import cn.toutatis.core.root.security.handler.LogOutHandler;
 import cn.toutatis.xvoid.spring.PkgInfo;
 import cn.toutatis.xvoid.spring.core.security.handler.SecurityHandler;
+import cn.toutatis.xvoid.support.spring.config.RunMode;
+import cn.toutatis.xvoid.support.spring.config.VoidConfiguration;
 import cn.toutatis.xvoid.toolkit.file.FileToolkit;
+import cn.toutatis.xvoid.toolkit.formatting.EnumToolkit;
 import cn.toutatis.xvoid.toolkit.log.LoggerToolkit;
 import org.slf4j.Logger;
 import org.springframework.context.annotation.Bean;
@@ -36,10 +39,13 @@ public class Security extends WebSecurityConfigurerAdapter {
 
     private final LogOutHandler logOutHandler;
 
-    public Security(VoidSecurityAuthenticationService voidAuthenticationService, SecurityHandler securityHandler, LogOutHandler logOutHandler) {
+    private final VoidConfiguration voidConfiguration;
+
+    public Security(VoidSecurityAuthenticationService voidAuthenticationService, SecurityHandler securityHandler, LogOutHandler logOutHandler, VoidConfiguration voidConfiguration) {
         this.voidAuthenticationService = voidAuthenticationService;
         this.securityHandler = securityHandler;
         this.logOutHandler = logOutHandler;
+        this.voidConfiguration = voidConfiguration;
     }
 
 //    @Override
@@ -94,17 +100,21 @@ public class Security extends WebSecurityConfigurerAdapter {
         return daoAuthenticationProvider;
     }
 
-//    @Autowired
-//    WechatProperties wechatProperties;
 
     private String[] getOpenMapping(){
+        RunMode mode = voidConfiguration.getMode();
+        logger.info("[{}]当前启动模式为:{}",PkgInfo.MODULE_NAME,mode);
+        String[] openMappings = new String[1];
+        if (mode == RunMode.DEBUG){
+            logger.warn("[{}]注意开发模式为:DEBUG[调试模式],将忽略所有权限控制.",PkgInfo.MODULE_NAME);
+            openMappings[0] = "/**";
+            return openMappings;
+        }
         Properties properties = new Properties();
-        String[] openMappings = new String[0];
         File file = null;
         try {
             file = new File(Objects.requireNonNull(
-                    FileToolkit.getResourcesFile("openMapping.properties")).toURI()
-            );
+                    FileToolkit.getResourcesFile("openMapping.properties")).toURI());
         } catch (URISyntaxException e) {
             e.printStackTrace();
         }
@@ -112,23 +122,37 @@ public class Security extends WebSecurityConfigurerAdapter {
             try {
                 FileInputStream fileInputStream = new FileInputStream(file);
                 properties.load(fileInputStream);
-                List<String> opens = new ArrayList<>();
+                List<String> opens = new ArrayList<>(20);
                 Set<String> propertyNames = properties.stringPropertyNames();
                 Iterator<String> iterator = propertyNames.iterator();
                 String isOpenField = "OPEN";
                 while (iterator.hasNext()){
                     String next = iterator.next();
-                    String isOpen = properties.getProperty(next);
-                    if (isOpenField.equalsIgnoreCase(isOpen)){
-                        opens.add(next);
-                        logger.info("["+ PkgInfo.MODULE_NAME+"] 添加开放路径："+next);
+                    String rightStr = properties.getProperty(next);
+                    RunMode pathRight = EnumToolkit.getValue(RunMode.class, rightStr);
+                    if (pathRight != null){
+                        if (pathRight == RunMode.DEV){
+                            opens.add(next);
+                            logger.info("["+ PkgInfo.MODULE_NAME+"] 添加DEV开发路径权限："+next);
+                        }else {
+                            logger.warn("["+ PkgInfo.MODULE_NAME+"] 未知权限路径[{}]和权限[{}]",next,rightStr);
+                        }
+                    }else{
+                        if (isOpenField.equalsIgnoreCase(rightStr)) {
+                            opens.add(next);
+                            logger.info("[" + PkgInfo.MODULE_NAME + "] 添加OPEN开放路径权限：" + next);
+                            continue;
+                        }
+                        logger.warn("["+ PkgInfo.MODULE_NAME+"] 未知权限路径："+next);
                     }
                 }
                 openMappings = opens.toArray(openMappings);
             } catch (IOException e) {
-                System.out.println("openMapping.properties not found , replace empty String[]");
+                logger.error("openMapping.properties not found , replace empty String[]");
                 openMappings = new String[0];
             }
+        }else{
+            logger.error("openMapping.properties not found , replace empty String[]");
         }
         return openMappings;
     }

@@ -2,7 +2,7 @@
 
 <#import "/modules/init/INIT.ftlh" as INIT >
 
-<@INIT.DOC_INIT title=applicationName > <#--不可删除-->
+<@INIT.DOC_INIT title=title > <#--不可删除-->
     <#--填充head头-->
 </@INIT.DOC_INIT> <#--不可删除-->
 <body>
