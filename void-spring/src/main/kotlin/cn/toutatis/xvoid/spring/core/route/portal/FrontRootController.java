@@ -27,15 +27,14 @@ public class FrontRootController {
     @RequestMapping("/")
     public ModelAndView index(){
         ModelAndView modelAndView = new ModelAndView(viewToolkit.toView("Index"));
-        modelAndView.addObject("applicationName",applicationName);
+        modelAndView.addObject("appName",applicationName);
         modelAndView.addObject("title","首页");
         return modelAndView;
     }
 
     @RequestMapping("/example")
     public ModelAndView example(){
-        ModelAndView modelAndView = new ModelAndView("Example");
-        modelAndView.addObject("applicationName",applicationName);
+        ModelAndView modelAndView = new ModelAndView("pages/dev/Example");
         modelAndView.addObject("title","示例");
         return modelAndView;
     }
