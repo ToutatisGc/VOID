@@ -1,0 +1,14 @@
+{
+  "title": "XVOID-图片压缩工具",
+  "width": 600,
+  "fileViewWidth": 0,
+  "height": 450,
+  "differentRegular": true,
+  "resizable": false,
+  "retainSourceFile": true,
+  "zipType": "0",
+  "zipTimes": 5,
+  "lastChooseDir": "",
+  "lastSaveDir": "",
+  "saveFileRenameType": "UUID"
+}

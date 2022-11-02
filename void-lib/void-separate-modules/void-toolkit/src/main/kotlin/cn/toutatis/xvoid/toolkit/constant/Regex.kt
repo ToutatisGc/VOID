@@ -26,4 +26,10 @@ object Regex {
      * 数字正则
      */
     const val NUMBER_REGEX = "-?[0-9]+(\\.[0-9]+)?"
+
+    /**
+     * 图片后缀正则(目前支持这么多)
+     * */
+    const val IMAGE_SUFFIX_REGEX = "png|jpg|jpeg"
+
 }

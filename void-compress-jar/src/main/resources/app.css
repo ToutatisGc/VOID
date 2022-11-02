@@ -1,0 +1,19 @@
+
+.menu-item:hover{
+    -fx-cursor: hand;
+}
+
+.menu:hover{
+    -fx-cursor: hand;
+}
+
+#save-button{
+    -fx-background-color: #3183ff;
+    -fx-color:red;
+}
+
+#save-button:hover{
+    -fx-cursor: hand;
+    -fx-background-color: #69bfff;
+    -fx-color:red;
+}
