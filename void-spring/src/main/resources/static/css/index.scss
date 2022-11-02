@@ -19,35 +19,6 @@ $base-background-color-dark: #081b34;
   display: none !important;
 }
 
-.example {
-  padding: 20px;
-  color: white;
-}
-/* 超小设备 (手机, 600px 以下屏幕设备) */
-@media only screen and (max-width: 600px) {
-  .example {background: #b88e8e;}
-}
-
-/* 小设备 (平板电脑和大型手机，600 像素及以上) */
-@media only screen and (min-width: 600px) {
-  .example {background: green;}
-}
-
-/* 中型设备（平板电脑，768 像素及以上） */
-@media only screen and (min-width: 768px) {
-  .example {background: blue;}
-}
-
-/* 大型设备（笔记本电脑/台式机，992 像素及以上） */
-@media only screen and (min-width: 992px) {
-  .example {background: orange;}
-}
-
-/* 超大型设备（大型笔记本电脑和台式机，1200 像素及以上） */
-@media only screen and (min-width: 1200px) {
-  .example {background: pink;}
-}
-
 @mixin base-background{
   width: 100%;
   height: 100vh;
@@ -56,6 +27,21 @@ $base-background-color-dark: #081b34;
 @mixin primary_title{
   font-weight: bolder;
   font-size: 2.5vw;
+  margin-bottom: 10px;
+}
+
+@mixin main_text{
+  color: lighten($base-font-color,15%);
+  line-height: 3vh;
+}
+
+@mixin primary_title_phone{
+  font-weight: bolder;
+  word-wrap: break-word;
+  //word-break: break-word;
+  word-break: normal;
+  font-size: 6vw;
+  margin: 10px;
 }
 
 .#{$class-prefix} {
@@ -71,6 +57,23 @@ $base-background-color-dark: #081b34;
     text-align: center;
   }
 
+  &-box{
+    border-radius: 4px;
+    background-color: transparentize($base-background-color,0.6)
+  }
+
+  &-box_shadow{
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    box-shadow: 0 8px 10px rgba(0, 0, 0, 0.5);
+  }
+
+  &-link{
+    color: darken($theme-color,15%);
+    background-color: rgba(0, 0, 0, 0.15);
+    border-radius: 4px;
+    padding: 0 6px 0 6px;
+  }
+
   ///*页面背景色*/
   &-base-background{
     @include base-background;
@@ -82,22 +85,53 @@ $base-background-color-dark: #081b34;
     background-color: $base-background-color-dark;
   }
 
-  /*主标题*/
-  &-primary-title{
-    @include primary_title;
-    color: lighten($base-font-color,15%);
+  @media only screen and (min-width: 768px) {
+    /*主标题*/
+    &-primary-title{
+      @include primary_title_phone;
+      color: lighten($base-font-color,15%);
+    }
+
+    &-main-text{
+      @include main-text;
+      font-size: 2.5vh;
+      line-height: 3.5vh;
+    }
+
+    /*夜间主标题*/
+    &-primary-title_dark{
+      @include primary_title_phone;
+      color: darken($base-font-color-dark,0%);
+    }
+
+    /*主题色主标题*/
+    &-primary-title_clr{
+      @include primary_title_phone;
+      color: $theme-color;
+    }
   }
 
-  /*主标题*/
-  &-primary-title_dark{
-    @include primary_title;
-    color: darken($base-font-color-dark,0%);
-  }
+  @media only screen and (min-width: 1200px) {
 
-  /*带色标题*/
-  &-primary-title_clr{
-    @include primary_title;
-    color: $theme-color;
+    &-primary-title{
+      @include primary_title;
+      color: lighten($base-font-color,15%);
+    }
+
+    &-main-text{
+      @include main-text;
+      font-size: 2vh;
+    }
+
+    &-primary-title_dark{
+      @include primary_title;
+      color: darken($base-font-color-dark,0%);
+    }
+
+    &-primary-title_clr{
+      @include primary_title;
+      color: $theme-color;
+    }
   }
 
 }

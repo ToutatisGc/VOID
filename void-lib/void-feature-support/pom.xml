@@ -52,6 +52,7 @@
         <csv.version>1.9.0</csv.version>
         <jsoup.version>1.15.2</jsoup.version>
         <okhttp.version>5.0.0-alpha.10</okhttp.version>
+        <thumbnailator.version>0.4.18</thumbnailator.version>
 
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
@@ -90,7 +91,7 @@
     <distributionManagement>
         <snapshotRepository>
             <id>sonatype</id>
-            <url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
+            <url>https://s01.oss.sonatype.org/compressContent/repositories/snapshots</url>
         </snapshotRepository>
         <repository>
             <id>sonatype</id>
@@ -369,6 +370,13 @@
                 <groupId>org.jsoup</groupId>
                 <artifactId>jsoup</artifactId>
                 <version>${jsoup.version}</version>
+                <optional>true</optional>
+            </dependency>
+            <!--图片压缩-->
+            <dependency>
+                <groupId>net.coobird</groupId>
+                <artifactId>thumbnailator</artifactId>
+                <version>${thumbnailator.version}</version>
                 <optional>true</optional>
             </dependency>
         </dependencies>

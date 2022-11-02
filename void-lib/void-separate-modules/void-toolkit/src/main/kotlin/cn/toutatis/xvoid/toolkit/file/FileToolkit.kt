@@ -1,5 +1,6 @@
 package cn.toutatis.xvoid.toolkit.file
 
+import cn.toutatis.xvoid.toolkit.constant.Regex
 import org.apache.commons.io.IOUtils
 import org.slf4j.LoggerFactory
 import sun.security.util.Resources
@@ -9,6 +10,7 @@ import java.io.FileNotFoundException
 import java.io.InputStream
 import java.net.URL
 import java.util.*
+import java.util.regex.Pattern
 
 /**
  * @author Toutatis_Gc
@@ -59,6 +61,11 @@ object FileToolkit {
         return runPath.path
     }
 
+    @JvmStatic
+    fun getThreadPath(): String {
+        return Thread.currentThread().contextClassLoader.getResource("")!!.path
+    }
+
     /**
      * Get the resource files in the JAR package.
      */
@@ -81,6 +88,32 @@ object FileToolkit {
     @JvmStatic
     fun getFileContent(file:File): String{
         return IOUtils.toString(file.toURI(),Charsets.UTF_8)
+    }
+
+    /**
+     * 获取文件路径文件名后缀
+     */
+    @JvmStatic
+    fun getFileSuffix(fileName: String): String {
+        return fileName.substring(fileName.lastIndexOf(".") + 1).lowercase()
+    }
+
+    @JvmStatic
+    fun getFileSuffix(file: File): String {
+        if(file.exists()){
+            return getFileSuffix(file.name)
+        }
+        throw FileNotFoundException("文件不存在")
+    }
+
+    /**
+     * 检测是否为图片
+     * 其实应该用文件头检查,但是目前没空,先用文件名检查
+     */
+    @JvmStatic
+    fun isImg(suffix: String): Boolean {
+        val matcher = Pattern.compile(Regex.IMAGE_SUFFIX_REGEX).matcher(suffix)
+        return matcher.matches()
     }
 
     @JvmStatic
