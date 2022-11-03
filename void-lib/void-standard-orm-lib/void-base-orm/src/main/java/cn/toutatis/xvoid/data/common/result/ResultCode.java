@@ -81,23 +81,23 @@ public enum ResultCode implements Cloneable {
     /**
      * 响应码
      */
-    private String code;
+    private final String code;
 
     /**
      * 内部响应码
      * 一般不显示
      */
-    private String innerCode;
+    private final String innerCode;
 
     /**
      * 当前code所代表响应信息
      */
-    private String info;
+    private final String info;
 
     /**
      * 额外信息
      */
-    private String extraInfo;
+    private final String extraInfo;
 
     /**
      * 是否成功
@@ -115,6 +115,8 @@ public enum ResultCode implements Cloneable {
     public String getCode() {
         return code;
     }
+
+    public String getInnerCode() { return innerCode; }
 
     public String getInfo() {
         return info;

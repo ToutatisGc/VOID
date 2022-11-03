@@ -19,7 +19,7 @@ import javax.servlet.http.HttpServletResponse
  * 异常处理器
  */
 @ControllerAdvice
-class ExceptionAdviceDispose {
+class VoidExceptionAdviceDispose {
 
     private val logger = LoggerToolkit.getLogger(javaClass)
 

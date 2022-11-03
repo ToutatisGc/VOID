@@ -1,6 +1,7 @@
 package cn.toutatis.xvoid.spring.core.security.handler;
 
 import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.authentication.InsufficientAuthenticationException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
@@ -44,8 +45,20 @@ public class SecurityHandler implements AuthenticationSuccessHandler,
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
 
     }
+
+    /**
+     * 无权限访问控制
+     * @param request
+     * @param response
+     * @param authException
+     * @throws IOException
+     * @throws ServletException
+     */
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
+        if (authException instanceof InsufficientAuthenticationException){
+            System.err.println(888);
+        }
         System.err.println(777);
     }
 
