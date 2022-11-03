@@ -1,5 +1,6 @@
 package cn.toutatis.xvoid.support.spring.config;
 
+import cn.toutatis.xvoid.Version;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
@@ -13,6 +14,11 @@ public class VoidConfiguration {
      * 是否开启调试模式
      */
     private RunMode mode = RunMode.DEV;
+
+    /**
+     * 版本号
+     */
+    private Version version = Version.$DEFAULT;
 
     /**
      * 是否开启平台多用户模式
@@ -177,10 +183,19 @@ public class VoidConfiguration {
         }
     }
 
+    /**
+     * 全局服务配置
+     */
     public static class GlobalServiceConfig{
 
+        /**
+         * 自动填充请求code
+         */
         private Boolean autoConfig = true;
 
+        /**
+         * 使用详细信息模式
+         */
         private Boolean useDetailedMode = true;
 
         public Boolean getAutoConfig() {
@@ -238,6 +253,14 @@ public class VoidConfiguration {
 
     public void setMode(RunMode mode) {
         this.mode = mode;
+    }
+
+    public Version getVersion() {
+        return version;
+    }
+
+    public void setVersion(Version version) {
+        this.version = version;
     }
 
     public Boolean getPlatformMode() {

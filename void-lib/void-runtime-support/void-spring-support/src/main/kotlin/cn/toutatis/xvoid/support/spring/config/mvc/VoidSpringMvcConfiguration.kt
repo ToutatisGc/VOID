@@ -24,8 +24,10 @@ open class VoidSpringMvcConfiguration : WebMvcConfigurer {
      * 添加静态资源映射
      */
     override fun addResourceHandlers(registry: ResourceHandlerRegistry) {
+        /*TODO 缓存*/
         registry.addResourceHandler("/static/**").addResourceLocations("/static/", "classpath:/static/")
         registry.addResourceHandler("/favicon.ico").addResourceLocations("classpath:/favicon.ico")
+        registry.addResourceHandler("/robots.txt").addResourceLocations("classpath:/robots.txt")
     }
 
     @Bean

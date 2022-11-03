@@ -1,5 +1,5 @@
 void:
-  debug: DEV
+  mode: DEV
   global-log-config:
     record-request: true
     record-request-params: true

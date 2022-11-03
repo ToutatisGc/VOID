@@ -22,26 +22,31 @@ object Time {
     /**
      * @return  格式化当前时间
      */
+    @JvmStatic
     @get:Synchronized
     val currentTime: String get() = simpleDateFormat.format(System.currentTimeMillis())
 
     /**
      * @return 获取当前毫秒
      */
+    @JvmStatic
     val currentMillis: Long get() = System.currentTimeMillis()
 
     /**
      * @return 获取当前秒
      */
+    @JvmStatic
     val currentSeconds: Long get() = currentMillis / 1000
 
     /**
      * @param time 传入值
      * @return 格式化值
      */
+    @JvmStatic
     @Synchronized
     fun getCurrentTimeByLong(time: Long): String = simpleDateFormat.format(Date(time))
 
+    @JvmStatic
     fun getCurrentLocalDateTime(): String = LocalDateTime.now().format(DateTimeFormatter.ofPattern(DATE_FORMAT_REGEX))
 
     /**
@@ -49,6 +54,7 @@ object Time {
      * @param date 传入日期
      * @return 格式化时间
      */
+    @JvmStatic
     fun regexTime(format: String, date: Date): String = SimpleDateFormat(format).format(date)
 
     /**
@@ -56,6 +62,7 @@ object Time {
      * @param time 传入日期
      * @return 格式化时间
      */
+    @JvmStatic
     fun regexTime(format: String, time: Long): String = SimpleDateFormat(format).format(time)
 
 
@@ -63,6 +70,7 @@ object Time {
      * @param str 字符串转Date
      *
      */
+    @JvmStatic
     fun parseData(str :String) : Date{
         return simpleDateFormat.parse(str)
     }
@@ -73,6 +81,7 @@ object Time {
      * @param time 日期
      * @return 忘了当时的调用逻辑了
      */
+    @JvmStatic
     fun isSameDay(pattern: String, time: Long): Boolean = regexTime(pattern, Date()) == regexTime(pattern, time)
 
 }
