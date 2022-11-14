@@ -46,6 +46,8 @@ public class VoidErrorViewResolver implements ErrorViewResolver {
 
     @Override
     public ModelAndView resolveErrorView(HttpServletRequest request, HttpStatus status, Map<String, Object> model) {
+        System.err.println(status);
+        System.err.println(request.getAttribute(StandardFields.FILTER_REQUEST_ID));
         String method = request.getMethod();
         ResultCode resultCode;
         HashMap<String, String> customInfo = new HashMap<>(3);

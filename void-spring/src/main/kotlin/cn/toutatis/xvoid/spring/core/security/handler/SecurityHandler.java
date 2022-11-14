@@ -1,5 +1,9 @@
 package cn.toutatis.xvoid.spring.core.security.handler;
 
+import cn.hutool.http.HttpStatus;
+import cn.toutatis.xvoid.common.standard.StandardFields;
+import cn.toutatis.xvoid.toolkit.validator.Validator;
+import com.alibaba.fastjson.JSON;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.InsufficientAuthenticationException;
 import org.springframework.security.core.Authentication;
@@ -56,6 +60,16 @@ public class SecurityHandler implements AuthenticationSuccessHandler,
      */
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
+        String method = request.getMethod();
+        System.err.println(authException);
+        System.err.println(request.getAttribute(StandardFields.FILTER_REQUEST_ID));
+        if ("GET".equals(method)){
+            this.forwardPage(request,response,"/error");
+        }else {
+
+        }
+
+        // org.springframework.security.authentication.InsufficientAuthenticationException: Full authentication is required to access this resource
         if (authException instanceof InsufficientAuthenticationException){
             System.err.println(888);
         }
@@ -71,6 +85,41 @@ public class SecurityHandler implements AuthenticationSuccessHandler,
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
         System.err.println(999);
     }
+
+    private void jumpToPage(HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException {
+        String whether = request.getParameter(REQUEST_PARAMETER_WHETHER_REDIRECT_PAGE);
+        if (Validator.strNotBlank(whether) && ("true".equalsIgnoreCase(whether) || "false".equalsIgnoreCase(whether))){
+            boolean whetherBool = Boolean.parseBoolean(whether);
+            if (whetherBool){
+                String pageMapping = request.getParameter(REQUEST_CUSTOM_REDIRECT_PAGE_MAPPING);
+                if (Validator.strIsBlank(pageMapping)){
+                    request.getRequestDispatcher("/error").forward(request,response);
+                }else {
+                    request.getRequestDispatcher("/error").forward(request,response);
+                }
+            }
+        }
+    }
+
+    /**
+     * @param response  response
+     * @param o 序列化实体类
+     * @throws IOException 流异常
+     */
+    private void returnJson(HttpServletResponse response,Object o) throws IOException {
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+        response.getWriter().write(JSON.toJSONString(o));
+    }
+
+
+    private void forwardPage(HttpServletRequest request,HttpServletResponse response,String url) throws IOException, ServletException {
+        System.err.println(2);
+        response.setStatus(HttpStatus.HTTP_FORBIDDEN);
+//        response.sendRedirect("/error");
+        request.getRequestDispatcher(url).forward(request,response);
+    }
+
 
 
 
@@ -208,26 +257,6 @@ public class SecurityHandler implements AuthenticationSuccessHandler,
 //                request.getRequestDispatcher("/authErrorPage?code="+code).forward(request,response);
 //            }
 //        }
-//    }
-//    /**
-//     * @param response  response
-//     * @param o 序列化实体类
-//     * @throws IOException 流异常
-//     */
-//    private void returnJson(HttpServletRequest request, HttpServletResponse response,Object o) throws IOException {
-//        corsResponse(request,response);
-//        encodeReturn(response);
-//        response.getWriter().write(JSON.toJSONString(o));
-//    }
-//
-//    /**
-//     * @param response response
-//     * 编码为application/json
-//     */
-//    private void encodeReturn(HttpServletResponse response){
-//        response.setContentType("application/json");
-//        response.setCharacterEncoding("UTF-8");
-////        response.setStatus(HttpStatus.BAD_REQUEST.value());
 //    }
 //
 //    private void corsResponse(HttpServletRequest request,HttpServletResponse response){

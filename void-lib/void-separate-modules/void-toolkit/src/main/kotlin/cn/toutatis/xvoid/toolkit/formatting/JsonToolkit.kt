@@ -1,7 +1,10 @@
 package cn.toutatis.xvoid.toolkit.formatting
 
+import cn.toutatis.xvoid.toolkit.file.FileToolkit
+import com.alibaba.fastjson.JSON
 import com.alibaba.fastjson.JSONObject
 import org.slf4j.LoggerFactory
+import java.io.File
 
 /**
  * @author Toutatis_Gc
@@ -27,6 +30,11 @@ object JsonToolkit {
     private var alreadySetMaxRecord = false
 
     private var callRecordNumMethodClassName = ""
+
+    @JvmStatic
+    fun parseJsonObject(file: File): JSONObject {
+        return JSON.parseObject(FileToolkit.getFileContent(file))
+    }
 
     /**
      * 此方法获取以分隔符(.) 分隔的键，向下迭代以获取值.

@@ -1,28 +1,33 @@
 package cn.toutatis.xvoid.support.spring.core.aop.filters
 
-import cn.hutool.core.util.IdUtil
-import cn.toutatis.xvoid.common.standard.StandardFields
 import cn.toutatis.xvoid.support.spring.config.VoidConfiguration
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.stereotype.Component
-import javax.servlet.*
-import javax.servlet.annotation.WebFilter
+import javax.servlet.Filter
+import javax.servlet.FilterChain
+import javax.servlet.ServletRequest
+import javax.servlet.ServletResponse
 
-@Component
+/**
+ * @see AnyPerRequestFilter 参考此过滤器
+ */
+/*@Component
 @WebFilter(
     filterName = "RequestRidInjectFilter",
-    description = "请求ID注入过滤器"
-)
+    description = "请求ID注入过滤器",
+    dispatcherTypes = [
+        DispatcherType.ASYNC,DispatcherType.INCLUDE,DispatcherType.REQUEST, DispatcherType.ERROR,DispatcherType.FORWARD]
+)*/
+@Deprecated("ServletDispatcherType不生效,改用Spring的OncePerRequestFilter")
 class RequestRidInjectFilter : Filter {
 
     @Autowired
     private lateinit var voidConfiguration: VoidConfiguration
 
     override fun doFilter(request: ServletRequest, response: ServletResponse, filterChain: FilterChain) {
-        val recordRequestId = voidConfiguration.globalLogConfig.recordRequestId
-        if (recordRequestId){
-            request.setAttribute(StandardFields.FILTER_REQUEST_ID,IdUtil.fastUUID());
-        }
+//        val recordRequestId = voidConfiguration.globalLogConfig.recordRequestId
+//        if (recordRequestId){
+//            request.setAttribute(StandardFields.FILTER_REQUEST_ID,IdUtil.fastUUID());
+//        }
         filterChain.doFilter(request,response)
     }
 

@@ -87,7 +87,11 @@ object FileToolkit {
      */
     @JvmStatic
     fun getFileContent(file:File): String{
-        return IOUtils.toString(file.toURI(),Charsets.UTF_8)
+        if (file.exists()){
+            return IOUtils.toString(file.toURI(),Charsets.UTF_8)
+        }else{
+            throw FileNotFoundException("${file.path}不存在.")
+        }
     }
 
     /**
@@ -114,6 +118,11 @@ object FileToolkit {
     fun isImg(suffix: String): Boolean {
         val matcher = Pattern.compile(Regex.IMAGE_SUFFIX_REGEX).matcher(suffix)
         return matcher.matches()
+    }
+
+    @JvmStatic
+    fun exists(file: File): Boolean {
+        return file.exists()
     }
 
     @JvmStatic
