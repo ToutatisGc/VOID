@@ -35,7 +35,6 @@
 </div>
 </body>
 <style>
-
     .xv-code-circle{
         border-radius: 50%;
         border:2vh solid red;
@@ -48,7 +47,7 @@
 
     .xv-decorate-text{
         position: relative;
-        font-size: 13vh;
+        font-size: 11vh;
         font-weight:bolder;
         opacity: 0.5;
         margin:0;

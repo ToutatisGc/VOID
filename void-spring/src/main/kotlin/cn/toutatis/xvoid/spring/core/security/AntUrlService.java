@@ -27,7 +27,7 @@ public class AntUrlService {
      * @return 是否有权限
      */
     public boolean hasPermission(HttpServletRequest request, Authentication authentication) {
-        System.err.println(request.getServletPath());
+//        System.err.println(request.getRequestURI());
         Object authInfo = authentication.getPrincipal();
         if (authInfo instanceof String){ return false; }
         List<String> patterns;
