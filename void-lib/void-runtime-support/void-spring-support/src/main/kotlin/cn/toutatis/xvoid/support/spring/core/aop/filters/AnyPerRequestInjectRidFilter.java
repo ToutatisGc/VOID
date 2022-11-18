@@ -19,11 +19,11 @@ import java.io.IOException;
  */
 @Component
 @Order(-100)
-public class AnyPerRequestFilter extends OncePerRequestFilter {
+public class AnyPerRequestInjectRidFilter extends OncePerRequestFilter {
 
     private final VoidConfiguration voidConfiguration;
 
-    public AnyPerRequestFilter(VoidConfiguration voidConfiguration) {
+    public AnyPerRequestInjectRidFilter(VoidConfiguration voidConfiguration) {
         this.voidConfiguration = voidConfiguration;
     }
 
@@ -31,7 +31,7 @@ public class AnyPerRequestFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 
         if (voidConfiguration.getGlobalLogConfig().getRecordRequestId()){
-            request.setAttribute(StandardFields.FILTER_REQUEST_ID, IdUtil.fastUUID());
+            request.setAttribute(StandardFields.FILTER_REQUEST_ID_KEY, IdUtil.fastUUID());
         }
         filterChain.doFilter(request,response);
     }

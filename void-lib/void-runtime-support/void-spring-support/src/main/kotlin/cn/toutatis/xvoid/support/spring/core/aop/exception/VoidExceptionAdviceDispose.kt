@@ -32,7 +32,7 @@ class VoidExceptionAdviceDispose {
         logger.error("请求错误地址:{}",request.requestURL)
         val proxyResult = ProxyResult(ResultCode.REQUEST_EXCEPTION)
 
-        val requestId = request.getAttribute(StandardFields.FILTER_REQUEST_ID)
+        val requestId = request.getAttribute(StandardFields.FILTER_REQUEST_ID_KEY)
         if (requestId != null) proxyResult.requestId = requestId as String
 
         if (voidConfiguration.mode == RunMode.DEBUG) {

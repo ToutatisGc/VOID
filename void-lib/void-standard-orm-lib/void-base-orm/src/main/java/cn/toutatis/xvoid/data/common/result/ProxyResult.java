@@ -138,4 +138,12 @@ public class ProxyResult implements Result {
     public void setAction(Actions action) {
         this.action = action;
     }
+
+    public void setAutoConfig(Boolean autoConfig) {
+        this.autoConfig = autoConfig;
+    }
+
+    public Boolean getAutoConfig() {
+        return autoConfig;
+    }
 }

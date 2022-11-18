@@ -1,9 +1,13 @@
 package cn.toutatis.xvoid.spring.core.security.handler;
 
-import cn.hutool.http.HttpStatus;
-import cn.toutatis.xvoid.common.standard.StandardFields;
+import cn.toutatis.xvoid.data.common.result.ResultCode;
+import cn.toutatis.xvoid.spring.PkgInfo;
+import cn.toutatis.xvoid.support.spring.core.aop.advice.ResponseResultDispatcherAdvice;
+import cn.toutatis.xvoid.toolkit.log.LoggerToolkit;
 import cn.toutatis.xvoid.toolkit.validator.Validator;
 import com.alibaba.fastjson.JSON;
+import org.slf4j.Logger;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.InsufficientAuthenticationException;
 import org.springframework.security.core.Authentication;
@@ -18,6 +22,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+
+import static cn.toutatis.xvoid.common.standard.StandardFields.VOID_AUTH_STATUS_KEY;
 
 /**
  * @author Toutatis_Gc
@@ -40,9 +46,16 @@ public class SecurityHandler implements AuthenticationSuccessHandler,
      */
     private static final String REQUEST_CUSTOM_REDIRECT_PAGE_MAPPING = "CUSTOM_REDIRECT_PAGE_MAPPING";
 
-    public static final String UNCHECK_CODE = "980617";
+    private final RequestMethodResolver requestMethodResolver;
 
-    public static final String PERMISSION_DENIED_CODE = "971111";
+    private final Logger logger = LoggerToolkit.getLogger(this.getClass());
+
+    private final ResponseResultDispatcherAdvice responseResultDispatcherAdvice;
+
+    public SecurityHandler(RequestMethodResolver requestMethodResolver, ResponseResultDispatcherAdvice responseResultDispatcherAdvice) {
+        this.requestMethodResolver = requestMethodResolver;
+        this.responseResultDispatcherAdvice = responseResultDispatcherAdvice;
+    }
 
 
     @Override
@@ -52,28 +65,38 @@ public class SecurityHandler implements AuthenticationSuccessHandler,
 
     /**
      * 无权限访问控制
-     * @param request
-     * @param response
-     * @param authException
-     * @throws IOException
-     * @throws ServletException
+     * @param request 请求
+     * @param response 响应
+     * @param authException 权限异常
+     * @throws IOException 重定向异常
+     * @throws ServletException 重定向异常
      */
     @Override
-    public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
-        String method = request.getMethod();
-        System.err.println(authException);
-        System.err.println(request.getAttribute(StandardFields.FILTER_REQUEST_ID));
-        if ("GET".equals(method)){
-            this.forwardPage(request,response,"/error");
-        }else {
-
-        }
-
+    public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException){
         // org.springframework.security.authentication.InsufficientAuthenticationException: Full authentication is required to access this resource
         if (authException instanceof InsufficientAuthenticationException){
-            System.err.println(888);
+            // 特定异常
+        }else {
+            logger.error("[{}]未分配异常处理器",PkgInfo.MODULE_NAME);
         }
-        System.err.println(777);
+        ResultCode anonymityStatus = ResultCode.ANONYMITY_FAILED;
+        requestMethodResolver.resolveMethod(request, response).handle(
+                ()->{
+                    try {
+                        request.setAttribute(VOID_AUTH_STATUS_KEY, anonymityStatus.name());
+                        this.forwardPage(request,response,"/error");
+                    } catch (IOException | ServletException e) {
+                        e.printStackTrace();
+                    }
+                },
+                () ->{
+                    responseResultDispatcherAdvice.proxyResult();
+//                    this.returnJson(response,);
+                },
+                ()->{
+                    logger.warn("");
+                });
+
     }
 
     @Override
@@ -114,9 +137,7 @@ public class SecurityHandler implements AuthenticationSuccessHandler,
 
 
     private void forwardPage(HttpServletRequest request,HttpServletResponse response,String url) throws IOException, ServletException {
-        System.err.println(2);
-        response.setStatus(HttpStatus.HTTP_FORBIDDEN);
-//        response.sendRedirect("/error");
+        response.setStatus(HttpStatus.FORBIDDEN.value());
         request.getRequestDispatcher(url).forward(request,response);
     }
 

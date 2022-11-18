@@ -44,13 +44,23 @@ public class VoidErrorViewResolver implements ErrorViewResolver {
     }
 
 
+    /**
+     * @param request 请求
+     * @param status 状态码
+     * @param model [未知来源]
+     * @return 错误视图
+     */
     @Override
     public ModelAndView resolveErrorView(HttpServletRequest request, HttpStatus status, Map<String, Object> model) {
-        System.err.println(status);
-        System.err.println(request.getAttribute(StandardFields.FILTER_REQUEST_ID));
         String method = request.getMethod();
         ResultCode resultCode;
         HashMap<String, String> customInfo = new HashMap<>(3);
+        String authStatus = (String) request.getAttribute(StandardFields.VOID_AUTH_STATUS_KEY);
+        if (authStatus != null){
+            ResultCode code = ResultCode.valueOf(authStatus);
+        }else {
+
+        }
         switch (status){
             case NOT_FOUND:
                 resultCode = ResultCode.NOT_FOUND;
@@ -70,7 +80,7 @@ public class VoidErrorViewResolver implements ErrorViewResolver {
                 customInfo.put("subject",status.value()+" "+status.getReasonPhrase().toUpperCase());
                 Boolean useDetailedMode = globalServiceConfig.getUseDetailedMode();
                 ModelAndView modelAndView = new ModelAndView(viewToolkit.toView("error/Error"));
-                modelAndView.addObject("rid",request.getAttribute(StandardFields.FILTER_REQUEST_ID));
+                modelAndView.addObject("rid",request.getAttribute(StandardFields.FILTER_REQUEST_ID_KEY));
                 modelAndView.addObject("code",resultCode.getCode());
                 modelAndView.addObject("httpCode",status.value());
                 modelAndView.addObject("title",resultCode.getInfo());
