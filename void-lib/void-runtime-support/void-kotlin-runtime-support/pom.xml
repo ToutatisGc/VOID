@@ -9,6 +9,7 @@
         <groupId>cn.toutatis</groupId>
         <artifactId>void-feature-support</artifactId>
         <version>0.0.0-ALPHA</version>
+        <relativePath/>
     </parent>
 
     <groupId>cn.toutatis</groupId>
