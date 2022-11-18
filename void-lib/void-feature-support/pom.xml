@@ -18,7 +18,7 @@
         <java11.version>11</java11.version>
         <java17.version>17</java17.version>
 
-        <kotlin.version>1.6.21</kotlin.version>
+        <kotlin.version>1.7.21</kotlin.version>
         <kotlinx.version>1.6.4</kotlinx.version>
         <kotlin.code.style>official</kotlin.code.style>
 
@@ -446,7 +446,7 @@
                     <groupId>org.jetbrains.kotlin</groupId>
                     <artifactId>kotlin-maven-plugin</artifactId>
                     <configuration>
-                        <jvmTarget>1.8</jvmTarget>
+                        <jvmTarget>17</jvmTarget>
                         <args>
                             <arg>-Xjsr305=strict</arg>
                         </args>

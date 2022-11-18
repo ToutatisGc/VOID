@@ -90,7 +90,7 @@ public class SecurityHandler implements AuthenticationSuccessHandler,
                     }
                 },
                 () ->{
-                    responseResultDispatcherAdvice.proxyResult();
+//                    responseResultDispatcherAdvice.proxyResult();
 //                    this.returnJson(response,);
                 },
                 ()->{

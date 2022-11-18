@@ -18,7 +18,7 @@
     <description>SpringBoot集成VOID标准环境</description>
     <properties>
         <java.version>1.8</java.version>
-        <kotlin.version>1.6.21</kotlin.version>
+        <kotlin.version>1.7.21</kotlin.version>
     </properties>
     <dependencies>
         <!--Kotlin支持-->

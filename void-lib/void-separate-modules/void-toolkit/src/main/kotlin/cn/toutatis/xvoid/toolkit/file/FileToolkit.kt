@@ -1,15 +1,13 @@
 package cn.toutatis.xvoid.toolkit.file
 
+//import sun.security.util.Resources
 import cn.toutatis.xvoid.toolkit.constant.Regex
 import org.apache.commons.io.IOUtils
 import org.slf4j.LoggerFactory
-import sun.security.util.Resources
-//import sun.security.util.Resources
 import java.io.File
 import java.io.FileNotFoundException
 import java.io.InputStream
 import java.net.URL
-import java.util.*
 import java.util.regex.Pattern
 
 /**
@@ -31,14 +29,6 @@ object FileToolkit {
     @JvmStatic
     fun getResourcesFile(filename:String): URL?{
         return Thread.currentThread().contextClassLoader.getResource(filename)
-    }
-
-    /**
-     * Get the Properties file in the run directory.
-     */
-    @JvmStatic
-    fun getResourcesProperties(filename:String): ResourceBundle {
-        return Resources.getBundle(filename)
     }
 
     /**

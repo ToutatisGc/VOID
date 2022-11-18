@@ -7,7 +7,7 @@
     <parent>
         <artifactId>void-kotlin-runtime-support</artifactId>
         <groupId>cn.toutatis</groupId>
-        <version>1.6.21</version>
+        <version>1.7.21</version>
     </parent>
 
     <groupId>cn.toutatis</groupId>
