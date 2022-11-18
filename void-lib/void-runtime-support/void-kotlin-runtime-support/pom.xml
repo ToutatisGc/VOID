@@ -5,14 +5,19 @@
 
     <modelVersion>4.0.0</modelVersion>
 
+    <parent>
+        <groupId>cn.toutatis</groupId>
+        <artifactId>void-feature-support</artifactId>
+        <version>0.0.0-ALPHA</version>
+    </parent>
 
     <groupId>cn.toutatis</groupId>
     <artifactId>void-kotlin-runtime-support</artifactId>
-    <version>1.6.21</version>
+    <version>1.7.21</version>
     <packaging>pom</packaging>
 
     <properties>
-        <kotlin.version>1.6.21</kotlin.version>
+
     </properties>
 
     <dependencyManagement>
@@ -47,12 +52,6 @@
 
         <dependency>
             <groupId>org.jetbrains.kotlin</groupId>
-            <artifactId>kotlin-android-extensions</artifactId>
-            <version>${kotlin.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.jetbrains.kotlin</groupId>
             <artifactId>kotlin-test-junit</artifactId>
             <scope>test</scope>
         </dependency>
@@ -73,7 +72,7 @@
                     <artifactId>kotlin-maven-plugin</artifactId>
                     <version>${kotlin.version}</version>
                     <configuration>
-                        <jvmTarget>1.8</jvmTarget>
+                        <jvmTarget>17</jvmTarget>
                         <args>
                             <arg>-Xjsr305=strict</arg>
                         </args>
