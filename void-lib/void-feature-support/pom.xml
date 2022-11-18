@@ -54,8 +54,8 @@
         <okhttp.version>5.0.0-alpha.10</okhttp.version>
         <thumbnailator.version>0.4.18</thumbnailator.version>
 
-        <maven.compiler.source>8</maven.compiler.source>
-        <maven.compiler.target>8</maven.compiler.target>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
         <p.source.version>2.2.1</p.source.version>
         <p.javadoc.version>3.4.1</p.javadoc.version>
         <p.nexus-staging.version>1.6.7</p.nexus-staging.version>
