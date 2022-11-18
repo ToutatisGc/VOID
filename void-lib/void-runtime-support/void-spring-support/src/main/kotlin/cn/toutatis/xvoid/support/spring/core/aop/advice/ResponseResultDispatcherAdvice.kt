@@ -1,9 +1,9 @@
 package cn.toutatis.xvoid.support.spring.core.aop.advice
 
-import cn.toutatis.xvoid.data.common.result.branch.DetailedResult
-import cn.toutatis.xvoid.data.common.result.branch.SimpleResult
 import cn.toutatis.xvoid.data.common.result.ProxyResult
 import cn.toutatis.xvoid.data.common.result.Result
+import cn.toutatis.xvoid.data.common.result.branch.DetailedResult
+import cn.toutatis.xvoid.data.common.result.branch.SimpleResult
 import org.springframework.core.MethodParameter
 import org.springframework.http.MediaType
 import org.springframework.http.converter.HttpMessageConverter
@@ -22,20 +22,23 @@ class ResponseResultDispatcherAdvice : ResponseBodyAdvice<Any>{
 
     override fun supports(returnType: MethodParameter, converterType: Class<out HttpMessageConverter<*>>): Boolean = true
 
-    override fun beforeBodyWrite(body: Any?, returnType: MethodParameter, selectedContentType: MediaType,
-                                 selectedConverterType: Class<out HttpMessageConverter<*>>,
-                                 request: ServerHttpRequest,
-                                 response: ServerHttpResponse
+    override fun beforeBodyWrite(
+        body: Any?, returnType: MethodParameter, selectedContentType: MediaType,
+        selectedConverterType: Class<out HttpMessageConverter<*>>,
+        request: ServerHttpRequest, response: ServerHttpResponse
     ): Any? {
-        if (body == null) return null
-        if (body::class == ProxyResult::class.java){
-            body as ProxyResult
-            val result: Result = if(body.useDetailedMode) SimpleResult() else DetailedResult()
-            result.setResultCode(body.resultCode)
-            return result
+        return this.proxyResult(body)
+    }
+
+    fun proxyResult(data:Any?): Any? {
+        if (data == null) return null
+        return if (data::class == ProxyResult::class.java){
+            data as ProxyResult
+            val result: Result = if(data.useDetailedMode) SimpleResult() else DetailedResult()
+            result.setResultCode(data.resultCode)
+            result
+        }else{
+            data;
         }
-//        request as HttpServletRequest
-//        request.
-        return body
     }
 }

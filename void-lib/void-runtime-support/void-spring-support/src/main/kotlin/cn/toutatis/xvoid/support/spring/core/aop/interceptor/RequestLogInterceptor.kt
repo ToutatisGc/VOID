@@ -36,7 +36,7 @@ class RequestLogInterceptor(voidConfiguration: VoidConfiguration) : HandlerInter
         if (logConfig.recordRequest && handler is HandlerMethod) {
             val beanType: Class<*> = handler.beanType
             logger.info("<====REQUEST-TIME:[${Time.getCurrentLocalDateTime()}]======" +
-                    "RID:[${request.getAttribute(StandardFields.FILTER_REQUEST_ID)}]=====>")
+                    "RID:[${request.getAttribute(StandardFields.FILTER_REQUEST_ID_KEY)}]=====>")
             logger.info("CLASS#METHOD:${beanType.name}#${handler.method.name}")
             logger.info("URL：${request.requestURL}\tTYPE：${request.method} Address:${RequestToolkit.getIpAddress(request)}")
             logger.info("MIME-TYPE：${request.contentType?:"-UNKNOWN-"}\tUser-Agent：${request.getHeader("User-Agent")}")
@@ -49,7 +49,7 @@ class RequestLogInterceptor(voidConfiguration: VoidConfiguration) : HandlerInter
             println()
         }
         if (logConfig.recordStaticResource && handler is ResourceHttpRequestHandler){
-            logger.info("<=STATIC-TIME:[${Time.getCurrentLocalDateTime()}]=RID:[${request.getAttribute(StandardFields.FILTER_REQUEST_ID)}]=${request.requestURI}====>")
+            logger.info("<=STATIC-TIME:[${Time.getCurrentLocalDateTime()}]=RID:[${request.getAttribute(StandardFields.FILTER_REQUEST_ID_KEY)}]=${request.requestURI}====>")
         }
         return true
     }

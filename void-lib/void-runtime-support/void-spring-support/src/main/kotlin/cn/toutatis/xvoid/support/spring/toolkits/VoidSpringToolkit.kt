@@ -36,7 +36,7 @@ class VoidSpringToolkit : ApplicationContextAware {
     }
 
     fun getRid(httpServletRequest: HttpServletRequest):String{
-        val rid = httpServletRequest.getAttribute(StandardFields.FILTER_REQUEST_ID) as String
+        val rid = httpServletRequest.getAttribute(StandardFields.FILTER_REQUEST_ID_KEY) as String
         return if (Validator.strIsBlank(rid)){ "-" }else{ rid }
     }
 

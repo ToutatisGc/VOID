@@ -8,7 +8,7 @@ import javax.servlet.ServletRequest
 import javax.servlet.ServletResponse
 
 /**
- * @see AnyPerRequestFilter 参考此过滤器
+ * @see AnyPerRequestInjectRidFilter 参考此过滤器
  */
 /*@Component
 @WebFilter(

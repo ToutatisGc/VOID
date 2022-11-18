@@ -2,7 +2,7 @@ package cn.toutatis.xvoid.spring.core.security;
 
 import cn.toutatis.core.root.security.handler.LogOutHandler;
 import cn.toutatis.xvoid.spring.core.security.handler.SecurityHandler;
-import cn.toutatis.xvoid.support.spring.core.aop.filters.AnyPerRequestFilter;
+import cn.toutatis.xvoid.support.spring.core.aop.filters.AnyPerRequestInjectRidFilter;
 import cn.toutatis.xvoid.support.spring.enhance.mapping.XvoidMappingResolver;
 import cn.toutatis.xvoid.toolkit.log.LoggerToolkit;
 import org.slf4j.Logger;
@@ -35,7 +35,7 @@ public class Security extends WebSecurityConfigurerAdapter {
     private final XvoidMappingResolver xvoidMappingResolver;
 
     @Autowired
-    private AnyPerRequestFilter anyRequestFilter;
+    private AnyPerRequestInjectRidFilter anyRequestFilter;
 
     public Security(VoidSecurityAuthenticationService voidAuthenticationService, SecurityHandler securityHandler, LogOutHandler logOutHandler, XvoidMappingResolver xvoidMappingResolver) {
         this.voidAuthenticationService = voidAuthenticationService;
