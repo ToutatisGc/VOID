@@ -57,7 +57,7 @@
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
         <p.source.version>2.2.1</p.source.version>
-        <p.javadoc.version>2.9.1</p.javadoc.version>
+        <p.javadoc.version>3.4.1</p.javadoc.version>
         <p.nexus-staging.version>1.6.7</p.nexus-staging.version>
     </properties>
 
