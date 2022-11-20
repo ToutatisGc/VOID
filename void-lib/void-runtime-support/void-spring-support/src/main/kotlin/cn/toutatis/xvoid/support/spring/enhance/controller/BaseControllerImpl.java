@@ -43,11 +43,11 @@ public class BaseControllerImpl<O extends EntityBasicAttribute<O>, SERVICE exten
     private SERVICE service;
 
     @Autowired
-    private VoidConfiguration voidConfiguration;
+    private final VoidConfiguration voidConfiguration;
 
-    private Boolean platformMode;
+    private final Boolean platformMode;
 
-    private CommonWrapper<O> commonWrapper = CommonWrapper.getInstance();
+    private final CommonWrapper<O> commonWrapper = CommonWrapper.getInstance();
 
     private ProxyResult result;
 
@@ -58,6 +58,7 @@ public class BaseControllerImpl<O extends EntityBasicAttribute<O>, SERVICE exten
                 voidConfiguration.getGlobalServiceConfig().getUseDetailedMode(),
                 voidConfiguration.getGlobalServiceConfig().getAutoConfig()
         );
+        result.setRequestId((String) request.getAttribute(StandardFields.FILTER_REQUEST_ID_KEY));
     }
 
     @Override
@@ -83,7 +84,7 @@ public class BaseControllerImpl<O extends EntityBasicAttribute<O>, SERVICE exten
         Map<String,Object> objectMap = new HashMap<>(2);
         objectMap.put("list",page.getRecords());
         objectMap.put("totalCount",page.getTotal());
-        result.setData(objectMap, Actions.SELECT);
+        result.setData(Actions.SELECT,objectMap);
         return result;
     }
 
@@ -102,7 +103,7 @@ public class BaseControllerImpl<O extends EntityBasicAttribute<O>, SERVICE exten
             }
         }
         O one = service.getOne(oQueryWrapper);
-        result.setData(one,Actions.SELECT);
+        result.setData(Actions.SELECT,one);
         return result;
     }
 

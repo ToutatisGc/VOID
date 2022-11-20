@@ -38,7 +38,6 @@ open class VoidSpringMvcConfiguration : WebMvcConfigurer {
 
     @Bean
     open fun requestContextListener(): RequestContextListener {
-        System.err.println("requestContextListener")
         return RequestContextListener()
     }
 }

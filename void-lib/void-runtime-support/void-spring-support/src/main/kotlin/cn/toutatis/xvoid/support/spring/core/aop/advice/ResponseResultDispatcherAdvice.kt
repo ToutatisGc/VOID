@@ -34,8 +34,11 @@ class ResponseResultDispatcherAdvice : ResponseBodyAdvice<Any>{
         if (data == null) return null
         return if (data::class == ProxyResult::class.java){
             data as ProxyResult
-            val result: Result = if(data.useDetailedMode) SimpleResult() else DetailedResult()
-            result.setResultCode(data.resultCode)
+            val result: Result = (if (data.useDetailedMode){ DetailedResult() } else { SimpleResult() })
+                .apply {
+                    setResultCode(data.resultCode)
+                    setData(data.data)
+            }
             result
         }else{
             data;
