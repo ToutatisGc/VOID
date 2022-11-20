@@ -27,7 +27,7 @@ public class DetailedResult implements Result {
     }
 
     @Override
-    public void setData(java.lang.Object data) {
+    public void setData(Object data) {
 
     }
 

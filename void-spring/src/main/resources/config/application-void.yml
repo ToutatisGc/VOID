@@ -12,3 +12,6 @@ void:
     description: VOID 文档接口
     base-package: cn.toutatis
     title: VOID文档
+  global-service-config:
+    auto-config: true
+    use-detailed-mode: true

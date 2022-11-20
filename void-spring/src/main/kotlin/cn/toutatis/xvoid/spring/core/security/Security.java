@@ -63,7 +63,7 @@ public class Security extends WebSecurityConfigurerAdapter {
 //        表单认证
         http.formLogin()
                 .loginPage("/auth/authPage")
-                .loginProcessingUrl("/authentication")
+                .loginProcessingUrl("/auth/authentication")
                 .usernameParameter("identity")
                 .passwordParameter("secret")
                 .successHandler(securityHandler)

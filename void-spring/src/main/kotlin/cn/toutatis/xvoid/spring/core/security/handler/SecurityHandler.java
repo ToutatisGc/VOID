@@ -1,5 +1,6 @@
 package cn.toutatis.xvoid.spring.core.security.handler;
 
+import cn.toutatis.xvoid.data.common.result.ProxyResult;
 import cn.toutatis.xvoid.data.common.result.ResultCode;
 import cn.toutatis.xvoid.spring.PkgInfo;
 import cn.toutatis.xvoid.support.spring.core.aop.advice.ResponseResultDispatcherAdvice;
@@ -82,19 +83,16 @@ public class SecurityHandler implements AuthenticationSuccessHandler,
         ResultCode anonymityStatus = ResultCode.ANONYMITY_FAILED;
         requestMethodResolver.resolveMethod(request, response).handle(
                 ()->{
-                    try {
-                        request.setAttribute(VOID_AUTH_STATUS_KEY, anonymityStatus.name());
-                        this.forwardPage(request,response,"/error");
-                    } catch (IOException | ServletException e) {
-                        e.printStackTrace();
-                    }
+                    request.setAttribute(VOID_AUTH_STATUS_KEY, anonymityStatus.name());
+                    this.forwardPage(request,response,"/error");
                 },
                 () ->{
-//                    responseResultDispatcherAdvice.proxyResult();
-//                    this.returnJson(response,);
+                    ProxyResult proxyResult = new ProxyResult(anonymityStatus);
+                    this.returnJson(response,responseResultDispatcherAdvice.proxyResult(proxyResult));
                 },
                 ()->{
-                    logger.warn("");
+                    logger.warn("[{}]未处理METHOD:{},异常为:{}",PkgInfo.MODULE_NAME,request.getMethod(),authException);
+                    authException.printStackTrace();
                 });
 
     }
@@ -129,16 +127,24 @@ public class SecurityHandler implements AuthenticationSuccessHandler,
      * @param o 序列化实体类
      * @throws IOException 流异常
      */
-    private void returnJson(HttpServletResponse response,Object o) throws IOException {
+    private void returnJson(HttpServletResponse response,Object o) {
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
-        response.getWriter().write(JSON.toJSONString(o));
+        try {
+            response.getWriter().write(JSON.toJSONString(o));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 
-    private void forwardPage(HttpServletRequest request,HttpServletResponse response,String url) throws IOException, ServletException {
+    private void forwardPage(HttpServletRequest request,HttpServletResponse response,String url) {
         response.setStatus(HttpStatus.FORBIDDEN.value());
-        request.getRequestDispatcher(url).forward(request,response);
+        try {
+            request.getRequestDispatcher(url).forward(request,response);
+        } catch (ServletException | IOException e) {
+            e.printStackTrace();
+        }
     }
 
 
