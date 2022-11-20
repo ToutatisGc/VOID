@@ -16,48 +16,100 @@
 
 package cn.toutatis.xvoid.data.common.result.branch;
 
-import cn.toutatis.xvoid.data.common.result.ResultCode;
 import cn.toutatis.xvoid.data.common.result.Result;
+import cn.toutatis.xvoid.data.common.result.ResultCode;
+import cn.toutatis.xvoid.toolkit.constant.Time;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
 
-import java.util.Objects;
 
+@Getter
+@EqualsAndHashCode
 public class SimpleResult implements Result {
 
-    private String code;
 
+    /**
+     * 请求分配ID
+     */
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private String rid;
+
+    /**
+     * 响应码枚举
+     */
+    private String resultCode;
+
+    /**
+     *  是否成功
+     */
+    private Boolean success;
+    /**
+     * 响应消息
+     */
     private String message;
-
+    /**
+     * 一般来源于resultCode的extraInfo字段
+     * 或可以另外指定为辅助消息
+     */
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private String supportMessage;
+    /**
+     * 时间戳
+     */
+    private final long timestamp = System.currentTimeMillis();
+    /**
+     * 本地时间
+     */
+    private final String localDateTime = Time.getCurrentTimeByLong(timestamp);
+    /**
+     * 响应数据
+     */
     private Object data;
 
-    private ResultCode resultCode;
+    public SimpleResult(ResultCode resultCode){
+        this.setResultCode(resultCode);
+    }
+
+    public SimpleResult(ResultCode resultCode,String message){
+        this.setResultCode(resultCode);
+        this.setMessage(message);
+    }
+
+    public SimpleResult(ResultCode resultCode,String message,Object data){
+        this.setResultCode(resultCode);
+        this.setMessage(message);
+        this.data = data;
+    }
+
+    @Override
+    public void setData(Object data) {
+        this.data = data;
+    }
+
+    @Override
+    public void setResultCode(ResultCode resultCode) {
+        this.resultCode = resultCode.getCode();
+        this.message = resultCode.getInfo();
+        this.supportMessage = resultCode.getExtraInfo();
+        this.success = resultCode.isSuccess();
+    }
 
     @Override
     public Result serialize() {
         return this;
     }
 
-    @Override
-    public void setData(Object data) {
-
+    public void setRid(String rid) {
+        this.rid = rid;
     }
 
-    @Override
-    public void setResultCode(ResultCode resultCode) {
-        this.resultCode = resultCode;
+    public void setMessage(String message) {
+        this.message = message;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        SimpleResult that = (SimpleResult) o;
-        return Objects.equals(code, that.code) && Objects.equals(message, that.message) && Objects.equals(data, that.data);
+    public void setSupportMessage(String supportMessage) {
+        this.supportMessage = supportMessage;
     }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(code, message, data);
-    }
-
 
 }

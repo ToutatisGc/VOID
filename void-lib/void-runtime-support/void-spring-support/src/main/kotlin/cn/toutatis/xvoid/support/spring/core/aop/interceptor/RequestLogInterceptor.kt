@@ -46,7 +46,7 @@ class RequestLogInterceptor(voidConfiguration: VoidConfiguration) : HandlerInter
                     logger.info("PARAM[${idx++}]：$key = ${value.joinToString(",")}")
                 }
             }
-            println()
+
         }
         if (logConfig.recordStaticResource && handler is ResourceHttpRequestHandler){
             logger.info("<=STATIC-TIME:[${Time.getCurrentLocalDateTime()}]=RID:[${request.getAttribute(StandardFields.FILTER_REQUEST_ID_KEY)}]=${request.requestURI}====>")

@@ -16,23 +16,114 @@
 
 package cn.toutatis.xvoid.data.common.result.branch;
 
-import cn.toutatis.xvoid.data.common.result.ResultCode;
 import cn.toutatis.xvoid.data.common.result.Result;
+import cn.toutatis.xvoid.data.common.result.ResultCode;
+import cn.toutatis.xvoid.toolkit.constant.Time;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
 
+/**
+ * @author Toutatis_Gc
+ * 详细响应模式
+ */
+@Getter
+@EqualsAndHashCode
 public class DetailedResult implements Result {
 
-    @Override
-    public Object serialize() {
-        return null;
+    /**
+     * 请求分配ID
+     */
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private String rid;
+
+    private String resultStatus;
+    /**
+     * 响应码枚举
+     */
+    private String resultCode;
+    /**
+     * 内部分配ID
+     */
+    private String innerCode;
+    /**
+     *  是否成功
+     */
+    private Boolean success;
+    /**
+     * 响应消息
+     */
+    private String message;
+    /**
+     * 一般来源于resultCode的extraInfo字段
+     * 或可以另外指定为辅助消息
+     */
+    private String supportMessage;
+    /**
+     * 时间戳
+     */
+    private final long timestamp = System.currentTimeMillis();
+    /**
+     * 本地时间
+     */
+    private final String localDateTime = Time.getCurrentTimeByLong(timestamp);
+    /**
+     * 响应数据
+     */
+    private Object data;
+
+    public DetailedResult() { }
+
+    public DetailedResult(ResultCode resultCode){
+        this.setResultCode(resultCode);
+    }
+
+    public DetailedResult(ResultCode resultCode,String message){
+        this.setResultCode(resultCode);
+        this.setMessage(message);
+    }
+
+    public DetailedResult(ResultCode resultCode,String message,Object data){
+        this.setResultCode(resultCode);
+        this.setMessage(message);
+        this.data = data;
     }
 
     @Override
     public void setData(Object data) {
-
+        this.data = data;
     }
 
     @Override
     public void setResultCode(ResultCode resultCode) {
-        resultCode = resultCode;
+        this.resultCode = resultCode.getCode();
+        this.message = resultCode.getInfo();
+        this.supportMessage = resultCode.getExtraInfo();
+        this.success = resultCode.isSuccess();
+        this.resultStatus = resultCode.name();
+        this.innerCode = resultCode.getInnerCode();
     }
+
+    public void setRid(String rid) {
+        this.rid = rid;
+    }
+
+    public void setSuccess(Boolean success) {
+        this.success = success;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public void setSupportMessage(String supportMessage) {
+        this.supportMessage = supportMessage;
+    }
+
+
+    @Override
+    public Object serialize() {
+        return this;
+    }
+
 }
