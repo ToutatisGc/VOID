@@ -1,9 +1,11 @@
 package cn.toutatis.xvoid.support.spring.core.aop.advice
 
+import cn.toutatis.xvoid.common.standard.StandardFields
 import cn.toutatis.xvoid.data.common.result.ProxyResult
 import cn.toutatis.xvoid.data.common.result.Result
 import cn.toutatis.xvoid.data.common.result.branch.DetailedResult
 import cn.toutatis.xvoid.data.common.result.branch.SimpleResult
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.core.MethodParameter
 import org.springframework.http.MediaType
 import org.springframework.http.converter.HttpMessageConverter
@@ -11,6 +13,7 @@ import org.springframework.http.server.ServerHttpRequest
 import org.springframework.http.server.ServerHttpResponse
 import org.springframework.web.bind.annotation.RestControllerAdvice
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice
+import javax.servlet.http.HttpServletRequest
 
 /**
  * @author Toutatis_Gc
@@ -19,6 +22,9 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice
  */
 @RestControllerAdvice
 class ResponseResultDispatcherAdvice : ResponseBodyAdvice<Any>{
+
+    @Autowired
+    private lateinit var request :  HttpServletRequest
 
     override fun supports(returnType: MethodParameter, converterType: Class<out HttpMessageConverter<*>>): Boolean = true
 
@@ -30,18 +36,31 @@ class ResponseResultDispatcherAdvice : ResponseBodyAdvice<Any>{
         return this.proxyResult(body)
     }
 
+    /**
+     * 代理Result派生类
+     */
     fun proxyResult(data:Any?): Any? {
         if (data == null) return null
-        return if (data::class == ProxyResult::class.java){
+        return if (data::class == ProxyResult::class){
             data as ProxyResult
-            val result: Result = (if (data.useDetailedMode){ DetailedResult() } else { SimpleResult() })
-                .apply {
-                    setResultCode(data.resultCode)
-                    setData(data.data)
+            val result: Result = if(data.useDetailedMode){
+                val detailedResult = DetailedResult(data.resultCode,data.message,data.data)
+                detailedResult.rid = request.getAttribute(StandardFields.FILTER_REQUEST_ID_KEY) as String
+                if(data.supportMessage != null){
+                    detailedResult.supportMessage = data.supportMessage
+                }
+                detailedResult
+            }else{
+                val simpleResult = SimpleResult(data.resultCode,data.message,data.data)
+                simpleResult.rid = request.getAttribute(StandardFields.FILTER_REQUEST_ID_KEY) as String
+                if(data.supportMessage != null){
+                    simpleResult.supportMessage = data.supportMessage
+                }
+                simpleResult
             }
-            result
+            result.serialize()
         }else{
-            data;
+            data
         }
     }
 }

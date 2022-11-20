@@ -30,8 +30,8 @@ class VoidExceptionAdviceDispose {
     @ExceptionHandler(Exception::class)
     fun errorMsg(request: HttpServletRequest, response: HttpServletResponse, e: Exception): ProxyResult {
         logger.error("请求错误地址:{}",request.requestURL)
+        e.printStackTrace()
         val proxyResult = ProxyResult(ResultCode.REQUEST_EXCEPTION)
-
         val requestId = request.getAttribute(StandardFields.FILTER_REQUEST_ID_KEY)
         if (requestId != null) proxyResult.requestId = requestId as String
 

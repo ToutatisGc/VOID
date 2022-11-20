@@ -6,6 +6,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.EqualsAndHashCode;
 import org.slf4j.Logger;
 
 import java.util.List;
@@ -15,7 +16,10 @@ import java.util.Map;
  * @author Toutatis_Gc
  * 代理返回类
  * ResponseResultDispatcherAdvice 请求返回前拦截并区别simpleMode然后分发继承类
+ * 注意: 如果已经设置autoConfig并且返回了响应状态码,需要自定义resultCode等字段,需要将setData的顺序前移
+ * 调用顺序: new constructor() > setData()方法 > setResultCode()/setMessage()等
  */
+@EqualsAndHashCode
 @ApiModel(
         value = "代理返回结果(最终返回结果为Result的派生类)",
         description = "Controller标准返回结果,经过 ResponseResultDispatcherAdvice 分发到派生类")
@@ -36,6 +40,13 @@ public class ProxyResult implements Result {
      */
     @ApiModelProperty(name="响应消息",required=true,example = "请求成功")
     private String message;
+
+    /**
+     * [具体分发到派生类]
+     * 辅助响应消息
+     */
+    @ApiModelProperty(name="响应消息",required=true,example = "请求成功")
+    private String supportMessage;
 
     /**
      * [具体分发到派生类]
@@ -85,28 +96,85 @@ public class ProxyResult implements Result {
      * 该字段用于autoConfig模式下
      * 作用是判断data填充是否为空或bool情况
      * */
-    private Boolean successfulSign = false;
+    @JsonIgnore
+    private Boolean successfulSign = null;
 
     /**
      * 是否已经编辑过,如果编辑过并且冻结对象,将不能再编辑对象内容
      */
+    @JsonIgnore
     private Boolean alreadyEdited = false;
 
+    /**
+     * 纯粹响应,无返回值
+     * @param resultCode 响应码
+     */
     public ProxyResult(ResultCode resultCode) {
         this.resultCode = resultCode;
     }
 
+    /**
+     * 动作和是否完成
+     * 例如:更新成功
+     * 调用setData()方法会检测data状态重置sign字段
+     * @param action 动作
+     * @param successfulSign 动作状态
+     */
+    public ProxyResult(Actions action, Boolean successfulSign) {
+        this.action = action;
+        this.successfulSign = successfulSign;
+    }
+
+    /**
+     * 按照动作判断数据是否符合标准并返回
+     * @param action 动作
+     * @param data 响应数据
+     */
+    public ProxyResult(Actions action, Object data) {
+        this.action = action;
+        this.setData(data);
+    }
+
+    /**
+     * 按照动作判断数据是否符合标准并返回,附带自定义消息,否则使用action分配标准消息
+     * @param action 动作
+     * @param message 消息
+     * @param data 数据
+     */
+    public ProxyResult(Actions action,String message, Object data ) {
+        this.action = action;
+        this.setData(data);
+        this.message = message;
+    }
+
+    /**
+     * 同上方法 增设消息字段
+     * @param action 动作
+     * @param message 响应自定义消息
+     * @param successfulSign 动作状态
+     */
+    public ProxyResult(Actions action, String message , Boolean successfulSign) {
+        this.message = message;
+        this.action = action;
+        this.successfulSign = successfulSign;
+    }
+
+    /**
+     * 无附带数据类型
+     * @param resultCode 响应码
+     * @param message 自定义消息
+     */
     public ProxyResult(ResultCode resultCode, String message) {
         this.resultCode = resultCode;
         this.message = message;
     }
 
-    public ProxyResult(ResultCode resultCode, String message, Object data) {
-        this.resultCode = resultCode;
-        this.message = message;
-        this.data = data;
-    }
 
+    /**
+     * 手动填充具体字段
+     * @param useDetailedMode 是否返回详细类型
+     * @param autoConfig 自动配置响应码
+     */
     public ProxyResult(Boolean useDetailedMode, Boolean autoConfig) {
         this.useDetailedMode = useDetailedMode;
         this.autoConfig = autoConfig;
@@ -168,11 +236,15 @@ public class ProxyResult implements Result {
      * @param data 数据
      */
     private void setContent(Object data){
+        if (freeze){
+            logger.error("{}对象已锁定,请先调用obj.freeze(false)解锁.",this.hashCode());
+            return;
+        }
         this.data = data;
         if (autoConfig){
             if (action != null){
                 Classify classify = Classify.UNKNOWN;
-                boolean notEmpty = false;
+                Boolean notEmpty = null;
                 if (data != null) {
                     Class<?> dataClass = data.getClass();
                     if (List.class.isAssignableFrom(dataClass)) {
@@ -191,6 +263,9 @@ public class ProxyResult implements Result {
                         String tmpData = (String) this.data;
                         this.successfulSign = notEmpty = tmpData.length() > 0;
                         classify = Classify.OBJECT;
+                    } else if (Boolean.class == (dataClass)) {
+                        this.successfulSign = notEmpty = (Boolean) this.data;
+                        classify = Classify.BOOLEAN;
                     } else if (Object.class.isAssignableFrom(dataClass)) {
                         this.successfulSign = notEmpty = true;
                         classify = Classify.OBJECT;
@@ -230,14 +305,6 @@ public class ProxyResult implements Result {
         }
     }
 
-    private void checkAutoSign(ResultCode successCode,ResultCode failCode){
-        if (this.successfulSign){
-            updateEnv(successCode);
-        }else {
-            updateEnv(failCode);
-        }
-    }
-
     /**
      * 更新响应属性
      * @param code 响应码
@@ -247,12 +314,21 @@ public class ProxyResult implements Result {
         this.setMessage(code.getInfo());
     }
 
-    private void updateEnv(boolean b,ResultCode success,ResultCode failCode){
-        if (b){
-            updateEnv(success);
+    private void updateEnv(Boolean signature,ResultCode successCode,ResultCode failCode){
+        if (signature!= null && signature){
+            updateEnv(successCode);
         }else {
             updateEnv(failCode);
         }
+    }
+
+    /**
+     * 检查动作是否成功并更新成功或失败标志响应码
+     * @param successCode 成功返回响应码
+     * @param failCode 失败返回响应码
+     */
+    private void checkAutoSign(ResultCode successCode,ResultCode failCode){
+       this.updateEnv(this.successfulSign,successCode,failCode);
     }
 
     @Override
@@ -266,6 +342,10 @@ public class ProxyResult implements Result {
 
     @Override
     public void setResultCode(ResultCode resultCode) {
+        if (freeze){
+            logger.error("{}对象已锁定,请先调用obj.freeze(false)解锁.",this.hashCode());
+            return;
+        }
         this.resultCode = resultCode;
     }
 
@@ -274,6 +354,10 @@ public class ProxyResult implements Result {
     }
 
     public void setMessage(String message) {
+        if (freeze){
+            logger.error("{}对象已锁定,请先调用obj.freeze(false)解锁.",this.hashCode());
+            return;
+        }
         this.message = message;
     }
 
@@ -302,10 +386,22 @@ public class ProxyResult implements Result {
     }
 
     public void setAction(Actions action) {
+        if (freeze){
+            logger.error("{}对象已锁定,请先调用obj.freeze(false)解锁.",this.hashCode());
+            return;
+        }
         this.action = action;
     }
 
     public void setFreeze(Boolean freeze) {
         this.freeze = freeze;
+    }
+
+    public String getSupportMessage() {
+        return supportMessage;
+    }
+
+    public void setSupportMessage(String supportMessage) {
+        this.supportMessage = supportMessage;
     }
 }
