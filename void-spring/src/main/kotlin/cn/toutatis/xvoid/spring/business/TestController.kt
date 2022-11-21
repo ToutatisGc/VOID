@@ -88,7 +88,7 @@ class TestController {
     @RequestMapping("/g",method=[RequestMethod.GET])
     fun test8(): ProxyResult {
         val result = ProxyResult(ResultCode.NORMAL_SUCCESS)
-        result.useDetailedMode = false
+        result.useDetailedMode = true
         return result
     }
 

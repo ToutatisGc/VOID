@@ -55,25 +55,30 @@ public class VoidErrorViewResolver implements ErrorViewResolver {
         String method = request.getMethod();
         ResultCode resultCode;
         HashMap<String, String> customInfo = new HashMap<>(3);
-        String authStatus = (String) request.getAttribute(StandardFields.VOID_AUTH_STATUS_KEY);
+        String authStatus = (String) request.getAttribute(StandardFields.VOID_HTTP_ATTRIBUTE_STATUS_KEY);
         if (authStatus != null){
-            ResultCode code = ResultCode.valueOf(authStatus);
+            resultCode = ResultCode.valueOf(authStatus);
+            String customMessageAttribute = (String) request.getAttribute(StandardFields.VOID_HTTP_ATTRIBUTE_MESSAGE_KEY);
+            if (customMessageAttribute != null){
+                customInfo.put("message", customMessageAttribute);
+            }else{
+                customInfo.put("message", resultCode.getInfo());
+            }
         }else {
-
-        }
-        switch (status){
-            case NOT_FOUND:
-                resultCode = ResultCode.NOT_FOUND;
-                customInfo.put("message","您所访问的页面不存在,请稍后再试!");
-                break;
-            case INTERNAL_SERVER_ERROR:
-                resultCode = ResultCode.REQUEST_EXCEPTION;
-                customInfo.put("message","您的访问出错啦!请稍后再试或者刷新尝试!");
-                break;
-            default:
-                logger.error("未发现异常处理,请尽快处理此类异常[{}]",status);
-                resultCode = ResultCode.UNKNOWN_EXCEPTION;
-                break;
+            switch (status) {
+                case NOT_FOUND:
+                    resultCode = ResultCode.NOT_FOUND;
+                    customInfo.put("message", "您所访问的页面不存在,请稍后再试!");
+                    break;
+                case INTERNAL_SERVER_ERROR:
+                    resultCode = ResultCode.REQUEST_EXCEPTION;
+                    customInfo.put("message", "您的访问出错啦!请稍后再试或者刷新尝试!");
+                    break;
+                default:
+                    logger.error("未发现异常处理,请尽快处理此类异常[{}]", status);
+                    resultCode = ResultCode.UNKNOWN_EXCEPTION;
+                    break;
+            }
         }
         switch (method){
             case "GET":

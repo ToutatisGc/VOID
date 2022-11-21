@@ -62,7 +62,7 @@ public class Security extends WebSecurityConfigurerAdapter {
         http.httpBasic().disable();
 //        表单认证
         http.formLogin()
-                .loginPage("/auth/authPage")
+                .loginPage("/auth/login/page")
                 .loginProcessingUrl("/auth/authentication")
                 .usernameParameter("identity")
                 .passwordParameter("secret")
