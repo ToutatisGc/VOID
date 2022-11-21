@@ -12,11 +12,11 @@
     <div class="xv-main-text">{{message}}</div>
 </div>
 </body>
-    <#--临时样式-->
+<#--临时样式-->
 <style>
 
 </style>
-    <#--VUE 实例-->
+<#--VUE 实例-->
 <script>
     const { createApp } = Vue
 

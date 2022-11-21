@@ -24,7 +24,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-import static cn.toutatis.xvoid.common.standard.StandardFields.VOID_AUTH_STATUS_KEY;
+import static cn.toutatis.xvoid.common.standard.StandardFields.VOID_HTTP_ATTRIBUTE_STATUS_KEY;
 
 /**
  * @author Toutatis_Gc
@@ -83,7 +83,7 @@ public class SecurityHandler implements AuthenticationSuccessHandler,
         ResultCode anonymityStatus = ResultCode.ANONYMITY_FAILED;
         requestMethodResolver.resolveMethod(request, response).handle(
                 ()->{
-                    request.setAttribute(VOID_AUTH_STATUS_KEY, anonymityStatus.name());
+                    request.setAttribute(VOID_HTTP_ATTRIBUTE_STATUS_KEY, anonymityStatus.name());
                     this.forwardPage(request,response,"/error");
                 },
                 () ->{
@@ -93,7 +93,8 @@ public class SecurityHandler implements AuthenticationSuccessHandler,
                 ()->{
                     logger.warn("[{}]未处理METHOD:{},异常为:{}",PkgInfo.MODULE_NAME,request.getMethod(),authException);
                     authException.printStackTrace();
-                });
+                }
+        );
 
     }
 

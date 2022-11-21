@@ -37,6 +37,14 @@ VOID帮助您创建以Spring Boot/Vert.X为基础驱动的生产级Web服务，�
 
 您可以引入Maven仓库下的依赖或者下载本仓库的项目自行Install至本地.
 
+Git clone方式:
+
+```bash
+git clone https://github.com/ToutatisGc/VOID.git
+```
+
+仓库镜像方式:
+
 ```
 暂无
 ```

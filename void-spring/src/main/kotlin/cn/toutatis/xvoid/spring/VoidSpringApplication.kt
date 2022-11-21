@@ -23,4 +23,3 @@ fun main(args: Array<String>) {
     val applicationContext: ConfigurableApplicationContext = runApplication<VoidSpringApplication>(*args)
 //    VoidContext.intervene(applicationContext)
 }
-

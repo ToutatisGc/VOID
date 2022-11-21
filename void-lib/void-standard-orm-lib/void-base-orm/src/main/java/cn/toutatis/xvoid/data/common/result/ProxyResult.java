@@ -25,6 +25,12 @@ import java.util.Map;
         description = "Controller标准返回结果,经过 ResponseResultDispatcherAdvice 分发到派生类")
 public class ProxyResult implements Result {
 
+    /**
+     * 占位符常量
+     * 用来替换supportMessage
+     */
+    public static final String PLACEHOLDER_HEADER = "&PH&:";
+
     private final Logger logger = LoggerToolkit.getLogger(this.getClass());
 
     /**
@@ -68,7 +74,7 @@ public class ProxyResult implements Result {
      * 该属性默认在springboot下由VoidConfiguration和BaseControllerImpl类所产生
      */
     @JsonIgnore
-    private Boolean useDetailedMode = null;
+    private Boolean useDetailedMode = true;
 
     /**
      * 是否自动配置响应状态和消息
@@ -403,5 +409,9 @@ public class ProxyResult implements Result {
 
     public void setSupportMessage(String supportMessage) {
         this.supportMessage = supportMessage;
+    }
+
+    public void setPlaceholderSupportMessage(String placeholder) {
+        this.supportMessage = PLACEHOLDER_HEADER + placeholder;
     }
 }

@@ -11,7 +11,7 @@
     <div class="xv-flex-box" style="margin-top: 20vh">
         <div>
             <div class="xv-primary-title_clr xv-disable-select xv-decorate-text">PAGE</div>
-            <div class="xv-primary-title_clr xv-disable-select xv-decorate-text" style="font-size: 3vh;font-weight:lighter;position:fixed">${subject}</div>
+            <div class="xv-primary-title_clr xv-disable-select xv-decorate-text" style="font-size: 3vh;font-weight:lighter;position:fixed;padding-top:20px">${subject}</div>
         </div>
         <div class="xv-vertical-line" style="height: 10vh"></div>
         <div class="xv-decorate-text xv-code-circle xv-disable-select">${httpCode}</div>

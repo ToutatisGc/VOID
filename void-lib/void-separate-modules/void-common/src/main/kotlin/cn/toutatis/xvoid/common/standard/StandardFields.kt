@@ -15,11 +15,16 @@ class StandardFields {
         const val FILTER_REQUEST_ID_KEY = "VOID_RID"
 
         /**
-         * 权限部分使用
          * 作为权限成功或失败的属性key使用,返回值通常为枚举
          * 需要强制自定义
          */
-        const val VOID_AUTH_STATUS_KEY = "VOID_AUTH_STATUS"
+        const val VOID_HTTP_ATTRIBUTE_STATUS_KEY = "VOID_HTTP_STATUS_ATTRIBUTE"
+
+        /**
+         * httpServletRequest attribute
+         * 作为http自定义消息
+         */
+        const val VOID_HTTP_ATTRIBUTE_MESSAGE_KEY = "VOID_HTTP_MESSAGE_ATTRIBUTE"
 
         /**
          * TODO 多租户形态

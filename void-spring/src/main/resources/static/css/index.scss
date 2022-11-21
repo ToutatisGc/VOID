@@ -52,6 +52,10 @@ body {
 
 .#{$class-prefix} {
 
+  &-background_theme{
+    background-color: $theme-color;
+  }
+
   &-flex-box{
     display: flex;
     align-items: center;
@@ -141,7 +145,7 @@ body {
 
 
     /*夜间主标题*/
-    &-primary-title_dark{
+    &-primary-title__dark{
       @include primary_title_phone;
       color: darken($base-font-color-dark,0%);
     }
@@ -171,7 +175,7 @@ body {
     }
 
 
-    &-primary-title_dark{
+    &-primary-title__dark{
       @include primary_title;
       color: darken($base-font-color-dark,0%);
     }
@@ -182,5 +186,13 @@ body {
     }
   }
 
+}
+
+button.el-button.el-button--primary > span{
+  color: white;
+}
+
+button.el-button.el-button--success > span{
+  color: white;
 }
 

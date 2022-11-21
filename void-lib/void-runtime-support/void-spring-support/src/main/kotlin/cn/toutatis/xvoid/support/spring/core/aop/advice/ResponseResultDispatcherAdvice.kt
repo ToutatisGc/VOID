@@ -47,15 +47,19 @@ class ResponseResultDispatcherAdvice : ResponseBodyAdvice<Any>{
                 val detailedResult = DetailedResult(data.resultCode,data.message,data.data)
                 detailedResult.rid = request.getAttribute(StandardFields.FILTER_REQUEST_ID_KEY) as String
                 if(data.supportMessage != null){
-                    detailedResult.supportMessage = data.supportMessage
+                    if(data.supportMessage.startsWith(ProxyResult.PLACEHOLDER_HEADER)){
+                        detailedResult.supportMessage =  detailedResult.supportMessage.replace("{}",data.supportMessage.replace(ProxyResult.PLACEHOLDER_HEADER,""))
+                    }else{
+                        detailedResult.supportMessage = data.supportMessage
+                    }
+                }else{
+                    detailedResult.supportMessage = detailedResult.supportMessage.replace("[{}]","")
                 }
                 detailedResult
             }else{
                 val simpleResult = SimpleResult(data.resultCode,data.message,data.data)
                 simpleResult.rid = request.getAttribute(StandardFields.FILTER_REQUEST_ID_KEY) as String
-                if(data.supportMessage != null){
-                    simpleResult.supportMessage = data.supportMessage
-                }
+                simpleResult.supportMessage = if( data.supportMessage != null) data.supportMessage else null
                 simpleResult
             }
             result.serialize()
