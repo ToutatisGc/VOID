@@ -1,4 +1,4 @@
-package cn.toutatis.xvoid.spring.core.security;
+package cn.toutatis.xvoid.spring.core.security.core;
 
 
 import cn.toutatis.xvoid.spring.core.security.access.entity.LoginInfo;

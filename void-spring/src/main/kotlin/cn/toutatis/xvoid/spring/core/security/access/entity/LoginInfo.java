@@ -1,5 +1,7 @@
 package cn.toutatis.xvoid.spring.core.security.access.entity;
 
+import com.alibaba.fastjson.JSONObject;
+
 import java.util.List;
 
 /**
@@ -9,4 +11,6 @@ import java.util.List;
 public interface LoginInfo {
 
     List<String> getPermissions();
+
+    JSONObject getUserInfo();
 }

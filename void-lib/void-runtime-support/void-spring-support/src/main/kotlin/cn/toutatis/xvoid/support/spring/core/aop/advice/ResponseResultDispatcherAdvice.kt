@@ -5,6 +5,7 @@ import cn.toutatis.xvoid.data.common.result.ProxyResult
 import cn.toutatis.xvoid.data.common.result.Result
 import cn.toutatis.xvoid.data.common.result.branch.DetailedResult
 import cn.toutatis.xvoid.data.common.result.branch.SimpleResult
+import cn.toutatis.xvoid.support.spring.config.VoidConfiguration
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.core.MethodParameter
 import org.springframework.http.MediaType
@@ -26,6 +27,9 @@ class ResponseResultDispatcherAdvice : ResponseBodyAdvice<Any>{
     @Autowired
     private lateinit var request :  HttpServletRequest
 
+    @Autowired
+    private lateinit var voidConfiguration : VoidConfiguration
+
     override fun supports(returnType: MethodParameter, converterType: Class<out HttpMessageConverter<*>>): Boolean = true
 
     override fun beforeBodyWrite(
@@ -43,9 +47,13 @@ class ResponseResultDispatcherAdvice : ResponseBodyAdvice<Any>{
         if (data == null) return null
         return if (data::class == ProxyResult::class){
             data as ProxyResult
-            val result: Result = if(data.useDetailedMode){
+            var useDetailedMode :Boolean? = data.useDetailedMode
+            if (useDetailedMode == null){
+                useDetailedMode = voidConfiguration.globalServiceConfig.useDetailedMode
+            }
+            val result: Result = if(useDetailedMode!!){
                 val detailedResult = DetailedResult(data.resultCode,data.message,data.data)
-                detailedResult.rid = request.getAttribute(StandardFields.FILTER_REQUEST_ID_KEY) as String
+                detailedResult.rid = request.getAttribute(StandardFields.FILTER_REQUEST_ID_KEY) as String?
                 if(data.supportMessage != null){
                     if(data.supportMessage.startsWith(ProxyResult.PLACEHOLDER_HEADER)){
                         detailedResult.supportMessage =  detailedResult.supportMessage.replace("{}",data.supportMessage.replace(ProxyResult.PLACEHOLDER_HEADER,""))

@@ -1,12 +1,13 @@
-package cn.toutatis.xvoid.spring.core.security;
+package cn.toutatis.xvoid.spring.core.security.core;
 
 import cn.toutatis.core.root.security.handler.LogOutHandler;
-import cn.toutatis.xvoid.spring.core.security.handler.SecurityHandler;
+import cn.toutatis.xvoid.spring.core.security.VoidResponse;
+import cn.toutatis.xvoid.spring.core.security.access.VoidSecurityAuthenticationService;
+import cn.toutatis.xvoid.spring.core.security.core.handler.SecurityHandler;
 import cn.toutatis.xvoid.support.spring.core.aop.filters.AnyPerRequestInjectRidFilter;
 import cn.toutatis.xvoid.support.spring.enhance.mapping.XvoidMappingResolver;
 import cn.toutatis.xvoid.toolkit.log.LoggerToolkit;
 import org.slf4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -15,6 +16,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
 /**
@@ -34,14 +36,16 @@ public class Security extends WebSecurityConfigurerAdapter {
 
     private final XvoidMappingResolver xvoidMappingResolver;
 
-    @Autowired
-    private AnyPerRequestInjectRidFilter anyRequestFilter;
+    private final AnyPerRequestInjectRidFilter anyRequestFilter;
 
-    public Security(VoidSecurityAuthenticationService voidAuthenticationService, SecurityHandler securityHandler, LogOutHandler logOutHandler, XvoidMappingResolver xvoidMappingResolver) {
+    public static final String AUTH_PATH = "/auth/authentication";
+
+    public Security(VoidSecurityAuthenticationService voidAuthenticationService, SecurityHandler securityHandler, LogOutHandler logOutHandler, XvoidMappingResolver xvoidMappingResolver, AnyPerRequestInjectRidFilter anyRequestFilter) {
         this.voidAuthenticationService = voidAuthenticationService;
         this.securityHandler = securityHandler;
         this.logOutHandler = logOutHandler;
         this.xvoidMappingResolver = xvoidMappingResolver;
+        this.anyRequestFilter = anyRequestFilter;
     }
 
 //    @Override
@@ -61,9 +65,10 @@ public class Security extends WebSecurityConfigurerAdapter {
 //        禁用Basic Auth
         http.httpBasic().disable();
 //        表单认证
+        http.addFilterAt(usernamePasswordAuthenticationJsonFilter(), UsernamePasswordAuthenticationFilter.class);
         http.formLogin()
                 .loginPage("/auth/login/page")
-                .loginProcessingUrl("/auth/authentication")
+                .loginProcessingUrl(AUTH_PATH)
                 .usernameParameter("identity")
                 .passwordParameter("secret")
                 .successHandler(securityHandler)
@@ -101,5 +106,21 @@ public class Security extends WebSecurityConfigurerAdapter {
     @Override
     protected AuthenticationManager authenticationManager() throws Exception {
         return super.authenticationManager();
+    }
+
+    @Bean
+    public UsernamePasswordAuthenticationJsonFilter usernamePasswordAuthenticationJsonFilter(){
+        UsernamePasswordAuthenticationJsonFilter jsonInterceptor = new UsernamePasswordAuthenticationJsonFilter();
+        try {
+            jsonInterceptor.setAuthenticationManager(authenticationManager());
+            jsonInterceptor.setFilterProcessesUrl(AUTH_PATH);
+            jsonInterceptor.setUsernameParameter("identity");
+            jsonInterceptor.setPasswordParameter("secret");
+            jsonInterceptor.setAuthenticationSuccessHandler(securityHandler);
+            jsonInterceptor.setAuthenticationFailureHandler(securityHandler);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return jsonInterceptor;
     }
 }

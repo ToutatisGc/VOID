@@ -1,10 +1,9 @@
-package cn.toutatis.xvoid.spring.core.security;
+package cn.toutatis.xvoid.spring.core.security.core;
 
 import cn.toutatis.xvoid.spring.core.security.access.entity.LoginInfo;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 

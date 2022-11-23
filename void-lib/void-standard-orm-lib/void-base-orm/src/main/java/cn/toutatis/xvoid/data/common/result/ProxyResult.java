@@ -74,7 +74,7 @@ public class ProxyResult implements Result {
      * 该属性默认在springboot下由VoidConfiguration和BaseControllerImpl类所产生
      */
     @JsonIgnore
-    private Boolean useDetailedMode = true;
+    private Boolean useDetailedMode = null;
 
     /**
      * 是否自动配置响应状态和消息
@@ -83,7 +83,7 @@ public class ProxyResult implements Result {
      * 但是需要注意的是需要配置Actions动作来完成自动注入属性
      */
     @JsonIgnore
-    private Boolean autoConfig = true;
+    private Boolean autoConfig = null;
 
     /**
      * 此次请求对应动作

@@ -1,12 +1,7 @@
-package cn.toutatis.xvoid.spring.core.security
+package cn.toutatis.xvoid.spring.core.security.access
 
 interface ValidationMessage {
     companion object {
-
-        /**
-         * 验证消息时传出对象
-         */
-        const val VALIDATION_SESSION_KEY = "VALIDATION_LAST_OBJECT"
 
         /**
          * 认证消息枚举
@@ -14,11 +9,21 @@ interface ValidationMessage {
          */
         const val CHECK_CODE_ERROR = "验证码错误"
 
-        const val USER_NOT_EXIST = "用户%s不存在"
+        const val USER_NOT_EXIST = "用户不存在"
 
         const val USERNAME_BLANK = "用户名不能为空"
 
-        const val WRONG_IDENTIFY_FORMAT = "认证格式错误"
+        const val WRONG_IDENTIFY_FORMAT = "认证信息序列化错误"
+
+        const val WRONG_IDENTIFY_TYPE = "错误的认证类型"
+
+        const val NOT_OPENED_IDENTIFY_TYPE = "未开放的认证方式"
+
+        const val REQUIRED_IDENTIFY_INFO = "认证信息为空"
+
+        const val REQUIRED_IDENTIFY_PAYLOAD = "认证信息空荷载"
+
+        const val ACCOUNT_LOCKED = "账户已锁定"
 
         const val AUTH_NOT_FOUND = "权限未识别"
         const val PARAMETER_NOT_FOUND = "缺失参数"
