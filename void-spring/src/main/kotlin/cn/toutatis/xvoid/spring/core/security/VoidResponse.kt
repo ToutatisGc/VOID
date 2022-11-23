@@ -1,12 +1,13 @@
 package cn.toutatis.xvoid.spring.core.security
 
-import cn.toutatis.xvoid.spring.core.security.VoidHeader.*
+import cn.toutatis.xvoid.spring.core.security.core.VoidHeader.*
 import com.alibaba.fastjson.JSON
 import java.io.IOException
 import java.net.URLEncoder
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
+/*TODO 移动到support http包下*/
 class VoidResponse {
 
 

@@ -1,18 +1,24 @@
-package cn.toutatis.xvoid.spring.core.security.handler;
+package cn.toutatis.xvoid.spring.core.security.core.handler;
 
+import cn.toutatis.xvoid.common.standard.StandardFields;
 import cn.toutatis.xvoid.data.common.result.ProxyResult;
 import cn.toutatis.xvoid.data.common.result.ResultCode;
 import cn.toutatis.xvoid.spring.PkgInfo;
+import cn.toutatis.xvoid.spring.core.security.access.ValidationMessage;
+import cn.toutatis.xvoid.spring.core.security.access.VoidSecurityAuthenticationService;
+import cn.toutatis.xvoid.support.spring.config.VoidConfiguration;
 import cn.toutatis.xvoid.support.spring.core.aop.advice.ResponseResultDispatcherAdvice;
 import cn.toutatis.xvoid.toolkit.log.LoggerToolkit;
 import cn.toutatis.xvoid.toolkit.validator.Validator;
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import org.slf4j.Logger;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.AccessDeniedException;
-import org.springframework.security.authentication.InsufficientAuthenticationException;
+import org.springframework.security.authentication.*;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
@@ -53,15 +59,21 @@ public class SecurityHandler implements AuthenticationSuccessHandler,
 
     private final ResponseResultDispatcherAdvice responseResultDispatcherAdvice;
 
-    public SecurityHandler(RequestMethodResolver requestMethodResolver, ResponseResultDispatcherAdvice responseResultDispatcherAdvice) {
+    private final VoidConfiguration voidConfiguration;
+
+    private final VoidConfiguration.GlobalServiceConfig globalServiceConfig;
+
+    public SecurityHandler(RequestMethodResolver requestMethodResolver, ResponseResultDispatcherAdvice responseResultDispatcherAdvice, VoidConfiguration voidConfiguration) {
         this.requestMethodResolver = requestMethodResolver;
         this.responseResultDispatcherAdvice = responseResultDispatcherAdvice;
+        this.voidConfiguration = voidConfiguration;
+        this.globalServiceConfig = voidConfiguration.getGlobalServiceConfig();
     }
 
 
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
-
+        System.err.println(authentication);
     }
 
     /**
@@ -88,6 +100,7 @@ public class SecurityHandler implements AuthenticationSuccessHandler,
                 },
                 () ->{
                     ProxyResult proxyResult = new ProxyResult(anonymityStatus);
+                    proxyResult.setUseDetailedMode(globalServiceConfig.getUseDetailedMode());
                     this.returnJson(response,responseResultDispatcherAdvice.proxyResult(proxyResult));
                 },
                 ()->{
@@ -103,9 +116,49 @@ public class SecurityHandler implements AuthenticationSuccessHandler,
         System.err.println(666);
     }
 
+    /**
+     * 登陆失败
+     * @param request 请求
+     * @param response 响应
+     * @param exception 异常
+     * @throws IOException
+     * @throws ServletException
+     */
     @Override
     public void onAuthenticationFailure(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
-        System.err.println(999);
+        ProxyResult proxyResult;
+        String message;
+        if (exception instanceof UsernameNotFoundException){
+            Object attributeCode = request.getAttribute(VOID_HTTP_ATTRIBUTE_STATUS_KEY);
+            if (attributeCode instanceof ResultCode){
+                proxyResult =  new ProxyResult((ResultCode) attributeCode);
+            }else{
+                proxyResult = new ProxyResult(ResultCode.ILLEGAL_OPERATION);
+            }
+            String type = exception.getMessage();
+            Object requestInfo = request.getAttribute(StandardFields.VOID_HTTP_ATTRIBUTE_MESSAGE_KEY);
+            if (VoidSecurityAuthenticationService.MessageType.STRING == VoidSecurityAuthenticationService.MessageType.valueOf(type)){
+                proxyResult.setMessage((String) requestInfo);
+            }else {
+                JSONObject requestInfoJson = (JSONObject) requestInfo;
+                proxyResult.setMessage(requestInfoJson.getString("message"));
+            }
+        }else if (exception instanceof BadCredentialsException){
+            proxyResult = new ProxyResult(ResultCode.AUTHENTICATION_FAILED);
+        }else if (exception instanceof AccountStatusException){
+            proxyResult = new ProxyResult(ResultCode.CHECKED_FAILED);
+            if (exception.getClass() == LockedException.class) {
+                proxyResult.setMessage(ValidationMessage.ACCOUNT_LOCKED);
+            }else if (exception.getClass() == AccountExpiredException.class) {
+                proxyResult.setMessage(ValidationMessage.CONNECT_EXPIRED);
+            }else{
+                logger.error("[{}]认证未记录异常：{}",PkgInfo.MODULE_NAME,exception);
+            }
+        }else {
+            logger.error("[{}]认证未记录异常：{}",PkgInfo.MODULE_NAME,exception);
+            proxyResult = new ProxyResult(ResultCode.INNER_EXCEPTION);
+        }
+        this.returnJson(response,responseResultDispatcherAdvice.proxyResult(proxyResult));
     }
 
     private void jumpToPage(HttpServletRequest request,HttpServletResponse response) throws ServletException, IOException {
@@ -165,7 +218,7 @@ public class SecurityHandler implements AuthenticationSuccessHandler,
 //     */
 //    @Override
 //    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
-//        Object principal = authentication.getPrincipal();
+//        Object principal = authentication.getPrincipal();4
 //        if (principal instanceof AccountEntity){
 //            AccountEntity accountEntity = (AccountEntity) principal;
 //            switch (accountEntity.getAccountPermissionEnum()){

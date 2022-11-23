@@ -29,11 +29,14 @@ public class AnyPerRequestInjectRidFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+        this.fillRequestId(request, response);
+        filterChain.doFilter(request,response);
+    }
 
+    public void fillRequestId(HttpServletRequest request, HttpServletResponse response){
         if (voidConfiguration.getGlobalLogConfig().getRecordRequestId()){
             request.setAttribute(StandardFields.FILTER_REQUEST_ID_KEY, IdUtil.fastUUID());
         }
-        filterChain.doFilter(request,response);
     }
 
 }

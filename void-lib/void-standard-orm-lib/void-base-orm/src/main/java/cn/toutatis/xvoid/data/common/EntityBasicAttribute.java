@@ -101,7 +101,7 @@ public class EntityBasicAttribute<O extends Model<?>> extends Model<O> {
     @Enumerated(EnumType.ORDINAL)
     @TableField(value = "`status`",fill = FieldFill.INSERT)
     @ApiModelProperty(value="数据状态标志", required=true)
-    @Column(nullable = false,columnDefinition = "TINYINT COMMENT '数据状态'")
+    @Column(nullable = false,columnDefinition = "TINYINT DEFAULT 0 COMMENT '数据状态'")
     public DataStatus status;
 
     /**

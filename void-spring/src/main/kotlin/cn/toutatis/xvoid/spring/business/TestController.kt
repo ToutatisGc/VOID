@@ -2,7 +2,6 @@ package cn.toutatis.xvoid.spring.business
 
 import cn.toutatis.xvoid.data.common.result.ProxyResult
 import cn.toutatis.xvoid.data.common.result.ResultCode
-import cn.toutatis.xvoid.data.common.result.branch.DetailedResult
 import cn.toutatis.xvoid.support.spring.annotations.VoidController
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper
 import com.github.xiaoymin.knife4j.annotations.ApiSupport
@@ -12,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.jdbc.core.JdbcTemplate
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestMethod
-import org.springframework.web.bind.annotation.RestController
 import org.springframework.web.servlet.ModelAndView
 
 /**
@@ -85,7 +83,7 @@ class TestController {
         return modelAndView
     }
 
-    @RequestMapping("/g",method=[RequestMethod.GET])
+    @RequestMapping("/g",method=[RequestMethod.GET,RequestMethod.POST])
     fun test8(): ProxyResult {
         val result = ProxyResult(ResultCode.NORMAL_SUCCESS)
         result.useDetailedMode = true

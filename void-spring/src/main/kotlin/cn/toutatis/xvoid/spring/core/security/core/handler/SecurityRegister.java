@@ -1,4 +1,4 @@
-package cn.toutatis.xvoid.spring.core.security.handler;
+package cn.toutatis.xvoid.spring.core.security.core.handler;
 
 
 
