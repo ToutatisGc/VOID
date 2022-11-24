@@ -1,6 +1,6 @@
-package cn.toutatis.xvoid.spring.core.security.core;
+package cn.toutatis.xvoid.spring.core.security.config;
 
-import cn.toutatis.xvoid.spring.core.security.access.entity.LoginInfo;
+import cn.toutatis.xvoid.spring.business.user.entity.AuthInfo;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -21,7 +21,7 @@ public class SecurityContextToolkit {
      * @param <T> 用户类型
      * @return 用户信息
      */
-    public <T extends LoginInfo> T getCurrentLoginUser(Class<T> c){
+    public <T extends AuthInfo> T getCurrentLoginUser(Class<T> c){
         Object principal = getPrincipal();
         if (principal instanceof String){return null;}
         return  c.cast(principal);
@@ -30,10 +30,10 @@ public class SecurityContextToolkit {
     /**
      * @return 当前登录用户的认证信息
      */
-    public LoginInfo getCurrentLoginUser(){
+    public AuthInfo getCurrentLoginUser(){
         Object principal = getPrincipal();
         if (principal instanceof String){return null;}
-        return  (LoginInfo)principal;
+        return  (AuthInfo)principal;
     }
 
     /**

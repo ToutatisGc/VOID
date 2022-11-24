@@ -1,4 +1,4 @@
-package cn.toutatis.xvoid.spring.core.security.core.handler;
+package cn.toutatis.xvoid.spring.core.security.config.handler;
 
 /**
  * @author Toutatis_Gc

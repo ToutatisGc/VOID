@@ -1,4 +1,4 @@
-package cn.toutatis.xvoid.spring.core.security.core;
+package cn.toutatis.xvoid.spring.core.security.config;
 
 import cn.toutatis.xvoid.support.spring.core.aop.filters.AnyPerRequestInjectRidFilter;
 import cn.toutatis.xvoid.support.spring.core.aop.interceptor.RequestLogInterceptor;

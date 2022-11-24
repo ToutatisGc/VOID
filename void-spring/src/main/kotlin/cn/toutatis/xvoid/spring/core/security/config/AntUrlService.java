@@ -1,7 +1,7 @@
-package cn.toutatis.xvoid.spring.core.security.core;
+package cn.toutatis.xvoid.spring.core.security.config;
 
 
-import cn.toutatis.xvoid.spring.core.security.access.entity.LoginInfo;
+import cn.toutatis.xvoid.spring.business.user.entity.AuthInfo;
 import cn.toutatis.xvoid.toolkit.log.LoggerToolkit;
 import org.slf4j.Logger;
 import org.springframework.security.core.Authentication;
@@ -31,8 +31,8 @@ public class AntUrlService {
         Object authInfo = authentication.getPrincipal();
         if (authInfo instanceof String){ return false; }
         List<String> patterns;
-        if (authInfo instanceof LoginInfo){
-            patterns = ((LoginInfo) authInfo).getPermissions();
+        if (authInfo instanceof AuthInfo){
+            patterns = ((AuthInfo) authInfo).getPermissions();
         }else{
             logger.error("authInfo is not LoginInfo "+authInfo);
             return false;

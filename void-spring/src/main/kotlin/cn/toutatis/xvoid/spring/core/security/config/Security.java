@@ -1,9 +1,9 @@
-package cn.toutatis.xvoid.spring.core.security.core;
+package cn.toutatis.xvoid.spring.core.security.config;
 
 import cn.toutatis.core.root.security.handler.LogOutHandler;
 import cn.toutatis.xvoid.spring.core.security.VoidResponse;
 import cn.toutatis.xvoid.spring.core.security.access.VoidSecurityAuthenticationService;
-import cn.toutatis.xvoid.spring.core.security.core.handler.SecurityHandler;
+import cn.toutatis.xvoid.spring.core.security.config.handler.SecurityHandler;
 import cn.toutatis.xvoid.support.spring.core.aop.filters.AnyPerRequestInjectRidFilter;
 import cn.toutatis.xvoid.support.spring.enhance.mapping.XvoidMappingResolver;
 import cn.toutatis.xvoid.toolkit.log.LoggerToolkit;

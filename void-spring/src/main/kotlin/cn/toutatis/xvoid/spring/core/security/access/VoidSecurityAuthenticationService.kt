@@ -2,8 +2,8 @@ package cn.toutatis.xvoid.spring.core.security.access
 
 import cn.toutatis.xvoid.common.standard.StandardFields
 import cn.toutatis.xvoid.data.common.result.ResultCode
-import cn.toutatis.xvoid.spring.core.security.access.persistence.SystemUserLoginMapper
-import cn.toutatis.xvoid.spring.core.security.access.service.FormUserAuthService
+import cn.toutatis.xvoid.spring.business.user.persistence.SystemUserLoginMapper
+import cn.toutatis.xvoid.spring.business.user.service.FormUserAuthService
 import cn.toutatis.xvoid.support.spring.config.VoidConfiguration
 import cn.toutatis.xvoid.toolkit.log.LoggerToolkit
 import cn.toutatis.xvoid.toolkit.validator.Validator
@@ -38,6 +38,8 @@ class VoidSecurityAuthenticationService : UserDetailsService {
          * 验证码session key
          */
         const val VALIDATION_SECURITY_CODE_SESSION_KEY = "VOID_VALIDATION_SECURITY_CODE_SESSION_KEY"
+
+        const val AUTH_TIMES_KEY = "VOID_RETRY_AUTH_TIMES_KEY"
     }
 
 
@@ -90,6 +92,11 @@ class VoidSecurityAuthenticationService : UserDetailsService {
             }
             if (identityObj != null && identityObj.isNotEmpty()){
                 val authTypeStr = identityObj.getString("authType")
+//                val session = request.session
+//                val retryTimes = session.getAttribute(AUTH_TIMES_KEY)
+//                if (retryTimes != null){
+//
+//                }
                 if (authTypeStr != null){
                     /*TODO 认证*/
                     when(AuthType.valueOf(authTypeStr)){
@@ -168,7 +175,7 @@ class VoidSecurityAuthenticationService : UserDetailsService {
 
     /**
      * @param msg 抛出违规操作异常,并且在handler中记录
-     * @see cn.toutatis.xvoid.spring.core.security.core.handler.SecurityHandler 认证失败处理器
+     * @see cn.toutatis.xvoid.spring.core.security.config.handler.SecurityHandler 认证失败处理器
      */
     @Throws(UsernameNotFoundException::class)
     private fun throwIllegalOperation(msg:String):UsernameNotFoundException{

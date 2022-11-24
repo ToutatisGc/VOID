@@ -228,26 +228,33 @@ public class InheritanceState {
 				throw new AnnotationException( "No identifier specified for entity: " + clazz.getName() );
 			}
 			elements.trimToSize();
-			if (elements.size() > 2 &&
-					("id".equals(elements.get(0).getPropertyName()) ||
-							"uuid".equals(elements.get(0).getPropertyName())))
+			if (elements.size() > 2 &&  clazz.getSuperclass().getClass().getName().equals(EntityBasicAttribute.class.getName()) &&
+					("id".equals(elements.get(0).getPropertyName()) || "uuid".equals(elements.get(0).getPropertyName())))
 			{
-				ArrayList<PropertyData> tempElements = new ArrayList<PropertyData>();
+				System.err.println(clazz.getSuperclass());
+				ArrayList<PropertyData> tempElements = new ArrayList<>();
 				int start = -1;
 				for (int i = elements.size() - 1; i >= 0; i--) {
-					/*TODO BUG*/
 					PropertyData propertyData = elements.get(i);
-//					System.err.println(propertyData.getDeclaringClass().getName());
-//					System.err.println(EntityBasicAttribute.class.getName());
+					System.err.println(propertyData.getPropertyName());
+					System.err.println(propertyData.getDeclaringClass().getName());
+					System.err.println(EntityBasicAttribute.class.getName());
 					if (propertyData.getDeclaringClass().getName().equals(EntityBasicAttribute.class.getName())){
+						System.err.println(true);
 						start = i+1;
 						break;
 					}
 				}
-				tempElements.add(elements.get(0));
-				tempElements.addAll(elements.subList(start, elements.size()));
-				tempElements.addAll(elements.subList(1, start));
-				elements = tempElements;
+				if (start != -1){
+					/*先填入id属性*/
+					tempElements.add(elements.get(0));
+					/*填入自身属性*/
+					tempElements.addAll(elements.subList(start, elements.size()));
+					/*填入父属性*/
+					tempElements.addAll(elements.subList(1, start));
+					elements = tempElements;
+				}
+
 			}
 			elementsToProcess = new ElementsToProcess( elements, idPropertyCount );
 		}

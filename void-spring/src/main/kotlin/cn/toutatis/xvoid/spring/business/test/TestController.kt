@@ -1,4 +1,4 @@
-package cn.toutatis.xvoid.spring.business
+package cn.toutatis.xvoid.spring.business.test
 
 import cn.toutatis.xvoid.data.common.result.ProxyResult
 import cn.toutatis.xvoid.data.common.result.ResultCode
