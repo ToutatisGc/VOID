@@ -1,4 +1,4 @@
-package cn.toutatis.xvoid.spring.core.security.access.service;
+package cn.toutatis.xvoid.spring.business.user.service;
 
 import cn.toutatis.xvoid.common.standard.StandardFields;
 import cn.toutatis.xvoid.data.common.result.DataStatus;
@@ -6,7 +6,7 @@ import cn.toutatis.xvoid.data.common.result.ResultCode;
 import cn.toutatis.xvoid.data.common.security.SystemUserLogin;
 import cn.toutatis.xvoid.spring.core.security.access.ValidationMessage;
 import cn.toutatis.xvoid.spring.core.security.access.VoidSecurityAuthenticationService;
-import cn.toutatis.xvoid.spring.core.security.access.entity.FormUserDetails;
+import cn.toutatis.xvoid.spring.business.user.entity.FormUserDetails;
 import cn.toutatis.xvoid.toolkit.validator.Validator;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -65,7 +65,7 @@ public class FormUserAuthService {
                     formUserDetails.setUserInfo(userInfo);
                     formUserDetails.setEnabled(true);
                     /*TODO其余异常*/
-                    formUserDetails.setAccountNonLocked(false);
+                    formUserDetails.setAccountNonLocked(true);
                 }else{
                     formUserDetails.setEnabled(false);
                 }

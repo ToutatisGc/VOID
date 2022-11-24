@@ -1,4 +1,4 @@
-package cn.toutatis.xvoid.spring.core.security.core;
+package cn.toutatis.xvoid.spring.core.security.config;
 
 /**
  * 解析所有请求头

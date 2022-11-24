@@ -5,6 +5,7 @@ import cn.toutatis.xvoid.creater.mapper.Mapper;
 import cn.toutatis.xvoid.creater.mybatisplus.generator.config.DataSourceConfig;
 import cn.toutatis.xvoid.creater.mybatisplus.generator.config.querys.MySqlQuery;
 import cn.toutatis.xvoid.creater.mybatisplus.generator.keywords.MySqlKeyWordsHandler;
+import cn.toutatis.xvoid.toolkit.file.FileToolkit;
 import com.baomidou.mybatisplus.annotation.DbType;
 
 import org.apache.ibatis.io.Resources;
@@ -110,7 +111,7 @@ public class ManifestToolkit {
      * @return 获取系统根路径
      */
     public String getRootPath(){
-        return Class.class.getResource("/").getPath();
+        return FileToolkit.getRuntimePath(this.getClass());
     }
 
     /**

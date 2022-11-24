@@ -85,7 +85,9 @@ public class DetailedResult implements Result {
 
     public DetailedResult(ResultCode resultCode,String message,Object data){
         this.setResultCode(resultCode);
-        this.setMessage(message);
+        if(message != null){
+            this.setMessage(message);
+        }
         this.data = data;
     }
 

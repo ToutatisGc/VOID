@@ -1,4 +1,4 @@
-package cn.toutatis.xvoid.spring.business;
+package cn.toutatis.xvoid.spring.business.test;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;

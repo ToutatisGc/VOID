@@ -169,7 +169,7 @@ public class ManifestDestinyComponent {
     public static JFrame manifest(Connection connect) throws IOException {
         JFrame manifest = new JFrame(ConfigurationTable.APP_NAME.getInfo());
 
-        File iconFile = new File(manifestToolkit.getRootPath()+ "img/darkStar.png");
+        File iconFile = new File(manifestToolkit.getRootPath()+ "/img/darkStar.png");
         byte[] iconBytes = Files.readAllBytes(iconFile.toPath());
         manifest.setIconImage(new ImageIcon(iconBytes).getImage());
         manifest.setLayout(new FlowLayout(FlowLayout.LEFT));

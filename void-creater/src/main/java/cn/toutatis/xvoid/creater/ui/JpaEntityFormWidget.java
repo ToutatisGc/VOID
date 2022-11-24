@@ -1,22 +1,16 @@
 package cn.toutatis.xvoid.creater.ui;
 
 import cn.toutatis.xvoid.creater.ManifestDestiny;
-import cn.toutatis.xvoid.toolkit.objects.ObjectToolkit;
+import cn.toutatis.xvoid.toolkit.validator.Validator;
 import com.alibaba.fastjson.JSONObject;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 
 import static cn.toutatis.xvoid.creater.ui.ManifestDestinyComponent.manifestToolkit;
@@ -152,7 +146,7 @@ public class JpaEntityFormWidget {
                 if (value.getBoolean("nullable")){ ddl.append("NOT NULL "); }
                 if (value.getBoolean("autoIncrement")){ ddl.append("AUTO_INCREMENT "); }
                 String aDefault = value.getString("default");
-                if (ObjectToolkit.getInstance().strNotBlank(aDefault)){
+                if (Validator.strNotBlank(aDefault)){
                     ddl.append("DEFAULT ");
                     if ("VARCHAR".equals(type)){
                         ddl.append("'").append(aDefault).append("'");

@@ -23,23 +23,17 @@ import java.util.Objects;
 /**
  * @author Toutatis_Gc
  */
-@Getter
-@Setter
-@ToString(callSuper = true)
-@ApiModel(
-        value = "SystemUserLogin 系统用户类",
-        description = "系统用户实体类",
-        parent = EntityBasicAttribute.class)
-@Table(name="vb_system_user_login")
-@Entity
+@Getter @Setter @Entity @ToString(callSuper = true)
 @JsonIgnoreProperties({"reservedString","reservedInt"})
+@ApiModel(value = "SystemUserLogin 系统用户类", description = "系统用户实体类", parent = EntityBasicAttribute.class)
+@Table(name="vb_system_user_login")
 @org.hibernate.annotations.Table(appliesTo = "vb_system_user_login", comment = "系统用户类")
 public class SystemUserLogin extends EntityBasicAttribute<SystemUserLogin> {
 
     @Id @TableId
     @ApiModelProperty(
             value="主键ID",required = true,
-            example = "1111222233334444")
+            example = "0b01f8466bcf11eda9c1b827eb90cfbc")
     @Column(name="id",columnDefinition = "VARCHAR(32) COMMENT '主键ID'")
     @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
     @GeneratedValue(generator = "UUID")

@@ -25,6 +25,8 @@ interface ValidationMessage {
 
         const val ACCOUNT_LOCKED = "账户已锁定"
 
+        const val ACCOUNT_DISABLED = "账户不允许登录"
+
         const val AUTH_NOT_FOUND = "权限未识别"
         const val PARAMETER_NOT_FOUND = "缺失参数"
         const val PARAMETER_ERROR = "参数错误"
