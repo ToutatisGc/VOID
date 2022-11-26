@@ -48,7 +48,7 @@
             <el-form v-loading="loading" class="xv-box_shadow" :model="loginForm" label-width="120px" label-position="top"
                      ref="ruleFormRef" :rules="rules" status-icon  <#--element-loading-background="rgba(122, 122, 122, 0.8)"-->
                      element-loading-text="登录中..."
-                     style="width: 50%;background-color:rgba(255,255,255,1);padding: 20px;border-radius: 4px;margin-top: 20px">
+                     style="background-color:rgba(255,255,255,1);padding: 20px;border-radius: 4px;margin-top: 20px">
                 <el-form-item label="用户名" prop="username">
                     <el-input v-model="loginForm.username" :suffix-icon="apple" placeholder="请输入用户名/手机号/邮箱" clearable>
                         <template #prepend><@HTML.ICON name="User"/></template>
@@ -66,7 +66,7 @@
                     </el-radio-group>
                 </el-form-item>
                 <el-form-item label="操作">
-                    <el-button type="primary" @click="login"><el-icon class="el-icon--left"><Arrow-Left-Bold/></el-icon>登 录</el-button>
+                    <el-button type="primary" @click="login" :disabled="buttonDisabled"><el-icon class="el-icon--left"><Arrow-Left-Bold/></el-icon>登 录</el-button>
                     <el-button type="success"><el-icon class="el-icon--left"><User/></el-icon>注册账户</el-button>
                     <el-button type="warning"><el-icon class="el-icon--left"><Key/></el-icon>忘记密码</el-button>
                 </el-form-item>
@@ -79,7 +79,7 @@
 <style>
     .xv-dialog {
         width: 70vw;
-        height: 50vh;
+        height: 55vh;
         margin: 20vh auto;
     }
 
@@ -123,9 +123,12 @@
                 rules: {
                     username: [
                         { required: true, message: '请输入用户名', trigger: 'blur' },
-                        { min: 3, max: 5, message: 'Length should be 3 to 5', trigger: 'blur' },
+                        { min: 6, max: 32, message: '用户名不小于6位', trigger: 'blur' },
                     ],
-                    password:[ { required: true, message: '请输入密码', trigger: 'blur' },]
+                    password:[
+                        { required: true, message: '请输入密码', trigger: 'blur' },
+                        { min: 6, max: 32, message: '密码不小于6位', trigger: 'blur' },
+                    ]
                 },
                 loginForm:{
                     username:'',
@@ -133,6 +136,7 @@
                     type:'GUEST'
                 },
                 loading:false,
+                buttonDisabled: false,
             }
         },
         methods:{
@@ -157,7 +161,8 @@
                                         title: response.message,
                                         message: "登录成功,请稍候.即将跳转页面...",
                                         duration:3000
-                                    })
+                                    });
+                                    $this.buttonDisabled = true;
                                 }else {
                                     ElNotification({
                                         type:'error',
@@ -168,9 +173,6 @@
                                 }
                             }
                         )
-                        console.log(res)
-                    }else {
-                        console.log(res)
                     }
                 })
 

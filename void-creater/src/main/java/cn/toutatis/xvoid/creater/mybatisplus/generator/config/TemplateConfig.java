@@ -47,6 +47,8 @@ public class TemplateConfig {
 
     private String index = ConstVal.TEMPLATE_INDEX;
 
+    private String repository = ConstVal.TEMPLATE_REPOSITORY;
+
     public String getEntity(boolean kotlin) {
         return kotlin ? entityKt : entity;
     }
@@ -80,6 +82,8 @@ public class TemplateConfig {
                     case INDEX:
                         setIndex(null);
                         break;
+                    case REPOSITORY:
+                        setRepository(null);
                 }
             }
         }

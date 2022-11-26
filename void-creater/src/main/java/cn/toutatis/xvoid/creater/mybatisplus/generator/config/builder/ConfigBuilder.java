@@ -245,7 +245,8 @@ public class ConfigBuilder {
         packageInfo.put(ConstVal.SERVICE, joinPackage(config.getParent(), config.getService()));
         packageInfo.put(ConstVal.SERVICE_IMPL, joinPackage(config.getParent(), config.getServiceImpl()));
         packageInfo.put(ConstVal.CONTROLLER, joinPackage(config.getParent(), config.getController()));
-        packageInfo.put(ConstVal.INDEX,"page");
+        packageInfo.put(ConstVal.INDEX,"pages");
+        packageInfo.put(ConstVal.REPOSITORY,joinPackage(config.getParent(), config.getMapper()));
 //        packageInfo.put(ConstVal.INDEX, joinPackage(config.getParent(), config.getPage()));
 
         // 自定义路径
@@ -264,6 +265,7 @@ public class ConfigBuilder {
             setPathInfo(pathInfo, template.getServiceImpl(), outputDir, ConstVal.SERVICE_IMPL_PATH, ConstVal.SERVICE_IMPL);
             setPathInfo(pathInfo, template.getController(), outputDir, ConstVal.CONTROLLER_PATH, ConstVal.CONTROLLER);
             String pagePath = currentChoosePath+"/src/main/resources/templates/";
+            setPathInfo(pathInfo, template.getRepository(), outputDir , ConstVal.REPOSITORY_PATH, ConstVal.REPOSITORY);
             setPathInfo(pathInfo, template.getIndex(), pagePath , ConstVal.INDEX_PATH, ConstVal.INDEX);
         }
     }
@@ -401,6 +403,12 @@ public class ConfigBuilder {
             } else {
                 tableInfo.setIndexName(entityName + "Index");
             }
+            if (StringUtils.isNotBlank(globalConfig.getRepositoryName())) {
+                tableInfo.setRepositoryName(String.format(globalConfig.getRepositoryName(), entityName));
+            }else {
+                tableInfo.setRepositoryName(entityName + "Repository");
+            }
+
             // 检测导入包
             checkImportPackages(tableInfo);
         }

@@ -48,6 +48,7 @@ public class TableInfo {
     private String serviceImplName;
     private String controllerName;
     private String indexName;
+    private String repositoryName;
     private List<TableField> fields;
     /**
      * 公共字段
