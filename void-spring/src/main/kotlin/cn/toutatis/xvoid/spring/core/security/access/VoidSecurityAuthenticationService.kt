@@ -92,6 +92,7 @@ class VoidSecurityAuthenticationService : UserDetailsService {
             }
             if (identityObj != null && identityObj.isNotEmpty()){
                 val authTypeStr = identityObj.getString("authType")
+//                TODO 三次以后升级要验证码
 //                val session = request.session
 //                val retryTimes = session.getAttribute(AUTH_TIMES_KEY)
 //                if (retryTimes != null){

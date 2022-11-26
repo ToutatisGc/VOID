@@ -23,6 +23,6 @@ package cn.toutatis.xvoid.creater.mybatisplus.generator.config;
  */
 public enum TemplateType {
     
-    ENTITY, SERVICE, CONTROLLER, MAPPER, XML,INDEX
+    ENTITY, SERVICE, CONTROLLER, MAPPER, XML,INDEX,REPOSITORY
     
 }

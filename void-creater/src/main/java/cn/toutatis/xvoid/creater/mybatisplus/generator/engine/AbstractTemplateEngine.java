@@ -92,6 +92,7 @@ public abstract class AbstractTemplateEngine {
                 String serviceImplName = tableInfo.getServiceImplName();
                 String controllerName = tableInfo.getControllerName();
                 String indexName = tableInfo.getIndexName();
+                String repositoryName = tableInfo.getRepositoryName();
 //                String tablePrefix = manifestToolkit.getConfigProperties("tablePrefix");
 //                if (StringUtils.isNotBlank(tablePrefix)) {
 //                    String removeSignature = tablePrefix.replace("_", "");
@@ -151,6 +152,15 @@ public abstract class AbstractTemplateEngine {
                         writer(objectMap, templateFilePath(template.getIndex()), indexFile);
                     }
                 }
+                if (Boolean.parseBoolean(manifestToolkit.getConfigProperties("useGenerateJpa"))){
+                    if (null != tableInfo.getRepositoryName() && null != pathInfo.get(ConstVal.REPOSITORY_PATH)) {
+                        String repositoryFile = String.format((pathInfo.get(ConstVal.REPOSITORY_PATH) + File.separator + repositoryName + suffixJavaOrKt()), entityName);
+                        if (isCreate(FileType.OTHER, repositoryFile)) {
+                            writer(objectMap, templateFilePath(template.getRepository()), repositoryFile);
+                        }
+                    }
+                }
+
             }
         } catch (Exception e) {
             logger.error("无法创建文件，请检查配置信息！", e);

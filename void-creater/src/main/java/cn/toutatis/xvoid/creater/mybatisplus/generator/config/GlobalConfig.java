@@ -100,6 +100,7 @@ public class GlobalConfig {
     private String serviceImplName;
     private String controllerName;
     private String indexName;
+    private String repositoryName;
     /**
      * 指定生成的主键的ID类型
      */

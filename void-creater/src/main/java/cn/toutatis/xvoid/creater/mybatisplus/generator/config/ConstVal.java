@@ -36,6 +36,7 @@ public interface ConstVal {
     String XML = "Xml";
     String CONTROLLER = "Controller";
     String INDEX = "Index";
+    String REPOSITORY = "Repository";
 
     String ENTITY_PATH = "entity_path";
     String SERVICE_PATH = "service_path";
@@ -44,6 +45,7 @@ public interface ConstVal {
     String XML_PATH = "xml_path";
     String CONTROLLER_PATH = "controller_path";
     String INDEX_PATH = "index_path";
+    String REPOSITORY_PATH = "repository_path";
 
     String JAVA_TMPDIR = "java.io.tmpdir";
     String UTF8 = StandardCharsets.UTF_8.name();
@@ -61,6 +63,7 @@ public interface ConstVal {
     String TEMPLATE_SERVICE_IMPL = "/templates/serviceImpl.java";
     String TEMPLATE_CONTROLLER = "/templates/controller.java";
     String TEMPLATE_INDEX = "/templates/index.ftlh";
+    String TEMPLATE_REPOSITORY = "/templates/repository.java";
 
     String VM_LOAD_PATH_KEY = "file.resource.loader.class";
     String VM_LOAD_PATH_VALUE = "org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader";

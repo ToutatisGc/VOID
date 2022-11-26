@@ -45,8 +45,7 @@ import java.text.SimpleDateFormat;
  */
 <#if entityLombokModel>
     <#if usePersistence>
-@Getter
-@Setter
+@Getter @Setter <#if superEntityClass??>@ToString(callSuper = true)<#else>@ToString(callSuper = false)</#if>
         <#else>
 @Data
         <#if superEntityClass??>
@@ -58,23 +57,17 @@ import java.text.SimpleDateFormat;
     <#if chainModel>
 @Accessors(chain = true)
     </#if>
-@ToString(callSuper = true)
 </#if>
 <#if table.convert>
 @TableName("${table.name}")
 </#if>
-<#if usePersistence>
-@Entity
-@Table(name="${realTableName}")
-@org.hibernate.annotations.Table(appliesTo = "${realTableName}", comment = "${table.comment!}")
-</#if>
-<#if swagger2>
-    @ApiModel(
-    value="${realName}对象",
-    description="${table.comment!}"<#if superEntityClass??>,
-    parent = ${superEntityClass}.class</#if>)
-</#if>
 @JsonIgnoreProperties({"reservedString","reservedInt"})
+<#if swagger2>
+@ApiModel(value="${realName}对象",description="${table.comment!}"<#if superEntityClass??>,parent = ${superEntityClass}.class</#if>)
+</#if>
+<#if usePersistence>
+@Entity @Table(name = "${realTableName}") @org.hibernate.annotations.Table(appliesTo = "${realTableName}", comment = "${table.comment!}")
+</#if>
 <#if superEntityClass??>
 public class ${realName} extends ${superEntityClass}<#if activeRecord><${realName}></#if> {
 <#elseif activeRecord>
