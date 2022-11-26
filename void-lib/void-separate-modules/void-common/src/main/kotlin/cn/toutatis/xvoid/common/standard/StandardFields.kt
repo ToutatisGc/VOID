@@ -31,5 +31,7 @@ class StandardFields {
          */
         const val VOID_REQUEST_HEADER_MCH_ID = "Void-mchId"
 
+        const val VOID_SQL_DEFAULT_CREATOR = "SYSTEM"
+
     }
 }
