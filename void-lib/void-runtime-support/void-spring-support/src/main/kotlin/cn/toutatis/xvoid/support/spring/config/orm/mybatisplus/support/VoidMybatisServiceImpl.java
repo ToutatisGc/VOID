@@ -2,6 +2,7 @@ package cn.toutatis.xvoid.support.spring.config.orm.mybatisplus.support;
 
 import cn.toutatis.xvoid.data.common.result.DataStatus;
 import cn.toutatis.xvoid.support.SheetExportType;
+import cn.toutatis.xvoid.support.spring.config.VoidConfiguration;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -22,6 +23,9 @@ public class VoidMybatisServiceImpl<M extends BaseMapper<T>, T> extends ServiceI
 
     @Autowired
     protected M baseMapper;
+
+    @Autowired
+    protected VoidConfiguration config;
 
     @Override
     public Page<T> getList(PagingQuery pagingQuery, T obj) {

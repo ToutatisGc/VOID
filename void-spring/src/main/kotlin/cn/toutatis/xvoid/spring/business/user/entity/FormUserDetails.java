@@ -2,7 +2,6 @@ package cn.toutatis.xvoid.spring.business.user.entity;
 
 import com.alibaba.fastjson.JSONObject;
 import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.List;
@@ -13,7 +12,7 @@ import java.util.List;
  * 标准版表单登录用户
  * 该类用户通常使用页面登录可见页面
  */
-public class FormUserDetails implements UserDetails, AuthInfo {
+public class FormUserDetails implements AuthInfo {
 
     private Collection<? extends GrantedAuthority> authorities;
 
@@ -105,6 +104,7 @@ public class FormUserDetails implements UserDetails, AuthInfo {
         this.enabled = enabled;
     }
 
+    @Override
     public void setPermissions(List<String> permissions) {
         this.permissions = permissions;
     }

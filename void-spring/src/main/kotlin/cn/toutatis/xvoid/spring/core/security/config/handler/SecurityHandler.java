@@ -3,10 +3,13 @@ package cn.toutatis.xvoid.spring.core.security.config.handler;
 import cn.toutatis.xvoid.common.standard.StandardFields;
 import cn.toutatis.xvoid.data.common.result.ProxyResult;
 import cn.toutatis.xvoid.data.common.result.ResultCode;
+import cn.toutatis.xvoid.data.common.security.SystemAuthRole;
 import cn.toutatis.xvoid.spring.PkgInfo;
+import cn.toutatis.xvoid.spring.business.user.entity.AuthInfo;
+import cn.toutatis.xvoid.spring.business.user.service.SystemAuthPathService;
+import cn.toutatis.xvoid.spring.business.user.service.SystemAuthRoleService;
 import cn.toutatis.xvoid.spring.core.security.access.ValidationMessage;
 import cn.toutatis.xvoid.spring.core.security.access.VoidSecurityAuthenticationService;
-import cn.toutatis.xvoid.spring.business.user.entity.AuthInfo;
 import cn.toutatis.xvoid.support.spring.config.VoidConfiguration;
 import cn.toutatis.xvoid.support.spring.core.aop.advice.ResponseResultDispatcherAdvice;
 import cn.toutatis.xvoid.toolkit.log.LoggerToolkit;
@@ -14,6 +17,7 @@ import cn.toutatis.xvoid.toolkit.validator.Validator;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import org.slf4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.authentication.*;
@@ -30,6 +34,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 
 import static cn.toutatis.xvoid.common.standard.StandardFields.VOID_HTTP_ATTRIBUTE_STATUS_KEY;
 
@@ -64,6 +69,14 @@ public class SecurityHandler implements AuthenticationSuccessHandler,
 
     private final VoidConfiguration.GlobalServiceConfig globalServiceConfig;
 
+    @Autowired
+    private SystemAuthRoleService systemAuthRoleService;
+
+    @Autowired
+    private SystemAuthPathService systemAuthPathService;
+
+
+
     public SecurityHandler(RequestMethodResolver requestMethodResolver, ResponseResultDispatcherAdvice responseResultDispatcherAdvice, VoidConfiguration voidConfiguration) {
         this.requestMethodResolver = requestMethodResolver;
         this.responseResultDispatcherAdvice = responseResultDispatcherAdvice;
@@ -77,8 +90,12 @@ public class SecurityHandler implements AuthenticationSuccessHandler,
         Object principal = authentication.getPrincipal();
         if (principal instanceof AuthInfo){
             JSONObject userInfo = ((AuthInfo) principal).getUserInfo();
+            List<SystemAuthRole> roles = systemAuthRoleService.getUserRoles(userInfo.getString("id"));
+            List<String> userPermissionsStrings = systemAuthPathService.getUserPermissionsStrings(roles);
+            ((AuthInfo) principal).setPermissions(userPermissionsStrings);
+        }else{
+            logger.error(authentication.toString());
         }
-        System.err.println(authentication);
         this.returnJson(response,responseResultDispatcherAdvice.proxyResult(new ProxyResult(ResultCode.AUTHENTICATION_SUCCESSFUL)));
     }
 
