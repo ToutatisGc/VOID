@@ -9,6 +9,7 @@ import cn.toutatis.xvoid.toolkit.constant.Time
 import cn.toutatis.xvoid.toolkit.log.LoggerToolkit
 import com.alibaba.fastjson.JSONObject
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.web.HttpRequestMethodNotSupportedException
 import org.springframework.web.bind.annotation.ControllerAdvice
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.ResponseBody
@@ -29,12 +30,17 @@ class VoidExceptionAdviceDispose {
     @ResponseBody
     @ExceptionHandler(Exception::class)
     fun errorMsg(request: HttpServletRequest, response: HttpServletResponse, e: Exception): ProxyResult {
-        logger.error("请求错误地址:{}",request.requestURL)
-        e.printStackTrace()
-        val proxyResult = ProxyResult(ResultCode.REQUEST_EXCEPTION)
+        response.status = 500
+        logger.error("请求错误地址:{},[Exception:{}]",request.requestURL,e.toString())
+        var proxyResult = ProxyResult(ResultCode.REQUEST_EXCEPTION)
         val requestId = request.getAttribute(StandardFields.FILTER_REQUEST_ID_KEY)
         if (requestId != null) proxyResult.requestId = requestId as String
-
+        if (e is HttpRequestMethodNotSupportedException){
+            proxyResult = ProxyResult(ResultCode.ILLEGAL_OPERATION)
+            proxyResult.supportMessage="URI:[${request.requestURI}]不支持[${request.method}]方法"
+        }else{
+            e.printStackTrace()
+        }
         if (voidConfiguration.mode == RunMode.DEBUG) {
             e.printStackTrace()
             val exceptionObj = JSONObject(3)
@@ -44,8 +50,6 @@ class VoidExceptionAdviceDispose {
             proxyResult.data = exceptionObj
             /*TODO 异步存储*/
         }
-
-        response.status = 500
         return proxyResult
     }
 }

@@ -1,8 +1,10 @@
 package cn.toutatis.xvoid.spring.core.route.portal;
 
+import cn.toutatis.xvoid.data.common.result.ProxyResult;
 import cn.toutatis.xvoid.spring.core.tools.ViewToolkit;
 import cn.toutatis.xvoid.support.spring.annotations.VoidController;
 import cn.toutatis.xvoid.support.spring.config.VoidConfiguration;
+import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -38,6 +40,14 @@ public class FrontRootController {
         modelAndView.addObject("appName",applicationName);
         modelAndView.addObject("title","首页");
         return modelAndView;
+    }
+
+    @RequestMapping(value = "/getServiceInfo",method = RequestMethod.GET)
+    public ProxyResult getServiceInfo(){
+        JSONObject info = new JSONObject();
+        info.put("isPlatform",voidConfiguration.getPlatformMode());
+        info.put("version",voidConfiguration.getVersion().getVersion());
+        return new ProxyResult(info);
     }
 
     @RequestMapping(value = "/example",method = RequestMethod.GET)
