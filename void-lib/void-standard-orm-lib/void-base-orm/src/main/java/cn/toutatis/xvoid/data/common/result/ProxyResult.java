@@ -83,7 +83,7 @@ public class ProxyResult implements Result {
      * 但是需要注意的是需要配置Actions动作来完成自动注入属性
      */
     @JsonIgnore
-    private Boolean autoConfig = null;
+    private Boolean autoConfig = true;
 
     /**
      * 此次请求对应动作
@@ -117,6 +117,10 @@ public class ProxyResult implements Result {
      */
     public ProxyResult(ResultCode resultCode) {
         this.resultCode = resultCode;
+    }
+
+    public ProxyResult(Object data) {
+        this.setData(data);
     }
 
     /**

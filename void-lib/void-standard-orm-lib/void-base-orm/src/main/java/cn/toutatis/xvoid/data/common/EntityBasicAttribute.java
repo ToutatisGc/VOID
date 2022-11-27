@@ -58,7 +58,7 @@ public class EntityBasicAttribute<O extends Model<?>> extends Model<O> {
     @JsonIgnore
     @TableField(value = "createTime",fill = FieldFill.INSERT)
     @ApiModelProperty(value="创建日期", required=true)
-    @Column(nullable = false,columnDefinition = "DATETIME COMMENT '创建日期'")
+    @Column(nullable = false,columnDefinition = "DATETIME DEFAULT current_timestamp() COMMENT '创建日期'")
     public LocalDateTime createTime;
 
     /**
@@ -76,7 +76,7 @@ public class EntityBasicAttribute<O extends Model<?>> extends Model<O> {
     @JsonIgnore
     @TableField(value = "lastUpdateTime",fill = FieldFill.INSERT_UPDATE)
     @ApiModelProperty(value="最后更新日期", required=true)
-    @Column(nullable = false,columnDefinition = "DATETIME COMMENT '最后更新日期'")
+    @Column(nullable = false,columnDefinition = "DATETIME DEFAULT current_timestamp() COMMENT '最后更新日期'")
     public LocalDateTime lastUpdateTime;
 
     @JsonIgnore
