@@ -21,6 +21,12 @@
         <kotlin.version>1.7.21</kotlin.version>
     </properties>
     <dependencies>
+        <!--rabbitMQ支持-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-amqp</artifactId>
+        </dependency>
+
         <!--Kotlin支持-->
         <dependency>
             <artifactId>void-kotlin-runtime-support</artifactId>
