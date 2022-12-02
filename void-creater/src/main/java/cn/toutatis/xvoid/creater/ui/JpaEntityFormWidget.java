@@ -166,12 +166,12 @@ public class JpaEntityFormWidget {
                 ddl.append(
                         "rInt int null comment '预留整形值',\n" +
                         "rStr varchar(255) null comment '预留字符串',\n" +
-                        "createTime datetime not null comment '创建日期',\n" +
+                        "createTime datetime default current_timestamp() not null comment '创建日期',\n" +
                         "createBy varchar(32)  default 'SYSTEM' null comment '创建操作人',\n" +
-                        "lastUpdateTime datetime not null comment '最后更新日期',\n" +
+                        "lastUpdateTime datetime default current_timestamp() not null comment '最后更新日期',\n" +
                         "updateBy varchar(32) default 'SYSTEM' null comment '更新操作人',\n" +
                         "version int default 0 not null comment '版本号',\n" +
-                        "status tinyint not null comment '数据状态',\n" +
+                        "status tinyint default 0 not null comment '数据状态',\n" +
                         "logicDeleted tinyint default 0 not null comment '0正常:1删除',\n" +
                         "remark varchar(255) null comment '备注',\n" +
                         "belongTo varchar(255) default 'SYSTEM' null comment '归属',"

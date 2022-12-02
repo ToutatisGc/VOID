@@ -9,7 +9,7 @@ spring:
     name: VOID-SPRING | 春野
   profiles:
     active: dev
-    include: ["void","datasource","jpa","mybatis","third"]
+    include: ["void","datasource","jpa","mybatis","third","ampq"]
   lifecycle:
     timeout-per-shutdown-phase: 30s
 
@@ -19,3 +19,11 @@ spring:
 
   session:
     store-type: REDIS
+
+  rabbitmq:
+    host: "192.168.154.200"
+    port: 5672
+    template:
+      retry:
+        enabled: true
+        initial-interval: 1000ms

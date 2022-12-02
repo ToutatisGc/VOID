@@ -8,6 +8,11 @@ class StandardFields {
     companion object{
 
         /**
+         * 系统默认前缀
+         * 可以使用 XVOID. 或者 XVOID_ 作为键前缀，视业务而定
+         */
+        const val SYSTEM_PREFIX = "XVOID"
+        /**
          * servlet filter 请求注入ID字段
          * 全局搜索 AnyPerRequestInjectRidFilter 类
          * 往往使用于拦截器注入request属性rid(Request-Id)的key使用
@@ -31,6 +36,9 @@ class StandardFields {
          */
         const val VOID_REQUEST_HEADER_MCH_ID = "Void-mchId"
 
+        /**
+         * 系统默认创建者
+         */
         const val VOID_SQL_DEFAULT_CREATOR = "SYSTEM"
 
     }

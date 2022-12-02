@@ -2,6 +2,7 @@ package cn.toutatis.xvoid.spring.business.test
 
 import cn.toutatis.xvoid.data.common.result.ProxyResult
 import cn.toutatis.xvoid.data.common.result.ResultCode
+import cn.toutatis.xvoid.spring.amqp.AmqpShell
 import cn.toutatis.xvoid.support.spring.annotations.VoidController
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper
 import com.github.xiaoymin.knife4j.annotations.ApiSupport
@@ -23,6 +24,9 @@ import org.springframework.web.servlet.ModelAndView
 @VoidController
 @RequestMapping("/test")
 class TestController {
+
+    @Autowired
+    private lateinit var amqpShell : AmqpShell;
 
     @Autowired
     private lateinit var jdbcTemplate: JdbcTemplate
@@ -88,6 +92,10 @@ class TestController {
         val result = ProxyResult(ResultCode.NORMAL_SUCCESS)
         result.useDetailedMode = true
         return result
+    }
+    @RequestMapping("/send",method=[RequestMethod.GET,RequestMethod.POST])
+    fun test9(): Unit {
+//        amqpShell.sendMessage()
     }
 
 }
