@@ -2,11 +2,15 @@ package cn.toutatis.xvoid.support.spring.core.aop.interceptor
 
 import cn.toutatis.xvoid.common.standard.StandardFields
 import cn.toutatis.xvoid.support.PkgInfo.MODULE_NAME
+import cn.toutatis.xvoid.support.spring.amqp.AmqpShell
+import cn.toutatis.xvoid.support.spring.amqp.entity.SystemLog
+import cn.toutatis.xvoid.support.spring.amqp.log.LogType
 import cn.toutatis.xvoid.support.spring.config.VoidConfiguration
 import cn.toutatis.xvoid.toolkit.constant.Time
 import cn.toutatis.xvoid.toolkit.http.RequestToolkit
 import cn.toutatis.xvoid.toolkit.log.LoggerToolkit
 import com.alibaba.fastjson.JSONObject
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 import org.springframework.web.method.HandlerMethod
 import org.springframework.web.servlet.HandlerInterceptor
@@ -25,6 +29,8 @@ class RequestLogInterceptor(voidConfiguration: VoidConfiguration) : HandlerInter
 
     private var logConfig : VoidConfiguration.GlobalLogConfig = voidConfiguration.globalLogConfig
 
+    @Autowired
+    private lateinit var amqpShell: AmqpShell
 
     init {
         logger.info("[${MODULE_NAME}] RequestLogInterceptor init success.")
@@ -61,11 +67,31 @@ class RequestLogInterceptor(voidConfiguration: VoidConfiguration) : HandlerInter
             logger.info("CLASS#METHOD:${className}#${methodName}")
             logger.info("URL：${request.requestURL}\tTYPE：${request.method} Address:${RequestToolkit.getIpAddress(request)}")
             logger.info("MIME-TYPE：${request.contentType?:"-UNKNOWN-"}\tUser-Agent：${request.getHeader("User-Agent")}")
+            var paramsStr = "["
             if (logConfig.recordRequestParams) {
                 var idx = 0
                 request.parameterMap.forEach { (key, value) ->
+                    paramsStr+= "'$key = $value',"
                     logger.info("PARAM[${idx++}]：$key = ${value.joinToString(",")}")
                 }
+            }
+            paramsStr+= "]"
+            if (logConfig.recordToDb){
+                val systemLog = SystemLog()
+                systemLog.intro = "请求[${request.requestURI}]"
+                if (request.requestURI.contains("auth")){
+                    systemLog.type = LogType.AUTH.name
+                }
+                val details = JSONObject(true)
+                details["rid"] = request.getAttribute(StandardFields.FILTER_REQUEST_ID_KEY)
+                details["method"] = request.method
+                details["contentType"] = request.contentType
+                details["userAgent"] = request.getHeader("User-Agent")
+                if (logConfig.recordRequestParams) {
+                    details["params"] = paramsStr
+                }
+                systemLog.details = details.toJSONString()
+                amqpShell.sendLog(LogType.REQUEST,systemLog)
             }
         }
         return true

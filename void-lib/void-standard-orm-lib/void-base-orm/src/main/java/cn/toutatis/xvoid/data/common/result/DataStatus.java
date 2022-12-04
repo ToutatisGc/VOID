@@ -14,6 +14,7 @@ public enum DataStatus {
      */
     SYS_OPEN_0000(0,"SYS_OPEN_0000","数据正常"),
     SYS_DELETED_0000(1,"SYS_DELETED_0000","逻辑删除"),
+    SYS_UNCHECK_0000(2,"SYS_UNCHECK_0000","未验证"),
     ;
 
     @EnumValue

@@ -60,7 +60,7 @@ public class Security extends WebSecurityConfigurerAdapter {
         http.csrf().disable();
         http.addFilterBefore(anyRequestFilter, BasicAuthenticationFilter.class);
         http.headers()
-                .addHeaderWriter(VoidResponse.Companion::cors)
+//                .addHeaderWriter(VoidResponse.Companion::cors)
                 .frameOptions().disable();
 //        禁用Basic Auth
         http.httpBasic().disable();

@@ -2,8 +2,11 @@ package cn.toutatis.xvoid.spring.business.test
 
 import cn.toutatis.xvoid.data.common.result.ProxyResult
 import cn.toutatis.xvoid.data.common.result.ResultCode
-import cn.toutatis.xvoid.spring.amqp.AmqpShell
+import cn.toutatis.xvoid.support.spring.amqp.AmqpShell
+import cn.toutatis.xvoid.support.spring.amqp.entity.SystemLog
+import cn.toutatis.xvoid.support.spring.amqp.log.LogType
 import cn.toutatis.xvoid.support.spring.annotations.VoidController
+import com.alibaba.fastjson.JSONObject
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper
 import com.github.xiaoymin.knife4j.annotations.ApiSupport
 import io.swagger.annotations.Api
@@ -95,7 +98,14 @@ class TestController {
     }
     @RequestMapping("/send",method=[RequestMethod.GET,RequestMethod.POST])
     fun test9(): Unit {
-//        amqpShell.sendMessage()
+        val systemLog = SystemLog()
+        systemLog.intro = "测试日志"
+        systemLog.type = "AUTH"
+        val jsonObject = JSONObject()
+        jsonObject["id"] = "642a775f05c11ea64792833"
+        jsonObject["name"] = "CCD"
+        systemLog.details = jsonObject.toJSONString()
+        amqpShell.sendLog(LogType.AUTH, systemLog)
     }
 
 }

@@ -28,6 +28,10 @@ spring:
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     driver-class-name: com.mysql.cj.jdbc.Driver
+  data:
+    redis:
+      repositories:
+        enabled: false
 mybatis-plus:
   global-config:
     banner: false
@@ -37,4 +41,7 @@ knife4j:
     enableDebug: true
     swaggerModelName: 实体类列表
     enableVersion: true
-
+  data:
+    redis:
+      repositories:
+        enabled: false

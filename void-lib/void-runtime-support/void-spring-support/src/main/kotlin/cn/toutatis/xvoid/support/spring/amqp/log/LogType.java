@@ -1,17 +1,21 @@
-package cn.toutatis.xvoid.spring.amqp.log;
+package cn.toutatis.xvoid.support.spring.amqp.log;
 
 /**
  * @author Toutatis_Gc
  * @date 2022/12/1 21:47
  */
-public enum LogEnum {
+public enum LogType {
 
     /**
      * 鉴权
      */
     AUTH,
     /**
-     * 请求
+     * 管理权限
+     */
+    ADMIN,
+    /**
+     * 外部请求
      */
     REQUEST,
     /**
