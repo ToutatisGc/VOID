@@ -100,12 +100,11 @@ public class ${realName} implements Serializable {
            <#if field.propertyType == 'String'>
     @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
     @GeneratedValue(generator = "UUID")
-           </#if>
-        </#if>
-        <#if field.propertyName == 'uuid'>
     @TableId(value = "uuid",type = IdType.ASSIGN_UUID)
-        <#else>
+           </#if>
+           <#if field.propertyType == 'Integer'>
     @TableId(value = "id",type = IdType.AUTO)
+           </#if>
         </#if>
     </#if>
         <#-- 普通字段 -->

@@ -1,4 +1,7 @@
 spring:
+  redis:
+    host: 192.168.0.199
+    password: asdtqweq1qwd8qwd4qw8er4qwd5q672
   datasource:
 #    p6spy SQL分析所需地址
     url: jdbc:p6spy:mysql://192.168.0.199:3306/VOID?serverTimezone=UTC&useUnicode=true&characterEncoding=utf-8

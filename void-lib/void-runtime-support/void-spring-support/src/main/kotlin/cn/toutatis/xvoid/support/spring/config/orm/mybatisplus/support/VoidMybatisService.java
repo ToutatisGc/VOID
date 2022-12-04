@@ -14,9 +14,6 @@ import java.util.List;
  */
 public interface VoidMybatisService<T> extends IService<T> {
 
-
-
-
     /**
      * @param pagingQuery 分页对象
      * @param t 实体类

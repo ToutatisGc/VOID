@@ -3,7 +3,7 @@ void:
   global-log-config:
     record-request: true
     record-request-params: true
-    record-to-db: false
+    record-to-db: true
     record-static-resource: false
   global-orm-config:
     use-table-prefix: false
