@@ -8,7 +8,7 @@ spring:
   application:
     name: VOID-SPRING | 春野
   profiles:
-    active: dev
+    active: produce
     include: ["void","datasource","jpa","mybatis","third","ampq"]
   lifecycle:
     timeout-per-shutdown-phase: 30s

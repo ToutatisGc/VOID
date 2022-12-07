@@ -45,3 +45,5 @@ knife4j:
   setting:
     enableDebug: true
     swaggerModelName: 实体类列表
+datasource:
+  protocol: jdbc:p6spy:mysql://
