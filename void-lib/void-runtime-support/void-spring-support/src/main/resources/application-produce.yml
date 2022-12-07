@@ -45,3 +45,5 @@ knife4j:
     redis:
       repositories:
         enabled: false
+datasource:
+  protocol: jdbc:mysql://

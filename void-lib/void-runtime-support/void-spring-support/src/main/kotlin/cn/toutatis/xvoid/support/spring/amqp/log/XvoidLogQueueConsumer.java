@@ -37,7 +37,7 @@ public class XvoidLogQueueConsumer {
         LogType logType;
         if (Validator.strIsBlank(type)) {
             String receivedRoutingKey = message.getMessageProperties().getReceivedRoutingKey();
-            type = receivedRoutingKey.substring(receivedRoutingKey.lastIndexOf("."));
+            type = receivedRoutingKey.substring(receivedRoutingKey.lastIndexOf(".")+1);
         }
         logType = LogType.valueOf(type);
         SystemLog systemLog = JSON.toJavaObject(body, SystemLog.class);
@@ -47,7 +47,6 @@ public class XvoidLogQueueConsumer {
         }catch(Exception e){
             e.printStackTrace();
         }
-        System.err.println(systemLog);
     }
 
 }
