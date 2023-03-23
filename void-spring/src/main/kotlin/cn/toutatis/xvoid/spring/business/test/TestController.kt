@@ -96,6 +96,7 @@ class TestController {
         result.useDetailedMode = true
         return result
     }
+
     @RequestMapping("/send",method=[RequestMethod.GET,RequestMethod.POST])
     fun test9(): Unit {
         val systemLog = SystemLog()
@@ -106,6 +107,11 @@ class TestController {
         jsonObject["name"] = "CCD"
         systemLog.details = jsonObject.toJSONString()
         amqpShell.sendLog(LogType.AUTH, systemLog)
+    }
+
+    @RequestMapping("/upload", method = [RequestMethod.POST])
+    fun test10(): Unit {
+
     }
 
 }

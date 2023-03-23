@@ -1,10 +1,10 @@
 spring:
   redis:
-    host: 192.168.0.199
-    password: asdtqweq1qwd8qwd4qw8er4qwd5q672
+    host: localhost
+#    password: 
   datasource:
 #    p6spy SQL分析所需地址
-    url: ${datasource.protocol}192.168.0.199:3306/VOID?serverTimezone=UTC&useUnicode=true&characterEncoding=utf-8
+    url: ${datasource.protocol}localhost:3306/VOID?serverTimezone=UTC&useUnicode=true&characterEncoding=utf-8
 #    url: jdbc:p6spy:mysql://localhost:3307/VOID?serverTimezone=UTC&useUnicode=true&characterEncoding=utf-8
 #    url: jdbc:mysql://localhost:3307/VOID?serverTimezone=UTC&useUnicode=true&characterEncoding=utf-8
     username: root
