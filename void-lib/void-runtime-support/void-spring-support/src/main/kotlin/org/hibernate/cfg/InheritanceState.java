@@ -228,7 +228,8 @@ public class InheritanceState {
 				throw new AnnotationException( "No identifier specified for entity: " + clazz.getName() );
 			}
 			elements.trimToSize();
-			if (elements.size() > 2 &&  clazz.getSuperclass().getClass().getName().equals(EntityBasicAttribute.class.getName()) &&
+			/*TODO 字段先后还是有问题*/
+			if (elements.size() > 2 && clazz.getSuperclass().getClass().getName().equals(EntityBasicAttribute.class.getName()) &&
 					("id".equals(elements.get(0).getPropertyName()) || "uuid".equals(elements.get(0).getPropertyName())))
 			{
 				System.err.println(clazz.getSuperclass());

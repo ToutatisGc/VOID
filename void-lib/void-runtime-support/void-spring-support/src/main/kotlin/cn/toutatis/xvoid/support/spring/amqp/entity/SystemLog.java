@@ -36,30 +36,29 @@ public class SystemLog extends EntityBasicAttribute<SystemLog> {
 
     private static final long serialVersionUID = 1L;
 
-    @ApiModelProperty(value = "主键id")
-    @Id
+    @Id @TableId
+    @ApiModelProperty(value="主键ID",required = true, example = "0b01f8466bcf11eda9c1b827eb90cfbc")
+    @Column(name="id",columnDefinition = "VARCHAR(32) COMMENT '主键ID'")
     @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
     @GeneratedValue(generator = "UUID")
-    @TableId(value = "id",type = IdType.ASSIGN_UUID)
-    @Column(name="id",columnDefinition = "COMMENT '主键id'")
     private String id;
 
     @ApiModelProperty(value = "日志类型")
     @TableField("`type`")
-    @Column(name="type",columnDefinition = "COMMENT '日志类型'")
+    @Column(name="type",columnDefinition = "VARCHAR(32) COMMENT '日志类型'")
     private String type;
 
     @ApiModelProperty(value = "摘要")
-    @Column(name="intro",columnDefinition = "COMMENT '摘要'")
+    @Column(name="intro",columnDefinition = "VARCHAR(255) COMMENT '摘要'")
     private String intro;
 
     @ApiModelProperty(value = "详细内容（JSON格式）")
-    @Column(name="details",columnDefinition = "COMMENT '详细内容（JSON格式）'")
+    @Column(name="details",columnDefinition = "VARCHAR(6000) COMMENT '详细内容（JSON格式）'")
     private String details;
 
     @ApiModelProperty(value = "请求用户")
     @TableField("`user`")
-    @Column(name="user",columnDefinition = "COMMENT '请求用户'")
+    @Column(name="user",columnDefinition = "VARCHAR(32) COMMENT '请求用户'")
     private String user;
 
     public String getId() {
