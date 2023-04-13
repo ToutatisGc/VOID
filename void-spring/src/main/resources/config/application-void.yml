@@ -15,3 +15,5 @@ void:
   global-service-config:
     auto-config: true
     use-detailed-mode: true
+    compress-file: true
+    file-object-classify: true
