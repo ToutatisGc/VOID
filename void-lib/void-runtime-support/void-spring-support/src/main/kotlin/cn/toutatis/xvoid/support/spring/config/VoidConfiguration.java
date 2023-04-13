@@ -198,6 +198,16 @@ public class VoidConfiguration {
          */
         private Boolean useDetailedMode = true;
 
+        /**
+         * 文件按照MIME-TYPE分类
+         */
+        private Boolean fileObjectClassify = true;
+
+        /**
+         * 是否启用文件压缩
+         */
+        private Boolean compressFile= true;
+
         public Boolean getAutoConfig() {
             return autoConfig;
         }
@@ -213,6 +223,14 @@ public class VoidConfiguration {
         public void setUseDetailedMode(Boolean useDetailedMode) {
             this.useDetailedMode = useDetailedMode;
         }
+
+        public Boolean getFileObjectClassify() { return fileObjectClassify; }
+
+        public void setFileObjectClassify(Boolean fileObjectClassify) { this.fileObjectClassify = fileObjectClassify; }
+
+        public Boolean getCompressFile() { return compressFile; }
+
+        public void setCompressFile(Boolean compressFile) { this.compressFile = compressFile; }
     }
 
     public GlobalServiceConfig getGlobalServiceConfig() {

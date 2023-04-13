@@ -32,4 +32,20 @@ object Regex {
      * */
     const val IMAGE_SUFFIX_REGEX = "png|jpg|jpeg"
 
+    /**
+     * 转换ant格式到regex格式
+     */
+    private fun parseAntToRegex( antPattern: String):String {
+        var regex = antPattern
+        regex = regex.replace("*", ".*")
+        regex = regex.replace("?", ".")
+        regex = regex.replace("**", ".*")
+        regex = regex.replace("{", "(")
+        regex = regex.replace("}", ")")
+        regex = regex.replace("[", "\\[")
+        regex = regex.replace("]", "\\]")
+        regex = regex.replace("!", "^")
+        return regex
+    }
+
 }

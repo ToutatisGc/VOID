@@ -18,6 +18,18 @@ object FileToolkit {
 
     private val logger = LoggerFactory.getLogger(FileToolkit::class.java)
 
+    val TEMP_FILE_DIR = "XV_TEMP"
+
+    @JvmStatic
+    fun createDirectoryOrExist(dirPath:String): Boolean {
+        val dirFile = File(dirPath)
+        return if (dirFile.exists()){
+            if (dirFile.isDirectory){ true } else{ createDirectoryOrExist(dirPath) }
+        }else{
+            dirFile.mkdirs()
+        }
+    }
+
     @JvmStatic
     fun getResourcesFileAsString(filename:String): String? {
         return getResourcesFile(filename)?.readText(Charsets.UTF_8)

@@ -6,6 +6,8 @@ import cn.toutatis.xvoid.support.spring.amqp.AmqpShell
 import cn.toutatis.xvoid.support.spring.amqp.entity.SystemLog
 import cn.toutatis.xvoid.support.spring.amqp.log.LogType
 import cn.toutatis.xvoid.support.spring.annotations.VoidController
+import cn.toutatis.xvoid.support.spring.config.VoidConfiguration
+import cn.toutatis.xvoid.toolkit.file.FileToolkit
 import com.alibaba.fastjson.JSONObject
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper
 import com.github.xiaoymin.knife4j.annotations.ApiSupport
@@ -15,7 +17,11 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.jdbc.core.JdbcTemplate
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestMethod
+import org.springframework.web.bind.annotation.RequestParam
+import org.springframework.web.multipart.MultipartFile
 import org.springframework.web.servlet.ModelAndView
+import java.util.stream.Stream
+
 
 /**
  * @author Toutatis_Gc
@@ -109,8 +115,52 @@ class TestController {
         amqpShell.sendLog(LogType.AUTH, systemLog)
     }
 
+    @Autowired
+    private lateinit var voidConfiguration: VoidConfiguration
+
     @RequestMapping("/upload", method = [RequestMethod.POST])
-    fun test10(): Unit {
+    fun test10(@RequestParam("file") uploadFile: MultipartFile?): Unit {
+        if (uploadFile == null){
+            /*TODO 空处理*/
+        }
+        /*文件通用部分 START*/
+        val threadPath = FileToolkit.getThreadPath()
+        val tmpDirName = threadPath + FileToolkit.TEMP_FILE_DIR
+        val tmpDirExist = FileToolkit.createDirectoryOrExist(tmpDirName)
+        if (tmpDirExist){
+            val callerFrame: StackWalker.StackFrame? = StackWalker.getInstance()
+                .walk { stackStream: Stream<StackWalker.StackFrame?> ->
+                    stackStream.skip(1).findFirst().orElse(null)
+                }
+            if (callerFrame != null) {
+                System.out.println("Caller Method Name: " + callerFrame.getMethodName())
+                System.out.println("Caller Class Name: " + callerFrame.getClassName())
+            }
+            /*TODO 是否分类*/
+            val globalServiceConfig = voidConfiguration.globalServiceConfig
+            if (globalServiceConfig.fileObjectClassify){
+                var contentType = uploadFile?.contentType
+                if (contentType != null){
+                    contentType = contentType.split("/")[0]
+                }
+                System.err.println(contentType)
+            }
+            val name = uploadFile?.originalFilename
+            System.err.println(name)
+//            uploadFile.transferTo()
+        }
+        /*TODO 是否压缩*/
+
+        /*文件通用部分 END*/
+//        val client = MinioClient.builder()
+//            .endpoint("http://localhost:9000" )
+//            .credentials("root", "12345678")
+//            .build()
+//        val uploadObjectBuilder = UploadObjectArgs.builder()
+//        val path = Paths.get(uploadFile.originalFilename)
+//        System.err.println(path.toFile().absolutePath)
+//        uploadObjectBuilder.bucket("xvoid-rich-text-source").filename(path.toFile().absolutePath)
+//        client.uploadObject(uploadObjectBuilder.build())
 
     }
 
