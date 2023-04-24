@@ -18,7 +18,9 @@ object FileToolkit {
 
     private val logger = LoggerFactory.getLogger(FileToolkit::class.java)
 
-    val TEMP_FILE_DIR = "XV_TEMP"
+    const val TEMP_FILE_DIR = "XV_TEMP"
+
+    const val RESOURCE_FILE_DIR = "XV_RESOURCE"
 
     @JvmStatic
     fun createDirectoryOrExist(dirPath:String): Boolean {

@@ -208,6 +208,8 @@ public class VoidConfiguration {
          */
         private Boolean compressFile= true;
 
+        private ObjectStorageMode objectStorageMode = ObjectStorageMode.LOCAL;
+
         public Boolean getAutoConfig() {
             return autoConfig;
         }
@@ -231,6 +233,14 @@ public class VoidConfiguration {
         public Boolean getCompressFile() { return compressFile; }
 
         public void setCompressFile(Boolean compressFile) { this.compressFile = compressFile; }
+
+        public ObjectStorageMode getObjectStorageMode() {
+            return objectStorageMode;
+        }
+
+        public void setObjectStorageMode(ObjectStorageMode objectStorageMode) {
+            this.objectStorageMode = objectStorageMode;
+        }
     }
 
     public GlobalServiceConfig getGlobalServiceConfig() {
