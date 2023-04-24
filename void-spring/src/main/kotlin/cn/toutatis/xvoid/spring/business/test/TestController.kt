@@ -6,6 +6,7 @@ import cn.toutatis.xvoid.support.spring.amqp.AmqpShell
 import cn.toutatis.xvoid.support.spring.amqp.entity.SystemLog
 import cn.toutatis.xvoid.support.spring.amqp.log.LogType
 import cn.toutatis.xvoid.support.spring.annotations.VoidController
+import cn.toutatis.xvoid.support.spring.config.ObjectStorageMode
 import cn.toutatis.xvoid.support.spring.config.VoidConfiguration
 import cn.toutatis.xvoid.toolkit.file.FileToolkit
 import com.alibaba.fastjson.JSONObject
@@ -124,20 +125,24 @@ class TestController {
             /*TODO 空处理*/
         }
         /*文件通用部分 START*/
+        /*TODO 本地模式,分类存储*/
+        val globalServiceConfig = voidConfiguration.globalServiceConfig
+        if (globalServiceConfig.objectStorageMode == ObjectStorageMode.LOCAL){
+
+        }
         val threadPath = FileToolkit.getThreadPath()
         val tmpDirName = threadPath + FileToolkit.TEMP_FILE_DIR
         val tmpDirExist = FileToolkit.createDirectoryOrExist(tmpDirName)
         if (tmpDirExist){
-            val callerFrame: StackWalker.StackFrame? = StackWalker.getInstance()
+/*            val callerFrame: StackWalker.StackFrame? = StackWalker.getInstance()
                 .walk { stackStream: Stream<StackWalker.StackFrame?> ->
                     stackStream.skip(1).findFirst().orElse(null)
                 }
             if (callerFrame != null) {
                 System.out.println("Caller Method Name: " + callerFrame.getMethodName())
                 System.out.println("Caller Class Name: " + callerFrame.getClassName())
-            }
+            }*/
             /*TODO 是否分类*/
-            val globalServiceConfig = voidConfiguration.globalServiceConfig
             if (globalServiceConfig.fileObjectClassify){
                 var contentType = uploadFile?.contentType
                 if (contentType != null){
