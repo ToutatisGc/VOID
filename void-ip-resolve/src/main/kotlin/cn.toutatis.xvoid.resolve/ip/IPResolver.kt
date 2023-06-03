@@ -24,7 +24,11 @@ import kotlin.system.exitProcess
  * 在此文件运行main方法
  * */
 fun main(args: Array<String>) {
-    IPResolver(args[0].toBoolean())
+    if (args.size == 1) {
+        IPResolver(args[0].toBoolean())
+    }else{
+        IPResolver(false)
+    }
 }
 
 internal object PkgInfo {
@@ -248,7 +252,7 @@ class IPResolver(mode: Boolean, private val params: Map<String, String>? = null)
         if (Validator.strIsBlank(properties.getProperty("Ali-Access-Key-Id"))
             || Validator.strIsBlank(properties.getProperty("ALi-Access-Key-Secret"))
             || Validator.strIsBlank(properties.getProperty("Resolve-Domain"))){
-            logger.error("[${MODULE_NAME}]请检查配置文件缺失值")
+            logger.error("[${MODULE_NAME}]请检查配置文件缺失值[config.properties [*]标必填属性]")
             exitProcess(-1)
         }
         Companion.config = properties

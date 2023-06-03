@@ -1,7 +1,9 @@
 package cn.toutatis.xvoid.spring.business.test
 
+import cn.toutatis.xvoid.data.common.base.SystemResource
 import cn.toutatis.xvoid.data.common.result.ProxyResult
 import cn.toutatis.xvoid.data.common.result.ResultCode
+import cn.toutatis.xvoid.data.common.result.SimpleResultMessage
 import cn.toutatis.xvoid.support.spring.amqp.AmqpShell
 import cn.toutatis.xvoid.support.spring.amqp.entity.SystemLog
 import cn.toutatis.xvoid.support.spring.amqp.log.LogType
@@ -21,7 +23,7 @@ import org.springframework.web.bind.annotation.RequestMethod
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.multipart.MultipartFile
 import org.springframework.web.servlet.ModelAndView
-import java.util.stream.Stream
+import java.io.File
 
 
 /**
@@ -120,41 +122,33 @@ class TestController {
     private lateinit var voidConfiguration: VoidConfiguration
 
     @RequestMapping("/upload", method = [RequestMethod.POST])
-    fun test10(@RequestParam("file") uploadFile: MultipartFile?): Unit {
-        if (uploadFile == null){
-            /*TODO 空处理*/
-        }
-        /*文件通用部分 START*/
-        /*TODO 本地模式,分类存储*/
-        val globalServiceConfig = voidConfiguration.globalServiceConfig
-        if (globalServiceConfig.objectStorageMode == ObjectStorageMode.LOCAL){
-
+    fun test10(@RequestParam("file") uploadFile: MultipartFile?): Any? {
+        if (uploadFile == null || uploadFile.size == 0L){
+            return ProxyResult(ResultCode.UPLOAD_FAILED,SimpleResultMessage.RESPONSE_UPLOAD_MISS_FILE)
         }
         val threadPath = FileToolkit.getThreadPath()
-        val tmpDirName = threadPath + FileToolkit.TEMP_FILE_DIR
-        val tmpDirExist = FileToolkit.createDirectoryOrExist(tmpDirName)
+        val tmpDir = threadPath + FileToolkit.TEMP_FILE_DIR
+        val tmpDirExist = FileToolkit.createDirectoryOrExist(tmpDir)
         if (tmpDirExist){
-/*            val callerFrame: StackWalker.StackFrame? = StackWalker.getInstance()
-                .walk { stackStream: Stream<StackWalker.StackFrame?> ->
-                    stackStream.skip(1).findFirst().orElse(null)
+//            uploadFile.transferTo(File())
+            val globalServiceConfig = voidConfiguration.globalServiceConfig
+            val name = uploadFile.originalFilename
+            if (globalServiceConfig.objectStorageMode == ObjectStorageMode.LOCAL){
+                var contentType = uploadFile.contentType
+                val systemResource = SystemResource()
+                val systemResourceQueryWrapper = QueryWrapper<SystemResource>()
+                systemResource.selectOne(systemResourceQueryWrapper)
+                if (globalServiceConfig.fileObjectClassify){
+                    contentType = (if (contentType != null) contentType.split("/")[0] else "unknown")
+                }else{
+
                 }
-            if (callerFrame != null) {
-                System.out.println("Caller Method Name: " + callerFrame.getMethodName())
-                System.out.println("Caller Class Name: " + callerFrame.getClassName())
-            }*/
-            /*TODO 是否分类*/
-            if (globalServiceConfig.fileObjectClassify){
-                var contentType = uploadFile?.contentType
-                if (contentType != null){
-                    contentType = contentType.split("/")[0]
-                }
-                System.err.println(contentType)
+            }else{
+
             }
-            val name = uploadFile?.originalFilename
             System.err.println(name)
 //            uploadFile.transferTo()
         }
-        /*TODO 是否压缩*/
 
         /*文件通用部分 END*/
 //        val client = MinioClient.builder()
@@ -166,7 +160,7 @@ class TestController {
 //        System.err.println(path.toFile().absolutePath)
 //        uploadObjectBuilder.bucket("xvoid-rich-text-source").filename(path.toFile().absolutePath)
 //        client.uploadObject(uploadObjectBuilder.build())
-
+        return null;
     }
 
 }
