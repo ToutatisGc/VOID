@@ -22,13 +22,23 @@ object FileToolkit {
 
     const val RESOURCE_FILE_DIR = "XV_RESOURCE"
 
+    /**
+     * 为createDirectoryOrExist方法创建路径映射
+     */
+    private val dirPathMap = HashMap<String, Boolean>(32)
+
     @JvmStatic
     fun createDirectoryOrExist(dirPath:String): Boolean {
+        if (dirPathMap.containsKey(dirPath)){
+            return true
+        }
         val dirFile = File(dirPath)
         return if (dirFile.exists()){
             if (dirFile.isDirectory){ true } else{ createDirectoryOrExist(dirPath) }
         }else{
-            dirFile.mkdirs()
+            val mkdirSuccess = dirFile.mkdirs()
+            dirPathMap[dirPath] = mkdirSuccess
+            return mkdirSuccess
         }
     }
 

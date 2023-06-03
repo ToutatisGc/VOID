@@ -1,0 +1,10 @@
+package cn.toutatis.xvoid.data.common.result;
+
+/**
+ * 常用响应消息
+ */
+public class SimpleResultMessage {
+
+    public static final String RESPONSE_UPLOAD_MISS_FILE = "缺失上传文件";
+
+}
