@@ -1,16 +1,13 @@
 package cn.toutatis.xvoid.spring.business.test
 
-import cn.toutatis.xvoid.data.common.base.SystemResource
 import cn.toutatis.xvoid.data.common.result.ProxyResult
 import cn.toutatis.xvoid.data.common.result.ResultCode
-import cn.toutatis.xvoid.data.common.result.SimpleResultMessage
 import cn.toutatis.xvoid.support.spring.amqp.AmqpShell
 import cn.toutatis.xvoid.support.spring.amqp.entity.SystemLog
 import cn.toutatis.xvoid.support.spring.amqp.log.LogType
 import cn.toutatis.xvoid.support.spring.annotations.VoidController
-import cn.toutatis.xvoid.support.spring.config.ObjectStorageMode
 import cn.toutatis.xvoid.support.spring.config.VoidConfiguration
-import cn.toutatis.xvoid.toolkit.file.FileToolkit
+import cn.toutatis.xvoid.support.spring.core.file.service.impl.SystemResourceServiceImpl
 import com.alibaba.fastjson.JSONObject
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper
 import com.github.xiaoymin.knife4j.annotations.ApiSupport
@@ -23,7 +20,6 @@ import org.springframework.web.bind.annotation.RequestMethod
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.multipart.MultipartFile
 import org.springframework.web.servlet.ModelAndView
-import java.io.File
 
 
 /**
@@ -121,46 +117,12 @@ class TestController {
     @Autowired
     private lateinit var voidConfiguration: VoidConfiguration
 
+    @Autowired
+    private lateinit var systemResourceService: SystemResourceServiceImpl
+
     @RequestMapping("/upload", method = [RequestMethod.POST])
     fun test10(@RequestParam("file") uploadFile: MultipartFile?): Any? {
-        if (uploadFile == null || uploadFile.size == 0L){
-            return ProxyResult(ResultCode.UPLOAD_FAILED,SimpleResultMessage.RESPONSE_UPLOAD_MISS_FILE)
-        }
-        val threadPath = FileToolkit.getThreadPath()
-        val tmpDir = threadPath + FileToolkit.TEMP_FILE_DIR
-        val tmpDirExist = FileToolkit.createDirectoryOrExist(tmpDir)
-        if (tmpDirExist){
-//            uploadFile.transferTo(File())
-            val globalServiceConfig = voidConfiguration.globalServiceConfig
-            val name = uploadFile.originalFilename
-            if (globalServiceConfig.objectStorageMode == ObjectStorageMode.LOCAL){
-                var contentType = uploadFile.contentType
-                val systemResource = SystemResource()
-                val systemResourceQueryWrapper = QueryWrapper<SystemResource>()
-                systemResource.selectOne(systemResourceQueryWrapper)
-                if (globalServiceConfig.fileObjectClassify){
-                    contentType = (if (contentType != null) contentType.split("/")[0] else "unknown")
-                }else{
-
-                }
-            }else{
-
-            }
-            System.err.println(name)
-//            uploadFile.transferTo()
-        }
-
-        /*文件通用部分 END*/
-//        val client = MinioClient.builder()
-//            .endpoint("http://localhost:9000" )
-//            .credentials("root", "12345678")
-//            .build()
-//        val uploadObjectBuilder = UploadObjectArgs.builder()
-//        val path = Paths.get(uploadFile.originalFilename)
-//        System.err.println(path.toFile().absolutePath)
-//        uploadObjectBuilder.bucket("xvoid-rich-text-source").filename(path.toFile().absolutePath)
-//        client.uploadObject(uploadObjectBuilder.build())
-        return null;
+        return systemResourceService.receiveFile(uploadFile);
     }
 
 }

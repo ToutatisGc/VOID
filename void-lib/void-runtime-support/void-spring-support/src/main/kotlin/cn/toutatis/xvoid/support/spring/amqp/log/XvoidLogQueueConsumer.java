@@ -2,9 +2,6 @@ package cn.toutatis.xvoid.support.spring.amqp.log;
 
 import cn.toutatis.xvoid.support.spring.amqp.AmqpShell;
 import cn.toutatis.xvoid.support.spring.amqp.XvoidSystemAmqpNamingDescription;
-//import cn.toutatis.xvoid.support.spring.amqp.entity.SystemLog;
-//import cn.toutatis.xvoid.support.spring.amqp.persistence.SystemLogMapper;
-//import cn.toutatis.xvoid.support.spring.amqp.service.SystemLogService;
 import cn.toutatis.xvoid.support.spring.amqp.entity.SystemLog;
 import cn.toutatis.xvoid.support.spring.amqp.service.SystemLogService;
 import cn.toutatis.xvoid.support.spring.amqp.service.impl.SystemLogServiceImpl;

@@ -21,12 +21,6 @@
         <kotlin.version>1.7.21</kotlin.version>
     </properties>
     <dependencies>
-        <dependency>
-            <groupId>io.minio</groupId>
-            <artifactId>minio</artifactId>
-            <version>8.5.2</version>
-        </dependency>
-
         <!--Kotlin支持-->
         <dependency>
             <groupId>cn.toutatis</groupId>

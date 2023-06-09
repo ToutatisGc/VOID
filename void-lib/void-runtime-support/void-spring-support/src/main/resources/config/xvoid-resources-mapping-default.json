@@ -2,6 +2,7 @@
   "RESOURCES": {
    "/favicon.ico": ["classpath:/favicon.ico"],
    "/static/**": ["/static/", "classpath:/static/"],
+   "/resources/**": ["/resources/", "classpath:/resources/"],
    "/robots.txt": ["classpath:/robots.txt"]
   },
   "SECURITY": {
