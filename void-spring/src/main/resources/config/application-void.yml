@@ -17,3 +17,9 @@ void:
     use-detailed-mode: true
     compress-file: true
     file-object-classify: true
+    object-storage-mode: LOCAL
+  min-io-config:
+    endpoint: http://localhost:9000
+    region: standard
+    access-key: rs6Zd7TPg7sR3kkz
+    access-secret: d0hvKZor51MICa3zOZ55ThnrDLe8Ax1H

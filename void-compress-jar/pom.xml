@@ -32,6 +32,11 @@
             <artifactId>void-toolkit</artifactId>
             <version>0.0.0-ALPHA</version>
         </dependency>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-controls</artifactId>
+            <version>17</version>
+        </dependency>
     </dependencies>
 
     <build>

@@ -34,6 +34,7 @@ public class VoidConfiguration {
     private VoidConfiguration.DocConfig docConfig = new DocConfig();
     private VoidConfiguration.GlobalOrmConfig globalOrmConfig = new GlobalOrmConfig();
     private VoidConfiguration.GlobalServiceConfig globalServiceConfig = new GlobalServiceConfig();
+    private VoidConfiguration.MinIoConfig minIoConfig = new MinIoConfig();
 
     /**
      * 全局日志环境变量
@@ -241,6 +242,74 @@ public class VoidConfiguration {
         public void setObjectStorageMode(ObjectStorageMode objectStorageMode) {
             this.objectStorageMode = objectStorageMode;
         }
+    }
+
+    /**
+     * MinIO客户端连接参数
+     */
+    public static class MinIoConfig{
+
+        /**
+         * MinIO连接端点
+         */
+        private String endpoint =  "http://localhost:9000";
+
+        /**
+         * MinIO默认用户名[root]
+         */
+        private String accessKey = "root";
+
+        /**
+         * MinIO用户密码[必填]
+         */
+        private String accessSecret;
+
+        /**
+         * MinIO访问区域
+         * 集群下需要填入地区，根据就近原则优化访问速度
+         */
+        private String region = "standard";
+
+        public String getEndpoint() {
+            return endpoint;
+        }
+
+        public void setEndpoint(String endpoint) {
+            this.endpoint = endpoint;
+        }
+
+        public String getAccessKey() {
+            return accessKey;
+        }
+
+        public void setAccessKey(String accessKey) {
+            this.accessKey = accessKey;
+        }
+
+        public String getAccessSecret() {
+            return accessSecret;
+        }
+
+        public void setAccessSecret(String accessSecret) {
+            this.accessSecret = accessSecret;
+        }
+
+        public String getRegion() {
+            return region;
+        }
+
+        public void setRegion(String region) {
+            this.region = region;
+        }
+
+    }
+
+    public MinIoConfig getMinIoConfig() {
+        return minIoConfig;
+    }
+
+    public void setMinIoConfig(MinIoConfig minIoConfig) {
+        this.minIoConfig = minIoConfig;
     }
 
     public GlobalServiceConfig getGlobalServiceConfig() {

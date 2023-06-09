@@ -20,7 +20,7 @@ object FileToolkit {
 
     const val TEMP_FILE_DIR = "XV_TEMP"
 
-    const val RESOURCE_FILE_DIR = "XV_RESOURCE"
+    const val RESOURCE_FILE_DIR = "resources"
 
     /**
      * 为createDirectoryOrExist方法创建路径映射
