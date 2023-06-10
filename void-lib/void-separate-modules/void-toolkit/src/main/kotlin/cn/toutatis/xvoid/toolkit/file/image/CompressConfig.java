@@ -103,6 +103,16 @@ public class CompressConfig {
          */
         private String saveFileRenameType = "UUID";
 
+        private PictureQualityDistributionStrategy pictureQualityDistributionStrategy = PictureQualityDistributionStrategy.AVERAGE;
+
+        public PictureQualityDistributionStrategy getPictureQualityDistributionStrategy() {
+            return pictureQualityDistributionStrategy;
+        }
+
+        public void setPictureQualityDistributionStrategy(PictureQualityDistributionStrategy pictureQualityDistributionStrategy) {
+            this.pictureQualityDistributionStrategy = pictureQualityDistributionStrategy;
+        }
+
         public String getTitle() {
             return title;
         }

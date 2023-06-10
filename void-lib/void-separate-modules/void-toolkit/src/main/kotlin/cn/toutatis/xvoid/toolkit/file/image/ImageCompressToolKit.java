@@ -78,7 +78,7 @@ public class ImageCompressToolKit {
             }
             Image temp = new ImageIcon(resizedImage).getImage();
             //创建缓冲图像
-            BufferedImage bufferedImage = new BufferedImage(temp.getWidth(null), temp.getHeight(null), BufferedImage.TYPE_INT_ARGB);
+            BufferedImage bufferedImage = new BufferedImage(temp.getWidth(null), temp.getHeight(null), BufferedImage.TYPE_INT_RGB);
             //将图像复制到缓冲图像
             Graphics2D graphics2D = bufferedImage.createGraphics();
             //清除背景并绘制图像
@@ -99,7 +99,7 @@ public class ImageCompressToolKit {
             ImageIO.write(bufferedImage, "", new File(""));
             ImageWriter writer = null;
             ImageTypeSpecifier type = ImageTypeSpecifier.createFromRenderedImage(bufferedImage);
-            Iterator<ImageWriter> iter = ImageIO.getImageWriters(type,fileSuffix);
+            Iterator<ImageWriter> iter = ImageIO.getImageWriters(type,"jpg");
             if (iter.hasNext()) { writer = iter.next(); }
             if (writer == null) {
                 logger.error("[%s-IMAGE]未找到合适的输入器[%s]".formatted(VoidModuleInfo.MODULE_NAME, fileSuffix));
@@ -147,7 +147,7 @@ public class ImageCompressToolKit {
             }
             AtomicInteger count = new AtomicInteger();
             distinctFileList.forEach(item ->{
-                String suffix = item.getName().substring(item.getName().lastIndexOf(".") + 1);
+                String suffix = FileToolkit.getFileSuffix(item);
                 String nameType = config.getSaveFileRenameType();
                 String fileName = "UNKNOWN-"+item.hashCode();
                 int point = item.getName().lastIndexOf(".");
@@ -157,16 +157,41 @@ public class ImageCompressToolKit {
                     fileName = item.getName().substring(0,point);
                 }
                 if (config.getDifferentRegular()){
-                    double avg = 0.8D / zipTimes;
-                    for (Integer i = 1; i <= zipTimes; i++) {
-                        double currentQuality = i * avg;
+                    ArrayList<Double> qualityList = new ArrayList<>(zipTimes);
+                    if (config.getPictureQualityDistributionStrategy() == PictureQualityDistributionStrategy.EXTREME){
+                        // 质量因子,数值越高压缩质量越接近原图,建议区间[0.5-0.8]
+                        double qualityFactor= 0.75;
+                        // 质量顶点,数值最高值
+                        double qualityPeak = 8;
+                        // 修正值,数值在前两者的乘积上提高
+                        double base = 0;
+                        for (double x = zipTimes; x > 0; x -= 1) {
+                            double currentZipQuality = (qualityFactor * Math.pow(x - qualityPeak, 2) + base)/100;
+                            qualityList.add(currentZipQuality);
+                        }
+                    }else {
+                        double avg = 0.8D / zipTimes;
+                        for (int i = 1; i <= zipTimes; i++) {
+                            double currentZipQuality = i * avg;
+                            qualityList.add(currentZipQuality);
+                        }
+                    }
+                    boolean isPng = "png".equalsIgnoreCase(suffix);
+                    for (int i = 1; i <= qualityList.size(); i++) {
+                        Double currentQuality = qualityList.get(i - 1);
 //                        组合文件目录
                         switch (config.getZipType()){
                             case "1":
                                 File quality = concatFileName(lastSaveDir, fileName, "Q", i, suffix);
                                 logger.info("正在压缩"+item.getName()+"[Q"+i+"]");
                                 try {
-                                    ImageCompressToolKit.linearCompression(item,quality,0,0,Float.parseFloat(String.valueOf(currentQuality)));
+                                    if (isPng){
+                                        ImageCompressToolKit.linearCompression(item,quality,0,0,Float.parseFloat(String.valueOf(currentQuality)));
+//                                        logger.info("[%s]PNG图片,仅消除部分图片信息.已停止压缩文件[%s]".formatted(VoidModuleInfo.MODULE_NAME,item.getName()));
+                                        break;
+                                    }else {
+                                        ImageCompressToolKit.linearCompression(item,quality,0,0,Float.parseFloat(String.valueOf(currentQuality)));
+                                    }
                                 } catch (IOException e) {
                                     e.printStackTrace();
                                 }
@@ -187,7 +212,15 @@ public class ImageCompressToolKit {
                                     ImageCompressToolKit.thumbnail(item,all_ratio,currentQuality);
                                     logger.info("正在压缩"+item.getName()+"[R"+i+"]");
                                     File all_quality = concatFileName(lastSaveDir, fileName, "Q", i, suffix);
-                                    ImageCompressToolKit.linearCompression(item,all_quality,0,0,Float.parseFloat(String.valueOf(currentQuality)));
+                                    if (isPng){
+                                        if (i == 1){
+                                            ImageCompressToolKit.linearCompression(item,all_quality,0,0,Float.parseFloat(String.valueOf(currentQuality)));
+                                        }else {
+                                            continue;
+                                        }
+                                    }else {
+                                        ImageCompressToolKit.linearCompression(item,all_quality,0,0,Float.parseFloat(String.valueOf(currentQuality)));
+                                    }
                                     logger.info("正在压缩"+item.getName()+"[Q"+i+"]");
                                 } catch (IOException e) {
                                     e.printStackTrace();
