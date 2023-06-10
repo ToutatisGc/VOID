@@ -16,6 +16,7 @@ import cn.toutatis.xvoid.support.spring.config.orm.mybatisplus.support.VoidMybat
 import cn.toutatis.xvoid.toolkit.file.FileToolkit;
 import cn.toutatis.xvoid.toolkit.file.image.CompressConfig;
 import cn.toutatis.xvoid.toolkit.file.image.ImageCompressToolKit;
+import cn.toutatis.xvoid.toolkit.file.image.PictureQualityDistributionStrategy;
 import cn.toutatis.xvoid.toolkit.validator.Validator;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -63,6 +64,8 @@ public class SystemResourceServiceImpl extends VoidMybatisServiceImpl<SystemReso
     public void init(){
         compressConfig = new CompressConfig(null).getConfig();
         compressConfig.setSaveFileRenameType("SOURCE");
+        compressConfig.setPictureQualityDistributionStrategy(PictureQualityDistributionStrategy.EXTREME);
+        compressConfig.setZipTimes(3);
     }
 
     @Override
@@ -156,15 +159,15 @@ public class SystemResourceServiceImpl extends VoidMybatisServiceImpl<SystemReso
                     }
                 }
             }
-//            boolean save = this.save(systemResource);
-//            if (save) {
-//                ProxyResult proxyResult = new ProxyResult(ResultCode.UPLOAD_SUCCESS);
-//                JSONObject resourceInfo = new JSONObject(2);
-//                resourceInfo.put("filename",systemResource.getFileName()+"."+systemResource.getSuffix());
-//                resourceInfo.put("url",systemResource.getPath());
-//                proxyResult.setData(resourceInfo);
-//                return proxyResult;
-//            }
+            boolean save = this.save(systemResource);
+            if (save) {
+                ProxyResult proxyResult = new ProxyResult(ResultCode.UPLOAD_SUCCESS);
+                JSONObject resourceInfo = new JSONObject(2);
+                resourceInfo.put("filename",systemResource.getFileName()+"."+systemResource.getSuffix());
+                resourceInfo.put("url",systemResource.getPath());
+                proxyResult.setData(resourceInfo);
+                return proxyResult;
+            }
         }else {
 
         }
