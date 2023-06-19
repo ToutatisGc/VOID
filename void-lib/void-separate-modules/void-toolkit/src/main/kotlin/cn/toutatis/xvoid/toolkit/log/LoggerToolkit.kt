@@ -9,13 +9,41 @@ import org.slf4j.LoggerFactory
  */
 object LoggerToolkit {
 
+    /**
+     * 获取以名称为实例的日志实例
+     */
     @JvmStatic
     fun getLogger(name: String): Logger{
         return LoggerFactory.getLogger(name)
     }
 
+    /**
+     * 获取以类名为实例的日志实例
+     */
     @JvmStatic
     fun getLogger(clazz: Class<*>): Logger{
         return LoggerFactory.getLogger(clazz)
     }
+
+    @JvmStatic
+    fun printModuleInfoWithMessage(module:String, message:String): String{
+        return "[$module]$message"
+    }
+
+}
+
+/**
+ * Logger扩展函数
+ * info方法携带module信息和消息日志
+ */
+fun Logger.infoWithModule(module: String,message: String){
+    this.info(LoggerToolkit.printModuleInfoWithMessage(module, message))
+}
+
+/**
+ * Logger扩展函数
+ * warn方法携带module信息和消息日志
+ */
+fun Logger.warnWithModule(module: String,message: String){
+    this.warn(LoggerToolkit.printModuleInfoWithMessage(module, message))
 }
