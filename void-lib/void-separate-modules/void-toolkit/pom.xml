@@ -11,6 +11,9 @@
 
     <artifactId>void-toolkit</artifactId>
 
+    <properties>
+    </properties>
+
     <dependencies>
 
         <dependency>
@@ -97,11 +100,6 @@
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-imaging</artifactId>
             <version>1.0-alpha3</version>
-        </dependency>
-        <dependency>
-            <groupId>org.jetbrains.kotlin</groupId>
-            <artifactId>kotlin-stdlib</artifactId>
-            <version>1.8.0-Beta</version>
         </dependency>
         <dependency>
             <groupId>org.jetbrains.kotlin</groupId>
