@@ -16,6 +16,7 @@
         <maven.compiler.target>17</maven.compiler.target>
         <kotlin.version>1.7.21</kotlin.version>
         <jvm-target>1.8</jvm-target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
     <dependencyManagement>
