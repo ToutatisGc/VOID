@@ -38,16 +38,7 @@ object RequestToolkit {
      * @param request servlet请求对象
      * @return 获取真实ip地址,不返回内网地址
      */
-//    fun getIpAddress(request: HttpServletRequest): String {
-//        var ip: String? = request.getHeader("X-Real-IP")
-//        if (Validator.strNotBlank(ip) && !"unknown".equals(ip, ignoreCase = true)) return ip!!
-//        ip = request.getHeader("X-Forwarded-For")
-//        return if (Validator.strNotBlank(ip) && !"unknown".equals(ip, ignoreCase = true)) {
-//            val index = ip.indexOf(',')
-//            if (index != -1) ip.substring(0, index) else ip
-//        } else "-"
-//    }
-
+    @JvmStatic
     fun getIpAddress(request: HttpServletRequest): String? {
         var ipAddress: String?
         try {
