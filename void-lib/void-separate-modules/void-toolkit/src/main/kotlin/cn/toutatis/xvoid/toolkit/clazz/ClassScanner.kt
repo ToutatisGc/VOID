@@ -33,6 +33,27 @@ class ClassScanner : ResourceLoaderAware {
     private var resourcePatternResolver: ResourcePatternResolver = PathMatchingResourcePatternResolver()
     private var metadataReaderFactory: MetadataReaderFactory = CachingMetadataReaderFactory(resourcePatternResolver)
 
+    companion object {
+
+        /*TODO ISSUE扫描多个包，着急用，不解决，下面的scan需要扫描到具体的包名*/
+        private fun scan(basePackages: Array<String>, vararg annotations: Class<out Annotation>): Set<Class<*>> {
+            val scanner = ClassScanner()
+            if (ArrayUtils.isNotEmpty(annotations)) {
+                for (annotation in annotations) {
+                    scanner.addIncludeFilter(AnnotationTypeFilter(annotation))
+                }
+            }
+            val classes: MutableSet<Class<*>> = HashSet()
+            for (s in basePackages) classes.addAll(scanner.doScan(s))
+            return classes
+        }
+
+        fun scan(basePackages: String, vararg annotations: Class<out Annotation>): Set<Class<*>> {
+            return scan(StringUtils.tokenizeToStringArray(basePackages, ",; "),*annotations)
+        }
+
+    }
+
     override fun setResourceLoader(resourceLoader: ResourceLoader) {
         resourcePatternResolver = ResourcePatternUtils.getResourcePatternResolver(resourceLoader)
         metadataReaderFactory = CachingMetadataReaderFactory(resourceLoader)
@@ -94,24 +115,5 @@ class ClassScanner : ResourceLoaderAware {
 
 
 
-    companion object {
 
-        /*TODO ISSUE扫描多个包，着急用，不解决，下面的scan需要扫描到具体的包名*/
-        private fun scan(basePackages: Array<String>, vararg annotations: Class<out Annotation>): Set<Class<*>> {
-            val scanner = ClassScanner()
-            if (ArrayUtils.isNotEmpty(annotations)) {
-                for (annotation in annotations) {
-                    scanner.addIncludeFilter(AnnotationTypeFilter(annotation))
-                }
-            }
-            val classes: MutableSet<Class<*>> = HashSet()
-            for (s in basePackages) classes.addAll(scanner.doScan(s))
-            return classes
-        }
-
-        fun scan(basePackages: String, vararg annotations: Class<out Annotation>): Set<Class<*>> {
-            return scan(StringUtils.tokenizeToStringArray(basePackages, ",; "),*annotations)
-        }
-
-    }
 }
