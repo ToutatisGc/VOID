@@ -6,21 +6,45 @@ import java.time.format.DateTimeFormatter
 import java.util.*
 
 /**
+ * 时间相关常量和常用方法
+ *
+ * <p>提供了日期格式化、获取当前时间、获取当前毫秒数和秒数、正则时间格式化等方法。</p>
+ * <p>注意：该类线程安全。</p>
+ *
  * @author Toutatis_Gc
- * 关于日期使用的常量和一些常用方法
+ * @since 2023-06-21
+ * @version 0.0.0
  */
 object Time {
 
+    /**
+     * 日期格式正则表达式：yyyy-MM-dd
+     * 获取年月日
+     */
     const val YYYYMMDD_FORMAT_REGEX = "yyyy-MM-dd"
+
+    /**
+     * 日期时间格式正则表达式：yyyy-MM-dd HH:mm:ss
+     * 精确到年月日时分秒
+     */
     const val DATE_FORMAT_REGEX = "yyyy-MM-dd HH:mm:ss"
+
+    /**
+     * 统一目录时间格式：yyyyMMdd
+     */
     const val DIR_UNIFORM_TIME = "yyyyMMdd"
+
+    /**
+     * 连接时间格式正则表达式：yyyyMMddHHmmss
+     */
     const val CONCAT_TIME_REGEX = "yyyyMMddHHmmss"
 
     @Volatile
     var simpleDateFormat = SimpleDateFormat(DATE_FORMAT_REGEX)
 
     /**
-     * @return  格式化当前时间
+     * 获取当前时间的格式化字符串
+     * @return 格式化的当前时间
      */
     @JvmStatic
     @get:Synchronized
