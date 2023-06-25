@@ -11,15 +11,28 @@ import java.net.URL
 import java.util.regex.Pattern
 
 /**
+ * 文件相关工具
  * @author Toutatis_Gc
- * 文件工具箱
  */
 object FileToolkit {
 
     private val logger = LoggerFactory.getLogger(FileToolkit::class.java)
 
+    /**
+     * 资源临时目录
+     * 一般转储或者解压缩等功能都需要一个临时目录来存放中途数据
+     * 但该文件夹并不负责存储文件,并且作为缓存目录,必须具有可删除性
+     * 一定注意不能存放重要文件
+     */
     const val TEMP_FILE_DIR = "XV_TEMP"
 
+    /**
+     * 资源永存目录
+     * 默认推荐该文件为resources命名,对于部分web框架如springboot可以将文件目录映射为静态资源文件夹,可以直接从web端访问
+     * 对于静态资源api,地址为http://localhost/<context-path>/resources/<image/text..>/<image.jpg/READ-ME.md>具有良好的可读性
+     * 对于本框架,该资源目录使用于以下文件
+     * {@link cn.toutatis.xvoid.support.spring.core.file.service.impl.SystemResourceServiceImpl}
+     */
     const val RESOURCE_FILE_DIR = "resources"
 
     /**
