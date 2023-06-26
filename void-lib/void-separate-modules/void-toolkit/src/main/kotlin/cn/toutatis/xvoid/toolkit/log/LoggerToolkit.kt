@@ -43,7 +43,20 @@ fun Logger.infoWithModule(module: String,message: String){
 /**
  * Logger扩展函数
  * warn方法携带module信息和消息日志
+ * @param module 模块信息
+ * @param message 日志消息
  */
 fun Logger.warnWithModule(module: String,message: String){
     this.warn(LoggerToolkit.printModuleInfoWithMessage(module, message))
+}
+
+/**
+ * Logger扩展函数
+ * warn方法携带module信息和消息日志
+ * @param module 模块信息
+ * @param message 日志消息
+ * @param arguments 日志格式化变量
+ */
+fun Logger.warnWithModule(module: String,message: String,vararg arguments: String){
+    this.warn(LoggerToolkit.printModuleInfoWithMessage(module, message),arguments)
 }

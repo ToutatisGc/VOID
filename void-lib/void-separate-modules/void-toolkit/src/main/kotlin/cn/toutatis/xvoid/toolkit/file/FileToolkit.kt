@@ -1,7 +1,9 @@
 package cn.toutatis.xvoid.toolkit.file
 
 //import sun.security.util.Resources
+import cn.toutatis.xvoid.toolkit.VoidModuleInfo
 import cn.toutatis.xvoid.toolkit.constant.Regex
+import cn.toutatis.xvoid.toolkit.log.warnWithModule
 import org.apache.commons.io.IOUtils
 import org.slf4j.LoggerFactory
 import java.io.File
@@ -36,23 +38,49 @@ object FileToolkit {
     const val RESOURCE_FILE_DIR = "resources"
 
     /**
-     * 为createDirectoryOrExist方法创建路径映射
+     * 为createDirectoryOrExist方法创建路径映射缓存
      */
-    private val dirPathMap = HashMap<String, Boolean>(32)
+    private val dirPathMapCache = HashMap<String, Boolean>(32)
 
+    /**
+     * 创建或返回目录是否已经存在
+     *
+     * 对于频繁创建目录的行为做了包装处理,如果目录不存在
+     * 则创建目录,并加入到局内缓存,避免多次查找文件对象
+     * 仅需关心文件转储或者其他业务内容,无需关心目录是否已经创建
+     * 注意:一般来说,结果都会返回true
+     * 如果不是true,行为差异出现在 File.mkdirs()中
+     * @return 目录已存在或者目录已经生成
+     */
     @JvmStatic
     fun createDirectoryOrExist(dirPath:String): Boolean {
-        if (dirPathMap.containsKey(dirPath)){
+        if (dirPathMapCache.containsKey(dirPath)){
             return true
         }
         val dirFile = File(dirPath)
-        return if (dirFile.exists()){
-            if (dirFile.isDirectory){ true } else{ createDirectoryOrExist(dirPath) }
+        var mkdirSuccess = false
+        if (dirFile.exists()){
+            if (dirFile.isDirectory){
+                mkdirSuccess = true
+                dirPathMapCache[dirPath] = mkdirSuccess
+            }else{
+                val mkdir = dirFile.mkdirs()
+                if (mkdir){
+                    dirPathMapCache[dirPath] = mkdirSuccess
+                    mkdirSuccess = true
+                }
+            }
         }else{
-            val mkdirSuccess = dirFile.mkdirs()
-            dirPathMap[dirPath] = mkdirSuccess
-            return mkdirSuccess
+            val mkdir = dirFile.mkdirs()
+            if (mkdir){
+                mkdirSuccess = true
+                dirPathMapCache[dirPath] = mkdirSuccess
+            }
         }
+        if (!mkdirSuccess){
+            logger.warnWithModule(VoidModuleInfo.MODULE_NAME,"${dirPath} 创建文件夹失败")
+        }
+        return mkdirSuccess
     }
 
     @JvmStatic
