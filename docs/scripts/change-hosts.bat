@@ -15,7 +15,7 @@ set "hostsFile=%windir%\System32\drivers\etc\hosts"
 
 :: 检查 hosts 文件是否存在
 if not exist "%hostsFile%" (
-    echo hosts 文件不存在
+    echo [XVOID]hosts文件不存在
     pause
     exit /b
 )
