@@ -51,7 +51,8 @@ object I18n {
      * 从库中翻译
      */
     @JvmStatic
-    fun translate(key:String): Unit {
+    fun translate(key:String): String {
+        return translate(key,null)
     }
 
 
@@ -59,7 +60,12 @@ object I18n {
      * 从库中翻译
      */
     @JvmStatic
-    fun translate(key:String,vararg args:String): Unit {
+    fun translate(key:String,vararg args:String?): String {
+        val transStr = JsonToolkit.getString(translationObject, key)
+        return if (transStr != null){
+            if (args.isEmpty()){ return transStr }
+            transStr.format(args)
+        }else{ "" }
     }
 
     /**
@@ -78,7 +84,8 @@ object I18n {
             logger.warnWithModule(VoidModuleInfo.MODULE_NAME,
                 "Locale translation file not found [${filename}]." +
                         "[SIMPLIFIED_CHINESE] will be used by default locale.")
-            loadLanguageLib(Locale.SIMPLIFIED_CHINESE)
+            this.locale = Locale.SIMPLIFIED_CHINESE
+            loadLanguageLib(locale)
             return
         }
         val parseJsonObject = JsonToolkit.parseJsonObject(File(path!!))
