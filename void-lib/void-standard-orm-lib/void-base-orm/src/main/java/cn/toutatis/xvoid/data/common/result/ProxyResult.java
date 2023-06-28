@@ -19,7 +19,7 @@ import java.util.Map;
  * 注意: 如果已经设置autoConfig并且返回了响应状态码,需要自定义resultCode等字段,需要将setData的顺序前移
  * 调用顺序: new constructor() > setData()方法 > setResultCode()/setMessage()等
  */
-@EqualsAndHashCode
+@EqualsAndHashCode(callSuper = false)
 @ApiModel(
         value = "代理返回结果(最终返回结果为Result的派生类)",
         description = "Controller标准返回结果,经过 ResponseResultDispatcherAdvice 分发到派生类")
