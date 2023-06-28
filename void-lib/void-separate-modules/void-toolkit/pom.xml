@@ -11,6 +11,9 @@
 
     <artifactId>void-toolkit</artifactId>
 
+    <properties>
+    </properties>
+
     <dependencies>
 
         <dependency>

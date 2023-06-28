@@ -22,9 +22,9 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2
 
 
 /**
- * @author Toutatis_Gc
- * @date 2022/5/19 22:49
- * springfox文档加载配置
+ * Void knife4j configuration
+ *
+ * @constructor Create empty Void knife4j configuration
  */
 @Configuration
 @EnableSwagger2

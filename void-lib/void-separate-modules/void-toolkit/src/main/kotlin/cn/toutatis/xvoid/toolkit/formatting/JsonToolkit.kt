@@ -16,9 +16,9 @@ object JsonToolkit {
     /**
      * Default maximum recorded value.
      */
-    const val DEFAULT_MAX_RECORD = 16
+    const val DEFAULT_MAX_RECORD = 1024
 
-    private var recordJsonHash:HashMap<String,JSONObject> = HashMap()
+    private var recordJsonHash:HashMap<String,JSONObject> = HashMap(128)
 
     private val logger = LoggerFactory.getLogger(JsonToolkit::class.java)
 
@@ -31,9 +31,25 @@ object JsonToolkit {
 
     private var callRecordNumMethodClassName = ""
 
+    /**
+     * 将json文件内容转换为json对象
+     */
     @JvmStatic
     fun parseJsonObject(file: File): JSONObject {
         return JSON.parseObject(FileToolkit.getFileContent(file))
+    }
+
+    @JvmStatic
+    fun parseJsonObject(jsonString:String): JSONObject {
+        return JSON.parseObject(jsonString)
+    }
+
+    /**
+     * 将任意对象转换为json对象
+     */
+    @JvmStatic
+    fun parseJsonObject(obj: Any): JSONObject {
+        return JSON.parseObject(JSON.toJSONString(obj))
     }
 
     /**

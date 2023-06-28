@@ -1,11 +1,15 @@
 package cn.toutatis.xvoid.support.spring.core.file.service;
 
+import cn.toutatis.xvoid.common.enums.FileFields;
 import cn.toutatis.xvoid.data.common.base.SystemResource;
 import cn.toutatis.xvoid.data.common.result.Result;
+import cn.toutatis.xvoid.support.spring.config.ObjectStorageMode;
 import cn.toutatis.xvoid.support.spring.config.orm.mybatisplus.support.VoidMybatisService;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
+import java.util.Map;
 
 /**
  * <p>
@@ -18,12 +22,30 @@ import java.io.IOException;
 public interface SystemResourceService extends VoidMybatisService<SystemResource> {
 
     /**
+     * TODO 注释
+     * 用户上传文件
      * @param multipartFile 用户上传文件
+     * @param fields 需要Object返回的字段
      * @return 上传结果
      * 将用户上传的文件保存至本地或文件系统
      * 并根据配置文件判断是否进行分类和压缩图片文件
      */
-    Object receiveFile(MultipartFile multipartFile) throws IOException;
+    Result receiveFile(MultipartFile multipartFile, List<FileFields> fields) throws IOException;
+
+    /**
+     * 下载资源文件
+     * @param path 文件路径
+     * @param objectStorageMode 文件存储位置
+     * @throws IOException 文件流异常
+     * @return 文件输出流
+     */
+    Object downloadFile(String path, ObjectStorageMode objectStorageMode) throws IOException;
+
+    /**
+     * 获取文件信息
+     * @return 文件信息
+     */
+    Map<String,Object> metaData();
 
 
 }

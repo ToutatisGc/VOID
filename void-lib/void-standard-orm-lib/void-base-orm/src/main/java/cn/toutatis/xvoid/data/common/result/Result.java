@@ -17,6 +17,7 @@
 package cn.toutatis.xvoid.data.common.result;
 
 import java.io.Serializable;
+import java.util.Map;
 
 /**
  * 如需统一RESTFUL API 则需要统一返回该对象的实例
@@ -39,5 +40,11 @@ public interface Result extends Serializable {
      * 此方法用以设置返回的结果代码,不同的结果代码会返回不同效果
      */
     void setResultCode(ResultCode resultCode);
+
+    /**
+     * 获取数据内容转换为map类型
+     * @return 数据map
+     */
+    Map<String,Object> getDataMap();
 
 }
