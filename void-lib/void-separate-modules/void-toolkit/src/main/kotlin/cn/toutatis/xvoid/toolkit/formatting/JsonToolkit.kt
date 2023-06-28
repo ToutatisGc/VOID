@@ -31,9 +31,20 @@ object JsonToolkit {
 
     private var callRecordNumMethodClassName = ""
 
+    /**
+     * 将json文件内容转换为json对象
+     */
     @JvmStatic
     fun parseJsonObject(file: File): JSONObject {
         return JSON.parseObject(FileToolkit.getFileContent(file))
+    }
+
+    /**
+     * 将任意对象转换为json对象
+     */
+    @JvmStatic
+    fun parseJsonObject(obj: Any): JSONObject {
+        return JSON.parseObject(JSON.toJSONString(obj))
     }
 
     /**

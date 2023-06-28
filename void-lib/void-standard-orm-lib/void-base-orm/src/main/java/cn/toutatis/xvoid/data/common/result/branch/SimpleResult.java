@@ -16,6 +16,7 @@
 
 package cn.toutatis.xvoid.data.common.result.branch;
 
+import cn.toutatis.xvoid.data.common.result.AbstractResult;
 import cn.toutatis.xvoid.data.common.result.Result;
 import cn.toutatis.xvoid.data.common.result.ResultCode;
 import cn.toutatis.xvoid.toolkit.constant.Time;
@@ -26,7 +27,7 @@ import lombok.Getter;
 
 @Getter
 @EqualsAndHashCode
-public class SimpleResult implements Result {
+public class SimpleResult extends AbstractResult implements Result {
 
 
     /**
@@ -62,10 +63,6 @@ public class SimpleResult implements Result {
      * 本地时间
      */
     private final String localDateTime = Time.getCurrentTimeByLong(timestamp);
-    /**
-     * 响应数据
-     */
-    private Object data;
 
     public SimpleResult(ResultCode resultCode){
         this.setResultCode(resultCode);

@@ -18,6 +18,7 @@ import cn.toutatis.xvoid.support.spring.config.orm.mybatisplus.support.VoidMybat
 import cn.toutatis.xvoid.toolkit.file.FileToolkit;
 import cn.toutatis.xvoid.toolkit.file.image.CompressConfig;
 import cn.toutatis.xvoid.toolkit.file.image.ImageCompressToolKit;
+import cn.toutatis.xvoid.toolkit.log.LoggerToolkit;
 import cn.toutatis.xvoid.toolkit.validator.Validator;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import io.minio.GetPresignedObjectUrlArgs;
@@ -28,6 +29,7 @@ import io.minio.http.Method;
 import lombok.val;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.RandomStringUtils;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -53,6 +55,7 @@ import java.util.*;
 @Service
 public class SystemResourceServiceImpl extends VoidMybatisServiceImpl<SystemResourceMapper, SystemResource> implements SystemResourceService {
 
+    private Logger logger = LoggerToolkit.getLogger(SystemResourceServiceImpl.class);
     /**
      * 配置注入类
      */
@@ -151,6 +154,7 @@ public class SystemResourceServiceImpl extends VoidMybatisServiceImpl<SystemReso
                 String tmpDir = threadPath + FileToolkit.TEMP_FILE_DIR;
                 boolean tmpDirExist = FileToolkit.createDirectoryOrExist(tmpDir);
                 if (tmpDirExist) {
+                    //直接将数据转储至本地文件，随后上传至文件服务器
                     localFile = new File(tmpDir + "/" + randomId + "." + fileSuffix);
                     multipartFile.transferTo(localFile);
                     MinioClient client = minIOHelper.getClient();
@@ -169,7 +173,9 @@ public class SystemResourceServiceImpl extends VoidMybatisServiceImpl<SystemReso
                             InvalidKeyException | InvalidResponseException | NoSuchAlgorithmException
                             | ServerException | XmlParserException e) {
                         e.printStackTrace();
-                        throw new ContinueTransactionException("[%s]上传文件转储MINIO服务异常,请查看日志解决问题.".formatted(VoidModuleInfo.MODULE_NAME));
+                        String message = "[%s]上传文件[%s]转储MINIO服务异常,请查看日志解决问题.".formatted(VoidModuleInfo.MODULE_NAME, originalFilename);
+                        logger.error(message);
+                        throw new ContinueTransactionException(message);
                     }
                     GetPresignedObjectUrlArgs.Builder getUrlArgsBuilder = GetPresignedObjectUrlArgs.builder();
                     getUrlArgsBuilder.bucket(minIOHelper.bucket(MinIOHelper.XVOID_USER_RESOURCE_BUCKET)).object(originalFilename);
@@ -199,6 +205,16 @@ public class SystemResourceServiceImpl extends VoidMybatisServiceImpl<SystemReso
         }else {
 
         }
+        return null;
+    }
+
+    @Override
+    public Object downloadFile(String path, ObjectStorageMode objectStorageMode) throws IOException {
+        return null;
+    }
+
+    @Override
+    public Map<String, Object> metaData() {
         return null;
     }
 
