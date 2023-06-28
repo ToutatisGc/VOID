@@ -61,7 +61,7 @@ class ResponseResultDispatcherAdvice : ResponseBodyAdvice<Any>{
                         detailedResult.supportMessage = data.supportMessage
                     }
                 }else{
-                    detailedResult.supportMessage = detailedResult.supportMessage.replace("[{}]","")
+                    detailedResult.supportMessage = data.resultCode.extraInfo.replace("[{}]","")
                 }
                 detailedResult
             }else{

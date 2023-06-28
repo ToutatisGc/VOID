@@ -7,6 +7,7 @@ import cn.toutatis.xvoid.support.spring.amqp.entity.SystemLog
 import cn.toutatis.xvoid.support.spring.amqp.log.LogType
 import cn.toutatis.xvoid.support.spring.annotations.VoidController
 import cn.toutatis.xvoid.support.spring.config.VoidConfiguration
+import cn.toutatis.xvoid.support.spring.core.file.service.SystemResourceService
 import cn.toutatis.xvoid.support.spring.core.file.service.impl.SystemResourceServiceImpl
 import com.alibaba.fastjson.JSONObject
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper
@@ -118,11 +119,17 @@ class TestController {
     private lateinit var voidConfiguration: VoidConfiguration
 
     @Autowired
-    private lateinit var systemResourceService: SystemResourceServiceImpl
+    private lateinit var systemResourceService: SystemResourceService
 
     @RequestMapping("/upload", method = [RequestMethod.POST])
     fun test10(@RequestParam("file") uploadFile: MultipartFile?): Any? {
         return systemResourceService.receiveFile(uploadFile);
+    }
+
+    @RequestMapping("/files",method = [RequestMethod.GET])
+    fun get(filename:String,services:String?):Any?{
+
+        return null;
     }
 
 }

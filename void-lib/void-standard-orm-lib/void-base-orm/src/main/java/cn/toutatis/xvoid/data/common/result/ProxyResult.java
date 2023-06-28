@@ -1,5 +1,6 @@
 package cn.toutatis.xvoid.data.common.result;
 
+import cn.toutatis.xvoid.VoidModuleInfo;
 import cn.toutatis.xvoid.common.exception.MissingParameterException;
 import cn.toutatis.xvoid.toolkit.log.LoggerToolkit;
 import com.alibaba.fastjson.JSONObject;
@@ -11,6 +12,7 @@ import org.slf4j.Logger;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * @author Toutatis_Gc
@@ -218,6 +220,36 @@ public class ProxyResult implements Result {
         setContent(data);
     }
 
+    /**
+     * 放入数据
+     * @param key 数据键
+     * @param value 数据值
+     */
+    public void putData(String key, Object value){
+        if (data == null){
+            JSONObject data = new JSONObject();
+            data.put(key, value);
+        }else if (Map.class.isAssignableFrom(data.getClass())){
+            Map<String,Object> data =(Map<String,Object>) this.data;
+            data.put(key, value);
+        }else {
+            throw new IllegalArgumentException("[%s-DATA]该类型并不是Map.class的子类,无法put数据.".formatted(VoidModuleInfo.MODULE_NAME));
+        }
+        this.alreadyEdited = true;
+        setContent(data);
+    }
+
+    /**
+     * 设置动作的放入数据
+     * @param action 动作
+     * @param key 数据键
+     * @param value 数据值
+     */
+    public void putData(Actions action,String key, Object value){
+        setAction(action);
+        putData(key, value);
+    }
+
     private enum Classify{
         /**
          * 未知
@@ -310,7 +342,7 @@ public class ProxyResult implements Result {
                 }
             }else{
                 // 没有任何动作标记,视为普通请求
-                updateEnv(ResultCode.NORMAL_SUCCESS);
+                updateEnv(Objects.requireNonNullElse(resultCode, ResultCode.NORMAL_SUCCESS));
             }
         }
     }

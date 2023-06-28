@@ -20,8 +20,10 @@ public interface SystemResourceService extends VoidMybatisService<SystemResource
     /**
      * @param multipartFile 用户上传文件
      * @return 上传结果
-     * 将用户上传的文件保存至本地
+     * 将用户上传的文件保存至本地或文件系统
+     * 并根据配置文件判断是否进行分类和压缩图片文件
      */
     Object receiveFile(MultipartFile multipartFile) throws IOException;
+
 
 }

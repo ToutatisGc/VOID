@@ -7,14 +7,20 @@
 <body>
 <#--HTML body起始-->
 <div v-cloak id="app" class="xv-base-background">
+    <div style="position: fixed;background-color: black;width: 100%;height: 100%;z-index: 0">
+        <video style="width: 100%;height: 100%;object-fit: fill" autoplay playsinline loop
+               poster="${projectPath}/static/assets/video/videoBGPoster.png" class="videoBG">
+            <source src="${projectPath}/static/assets/video/videoBG.mp4" type="video/mp4">
+        </video>
+    </div>
     <br style="line-height:0;"/>
-    <div class="xv-dialog xv-flex-box xv-box_shadow">
+    <div class="xv-dialog xv-flex-box xv-box_shadow" style="position: absolute;z-index: 1">
         <div class="xv-half-container xv-background-img">
 <#--            <div class="xv-box_shadow xv-flex-box xv-login-title xv-horizontal-center">-->
 <#--                <img class="xv-logo" height="50" src="${projectPath}/static/assets/img/logo.png" alt="">-->
 <#--                <div class="xv-main-text">春野 | 后台管理系统</div>-->
 <#--            </div>-->
-            <div class="xv-flex-box_vertical xv-horizontal-center xv-box xv-box_shadow" style="width: 80%;height: 70%;margin-top:10%;background-color:white">
+            <div class="xv-flex-box_vertical xv-horizontal-center xv-box xv-box_shadow" style="width: 80%;height: 70%;margin-top:15%;background-color:white">
                 <div class="xv-main-text">2022-11-21 更新公告</div>
                 <div class="xv-update-window">
                     TODO 富文本和滚动
@@ -40,7 +46,7 @@
             </div>
         </div>
         <div class="xv-half-container xv-background_theme xv-flex-box_vertical">
-            <div class="xv-box_shadow xv-flex-box xv-login-title xv-horizontal-center" style="margin-top:12%">
+            <div class="xv-box_shadow xv-flex-box xv-login-title xv-horizontal-center" style="margin-top:15%">
                 <img class="xv-logo" height="50" src="${projectPath}/static/assets/img/logo.png" alt="">
                 <div class="xv-main-text">春野 | 后台管理系统</div>
             </div>
@@ -78,9 +84,11 @@
 </body>
 <style>
     .xv-dialog {
-        width: 70vw;
+        width: 65vw;
         height: 55vh;
         margin: 20vh auto;
+        left: 50%;
+        transform: translateX(-50%);
     }
 
     .xv-update-window{
@@ -93,8 +101,9 @@
     }
 
     .xv-background-img {
-        background: url("${projectPath}/static/assets/img/login-banner.png") no-repeat center;
-        background-size: 100% 100%;
+        background-color: rgba(0,0,0,0.5);
+        <#--background: url("${projectPath}/static/assets/img/login-banner.png") no-repeat center;-->
+        <#--background-size: 100% 100%;-->
     }
 
     .xv-login-title {
