@@ -364,10 +364,6 @@ public class ProxyResult extends AbstractResult implements Result {
         this.message = message;
     }
 
-    public Object getData() {
-        return data;
-    }
-
     public String getRequestId() {
         return requestId;
     }

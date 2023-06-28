@@ -80,11 +80,6 @@ public class SimpleResult extends AbstractResult implements Result {
     }
 
     @Override
-    public void setData(Object data) {
-        this.data = data;
-    }
-
-    @Override
     public void setResultCode(ResultCode resultCode) {
         this.resultCode = resultCode.getCode();
         this.message = resultCode.getInfo();
