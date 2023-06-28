@@ -1,3 +1,8 @@
 {
-  "XVOID_FILE_NOT_FOUND_ERROR": "文件未找到"
+  "commons": {
+    "unknown": "未知"
+  },
+  "xvoid": {
+
+  }
 }
