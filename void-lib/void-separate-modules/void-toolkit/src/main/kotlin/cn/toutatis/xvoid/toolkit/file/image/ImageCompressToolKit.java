@@ -120,7 +120,7 @@ public class ImageCompressToolKit {
         Thumbnails.of(origin).scale(scale).toFile(dist);
     }
 
-    public static void differentStandardThumbnail(List<File> fileList, CompressConfig.CompressContent config) {
+    public static List<String> differentStandardThumbnail(List<File> fileList, CompressConfig.CompressContent config) {
         List<File> distinctFileList =
                 fileList.stream()
                         .distinct()
@@ -139,11 +139,11 @@ public class ImageCompressToolKit {
                     logger.info("[%s]目标地址校验成功.[√]".formatted(VoidModuleInfo.MODULE_NAME));
                 }else {
                     logger.info("[%s]保存目录错误.[目标地址不是目录×]".formatted(VoidModuleInfo.MODULE_NAME));
-                    return;
+                    return null;
                 }
             }else {
                 logger.info("[%s]保存目录错误.[空文件夹×]".formatted(VoidModuleInfo.MODULE_NAME));
-                return;
+                return null;
             }
             AtomicInteger count = new AtomicInteger();
             distinctFileList.forEach(item ->{
@@ -213,6 +213,7 @@ public class ImageCompressToolKit {
         }else {
             logger.info("可执行图片数量为0.[×]");
         }
+        return null;
     }
 
     private static File concatFileName(String dir,String fileName,String middle,int currentTimes,String suffix){

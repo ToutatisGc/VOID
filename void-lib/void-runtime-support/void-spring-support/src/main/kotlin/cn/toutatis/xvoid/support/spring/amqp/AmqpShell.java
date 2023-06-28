@@ -19,9 +19,9 @@ import static org.springframework.amqp.core.MessageProperties.CONTENT_TYPE_BYTES
 import static org.springframework.amqp.core.MessageProperties.CONTENT_TYPE_JSON;
 
 /**
+ * rabbitMQ 封装
  * @author Toutatis_Gc
  * @date 2022/11/27 20:19
- * rabbitMQ 封装
  */
 @Component
 public class AmqpShell {

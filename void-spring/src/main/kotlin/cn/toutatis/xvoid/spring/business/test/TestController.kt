@@ -122,7 +122,7 @@ class TestController {
 
     @RequestMapping("/upload", method = [RequestMethod.POST])
     fun test10(@RequestParam("file") uploadFile: MultipartFile?): Any? {
-        return systemResourceService.receiveFile(uploadFile);
+        return systemResourceService.receiveFile(uploadFile,null);
     }
 
 }
