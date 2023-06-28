@@ -2,6 +2,7 @@ package cn.toutatis.xvoid.spring.core.security.config;
 
 import cn.toutatis.xvoid.support.spring.core.aop.filters.AnyPerRequestInjectRidFilter;
 import cn.toutatis.xvoid.support.spring.core.aop.interceptor.RequestLogInterceptor;
+import cn.toutatis.xvoid.toolkit.validator.Validator;
 import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +43,9 @@ public class UsernamePasswordAuthenticationJsonFilter extends UsernamePasswordAu
         requestlogInterceptor.logRequest(request,response,recordInfo);
         if(!"POST".equals(request.getMethod())){
             throw new AuthenticationServiceException("Authentication method not supported: " + request.getMethod());
+        }
+        if(Validator.strIsBlank(request.getContentType())){
+
         }
         if(request.getContentType().equalsIgnoreCase(MediaType.APPLICATION_JSON_VALUE)){
             Map<String,Object> userInfo;

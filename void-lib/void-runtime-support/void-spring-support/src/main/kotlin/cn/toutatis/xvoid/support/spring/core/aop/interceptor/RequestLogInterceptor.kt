@@ -8,6 +8,7 @@ import cn.toutatis.xvoid.support.spring.amqp.log.LogType
 import cn.toutatis.xvoid.support.spring.config.VoidConfiguration
 import cn.toutatis.xvoid.toolkit.constant.Time
 import cn.toutatis.xvoid.toolkit.http.RequestToolkit
+import cn.toutatis.xvoid.toolkit.locale.I18n
 import cn.toutatis.xvoid.toolkit.log.LoggerToolkit
 import com.alibaba.fastjson.JSONObject
 import org.springframework.beans.factory.annotation.Autowired
@@ -57,10 +58,13 @@ class RequestLogInterceptor(voidConfiguration: VoidConfiguration) : HandlerInter
                 val beanType: Class<*> = handler.beanType
                 className = beanType.name
                 methodName = handler.method.name
-            }else{
+            }else if (handler is JSONObject){
                 handler as JSONObject
                 className = handler.getString("className")
                 methodName = handler.getString("methodName")
+            }else{
+                className = handler.javaClass.name
+                methodName = I18n.translate("commons.unknown")
             }
             logger.info("<====REQUEST-TIME:[${Time.getCurrentLocalDateTime()}]======" +
                     "RID:[${request.getAttribute(StandardFields.FILTER_REQUEST_ID_KEY)}]=====>")

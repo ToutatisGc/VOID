@@ -55,13 +55,13 @@ object I18n {
         return translate(key,null)
     }
 
-
     /**
      * 从库中翻译
      */
     @JvmStatic
     fun translate(key:String,vararg args:String?): String {
-        val transStr = JsonToolkit.getString(translationObject, key)
+        if (Validator.strIsBlank(key)){ return "" }
+        val transStr = JsonToolkit.getString(translationObject, key.trim().lowercase())
         return if (transStr != null){
             if (args.isEmpty()){ return transStr }
             transStr.format(args)
