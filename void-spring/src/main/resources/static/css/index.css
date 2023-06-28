@@ -15,7 +15,7 @@ body {
 }
 
 .xv-background_theme {
-  background-color: #1f59a0;
+  background-color: rgba(0, 0, 0,0.5);
 }
 .xv-flex-box {
   display: flex;

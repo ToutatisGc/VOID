@@ -22,6 +22,8 @@ object FileToolkit {
 
     const val RESOURCE_FILE_DIR = "resources"
 
+    private var runPath:String? = null
+
     /**
      * 为createDirectoryOrExist方法创建路径映射
      */
@@ -77,7 +79,10 @@ object FileToolkit {
 
     @JvmStatic
     fun getThreadPath(): String {
-        return Thread.currentThread().contextClassLoader.getResource("")!!.path
+        return if (runPath != null) runPath!! else {
+            runPath = Thread.currentThread().contextClassLoader.getResource("")!!.path
+            runPath!!
+        }
     }
 
     /**

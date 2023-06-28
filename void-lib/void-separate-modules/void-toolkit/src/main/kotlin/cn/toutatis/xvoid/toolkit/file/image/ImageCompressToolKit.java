@@ -23,6 +23,7 @@ import java.awt.image.BufferedImage;
 import java.awt.image.ConvolveOp;
 import java.awt.image.Kernel;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.*;
@@ -120,12 +121,13 @@ public class ImageCompressToolKit {
         Thumbnails.of(origin).scale(scale).toFile(dist);
     }
 
-    public static void differentStandardThumbnail(List<File> fileList, CompressConfig.CompressContent config) {
+    public static List<String> differentStandardThumbnail(List<File> fileList, CompressConfig.CompressContent config) throws FileNotFoundException {
         List<File> distinctFileList =
                 fileList.stream()
                         .distinct()
                         .filter(file -> file.exists() && file.isFile() && FileToolkit.isImg(FileToolkit.getFileSuffix(file.getName())))
                         .collect(Collectors.toList());
+        ArrayList<String> filenameList = new ArrayList<>(distinctFileList.size());
         if (distinctFileList.size() > 0){
             logger.info("[%s]待生成 ".formatted(VoidModuleInfo.MODULE_NAME)+distinctFileList.size()+ " 个图像资源.");
             Integer zipTimes = config.getZipTimes();
@@ -138,12 +140,13 @@ public class ImageCompressToolKit {
                 if (file.exists() && file.isDirectory()){
                     logger.info("[%s]目标地址校验成功.[√]".formatted(VoidModuleInfo.MODULE_NAME));
                 }else {
-                    logger.info("[%s]保存目录错误.[目标地址不是目录×]".formatted(VoidModuleInfo.MODULE_NAME));
-                    return;
+                    String error = "[%s]保存目录错误.[目标地址不是目录×]".formatted(VoidModuleInfo.MODULE_NAME);
+                    logger.error(error);
+                    throw new FileNotFoundException(error);
                 }
             }else {
                 logger.info("[%s]保存目录错误.[空文件夹×]".formatted(VoidModuleInfo.MODULE_NAME));
-                return;
+                throw new FileNotFoundException("");
             }
             AtomicInteger count = new AtomicInteger();
             distinctFileList.forEach(item ->{
@@ -246,6 +249,7 @@ public class ImageCompressToolKit {
         }else {
             logger.info("可执行图片数量为0.[×]");
         }
+        return filenameList;
     }
 
     private static File concatFileName(String dir,String fileName,String middle,int currentTimes,String suffix){

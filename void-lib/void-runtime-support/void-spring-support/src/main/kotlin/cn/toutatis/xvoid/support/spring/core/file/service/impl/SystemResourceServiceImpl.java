@@ -38,6 +38,7 @@ import java.io.IOException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -48,9 +49,8 @@ import java.util.Locale;
  * @author Toutatis_Gc
  * @since 2023-06-03
 */
-@Service
+@Service("systemResourceService")
 public class SystemResourceServiceImpl extends VoidMybatisServiceImpl<SystemResourceMapper, SystemResource> implements SystemResourceService {
-
 
     @Autowired
     private VoidConfiguration voidConfiguration;
@@ -70,19 +70,21 @@ public class SystemResourceServiceImpl extends VoidMybatisServiceImpl<SystemReso
 
     @Override
     public Object receiveFile(MultipartFile multipartFile) throws IOException {
+        // 文件合规校验
         if (multipartFile == null || multipartFile.getSize() == 0L){
             return new ProxyResult(ResultCode.UPLOAD_FAILED, SimpleResultMessage.RESPONSE_UPLOAD_MISS_FILE);
         }
         if (Validator.strIsBlank(multipartFile.getOriginalFilename())){
             return new ProxyResult(ResultCode.UPLOAD_FAILED, SimpleResultMessage.RESPONSE_UPLOAD_MISS_NAME);
         }
-        String threadPath = FileToolkit.getThreadPath();
+        // 查找是否有相同文件
         String md5Hex = DigestUtils.md5Hex(multipartFile.getBytes());
         QueryWrapper<SystemResource> md5QueryWrapper = new QueryWrapper<>();
         md5QueryWrapper.eq("hash",md5Hex);
         val hashFile = this.getOne(md5QueryWrapper);
-        //md5不冲突则秒传,合并文件
+        //md5不冲突则秒传,else合并文件
         if (hashFile == null) {
+            String threadPath = FileToolkit.getThreadPath();
             String originalFilename = multipartFile.getOriginalFilename();
             assert originalFilename != null;
             String fileSuffix = FileToolkit.getFileSuffix(originalFilename);
@@ -113,11 +115,10 @@ public class SystemResourceServiceImpl extends VoidMybatisServiceImpl<SystemReso
                     multipartFile.transferTo(localFile);
                     Boolean compressFile = globalServiceConfig.getCompressFile();
                     if (compressFile){
-                        ArrayList<File> files = new ArrayList<>(1);
-                        files.add(localFile);
-                        String parentDir = localFile.getParent();
-                        compressConfig.setLastSaveDir(parentDir);
-                        ImageCompressToolKit.differentStandardThumbnail(files,compressConfig);
+                        // TODO 文本文件压缩和压缩文件到7z或者其他,目前只有图片
+                        if (FileToolkit.isImg(fileSuffix)){
+                            List<String> compressFiles = this.compressFile(localFile);
+                        }
                     }
                 }
             } else {
@@ -143,20 +144,22 @@ public class SystemResourceServiceImpl extends VoidMybatisServiceImpl<SystemReso
                         e.printStackTrace();
                         throw new ContinueTransactionException("[%s]上传文件转储MINIO服务异常,请查看日志解决问题.".formatted(PkgInfo.MODULE_NAME));
                     }
-                    GetPresignedObjectUrlArgs.Builder getUrlArgsBuilder = GetPresignedObjectUrlArgs.builder();
-                    getUrlArgsBuilder.bucket(minIOHelper.bucket(MinIOHelper.XVOID_USER_RESOURCE_BUCKET)).object(originalFilename);
-                    getUrlArgsBuilder.method(Method.GET);
-                    GetPresignedObjectUrlArgs presignedObjectUrlArgs = getUrlArgsBuilder.build();
-                    String presignedObjectUrl;
-                    try {
-                        presignedObjectUrl = client.getPresignedObjectUrl(presignedObjectUrlArgs);
-                        systemResource.setPath(presignedObjectUrl);
-                        localFile.delete();
-                    } catch (ErrorResponseException | InsufficientDataException | InternalException | InvalidKeyException |
-                            InvalidResponseException | NoSuchAlgorithmException | XmlParserException | ServerException e) {
-                        e.printStackTrace();
-                        throw new ContinueTransactionException("[%s]上传文件获取MINIO回调链接异常,请查看日志解决问题.".formatted(PkgInfo.MODULE_NAME));
-                    }
+                    systemResource.setPath(MinIOHelper.XVOID_USER_RESOURCE_BUCKET+"/"+contentType+"/"+localFile.getName());
+                    localFile.delete();
+//                    GetPresignedObjectUrlArgs.Builder getUrlArgsBuilder = GetPresignedObjectUrlArgs.builder();
+//                    getUrlArgsBuilder.bucket(minIOHelper.bucket(MinIOHelper.XVOID_USER_RESOURCE_BUCKET)).object(originalFilename);
+//                    getUrlArgsBuilder.method(Method.GET);
+//                    GetPresignedObjectUrlArgs presignedObjectUrlArgs = getUrlArgsBuilder.build();
+//                    String presignedObjectUrl;
+//                    try {
+//                        presignedObjectUrl = client.getPresignedObjectUrl(presignedObjectUrlArgs);
+//                        systemResource.setPath(presignedObjectUrl);
+//                        localFile.delete();
+//                    } catch (ErrorResponseException | InsufficientDataException | InternalException | InvalidKeyException |
+//                            InvalidResponseException | NoSuchAlgorithmException | XmlParserException | ServerException e) {
+//                        e.printStackTrace();
+//                        throw new ContinueTransactionException("[%s]上传文件获取MINIO回调链接异常,请查看日志解决问题.".formatted(PkgInfo.MODULE_NAME));
+//                    }
                 }
             }
             boolean save = this.save(systemResource);
@@ -167,10 +170,28 @@ public class SystemResourceServiceImpl extends VoidMybatisServiceImpl<SystemReso
                 resourceInfo.put("url",systemResource.getPath());
                 proxyResult.setData(resourceInfo);
                 return proxyResult;
+            }else {
+                return new ProxyResult(ResultCode.UPLOAD_FAILED);
             }
         }else {
-
+            ProxyResult proxyResult = new ProxyResult(ResultCode.UPLOAD_SUCCESS);
+            proxyResult.putData("filename",hashFile.getFileName()+"."+hashFile.getSuffix());
+            proxyResult.putData("url",hashFile.getPath());
+            return proxyResult;
         }
-        return null;
+    }
+
+    /**
+     *
+     * @param file
+     * @return
+     * @throws IOException
+     */
+    private List<String> compressFile(File file) throws IOException {
+        ArrayList<File> files = new ArrayList<>(1);
+        files.add(file);
+        String parentDir = file.getParent();
+        compressConfig.setLastSaveDir(parentDir);
+        return ImageCompressToolKit.differentStandardThumbnail(files,compressConfig);
     }
 }
