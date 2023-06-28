@@ -21,6 +21,15 @@ public abstract class AbstractResult implements Result {
     @ApiModelProperty(name="请求响应数据",required=false,example = "{'name':'Toutatis_Gc'}")
     protected Object data;
 
+    public Object getData() {
+        return data;
+    }
+
+    @Override
+    public void setData(Object data) {
+        this.data = data;
+    }
+
     @Override
     public Map<String, Object> getDataMap() {
         if (data == null){
