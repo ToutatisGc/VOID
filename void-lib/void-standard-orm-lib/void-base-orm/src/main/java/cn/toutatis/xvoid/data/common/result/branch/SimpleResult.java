@@ -26,7 +26,7 @@ import lombok.Getter;
 
 
 @Getter
-@EqualsAndHashCode
+@EqualsAndHashCode(callSuper = false)
 public class SimpleResult extends AbstractResult implements Result {
 
 

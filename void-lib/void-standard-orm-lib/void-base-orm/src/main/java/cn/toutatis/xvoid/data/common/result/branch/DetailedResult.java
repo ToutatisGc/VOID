@@ -29,7 +29,7 @@ import lombok.Getter;
  * 详细响应模式
  */
 @Getter
-@EqualsAndHashCode
+@EqualsAndHashCode(callSuper = false)
 public class DetailedResult extends AbstractResult implements Result {
 
     /**
