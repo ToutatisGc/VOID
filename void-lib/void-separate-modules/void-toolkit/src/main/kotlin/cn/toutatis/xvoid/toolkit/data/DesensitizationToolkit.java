@@ -6,7 +6,6 @@ import cn.toutatis.xvoid.toolkit.VoidModuleInfo;
 import cn.toutatis.xvoid.toolkit.log.LoggerToolkit;
 import cn.toutatis.xvoid.toolkit.validator.Validator;
 import org.apache.commons.lang3.ClassUtils;
-import org.slf4j.Logger;
 
 import java.lang.reflect.Field;
 import java.util.ArrayList;
@@ -72,12 +71,12 @@ public class DesensitizationToolkit {
                 Class<?> fieldClass = map.get(field).getClass();
                 boolean primitiveOrWrapper = ClassUtils.isPrimitiveOrWrapper(fieldClass);
                 if (!primitiveOrWrapper){
-                    throw new IllegalArgumentException(LoggerToolkit.printModuleInfoWithMessage(VoidModuleInfo.MODULE_NAME, "脱敏字段需要基础类型或基础包装类"));
+                    throw new IllegalArgumentException(LoggerToolkit.infoWithModule(VoidModuleInfo.MODULE_NAME, "脱敏字段需要基础类型或基础包装类"));
                 }
                 String hiddenInfo = hiddenInfo(String.valueOf(map.get(field)));
                 map.put(field,hiddenInfo);
             }else {
-                throw new IllegalArgumentException(LoggerToolkit.printModuleInfoWithMessage(VoidModuleInfo.MODULE_NAME, "脱敏map不存在[%s]字段".formatted(field)));
+                throw new IllegalArgumentException(LoggerToolkit.infoWithModule(VoidModuleInfo.MODULE_NAME, "脱敏map不存在[%s]字段".formatted(field)));
             }
         }
         return map;
@@ -102,7 +101,7 @@ public class DesensitizationToolkit {
     public static String hiddenInfo(String info,String customSymbol){
         if (Validator.strIsBlank(info)){return null;}
         if (customSymbol == null || customSymbol.length() > 1){
-            throw new IllegalArgumentException(LoggerToolkit.printModuleInfoWithMessage(VoidModuleInfo.MODULE_NAME, "脱敏标识符不得为空或者大于1个字符"));
+            throw new IllegalArgumentException(LoggerToolkit.infoWithModule(VoidModuleInfo.MODULE_NAME, "脱敏标识符不得为空或者大于1个字符"));
         }
         String trimInfo = info.trim();
         int infoLength = trimInfo.length();

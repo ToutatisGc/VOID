@@ -1,7 +1,7 @@
 package cn.toutatis.xvoid.support.spring.core.aop.interceptor
 
 import cn.toutatis.xvoid.common.standard.StandardFields
-import cn.toutatis.xvoid.support.PkgInfo.MODULE_NAME
+import cn.toutatis.xvoid.support.VoidModuleInfo.MODULE_NAME
 import cn.toutatis.xvoid.support.spring.amqp.AmqpShell
 import cn.toutatis.xvoid.support.spring.amqp.entity.SystemLog
 import cn.toutatis.xvoid.support.spring.amqp.log.LogType

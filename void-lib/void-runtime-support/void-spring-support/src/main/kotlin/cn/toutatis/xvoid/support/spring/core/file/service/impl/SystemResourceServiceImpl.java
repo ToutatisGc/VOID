@@ -1,12 +1,14 @@
 package cn.toutatis.xvoid.support.spring.core.file.service.impl;
 
 
+import cn.toutatis.xvoid.common.enums.FileFields;
 import cn.toutatis.xvoid.common.exception.ContinueTransactionException;
 import cn.toutatis.xvoid.data.common.base.SystemResource;
 import cn.toutatis.xvoid.data.common.result.ProxyResult;
+import cn.toutatis.xvoid.data.common.result.Result;
 import cn.toutatis.xvoid.data.common.result.ResultCode;
 import cn.toutatis.xvoid.data.common.result.SimpleResultMessage;
-import cn.toutatis.xvoid.support.PkgInfo;
+import cn.toutatis.xvoid.support.VoidModuleInfo;
 import cn.toutatis.xvoid.support.spring.config.ObjectStorageMode;
 import cn.toutatis.xvoid.support.spring.config.VoidConfiguration;
 import cn.toutatis.xvoid.support.spring.core.file.MinIOHelper;
@@ -17,7 +19,6 @@ import cn.toutatis.xvoid.toolkit.file.FileToolkit;
 import cn.toutatis.xvoid.toolkit.file.image.CompressConfig;
 import cn.toutatis.xvoid.toolkit.file.image.ImageCompressToolKit;
 import cn.toutatis.xvoid.toolkit.validator.Validator;
-import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import io.minio.GetPresignedObjectUrlArgs;
 import io.minio.MinioClient;
@@ -36,13 +37,15 @@ import java.io.File;
 import java.io.IOException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
-import java.util.Locale;
+import java.util.*;
 
 /**
- * <p>
- * 系统资源类 服务实现类
- * </p>
+ *
+ * <p>系统资源类 服务实现类
+ * <p>Web服务的文件上传下载皆在于此
+ * <p>如果没有特殊需求,请使用此类
+ * <p><i>如有特殊需求,在此服务类编写,以防命名和行为的不一致导致的追踪困难</i>
+ *
  *
  * @author Toutatis_Gc
  * @since 2023-06-03
@@ -50,42 +53,62 @@ import java.util.Locale;
 @Service
 public class SystemResourceServiceImpl extends VoidMybatisServiceImpl<SystemResourceMapper, SystemResource> implements SystemResourceService {
 
+    /**
+     * 配置注入类
+     */
+    private final VoidConfiguration voidConfiguration;
 
-    @Autowired
-    private VoidConfiguration voidConfiguration;
+    /**
+     * MinIO文件系统
+     */
+    private final MinIOHelper minIOHelper;
 
-    @Autowired
-    private MinIOHelper minIOHelper;
-
+    /**
+     * 压缩图片配置文件
+     */
     private CompressConfig.CompressContent compressConfig;
+
+    public SystemResourceServiceImpl(VoidConfiguration voidConfiguration, MinIOHelper minIOHelper) {
+        this.voidConfiguration = voidConfiguration;
+        this.minIOHelper = minIOHelper;
+    }
 
     @PostConstruct
     public void init(){
+        // 使用局内配置文件
         compressConfig = new CompressConfig(null).getConfig();
+        // 设置为源命名方式
         compressConfig.setSaveFileRenameType("SOURCE");
     }
 
     @Override
-    public Object receiveFile(MultipartFile multipartFile) throws IOException {
+    public Result receiveFile(MultipartFile multipartFile, List<FileFields> fields) throws IOException {
+        // 边界判断
         if (multipartFile == null || multipartFile.getSize() == 0L){
             return new ProxyResult(ResultCode.UPLOAD_FAILED, SimpleResultMessage.RESPONSE_UPLOAD_MISS_FILE);
         }
         if (Validator.strIsBlank(multipartFile.getOriginalFilename())){
             return new ProxyResult(ResultCode.UPLOAD_FAILED, SimpleResultMessage.RESPONSE_UPLOAD_MISS_NAME);
         }
-        String threadPath = FileToolkit.getThreadPath();
+        //查询数据库是否存在相同文件
         String md5Hex = DigestUtils.md5Hex(multipartFile.getBytes());
         QueryWrapper<SystemResource> md5QueryWrapper = new QueryWrapper<>();
         md5QueryWrapper.eq("hash",md5Hex);
         val hashFile = this.getOne(md5QueryWrapper);
+        //初始化返回信息
+        Map<String,Object> returnInfo = null;
+        if (fields != null && fields.size() > 1){
+            returnInfo = fields.contains(FileFields.FEATURE_ORDER) ?
+                    new LinkedHashMap<String, Object>(fields.size()) : new HashMap<String, Object>(fields.size());
+        }
         //md5不冲突则秒传,合并文件
+        SystemResource systemResource = new SystemResource();
         if (hashFile == null) {
+            // hashFile为空,初始化存储对象,填入基础信息
             String originalFilename = multipartFile.getOriginalFilename();
             assert originalFilename != null;
             String fileSuffix = FileToolkit.getFileSuffix(originalFilename);
             String randomId = RandomStringUtils.random(32, true, true).toLowerCase(Locale.getDefault());
-            VoidConfiguration.GlobalServiceConfig globalServiceConfig = voidConfiguration.getGlobalServiceConfig();
-            SystemResource systemResource = new SystemResource();
             systemResource.setOriginName(originalFilename);
             systemResource.setSuffix(fileSuffix);
             systemResource.setFileName(randomId);
@@ -93,13 +116,16 @@ public class SystemResourceServiceImpl extends VoidMybatisServiceImpl<SystemReso
             systemResource.setSize((int) multipartFile.getSize());
             String contentType = multipartFile.getContentType();
             systemResource.setContentType(contentType);
-            contentType = (contentType != null) ? contentType.split("/")[0] : "unknown";
             File localFile;
+            String threadPath = FileToolkit.getThreadPath();
+            VoidConfiguration.GlobalServiceConfig globalServiceConfig = voidConfiguration.getGlobalServiceConfig();
+            // 存储开始,判断本地存储还是MINIO服务存储
             if (globalServiceConfig.getObjectStorageMode() == ObjectStorageMode.LOCAL) {
                 String resourceDir = threadPath + FileToolkit.RESOURCE_FILE_DIR;
                 boolean resourceDirExist = FileToolkit.createDirectoryOrExist(resourceDir);
                 if (resourceDirExist) {
                     if(globalServiceConfig.getFileObjectClassify()) {
+                        contentType = (contentType != null) ? contentType.split("/")[0] : "unknown";
                         localFile = new File("%s/%s/%s.%s".formatted(resourceDir, contentType, randomId, fileSuffix));
                         FileToolkit.createDirectoryOrExist(resourceDir + "/" + contentType);
                         systemResource.setPath("%s/%s/%s.%s".formatted(FileToolkit.RESOURCE_FILE_DIR, contentType, randomId, fileSuffix));
@@ -107,17 +133,21 @@ public class SystemResourceServiceImpl extends VoidMybatisServiceImpl<SystemReso
                         localFile = new File(resourceDir + "/" + randomId + "." + fileSuffix);
                         systemResource.setPath(FileToolkit.RESOURCE_FILE_DIR + "/" + randomId + "." + fileSuffix);
                     }
+                    //转储文件到本地
                     multipartFile.transferTo(localFile);
-                    Boolean compressFile = globalServiceConfig.getCompressFile();
-                    if (compressFile){
-                        ArrayList<File> files = new ArrayList<>(1);
-                        files.add(localFile);
-                        String parentDir = localFile.getParent();
-                        compressConfig.setLastSaveDir(parentDir);
-                        ImageCompressToolKit.differentStandardThumbnail(files,compressConfig);
-                    }
+                    System.err.println(localFile.getPath());
+                    // TODO 分解子目录压缩文件
+                    //是否压缩
+//                    if (globalServiceConfig.getCompressFile()){
+//                        ArrayList<File> files = new ArrayList<>(1);
+//                        files.add(localFile);
+//                        String parentDir = localFile.getParent();
+//                        compressConfig.setLastSaveDir(parentDir);
+//                        ImageCompressToolKit.differentStandardThumbnail(files,compressConfig);
+//                    }
                 }
             } else {
+                // MINIO存储
                 String tmpDir = threadPath + FileToolkit.TEMP_FILE_DIR;
                 boolean tmpDirExist = FileToolkit.createDirectoryOrExist(tmpDir);
                 if (tmpDirExist) {
@@ -127,6 +157,7 @@ public class SystemResourceServiceImpl extends VoidMybatisServiceImpl<SystemReso
                     UploadObjectArgs.Builder uploadObjectBuilder = UploadObjectArgs.builder();
                     uploadObjectBuilder.bucket(minIOHelper.bucket(MinIOHelper.XVOID_USER_RESOURCE_BUCKET)).filename(localFile.getPath());
                     if(globalServiceConfig.getFileObjectClassify()) {
+                        contentType = (contentType != null) ? contentType.split("/")[0] : "unknown";
                         uploadObjectBuilder.object(contentType+"/"+localFile.getName());
                     }else {
                         uploadObjectBuilder.object(localFile.getName());
@@ -138,7 +169,7 @@ public class SystemResourceServiceImpl extends VoidMybatisServiceImpl<SystemReso
                             InvalidKeyException | InvalidResponseException | NoSuchAlgorithmException
                             | ServerException | XmlParserException e) {
                         e.printStackTrace();
-                        throw new ContinueTransactionException("[%s]上传文件转储MINIO服务异常,请查看日志解决问题.".formatted(PkgInfo.MODULE_NAME));
+                        throw new ContinueTransactionException("[%s]上传文件转储MINIO服务异常,请查看日志解决问题.".formatted(VoidModuleInfo.MODULE_NAME));
                     }
                     GetPresignedObjectUrlArgs.Builder getUrlArgsBuilder = GetPresignedObjectUrlArgs.builder();
                     getUrlArgsBuilder.bucket(minIOHelper.bucket(MinIOHelper.XVOID_USER_RESOURCE_BUCKET)).object(originalFilename);
@@ -152,7 +183,7 @@ public class SystemResourceServiceImpl extends VoidMybatisServiceImpl<SystemReso
                     } catch (ErrorResponseException | InsufficientDataException | InternalException | InvalidKeyException |
                             InvalidResponseException | NoSuchAlgorithmException | XmlParserException | ServerException e) {
                         e.printStackTrace();
-                        throw new ContinueTransactionException("[%s]上传文件获取MINIO回调链接异常,请查看日志解决问题.".formatted(PkgInfo.MODULE_NAME));
+                        throw new ContinueTransactionException("[%s]上传文件获取MINIO回调链接异常,请查看日志解决问题.".formatted(VoidModuleInfo.MODULE_NAME));
                     }
                 }
             }
@@ -169,5 +200,18 @@ public class SystemResourceServiceImpl extends VoidMybatisServiceImpl<SystemReso
 
         }
         return null;
+    }
+
+    /**
+     * 放置文件信息
+     * @param infoMap 信息映射
+     * @param key map的Key
+     * @param value 文件的值
+     * @see cn.toutatis.xvoid.common.enums.FileFields
+     */
+    private void putInfoField(Map<String,Object> infoMap,FileFields key,Object value){
+        if (infoMap !=null){
+            infoMap.put(key.name(),value);
+        }
     }
 }
