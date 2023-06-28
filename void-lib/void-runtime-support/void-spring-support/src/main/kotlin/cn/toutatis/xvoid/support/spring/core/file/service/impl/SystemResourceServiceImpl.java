@@ -21,6 +21,7 @@ import cn.toutatis.xvoid.toolkit.file.image.ImageCompressToolKit;
 import cn.toutatis.xvoid.toolkit.log.LoggerToolkit;
 import cn.toutatis.xvoid.toolkit.file.image.PictureQualityDistributionStrategy;
 import cn.toutatis.xvoid.toolkit.validator.Validator;
+import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import io.minio.GetPresignedObjectUrlArgs;
 import io.minio.MinioClient;
@@ -149,21 +150,13 @@ public class SystemResourceServiceImpl extends VoidMybatisServiceImpl<SystemReso
                     multipartFile.transferTo(localFile);
                     Boolean compressFile = globalServiceConfig.getCompressFile();
                     if (compressFile){
+                        // TODO 分解子目录压缩文件
                         // TODO 文本文件压缩和压缩文件到7z或者其他,目前只有图片
-                        if (FileToolkit.isImg(fileSuffix)){
-                            List<String> compressFiles = this.compressFile(localFile);
-                        }
+//                        if (FileToolkit.isImg(fileSuffix)){
+//                            List<String> compressFiles = this.compressFile(localFile);
+//                        }
                     }
                     System.err.println(localFile.getPath());
-                    // TODO 分解子目录压缩文件
-                    //是否压缩
-//                    if (globalServiceConfig.getCompressFile()){
-//                        ArrayList<File> files = new ArrayList<>(1);
-//                        files.add(localFile);
-//                        String parentDir = localFile.getParent();
-//                        compressConfig.setLastSaveDir(parentDir);
-//                        ImageCompressToolKit.differentStandardThumbnail(files,compressConfig);
-//                    }
                 }
             } else {
                 // MINIO存储
@@ -221,21 +214,6 @@ public class SystemResourceServiceImpl extends VoidMybatisServiceImpl<SystemReso
                 return proxyResult;
             }else {
                 return new ProxyResult(ResultCode.UPLOAD_FAILED);
-                    GetPresignedObjectUrlArgs.Builder getUrlArgsBuilder = GetPresignedObjectUrlArgs.builder();
-                    getUrlArgsBuilder.bucket(minIOHelper.bucket(MinIOHelper.XVOID_USER_RESOURCE_BUCKET)).object(originalFilename);
-                    getUrlArgsBuilder.method(Method.GET);
-                    GetPresignedObjectUrlArgs presignedObjectUrlArgs = getUrlArgsBuilder.build();
-                    String presignedObjectUrl;
-                    try {
-                        presignedObjectUrl = client.getPresignedObjectUrl(presignedObjectUrlArgs);
-                        systemResource.setPath(presignedObjectUrl);
-                        localFile.delete();
-                    } catch (ErrorResponseException | InsufficientDataException | InternalException | InvalidKeyException |
-                            InvalidResponseException | NoSuchAlgorithmException | XmlParserException | ServerException e) {
-                        e.printStackTrace();
-                        throw new ContinueTransactionException("[%s]上传文件获取MINIO回调链接异常,请查看日志解决问题.".formatted(VoidModuleInfo.MODULE_NAME));
-                    }
-                }
             }
         }else {
             ProxyResult proxyResult = new ProxyResult(ResultCode.UPLOAD_SUCCESS);
@@ -243,6 +221,16 @@ public class SystemResourceServiceImpl extends VoidMybatisServiceImpl<SystemReso
             proxyResult.putData("url",hashFile.getPath());
             return proxyResult;
         }
+    }
+
+    @Override
+    public Object downloadFile(String path, ObjectStorageMode objectStorageMode) throws IOException {
+        return null;
+    }
+
+    @Override
+    public Map<String, Object> metaData() {
+        return null;
     }
 
     /**
@@ -257,28 +245,5 @@ public class SystemResourceServiceImpl extends VoidMybatisServiceImpl<SystemReso
         String parentDir = file.getParent();
         compressConfig.setLastSaveDir(parentDir);
         return ImageCompressToolKit.differentStandardThumbnail(files,compressConfig);
-    }
-
-    @Override
-    public Object downloadFile(String path, ObjectStorageMode objectStorageMode) throws IOException {
-        return null;
-    }
-
-    @Override
-    public Map<String, Object> metaData() {
-        return null;
-    }
-
-    /**
-     * 放置文件信息
-     * @param infoMap 信息映射
-     * @param key map的Key
-     * @param value 文件的值
-     * @see cn.toutatis.xvoid.common.enums.FileFields
-     */
-    private void putInfoField(Map<String,Object> infoMap,FileFields key,Object value){
-        if (infoMap !=null){
-            infoMap.put(key.name(),value);
-        }
     }
 }

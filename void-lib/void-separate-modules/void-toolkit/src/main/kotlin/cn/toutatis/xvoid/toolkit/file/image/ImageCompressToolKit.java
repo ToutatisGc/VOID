@@ -121,7 +121,7 @@ public class ImageCompressToolKit {
         Thumbnails.of(origin).scale(scale).toFile(dist);
     }
 
-    public static List<String> differentStandardThumbnail(List<File> fileList, CompressConfig.CompressContent config) {
+    public static List<String> differentStandardThumbnail(List<File> fileList, CompressConfig.CompressContent config) throws IOException {
         List<File> distinctFileList =
                 fileList.stream()
                         .distinct()
