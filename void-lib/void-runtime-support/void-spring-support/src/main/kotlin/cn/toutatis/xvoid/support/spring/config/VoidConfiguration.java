@@ -1,7 +1,12 @@
 package cn.toutatis.xvoid.support.spring.config;
 
 import cn.toutatis.xvoid.Version;
+import cn.toutatis.xvoid.support.spring.config.qos.AntiLeechStrategy;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+
+import java.time.Duration;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Toutatis_Gc
@@ -35,6 +40,7 @@ public class VoidConfiguration {
     private VoidConfiguration.GlobalOrmConfig globalOrmConfig = new GlobalOrmConfig();
     private VoidConfiguration.GlobalServiceConfig globalServiceConfig = new GlobalServiceConfig();
     private VoidConfiguration.MinIoConfig minIoConfig = new MinIoConfig();
+    private VoidConfiguration.QualityOfServiceStrategyConfig qualityOfServiceStrategyConfig = new QualityOfServiceStrategyConfig();
 
     /**
      * 全局日志环境变量
@@ -304,6 +310,78 @@ public class VoidConfiguration {
 
     }
 
+    /**
+     * 服务质量策略配置
+     */
+    public static class QualityOfServiceStrategyConfig{
+
+        /**
+         * 是否启用请求接口次数限制
+         */
+        private Boolean enableRequestCountLimit = false;
+
+        /**
+         * 单个接口在defaultTimeSlice时间片中最多请求次数
+         */
+        private Integer maxRequestCount = 30;
+
+        /**
+         * 默认时间片
+         */
+        private Duration defaultTimeSlice = Duration.ofMinutes(1);
+
+        /**
+         * 盗链策略
+         */
+        private AntiLeechStrategy leechStrategy = AntiLeechStrategy.ALLOW;
+
+        /**
+         * 允许访问链接的外部域名
+         * TODO 继承接口则按照接口行为执行
+         */
+        private List<String> allowOuterHosts;
+
+        public AntiLeechStrategy getLeechStrategy() {
+            return leechStrategy;
+        }
+
+        public void setLeechStrategy(AntiLeechStrategy leechStrategy) {
+            this.leechStrategy = leechStrategy;
+        }
+
+        public List<String> getAllowOuterHosts() {
+            return allowOuterHosts;
+        }
+
+        public void setAllowOuterHosts(List<String> allowOuterHosts) {
+            this.allowOuterHosts = allowOuterHosts;
+        }
+
+        public Boolean getEnableRequestCountLimit() {
+            return enableRequestCountLimit;
+        }
+
+        public void setEnableRequestCountLimit(Boolean enableRequestCountLimit) {
+            this.enableRequestCountLimit = enableRequestCountLimit;
+        }
+
+        public Integer getMaxRequestCount() {
+            return maxRequestCount;
+        }
+
+        public void setMaxRequestCount(Integer maxRequestCount) {
+            this.maxRequestCount = maxRequestCount;
+        }
+
+        public Duration getDefaultTimeSlice() {
+            return defaultTimeSlice;
+        }
+
+        public void setDefaultTimeSlice(Duration defaultTimeSlice) {
+            this.defaultTimeSlice = defaultTimeSlice;
+        }
+    }
+
     public MinIoConfig getMinIoConfig() {
         return minIoConfig;
     }
@@ -374,5 +452,13 @@ public class VoidConfiguration {
 
     public void setShowMode(Boolean showMode) {
         this.showMode = showMode;
+    }
+
+    public QualityOfServiceStrategyConfig getQualityOfServiceStrategyConfig() {
+        return qualityOfServiceStrategyConfig;
+    }
+
+    public void setQualityOfServiceStrategyConfig(QualityOfServiceStrategyConfig qualityOfServiceStrategyConfig) {
+        this.qualityOfServiceStrategyConfig = qualityOfServiceStrategyConfig;
     }
 }

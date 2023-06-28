@@ -1,6 +1,6 @@
 package cn.toutatis.xvoid.support;
 
-public class PkgInfo{
+public class VoidModuleInfo {
 
     public static final String PKG_NAME = "cn.toutatis.xvoid.support";
 

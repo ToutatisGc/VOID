@@ -21,11 +21,11 @@ import java.util.Objects;
  * 注意: 如果已经设置autoConfig并且返回了响应状态码,需要自定义resultCode等字段,需要将setData的顺序前移
  * 调用顺序: new constructor() > setData()方法 > setResultCode()/setMessage()等
  */
-@EqualsAndHashCode
+@EqualsAndHashCode(callSuper = false)
 @ApiModel(
         value = "代理返回结果(最终返回结果为Result的派生类)",
         description = "Controller标准返回结果,经过 ResponseResultDispatcherAdvice 分发到派生类")
-public class ProxyResult implements Result {
+public class ProxyResult extends AbstractResult implements Result {
 
     /**
      * 占位符常量
@@ -55,13 +55,6 @@ public class ProxyResult implements Result {
      */
     @ApiModelProperty(name="响应消息",required=true,example = "请求成功")
     private String supportMessage;
-
-    /**
-     * [具体分发到派生类]
-     * 响应数据
-     */
-    @ApiModelProperty(name="请求响应数据",required=false,example = "{'name':'Toutatis_Gc'}")
-    private Object data;
 
     /**
      * [具体分发到派生类]
@@ -401,10 +394,6 @@ public class ProxyResult implements Result {
             return;
         }
         this.message = message;
-    }
-
-    public Object getData() {
-        return data;
     }
 
     public String getRequestId() {

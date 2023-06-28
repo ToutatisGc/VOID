@@ -1,7 +1,9 @@
 package cn.toutatis.xvoid.toolkit.file
 
 //import sun.security.util.Resources
+import cn.toutatis.xvoid.toolkit.VoidModuleInfo
 import cn.toutatis.xvoid.toolkit.constant.Regex
+import cn.toutatis.xvoid.toolkit.log.warnWithModule
 import org.apache.commons.io.IOUtils
 import org.slf4j.LoggerFactory
 import java.io.File
@@ -11,37 +13,76 @@ import java.net.URL
 import java.util.regex.Pattern
 
 /**
+ * 文件相关工具
  * @author Toutatis_Gc
- * 文件工具箱
  */
 object FileToolkit {
 
     private val logger = LoggerFactory.getLogger(FileToolkit::class.java)
 
+    /**
+     * 资源临时目录
+     * 一般转储或者解压缩等功能都需要一个临时目录来存放中途数据
+     * 但该文件夹并不负责存储文件,并且作为缓存目录,必须具有可删除性
+     * 一定注意不能存放重要文件
+     */
     const val TEMP_FILE_DIR = "XV_TEMP"
 
+    /**
+     * 资源永存目录
+     * 默认推荐该文件为resources命名,对于部分web框架如springboot可以将文件目录映射为静态资源文件夹,可以直接从web端访问
+     * 对于静态资源api,地址为http://localhost/<context-path>/resources/<image/text..>/<image.jpg/READ-ME.md>具有良好的可读性
+     * 对于本框架,该资源目录使用于以下文件
+     * {@link cn.toutatis.xvoid.support.spring.core.file.service.impl.SystemResourceServiceImpl}
+     */
     const val RESOURCE_FILE_DIR = "resources"
 
     private var runPath:String? = null
 
     /**
-     * 为createDirectoryOrExist方法创建路径映射
+     * 为createDirectoryOrExist方法创建路径映射缓存
      */
-    private val dirPathMap = HashMap<String, Boolean>(32)
+    private val dirPathMapCache = HashMap<String, Boolean>(32)
 
+    /**
+     * 创建或返回目录是否已经存在
+     *
+     * 对于频繁创建目录的行为做了包装处理,如果目录不存在
+     * 则创建目录,并加入到局内缓存,避免多次查找文件对象
+     * 仅需关心文件转储或者其他业务内容,无需关心目录是否已经创建
+     * 注意:一般来说,结果都会返回true
+     * 如果不是true,行为差异出现在 File.mkdirs()中
+     * @return 目录已存在或者目录已经生成
+     */
     @JvmStatic
     fun createDirectoryOrExist(dirPath:String): Boolean {
-        if (dirPathMap.containsKey(dirPath)){
+        if (dirPathMapCache.containsKey(dirPath)){
             return true
         }
         val dirFile = File(dirPath)
-        return if (dirFile.exists()){
-            if (dirFile.isDirectory){ true } else{ createDirectoryOrExist(dirPath) }
+        var mkdirSuccess = false
+        if (dirFile.exists()){
+            if (dirFile.isDirectory){
+                mkdirSuccess = true
+                dirPathMapCache[dirPath] = mkdirSuccess
+            }else{
+                val mkdir = dirFile.mkdirs()
+                if (mkdir){
+                    dirPathMapCache[dirPath] = mkdirSuccess
+                    mkdirSuccess = true
+                }
+            }
         }else{
-            val mkdirSuccess = dirFile.mkdirs()
-            dirPathMap[dirPath] = mkdirSuccess
-            return mkdirSuccess
+            val mkdir = dirFile.mkdirs()
+            if (mkdir){
+                mkdirSuccess = true
+                dirPathMapCache[dirPath] = mkdirSuccess
+            }
         }
+        if (!mkdirSuccess){
+            logger.warnWithModule(VoidModuleInfo.MODULE_NAME,"${dirPath} 创建文件夹失败")
+        }
+        return mkdirSuccess
     }
 
     @JvmStatic

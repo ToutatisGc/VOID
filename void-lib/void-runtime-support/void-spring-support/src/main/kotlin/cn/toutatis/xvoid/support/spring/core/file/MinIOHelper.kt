@@ -1,9 +1,11 @@
 package cn.toutatis.xvoid.support.spring.core.file
 
-import cn.toutatis.xvoid.support.PkgInfo
+import cn.toutatis.xvoid.support.VoidModuleInfo
 import cn.toutatis.xvoid.support.spring.config.VoidConfiguration
 import cn.toutatis.xvoid.toolkit.file.FileToolkit
 import cn.toutatis.xvoid.toolkit.log.LoggerToolkit
+import cn.toutatis.xvoid.toolkit.log.errorWithModule
+import cn.toutatis.xvoid.toolkit.log.infoWithModule
 import io.minio.BucketExistsArgs
 import io.minio.MakeBucketArgs
 import io.minio.MinioClient
@@ -14,13 +16,21 @@ import org.springframework.stereotype.Component
 
 /**
  * MinIO助手
+ * @author Toutatis_Gc
  */
 @Component
 open class MinIOHelper {
 
     companion object{
+
+        /**
+         * 系统级别资源
+         */
         const val XVOID_SYSTEM_RESOURCE_BUCKET = "xvoid-system-material"
 
+        /**
+         * 用户上传资源
+         */
         const val XVOID_USER_RESOURCE_BUCKET = FileToolkit.RESOURCE_FILE_DIR
     }
 
@@ -32,7 +42,7 @@ open class MinIOHelper {
     private var minioClient:MinioClient? = null
 
     /**
-     * bucketBucket23333333
+     * bucketBucket23333333 :)
      */
     private val bucketBucket = HashMap<String,Boolean>(16)
 
@@ -49,7 +59,15 @@ open class MinIOHelper {
                     .credentials(minIoConfig.accessKey, minIoConfig.accessSecret)
                     .region(minIoConfig.region)
                     .build()
-                logger.info("[${PkgInfo.MODULE_NAME}-MinIO]已创建MinIO客户端,连接端为[${minIoConfig.endpoint}],Access-Key为:[${minIoConfig.accessKey}]")
+                // 测试客户端连接
+                try {
+                    val listBuckets = minioClient!!.listBuckets()
+                    logger.infoWithModule(VoidModuleInfo.MODULE_NAME,"MinIO",
+                        "已创建MinIO客户端,服务端为[${minIoConfig.endpoint}],Access-Key为:[${minIoConfig.accessKey}]")
+                }catch (exception: Exception){
+                    logger.errorWithModule(VoidModuleInfo.MODULE_NAME,"MinIO",
+                        "MinIO客户端连接失败,服务端为[${minIoConfig.endpoint}],Access-Key为:[${minIoConfig.accessKey}]")
+                }
             }
         }
         return minioClient!!
@@ -69,7 +87,7 @@ open class MinIOHelper {
                 makeBucketArgs.objectLock(false)
                 makeBucketArgs.bucket(bucket)
                 minioClient!!.makeBucket(makeBucketArgs.build())
-                logger.info("[${PkgInfo.MODULE_NAME}-MinIO]已创建桶[${bucket}]")
+                logger.infoWithModule(VoidModuleInfo.MODULE_NAME,"MinIO","已创建桶[${bucket}]")
             }else{
                 bucketBucket[bucket] = true
             }

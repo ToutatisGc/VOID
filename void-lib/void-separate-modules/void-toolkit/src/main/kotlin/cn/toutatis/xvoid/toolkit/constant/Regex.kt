@@ -1,6 +1,8 @@
 package cn.toutatis.xvoid.toolkit.constant
 
 /**
+ * Regex 类是一个 Kotlin 对象（object），用于存储常用的正则表达式模式。
+ * 它包含了一些静态的常量和一些私有函数，提供了方便的正则表达式操作。
  * @author Toutatis_Gc
  * @since 2020-10-01
  * @version 0
@@ -33,17 +35,19 @@ object Regex {
     const val IMAGE_SUFFIX_REGEX = "png|jpg|jpeg"
 
     /**
-     * 转换ant格式到regex格式
+     * 该函数接受一个 Ant 格式的URL匹配模式作为参数，并返回对应的正则表达式
+     * @param antPattern ant pattern 语法
+     * @return 由ant格式通配表达式转化为正则表达式
      */
-    private fun parseAntToRegex( antPattern: String):String {
+    private fun parseAntToRegex(antPattern: String):String {
         var regex = antPattern
         regex = regex.replace("*", ".*")
         regex = regex.replace("?", ".")
         regex = regex.replace("**", ".*")
         regex = regex.replace("{", "(")
         regex = regex.replace("}", ")")
-        regex = regex.replace("[", "\\[")
-        regex = regex.replace("]", "\\]")
+        regex = regex.replace("[", "[")
+        regex = regex.replace("]", "]")
         regex = regex.replace("!", "^")
         return regex
     }

@@ -16,6 +16,7 @@
 
 package cn.toutatis.xvoid.data.common.result.branch;
 
+import cn.toutatis.xvoid.data.common.result.AbstractResult;
 import cn.toutatis.xvoid.data.common.result.Result;
 import cn.toutatis.xvoid.data.common.result.ResultCode;
 import cn.toutatis.xvoid.toolkit.constant.Time;
@@ -28,8 +29,8 @@ import lombok.Getter;
  * 详细响应模式
  */
 @Getter
-@EqualsAndHashCode
-public class DetailedResult implements Result {
+@EqualsAndHashCode(callSuper = false)
+public class DetailedResult extends AbstractResult implements Result {
 
     /**
      * 请求分配ID
@@ -67,10 +68,6 @@ public class DetailedResult implements Result {
      * 本地时间
      */
     private final String localDateTime = Time.getCurrentTimeByLong(timestamp);
-    /**
-     * 响应数据
-     */
-    private Object data;
 
     public DetailedResult() { }
 
@@ -88,11 +85,6 @@ public class DetailedResult implements Result {
         if(message != null){
             this.setMessage(message);
         }
-        this.data = data;
-    }
-
-    @Override
-    public void setData(Object data) {
         this.data = data;
     }
 
