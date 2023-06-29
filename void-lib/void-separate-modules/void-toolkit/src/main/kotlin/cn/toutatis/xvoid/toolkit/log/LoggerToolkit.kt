@@ -110,5 +110,5 @@ fun Logger.errorWithModule(module: String,subModule: String,message: String){
  * @param arguments 日志格式化变量
  */
 fun Logger.warnWithModule(module: String,message: String,vararg arguments: String){
-    this.warn(LoggerToolkit.printModuleInfoWithMessage(module, message),arguments)
+    this.warn(LoggerToolkit.infoWithModule(module, message),arguments)
 }
