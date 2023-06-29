@@ -11,7 +11,7 @@ import cn.toutatis.xvoid.data.common.result.SimpleResultMessage;
 import cn.toutatis.xvoid.support.VoidModuleInfo;
 import cn.toutatis.xvoid.support.spring.config.ObjectStorageMode;
 import cn.toutatis.xvoid.support.spring.config.VoidConfiguration;
-import cn.toutatis.xvoid.support.spring.core.file.MinIOHelper;
+import cn.toutatis.xvoid.support.spring.core.file.MinIOShell;
 import cn.toutatis.xvoid.support.spring.core.file.persistence.SystemResourceMapper;
 import cn.toutatis.xvoid.support.spring.core.file.service.SystemResourceService;
 import cn.toutatis.xvoid.support.spring.config.orm.mybatisplus.support.VoidMybatisServiceImpl;
@@ -23,16 +23,13 @@ import cn.toutatis.xvoid.toolkit.file.image.PictureQualityDistributionStrategy;
 import cn.toutatis.xvoid.toolkit.validator.Validator;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import io.minio.GetPresignedObjectUrlArgs;
 import io.minio.MinioClient;
 import io.minio.UploadObjectArgs;
 import io.minio.errors.*;
-import io.minio.http.Method;
 import lombok.val;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.slf4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -69,16 +66,16 @@ public class SystemResourceServiceImpl extends VoidMybatisServiceImpl<SystemReso
     /**
      * MinIO文件系统
      */
-    private final MinIOHelper minIOHelper;
+    private final MinIOShell minIOShell;
 
     /**
      * 压缩图片配置文件
      */
     private CompressConfig.CompressContent compressConfig;
 
-    public SystemResourceServiceImpl(VoidConfiguration voidConfiguration, MinIOHelper minIOHelper) {
+    public SystemResourceServiceImpl(VoidConfiguration voidConfiguration, MinIOShell minIOShell) {
         this.voidConfiguration = voidConfiguration;
-        this.minIOHelper = minIOHelper;
+        this.minIOShell = minIOShell;
     }
 
     @PostConstruct
@@ -166,9 +163,9 @@ public class SystemResourceServiceImpl extends VoidMybatisServiceImpl<SystemReso
                     //直接将数据转储至本地文件，随后上传至文件服务器
                     localFile = new File(tmpDir + "/" + randomId + "." + fileSuffix);
                     multipartFile.transferTo(localFile);
-                    MinioClient client = minIOHelper.getClient();
+                    MinioClient client = minIOShell.getClient();
                     UploadObjectArgs.Builder uploadObjectBuilder = UploadObjectArgs.builder();
-                    uploadObjectBuilder.bucket(minIOHelper.bucket(MinIOHelper.XVOID_USER_RESOURCE_BUCKET)).filename(localFile.getPath());
+                    uploadObjectBuilder.bucket(minIOShell.bucket(MinIOShell.XVOID_USER_RESOURCE_BUCKET)).filename(localFile.getPath());
                     if(globalServiceConfig.getFileObjectClassify()) {
                         contentType = (contentType != null) ? contentType.split("/")[0] : "unknown";
                         uploadObjectBuilder.object(contentType+"/"+localFile.getName());
@@ -186,7 +183,7 @@ public class SystemResourceServiceImpl extends VoidMybatisServiceImpl<SystemReso
                         logger.error(message);
                         throw new ContinueTransactionException(message);
                     }
-                    systemResource.setPath(MinIOHelper.XVOID_USER_RESOURCE_BUCKET+"/"+contentType+"/"+localFile.getName());
+                    systemResource.setPath(MinIOShell.XVOID_USER_RESOURCE_BUCKET+"/"+contentType+"/"+localFile.getName());
                     localFile.delete();
 //                    GetPresignedObjectUrlArgs.Builder getUrlArgsBuilder = GetPresignedObjectUrlArgs.builder();
 //                    getUrlArgsBuilder.bucket(minIOHelper.bucket(MinIOHelper.XVOID_USER_RESOURCE_BUCKET)).object(originalFilename);
