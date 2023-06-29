@@ -19,7 +19,7 @@ import org.springframework.stereotype.Component
  * @author Toutatis_Gc
  */
 @Component
-open class MinIOHelper {
+open class MinIOShell {
 
     companion object{
 
