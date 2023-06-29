@@ -40,68 +40,68 @@ public class SystemResource extends EntityBasicAttribute<SystemResource> {
 
     @ApiModelProperty(value = "主键ID")
     @Id @TableId(value = "id",type = IdType.AUTO)
-    @Column(name="id",columnDefinition = "COMMENT '主键ID'")
+    @Column(name="id",columnDefinition = "INT COMMENT '主键ID'")
     private Integer id;
 
     @ApiModelProperty(value = "原文件名")
     @TableField("originName")
-    @Column(name="originName",columnDefinition = "COMMENT '原文件名'")
+    @Column(name="originName",columnDefinition = "VARCHAR(64) COMMENT '原文件名'")
     private String originName;
 
     @ApiModelProperty(value = "文件名")
     @TableField("fileName")
-    @Column(name="fileName",columnDefinition = "COMMENT '文件名'")
+    @Column(name="fileName",columnDefinition = "VARCHAR(64) COMMENT '文件名'")
     private String fileName;
 
     @ApiModelProperty(value = "哈希信息[默认MD5摘要算法]")
     @TableField("`hash`")
-    @Column(name="hash",columnDefinition = "COMMENT '哈希信息[默认MD5摘要算法]'")
+    @Column(name="hash",columnDefinition = "VARCHAR(256) COMMENT '哈希信息[默认MD5摘要算法]'")
     private String hash;
 
     @ApiModelProperty(value = "文件后缀")
-    @Column(name="suffix",columnDefinition = "COMMENT '文件后缀'")
+    @Column(name="suffix",columnDefinition = "VARCHAR(32) COMMENT '文件后缀'")
     private String suffix;
 
     @ApiModelProperty(value = "文件大小")
-    @Column(name="size",columnDefinition = "COMMENT '文件大小'")
+    @Column(name="size",columnDefinition = "INT COMMENT '文件大小'")
     private Integer size;
 
     @ApiModelProperty(value = "文件MIME-TYPE")
     @TableField("contentType")
-    @Column(name="contentType",columnDefinition = "COMMENT '文件MIME-TYPE'")
+    @Column(name="contentType",columnDefinition = "VARCHAR(64) COMMENT '文件MIME-TYPE'")
     private String contentType;
 
     @ApiModelProperty(value = "文件路径")
-    @Column(name="path",columnDefinition = "COMMENT '文件路径'")
+    @Column(name="path",columnDefinition = "VARCHAR(512) COMMENT '文件路径'")
     private String path;
 
     @ApiModelProperty(value = "文件标签")
-    @Column(name="tags",columnDefinition = "COMMENT '文件标签'")
+    @Column(name="tags",columnDefinition = "VARCHAR(256) COMMENT '文件标签'")
     private String tags;
 
     @ApiModelProperty(value = "关联文件")
     @TableField("relatedFile")
-    @Column(name="relatedFile",columnDefinition = "COMMENT '关联文件'")
+    @Column(name="relatedFile",columnDefinition = "INT COMMENT '关联文件'")
     private Integer relatedFile;
 
     @ApiModelProperty(value = "关联类型")
     @TableField("relatedType")
-    @Column(name="relatedType",columnDefinition = "COMMENT '关联类型'")
+    @Column(name="relatedType",columnDefinition = "INT COMMENT '关联类型'")
     private Integer relatedType;
 
     @ApiModelProperty(value = "文件状态[草稿,可归档,不可见等]")
     @TableField("fileStatus")
-    @Column(name="fileStatus",columnDefinition = "COMMENT '文件状态[草稿,可归档,不可见等]'")
+    @Column(name="fileStatus",columnDefinition = "INT COMMENT '文件状态[草稿,可归档,不可见等]'")
     private Integer fileStatus;
 
     @ApiModelProperty(value = "共享短链接")
     @TableField("shareableLink")
-    @Column(name="shareableLink",columnDefinition = "COMMENT '共享短链接'")
+    @Column(name="shareableLink",columnDefinition = "VARCHAR(128) COMMENT '共享短链接'")
     private String shareableLink;
 
     @ApiModelProperty(value = "访问次数")
     @TableField("downloadCount")
-    @Column(name="downloadCount",columnDefinition = "COMMENT '访问次数'")
+    @Column(name="downloadCount",columnDefinition = "INT COMMENT '访问次数'")
     private Integer downloadCount;
 
 
