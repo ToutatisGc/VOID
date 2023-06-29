@@ -5,6 +5,18 @@
  * See the lgpl.txt file in the root directory or <http://www.gnu.org/licenses/lgpl-2.1.html>.
  */
 package org.hibernate.cfg;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import javax.persistence.Access;
+import javax.persistence.EmbeddedId;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.IdClass;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.MappedSuperclass;
+
 import cn.toutatis.xvoid.data.common.EntityBasicAttribute;
 import org.hibernate.AnnotationException;
 import org.hibernate.annotations.common.reflection.XAnnotatedElement;
@@ -192,10 +204,10 @@ public class InheritanceState {
 	}
 
 	/*
-     * Get the annotated elements and determine access type from hierarchy, guessing from @Id or @EmbeddedId presence if not
-     * specified.
-     * Change EntityBinder by side effect
-     */
+	 * Get the annotated elements and determine access type from hierarchy, guessing from @Id or @EmbeddedId presence if not
+	 * specified.
+	 * Change EntityBinder by side effect
+	 */
 
 	public ElementsToProcess getElementsToProcess() {
 		if ( elementsToProcess == null ) {
@@ -227,21 +239,21 @@ public class InheritanceState {
 			if ( idPropertyCount == 0 && !inheritanceState.hasParents() ) {
 				throw new AnnotationException( "No identifier specified for entity: " + clazz.getName() );
 			}
-			elements.trimToSize();
-			/*TODO 字段先后还是有问题*/
-			if (elements.size() > 2 && clazz.getSuperclass().getClass().getName().equals(EntityBasicAttribute.class.getName()) &&
+			Class<?> superClass = null;
+			try {
+				Class<?> originClass = Class.forName(clazz.getName());
+				superClass = originClass.getSuperclass();
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			}
+			if (elements.size() > 2 && EntityBasicAttribute.class.equals(superClass) &&
 					("id".equals(elements.get(0).getPropertyName()) || "uuid".equals(elements.get(0).getPropertyName())))
 			{
-				System.err.println(clazz.getSuperclass());
 				ArrayList<PropertyData> tempElements = new ArrayList<>();
 				int start = -1;
 				for (int i = elements.size() - 1; i >= 0; i--) {
 					PropertyData propertyData = elements.get(i);
-					System.err.println(propertyData.getPropertyName());
-					System.err.println(propertyData.getDeclaringClass().getName());
-					System.err.println(EntityBasicAttribute.class.getName());
 					if (propertyData.getDeclaringClass().getName().equals(EntityBasicAttribute.class.getName())){
-						System.err.println(true);
 						start = i+1;
 						break;
 					}
@@ -254,6 +266,7 @@ public class InheritanceState {
 					/*填入父属性*/
 					tempElements.addAll(elements.subList(1, start));
 					elements = tempElements;
+					elements.trimToSize();
 				}
 
 			}
@@ -270,9 +283,9 @@ public class InheritanceState {
 				return AccessType.getAccessStrategy( xclass.getAnnotation( Access.class ).value() );
 			}
 		}
-        // Guess from identifier.
-        // FIX: Shouldn't this be determined by the first attribute (i.e., field or property) with annotations, but without an
-        //      explicit Access annotation, according to JPA 2.0 spec 2.3.1: Default Access Type?
+		// Guess from identifier.
+		// FIX: Shouldn't this be determined by the first attribute (i.e., field or property) with annotations, but without an
+		//      explicit Access annotation, according to JPA 2.0 spec 2.3.1: Default Access Type?
 		for (XClass xclass = clazz; xclass != null && !Object.class.getName().equals(xclass.getName()); xclass = xclass.getSuperclass()) {
 			if ( xclass.isAnnotationPresent( Entity.class ) || xclass.isAnnotationPresent( MappedSuperclass.class ) ) {
 				for ( XProperty prop : xclass.getDeclaredProperties( AccessType.PROPERTY.getType() ) ) {
