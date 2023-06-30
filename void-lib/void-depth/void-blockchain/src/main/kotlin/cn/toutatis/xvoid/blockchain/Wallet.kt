@@ -3,6 +3,14 @@ import java.security.KeyPairGenerator
 import java.security.PrivateKey
 import java.security.PublicKey
 
+
+/**
+ * Wallet 加密钱包
+ * @property publicKey 公钥
+ * @property privateKey 私钥
+ * @property blockChain 区块链
+ * @constructor Create empty Wallet
+ */
 data class Wallet(val publicKey: PublicKey, val privateKey: PrivateKey, val blockChain: BlockChain) {
 
     companion object {
@@ -16,13 +24,20 @@ data class Wallet(val publicKey: PublicKey, val privateKey: PrivateKey, val bloc
     }
 
     val balance: Int get() {
-        return getMyTransactions().sumBy { it.amount }
+        return getMyTransactions().sumOf { it.amount }
     }
 
     private fun getMyTransactions() : Collection<TransactionOutput> {
         return blockChain.UTXO.filterValues { it.isMine(publicKey) }.values
     }
 
+    /**
+     * Send funds to
+     *
+     * @param recipient
+     * @param amountToSend
+     * @return
+     */
     fun sendFundsTo(recipient: PublicKey, amountToSend: Int) : Transaction {
 
         if (amountToSend > balance) {

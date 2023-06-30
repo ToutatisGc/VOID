@@ -1,7 +1,6 @@
 package cn.toutatis.xvoid.blockchain
 
-import cn.toutatis.xvoid.toolkit.digest.DigestToolkit
-import cn.toutatis.xvoid.toolkit.digest.sha256
+import cn.toutatis.xvoid.toolkit.digest.SHA256
 import java.time.Instant
 
 /**
@@ -47,5 +46,5 @@ data class Block(val previousHash: String,
      * 计算区块hash
      * @return
      */
-    fun calculateHash(): String = "$previousHash$data$timestamp$nonce".sha256()!!
+    fun calculateHash(): String = "$previousHash$data$timestamp$nonce".SHA256()!!
 }
