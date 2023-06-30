@@ -415,7 +415,7 @@ public final class AnnotationBinder {
 			LOG.unsupportedMappedSuperclassWithEntityInheritance( clazzToProcess.getName() );
 		}
 
-		//TODO: be more strict with secondary table allowance (not for ids, not for secondary table join columns etc)
+		//: be more strict with secondary table allowance (not for ids, not for secondary table join columns etc)
 		InheritanceState inheritanceState = inheritanceStatePerClass.get( clazzToProcess );
 		AnnotatedClassType classType = context.getMetadataCollector().getClassType( clazzToProcess );
 
@@ -568,7 +568,7 @@ public final class AnnotationBinder {
 		OnDelete onDeleteAnn = clazzToProcess.getAnnotation( OnDelete.class );
 		boolean onDeleteAppropriate = false;
 
-		// todo : sucks that this is separate from RootClass distinction
+		//  : sucks that this is separate from RootClass distinction
 		final boolean isInheritanceRoot = !inheritanceState.hasParents();
 		final boolean hasSubclasses = inheritanceState.hasSiblings();
 
@@ -1462,9 +1462,9 @@ public final class AnnotationBinder {
 			inFlightPropertyDataList.add( 0, propertyAnnotatedElement );
 			/**
 			 * The property must be put in hibernate.properties as it's a system wide property. Fixable?
-			 * TODO support true/false/default on the property instead of present / not present
-			 * TODO is @Column mandatory?
-			 * TODO add method support
+			 *  support true/false/default on the property instead of present / not present
+			 *  is @Column mandatory?
+			 *  add method support
 			 */
 			if ( context.getBuildingOptions().isSpecjProprietarySyntaxEnabled() ) {
 				if ( element.isAnnotationPresent( Id.class ) && element.isAnnotationPresent( Column.class ) ) {
@@ -1497,7 +1497,7 @@ public final class AnnotationBinder {
 										prop,
 										// the actual @XToOne property
 										propertyContainer.getClassLevelAccessType().getType(),
-										//TODO we should get the right accessor but the same as id would do
+										// we should get the right accessor but the same as id would do
 										context.getBootstrapContext().getReflectionManager()
 								);
 								context.getMetadataCollector().addPropertyAnnotatedWithMapsIdSpecj(
@@ -1734,7 +1734,7 @@ public final class AnnotationBinder {
 					);
 				}
 
-				//FIXME support a proper PKJCs
+				// support a proper PKJCs
 				final boolean hasPkjc = property.isAnnotationPresent( PrimaryKeyJoinColumn.class )
 						|| property.isAnnotationPresent( PrimaryKeyJoinColumns.class );
 				boolean trueOneToOne = hasPkjc;
@@ -2026,7 +2026,7 @@ public final class AnnotationBinder {
 				collectionBinder.setElementColumns( elementColumns );
 				collectionBinder.setProperty( property );
 
-				//TODO enhance exception with @ManyToAny and @CollectionOfElements
+				// enhance exception with @ManyToAny and @CollectionOfElements
 				if ( oneToManyAnn != null && manyToManyAnn != null ) {
 					throw new AnnotationException(
 							"@OneToMany and @ManyToMany on the same property is not allowed: "
@@ -2285,7 +2285,7 @@ public final class AnnotationBinder {
 
 		// Natural ID columns must reside in one single UniqueKey within the Table.
 		// For now, simply ensure consistent naming.
-		// TODO: AFAIK, there really isn't a reason for these UKs to be created
+		// : AFAIK, there really isn't a reason for these UKs to be created
 		// on the secondPass.  This whole area should go away...
 		NaturalId naturalIdAnn = property.getAnnotation( NaturalId.class );
 		if ( naturalIdAnn != null ) {
@@ -2415,7 +2415,7 @@ public final class AnnotationBinder {
 		);
 	}
 
-	//TODO move that to collection binder?
+	// move that to collection binder?
 
 	private static void bindJoinedTableAssociation(
 			XProperty property,
@@ -2661,7 +2661,7 @@ public final class AnnotationBinder {
 		//add elements of the embeddable superclass
 		XClass superClass = xClassProcessed.getSuperclass();
 		while ( superClass != null && superClass.isAnnotationPresent( MappedSuperclass.class ) ) {
-			//FIXME: proper support of type variables incl var resolved at upper levels
+			//: proper support of type variables incl var resolved at upper levels
 			propContainer = new PropertyContainer( superClass, xClassProcessed, propertyAccessor );
 			addElementsOfClass( classElements, propContainer, buildingContext );
 			superClass = superClass.getSuperclass();
@@ -2763,7 +2763,7 @@ public final class AnnotationBinder {
 		comp.setEmbedded( isComponentEmbedded );
 		//yuk
 		comp.setTable( propertyHolder.getTable() );
-		//FIXME shouldn't identifier mapper use getClassOrElementName? Need to be checked.
+		// shouldn't identifier mapper use getClassOrElementName? Need to be checked.
 		if ( isIdentifierMapper || ( isComponentEmbedded && inferredData.getPropertyName() == null ) ) {
 			comp.setComponentClassName( comp.getOwner().getClassName() );
 		}
@@ -2829,7 +2829,7 @@ public final class AnnotationBinder {
 			setupComponentTuplizer( property, componentId );
 		}
 		else {
-			//TODO I think this branch is never used. Remove.
+			// I think this branch is never used. Remove.
 
 			for ( Ejb3Column column : columns ) {
 				column.forceNotNull(); //this is an id
@@ -2917,14 +2917,14 @@ public final class AnnotationBinder {
 		if ( property.isAnnotationPresent( Tuplizers.class ) ) {
 			for ( Tuplizer tuplizer : property.getAnnotation( Tuplizers.class ).value() ) {
 				EntityMode mode = EntityMode.parse( tuplizer.entityMode() );
-				//todo tuplizer.entityModeType
+				// tuplizer.entityModeType
 				component.addTuplizer( mode, tuplizer.impl().getName() );
 			}
 		}
 		if ( property.isAnnotationPresent( Tuplizer.class ) ) {
 			Tuplizer tuplizer = property.getAnnotation( Tuplizer.class );
 			EntityMode mode = EntityMode.parse( tuplizer.entityMode() );
-			//todo tuplizer.entityModeType
+			// tuplizer.entityModeType
 			component.addTuplizer( mode, tuplizer.impl().getName() );
 		}
 	}
@@ -3160,7 +3160,7 @@ public final class AnnotationBinder {
 		}
 		if ( trueOneToOne || mapToPK || !isEmptyAnnotationValue( mappedBy ) ) {
 			//is a true one-to-one
-			//FIXME referencedColumnName ignored => ordering may fail.
+			// referencedColumnName ignored => ordering may fail.
 			OneToOneSecondPass secondPass = new OneToOneSecondPass(
 					mappedBy,
 					propertyHolder.getEntityName(),
@@ -3492,7 +3492,7 @@ public final class AnnotationBinder {
 			InheritanceState state = new InheritanceState( clazz, inheritanceStatePerClass, buildingContext );
 			if ( superclassState != null ) {
 				//the classes are ordered thus preventing an NPE
-				//FIXME if an entity has subclasses annotated @MappedSuperclass wo sub @Entity this is wrong
+				// if an entity has subclasses annotated @MappedSuperclass wo sub @Entity this is wrong
 				superclassState.setHasSiblings( true );
 				InheritanceState superEntityState = InheritanceState.getInheritanceStateOfSuperEntity(
 						clazz, inheritanceStatePerClass

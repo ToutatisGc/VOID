@@ -25,16 +25,14 @@
         <!--标准化ORM库-->
         <module>void-standard-orm-lib</module>
 
-        <!--深度模块-->
-<!--        <module>void-depth</module>-->
-
         <!--独立模块-->
         <module>void-separate-modules</module>
 
+        <!--切面测试-->
         <module>void-aspect</module>
 
-        <!--工具类-->
-<!--        <module>void-common</module>-->
+        <!--深度模块-->
+        <module>void-depth</module>
     </modules>
 
 </project>

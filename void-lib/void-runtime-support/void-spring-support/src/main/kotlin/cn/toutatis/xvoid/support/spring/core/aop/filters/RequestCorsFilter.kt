@@ -9,10 +9,7 @@ import javax.servlet.annotation.WebFilter
 import javax.servlet.http.HttpServletRequest
 
 @Component
-@WebFilter(
-    filterName = "RequestCorsFilter",
-    description = "请求跨域过滤器"
-)
+@WebFilter(filterName = "RequestCorsFilter", description = "请求跨域过滤器")
 class RequestCorsFilter : Filter{
 
     override fun doFilter(request: ServletRequest, response: ServletResponse, filterChain: FilterChain) {
