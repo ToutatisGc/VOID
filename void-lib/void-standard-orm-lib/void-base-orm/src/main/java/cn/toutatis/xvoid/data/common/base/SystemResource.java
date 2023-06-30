@@ -40,7 +40,7 @@ public class SystemResource extends EntityBasicAttribute<SystemResource> {
 
     @ApiModelProperty(value = "主键ID")
     @Id @TableId(value = "id",type = IdType.AUTO)
-    @Column(name="id",columnDefinition = "INT COMMENT '主键ID'")
+    @Column(name="id",columnDefinition = "INT AUTO_INCREMENT COMMENT '主键ID'")
     private Integer id;
 
     @ApiModelProperty(value = "原文件名")

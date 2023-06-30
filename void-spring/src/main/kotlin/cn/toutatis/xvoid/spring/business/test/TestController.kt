@@ -119,7 +119,7 @@ class TestController {
     private lateinit var voidConfiguration: VoidConfiguration
 
     @Autowired
-    private lateinit var systemResourceService: SystemResourceService
+    private lateinit var systemResourceService: SystemResourceServiceImpl
 
     @RequestMapping("/upload", method = [RequestMethod.POST])
     fun test10(@RequestParam("file") uploadFile: MultipartFile?): Any? {
