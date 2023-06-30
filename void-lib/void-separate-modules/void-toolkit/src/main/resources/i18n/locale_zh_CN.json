@@ -1,6 +1,15 @@
 {
   "commons": {
-    "unknown": "未知"
+    "unknown": "未知",
+    "error": {
+      "stringNull": "字符串为空"
+    },
+    "digest": {
+      "success":"加密成功",
+      "fail": "加密失败",
+      "successArgs":"%s加密成功",
+      "failArgs":"%s加密失败"
+    }
   },
   "xvoid": {
 

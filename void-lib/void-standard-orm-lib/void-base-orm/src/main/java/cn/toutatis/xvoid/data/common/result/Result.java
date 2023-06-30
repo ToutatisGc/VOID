@@ -16,6 +16,8 @@
 
 package cn.toutatis.xvoid.data.common.result;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import java.io.Serializable;
 import java.util.Map;
 
@@ -45,6 +47,7 @@ public interface Result extends Serializable {
      * 获取数据内容转换为map类型
      * @return 数据map
      */
+    @JsonIgnore
     Map<String,Object> getDataMap();
 
 }

@@ -11,6 +11,7 @@
 
     <artifactId>void-depth</artifactId>
     <packaging>pom</packaging>
+
     <modules>
         <module>void-blockchain</module>
     </modules>

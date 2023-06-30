@@ -410,7 +410,6 @@ class PropertyContainer {
 	}
 
 	private static boolean mustBeSkipped(XProperty property) {
-		//TODO make those hardcoded tests more portable (through the bytecode provider?)
 		return property.isAnnotationPresent( Transient.class )
 				|| "net.sf.cglib.transform.impl.InterceptFieldCallback".equals( property.getType().getName() );
 	}

@@ -1,6 +1,15 @@
 {
   "commons": {
-    "unknown": "未知"
+    "unknown": "Unknown",
+    "error": {
+      "stringNull": "String is null"
+    },
+    "digest": {
+      "success":"Digest success",
+      "fail": "Digest failure",
+      "successArgs":"%s digest success",
+      "failArgs":"%s digest failure"
+    }
   },
   "xvoid": {
 
