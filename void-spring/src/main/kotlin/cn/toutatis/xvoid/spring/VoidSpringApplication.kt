@@ -10,9 +10,9 @@ import org.springframework.session.data.redis.config.annotation.web.http.EnableR
 import org.springframework.util.StopWatch
 
 @VoidApplication
-@ComponentScan(basePackages = ["cn.toutatis"])
-@EntityScan(basePackages=["cn.toutatis"])
-@MapperScan(basePackages = ["cn.toutatis"])
+@ComponentScan(basePackages = [VoidModuleInfo.BASE_SCAN_PACKAGE])
+@EntityScan(basePackages=[VoidModuleInfo.BASE_SCAN_PACKAGE])
+@MapperScan(basePackages = [VoidModuleInfo.BASE_SCAN_PACKAGE])
 @EnableRedisHttpSession
 class VoidSpringApplication
 
