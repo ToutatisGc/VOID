@@ -6,6 +6,8 @@ import com.baomidou.mybatisplus.extension.activerecord.Model;
 import cn.toutatis.xvoid.data.common.EntityBasicAttribute;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableField;
+
+import java.io.Serial;
 import java.io.Serializable;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -36,6 +38,7 @@ import java.text.SimpleDateFormat;
 @Entity @Table(name = "vb_system_resource") @org.hibernate.annotations.Table(appliesTo = "vb_system_resource", comment = "系统资源类")
 public class SystemResource extends EntityBasicAttribute<SystemResource> {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     @ApiModelProperty(value = "主键ID")
@@ -55,7 +58,7 @@ public class SystemResource extends EntityBasicAttribute<SystemResource> {
 
     @ApiModelProperty(value = "哈希信息[默认MD5摘要算法]")
     @TableField("`hash`")
-    @Column(name="hash",columnDefinition = "VARCHAR(256) COMMENT '哈希信息[默认MD5摘要算法]'")
+    @Column(name = "hash", unique = true, columnDefinition = "VARCHAR(256) COMMENT '哈希信息[默认MD5摘要算法]'")
     private String hash;
 
     @ApiModelProperty(value = "文件后缀")
