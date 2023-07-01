@@ -5,6 +5,8 @@ import cn.toutatis.xvoid.toolkit.log.LoggerToolkit
 /**
  * Block chain
  * 区块链是由多个前后连接的区块组成
+ *
+ *
  * @constructor Create empty Block chain
  */
 class BlockChain {
@@ -22,7 +24,7 @@ class BlockChain {
     /**
      * Mined times 挖掘次数
      */
-    private var minedTimes:Long = 0L
+    private var minedTimes:ULong = 0U
 
     /**
      * 一个区块链中保存着多个区块
@@ -37,6 +39,13 @@ class BlockChain {
 
     /**
      * 推送区块到区块链中
+     *
+     * 比特币在Block的生成过程中使用了POW机制，一个符合要求的Block Hash由N个前导零构成，零的个数取决于网络的难度值。
+     * 要得到合理的Block Hash需要经过大量尝试计算，
+     * 计算时间取决于机器的哈希运算速度。当某个节点提供出一个合理的Block Hash值，说明该节点确实经过了大量的尝试计算，
+     * 当然，并不能得出计算次数的绝对值，因为寻找合理hash是一个概率事件。
+     * 当节点拥有占全网n%的算力时，该节点即有n/100的概率找到Block Hash。
+     *
      * 1.检测是否为已挖掘区块
      * 2.如果不是,就挖掘正确区块
      * 3.挖掘成功,添加到链
@@ -65,7 +74,7 @@ class BlockChain {
     private fun mine(block: Block) : Block {
         var minedBlock = block.copy()
         while (!this.checkMined(minedBlock)) {
-            minedBlock = minedBlock.copy(nonce = minedBlock.nonce + 1)
+            minedBlock = minedBlock.copy(nonce = minedBlock.nonce + 1U)
             updateUTXO(minedBlock)
             minedTimes++
             println("NONCE:${minedBlock.nonce},HASH:${minedBlock.hash},TIMES:${minedTimes}")

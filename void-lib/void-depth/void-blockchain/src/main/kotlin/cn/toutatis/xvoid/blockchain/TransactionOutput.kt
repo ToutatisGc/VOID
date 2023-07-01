@@ -18,6 +18,12 @@ data class TransactionOutput(val recipient: PublicKey,
     fun isMine(me: PublicKey) : Boolean {
         return recipient == me
     }
+
+    override fun toString(): String {
+        return "TransactionOutput(amount=$amount, transactionHash='$transactionHash', hash='$hash')"
+    }
+
+
 }
 
 data class Transaction(val sender: PublicKey,
@@ -53,4 +59,10 @@ data class Transaction(val sender: PublicKey,
     fun isSignatureValid() : Boolean {
         return "${sender.encodeToString()}${recipient.encodeToString()}$amount".verifySignature(sender, signature)
     }
+
+    override fun toString(): String {
+        return "Transaction(amount=$amount, hash='$hash', inputs=$inputs, outputs=$outputs)"
+    }
+
+
 }
