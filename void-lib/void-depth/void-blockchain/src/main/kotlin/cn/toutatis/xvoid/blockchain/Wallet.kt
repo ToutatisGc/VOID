@@ -14,6 +14,11 @@ import java.security.PublicKey
 data class Wallet(val publicKey: PublicKey, val privateKey: PrivateKey, val blockChain: BlockChain) {
 
     companion object {
+        /**
+         * 创建一个钱包
+         * @param blockChain
+         * @return
+         */
         fun create(blockChain: BlockChain): Wallet {
             val generator = KeyPairGenerator.getInstance("RSA")
             generator.initialize(2048)

@@ -26,10 +26,10 @@ import java.time.Instant
  * @constructor Create empty Block
  */
 data class Block(val previousHash: String,
-                 val data: String,
+                 val data: String = "",
                  val transactions: MutableList<Transaction> = mutableListOf(),
                  val timestamp: Long = Instant.now().toEpochMilli(),
-                 val nonce: Long = Long.MIN_VALUE,
+                 val nonce: ULong = 0U,
                  var hash: String = "") {
 
     /**
@@ -39,12 +39,18 @@ data class Block(val previousHash: String,
         hash = calculateHash()
     }
 
-
-
     /**
      * Calculate hash
      * 计算区块hash
      * @return
      */
     fun calculateHash(): String = "$previousHash$data$timestamp$nonce".SHA256()!!
+
+    fun addTransaction(transaction: Transaction) : Block {
+
+        if (transaction.isSignatureValid())
+            transactions.add(transaction)
+        return this
+    }
+
 }
