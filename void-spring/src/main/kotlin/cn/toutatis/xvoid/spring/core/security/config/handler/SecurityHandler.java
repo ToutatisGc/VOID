@@ -4,7 +4,7 @@ import cn.toutatis.xvoid.common.standard.StandardFields;
 import cn.toutatis.xvoid.data.common.result.ProxyResult;
 import cn.toutatis.xvoid.data.common.result.ResultCode;
 import cn.toutatis.xvoid.data.common.security.SystemAuthRole;
-import cn.toutatis.xvoid.spring.PkgInfo;
+import cn.toutatis.xvoid.spring.VoidModuleInfo;
 import cn.toutatis.xvoid.spring.business.user.entity.AuthInfo;
 import cn.toutatis.xvoid.spring.business.user.service.SystemAuthPathService;
 import cn.toutatis.xvoid.spring.business.user.service.SystemAuthRoleService;
@@ -113,7 +113,7 @@ public class SecurityHandler implements AuthenticationSuccessHandler,
         if (authException instanceof InsufficientAuthenticationException){
             // 特定异常
         }else {
-            logger.error("[{}]未分配异常处理器",PkgInfo.MODULE_NAME);
+            logger.error("[{}]未分配异常处理器", VoidModuleInfo.MODULE_NAME);
         }
         ResultCode anonymityStatus = ResultCode.ANONYMITY_FAILED;
         requestMethodResolver.resolveMethod(request, response).handle(
@@ -127,7 +127,7 @@ public class SecurityHandler implements AuthenticationSuccessHandler,
                     this.returnJson(response,responseResultDispatcherAdvice.proxyResult(proxyResult));
                 },
                 ()->{
-                    logger.warn("[{}]未处理METHOD:{},异常为:{}",PkgInfo.MODULE_NAME,request.getMethod(),authException);
+                    logger.warn("[{}]未处理METHOD:{},异常为:{}", VoidModuleInfo.MODULE_NAME,request.getMethod(),authException);
                     authException.printStackTrace();
                 }
         );
@@ -177,10 +177,10 @@ public class SecurityHandler implements AuthenticationSuccessHandler,
             }else if (exception.getClass() == DisabledException.class) {
                 proxyResult.setMessage(ValidationMessage.ACCOUNT_DISABLED);
             }else {
-                logger.error("[{}]认证未记录异常：{}",PkgInfo.MODULE_NAME,exception.toString());
+                logger.error("[{}]认证未记录异常：{}", VoidModuleInfo.MODULE_NAME,exception.toString());
             }
         }else {
-            logger.error("[{}]认证未记录异常：{}",PkgInfo.MODULE_NAME,exception.toString());
+            logger.error("[{}]认证未记录异常：{}", VoidModuleInfo.MODULE_NAME,exception.toString());
             proxyResult = new ProxyResult(ResultCode.INNER_EXCEPTION);
         }
         this.returnJson(response,responseResultDispatcherAdvice.proxyResult(proxyResult));
