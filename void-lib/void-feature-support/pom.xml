@@ -393,12 +393,14 @@
                 <version>${thumbnailator.version}</version>
                 <optional>true</optional>
             </dependency>
+            <!--文件服务器-->
             <dependency>
                 <groupId>io.minio</groupId>
                 <artifactId>minio</artifactId>
                 <version>${minio.version}</version>
                 <optional>true</optional>
             </dependency>
+            <!--SQLite驱动-->
             <dependency>
                 <groupId>org.xerial</groupId>
                 <artifactId>sqlite-jdbc</artifactId>
