@@ -56,8 +56,10 @@ object LoggerToolkit {
  * Logger扩展函数
  * info方法携带module信息和消息日志
  */
-fun Logger.infoWithModule(module: String,message: String){
-    this.info(LoggerToolkit.infoWithModule(module, message))
+fun Logger.infoWithModule(module: String,message: String):String{
+    val log = LoggerToolkit.infoWithModule(module, message)
+    this.info(log)
+    return log
 }
 
 /**
@@ -66,40 +68,50 @@ fun Logger.infoWithModule(module: String,message: String){
  * @param module 模块信息
  * @param message 日志消息
  */
-fun Logger.warnWithModule(module: String,message: String){
-    this.warn(LoggerToolkit.infoWithModule(module, message))
+fun Logger.warnWithModule(module: String,message: String):String{
+    val log = LoggerToolkit.infoWithModule(module, message)
+    this.warn(log)
+    return log
 }
 
 /**
  * Logger扩展函数
  * error方法携带module信息和消息日志
  */
-fun Logger.errorWithModule(module: String,message: String){
-    this.error(LoggerToolkit.infoWithModule(module, message))
+fun Logger.errorWithModule(module: String,message: String):String{
+    val log = LoggerToolkit.infoWithModule(module, message)
+    this.error(log)
+    return log
 }
 
 /**
  * Logger扩展函数
  * info方法携带module信息和消息日志
  */
-fun Logger.infoWithModule(module: String,subModule: String,message: String){
-    this.info(LoggerToolkit.infoWithModule(module,subModule, message))
+fun Logger.infoWithModule(module: String,subModule: String,message: String):String{
+    val log = LoggerToolkit.infoWithModule(module,subModule, message)
+    this.info(log)
+    return log
 }
 
 /**
  * Logger扩展函数
  * warn方法携带module信息和消息日志
  */
-fun Logger.warnWithModule(module: String,subModule: String,message: String){
-    this.warn(LoggerToolkit.infoWithModule(module,subModule, message))
+fun Logger.warnWithModule(module: String,subModule: String,message: String):String{
+    val log = LoggerToolkit.infoWithModule(module,subModule, message)
+    this.warn(log)
+    return log
 }
 
 /**
  * Logger扩展函数
  * error方法携带module信息和消息日志
  */
-fun Logger.errorWithModule(module: String,subModule: String,message: String){
-    this.error(LoggerToolkit.infoWithModule(module,subModule, message))
+fun Logger.errorWithModule(module: String,subModule: String,message: String):String{
+    val log = LoggerToolkit.infoWithModule(module,subModule, message)
+    this.error(log)
+    return log
 }
 
 /**
@@ -109,6 +121,8 @@ fun Logger.errorWithModule(module: String,subModule: String,message: String){
  * @param message 日志消息
  * @param arguments 日志格式化变量
  */
-fun Logger.warnWithModule(module: String,message: String,vararg arguments: String){
-    this.warn(LoggerToolkit.infoWithModule(module, message),arguments)
+fun Logger.warnWithModule(module: String,message: String,vararg arguments: String):String{
+    val log = LoggerToolkit.infoWithModule(module, message)
+    this.warn(log,arguments)
+    return log
 }
