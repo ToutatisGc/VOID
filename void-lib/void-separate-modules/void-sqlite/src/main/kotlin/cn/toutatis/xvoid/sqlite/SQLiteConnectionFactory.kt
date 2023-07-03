@@ -12,15 +12,21 @@ class SQLiteConnectionFactory {
     private val logger = LoggerToolkit.getLogger(javaClass)
 
     companion object{
+
+        /**
+         * 驱动名称
+         */
         const val DRIVER_CLASS_NAME = "org.sqlite.JDBC"
+
+        /**
+         * 初始化加载驱动
+         */
+        init {
+            Class.forName(DRIVER_CLASS_NAME)
+        }
+
     }
 
-    /**
-     * 初始化加载驱动
-     */
-    init {
-        Class.forName(DRIVER_CLASS_NAME)
-    }
 
     fun createConnection(db: File): SQLiteConnection {
         if (db.exists() && db.isFile ) {
