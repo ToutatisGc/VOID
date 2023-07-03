@@ -47,16 +47,18 @@
         <module>void-toolkit</module>
         <!--公共部分-->
         <module>void-common</module>
-        <!--redis模块-->
+        <!--Redis数据库支持-->
         <module>void-redis</module>
         <!--缓存-->
         <module>void-cache</module>
-        <!--websocket模块-->
+        <!--WebSocket模块-->
         <module>void-websocket</module>
         <!--爬虫-->
         <module>void-creeper</module>
         <!--第三方接入-->
-        <module>void-thirdparty</module>
+        <module>void-third-party</module>
+        <!--SQLite数据库支持-->
+        <module>void-sqlite</module>
 
     </modules>
 
