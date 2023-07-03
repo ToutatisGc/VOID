@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>void-thirdparty</artifactId>
+    <artifactId>void-third-party</artifactId>
 
     <properties>
         <xvoid.version>0.0.0-ALPHA</xvoid.version>

@@ -7,7 +7,6 @@ import org.springframework.boot.runApplication
 import org.springframework.context.ConfigurableApplicationContext
 import org.springframework.context.annotation.ComponentScan
 import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisHttpSession
-import org.springframework.util.StopWatch
 
 @VoidApplication
 @ComponentScan(basePackages = [VoidModuleInfo.BASE_SCAN_PACKAGE])
