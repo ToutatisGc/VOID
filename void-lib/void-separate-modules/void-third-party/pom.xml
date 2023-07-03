@@ -15,7 +15,6 @@
         <xvoid.version>0.0.0-ALPHA</xvoid.version>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
-<!--        <kotlin.version>1.6.10</kotlin.version>-->
     </properties>
 
     <dependencies>
