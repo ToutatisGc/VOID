@@ -98,6 +98,7 @@ object HttpToolkit {
                 if (response.isSuccessful) message = Objects.requireNonNull(response.body).string()
             }
         } catch (e: IOException) {
+            // FIXME 明确原因,完善日志
             logger.error("对外请求失败,请查询原因[URL:" + request.url.toString() + "]")
         }
         return message
