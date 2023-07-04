@@ -11,9 +11,20 @@ abstract class AbstractArgumentsSchema:ArgumentsSchema {
 
     public constructor()
 
-    public constructor(checkParameterFields:List<String>?,checkHeadersFields:List<String>?){
+    public constructor(checkParameterFields:List<String>?,
+                       checkHeadersFields:List<String>?
+    ){
         this.requiredParameterFields = checkParameterFields
         this.requiredHeadersFields = checkHeadersFields
+    }
+
+    public constructor(checkParameterFields:List<String>?,
+                       checkHeadersFields:List<String>?,
+                       allParameterType:List<Triple<String,Boolean,String>>
+    ){
+        this.requiredParameterFields = checkParameterFields
+        this.requiredHeadersFields = checkHeadersFields
+        this.allParameterType = allParameterType
     }
 
     private val headers = LinkedHashMap<String,String>()
@@ -23,6 +34,12 @@ abstract class AbstractArgumentsSchema:ArgumentsSchema {
     private var requiredParameterFields:List<String>? = null
 
     private var requiredHeadersFields:List<String>? = null
+
+    /**
+     * 所需参数说明
+     * [ 参数名称 | 是否必填 | 字段说明 ]
+     */
+    private var allParameterType:List<Triple<String,Boolean,String>>? = null
 
     init {
         headers["Content-Type"] = ContentType.JSON.value
