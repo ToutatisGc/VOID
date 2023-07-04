@@ -20,4 +20,6 @@ interface ArgumentsSchema{
 
     fun checkParameters():Boolean
 
+    fun getAllParameters():List<Triple<String,Boolean,String>>?
+
 }

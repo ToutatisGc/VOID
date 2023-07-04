@@ -79,6 +79,7 @@ public class DocumentMappingEnumPropertyUtils {
         apiDocumentInfo.setMethodName(Validator.strIsBlank(apiDocument.name())? api.getMethodName() : apiDocument.name());
         apiDocumentInfo.setMethodDescription(apiDocument.description());
         apiDocumentInfo.setMethodVersion(apiDocument.version());
+        apiDocumentInfo.setRequestMethod(((BaseAPI) anEnum).getMethod().name());
         apiDocumentInfo.setMethodUrl(api.getUrl());
         ArgumentsSchema argumentsSchema = api.getArgumentsSchema();
         apiDocumentInfo.setArgumentsSchema(argumentsSchema);
