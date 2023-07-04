@@ -21,7 +21,7 @@ import org.jetbrains.annotations.NotNull;
                 "Web服务API对所有用户开放。使用本组服务之前，需要申请应用Key。不同类型用户可获取不同的数据访问能力。",
         url = "https://lbs.amap.com/api/webservice/summary",
         version = "4.2.0")
-public enum AMapAPI implements BaseAPI {
+public enum AMapWebAPI implements BaseAPI {
 
     /**
      * API条目
@@ -34,7 +34,7 @@ public enum AMapAPI implements BaseAPI {
 
     //对象初始化时，执行下面的方法，将注解上的枚举值解析到cache中
     static {
-        DocumentMappingEnumPropertyUtils.mappingProperties(AMapAPI.class);
+        DocumentMappingEnumPropertyUtils.mappingProperties(AMapWebAPI.class);
     };
 
     private final String methodName;
@@ -53,7 +53,7 @@ public enum AMapAPI implements BaseAPI {
         return DocumentMappingEnumPropertyUtils.resolve(this.name());
     }
 
-    AMapAPI(String methodName, Method method, String url, ArgumentsSchema argumentsSchema) {
+    AMapWebAPI(String methodName, Method method, String url, ArgumentsSchema argumentsSchema) {
         this.methodName = methodName;
         this.method = method;
         this.url = url;
