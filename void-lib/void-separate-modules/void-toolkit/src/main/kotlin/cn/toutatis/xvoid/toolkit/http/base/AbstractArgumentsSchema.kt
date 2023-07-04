@@ -78,6 +78,10 @@ abstract class AbstractArgumentsSchema:ArgumentsSchema {
        return this.checkContains(requiredParameterFields,parameters)
     }
 
+    override fun getAllParameters(): List<Triple<String, Boolean, String>>? {
+        return this.allParameterType
+    }
+
     private fun checkContains(list: List<String>?,map:Map<String,Any>): Boolean{
         var check = true
         if (list != null && list.isNotEmpty()){
