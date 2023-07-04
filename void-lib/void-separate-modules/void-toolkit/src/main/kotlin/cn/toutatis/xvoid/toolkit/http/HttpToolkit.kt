@@ -50,6 +50,7 @@ object HttpToolkit {
      * @param parameters 参数
      * @return 请求响应体
      */
+    @JvmStatic
     fun post(url: String, parameters: Map<String,String>? = null,headers:Map<String,String>? = null): String? {
         val builder = FormBody.Builder()
         if (parameters != null && parameters.isNotEmpty()) {
