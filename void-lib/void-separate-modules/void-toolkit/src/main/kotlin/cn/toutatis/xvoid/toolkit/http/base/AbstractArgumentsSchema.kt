@@ -92,4 +92,8 @@ abstract class AbstractArgumentsSchema:ArgumentsSchema {
         }
         return check
     }
+
+    override fun toString(): String {
+        return "AbstractArgumentsSchema(headers=$headers, parameters=$parameters, requiredParameterFields=$requiredParameterFields, requiredHeadersFields=$requiredHeadersFields, allParameterType=$allParameterType)"
+    }
 }
