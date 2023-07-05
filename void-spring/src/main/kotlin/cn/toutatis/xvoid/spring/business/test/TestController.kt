@@ -1,5 +1,6 @@
 package cn.toutatis.xvoid.spring.business.test
 
+import cn.toutatis.xvoid.bussiness.forum.entity.ForumArticle
 import cn.toutatis.xvoid.data.common.result.ProxyResult
 import cn.toutatis.xvoid.data.common.result.ResultCode
 import cn.toutatis.xvoid.support.spring.amqp.AmqpShell
@@ -14,6 +15,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper
 import com.github.xiaoymin.knife4j.annotations.ApiSupport
 import io.swagger.annotations.Api
 import io.swagger.annotations.ApiOperation
+import org.apache.commons.lang3.RandomStringUtils
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.jdbc.core.JdbcTemplate
 import org.springframework.web.bind.annotation.RequestMapping
@@ -130,6 +132,19 @@ class TestController {
     fun get(filename:String,services:String?):Any?{
 
         return null;
+    }
+
+    @Autowired
+    private lateinit var forumArticleMapper: ForumArticleMapper
+
+    @RequestMapping("/test123", method = [RequestMethod.POST])
+    fun test123() {
+        val forumArticle = ForumArticle()
+        forumArticle.title = "Test-${RandomStringUtils.randomAlphabetic(8)}"
+        forumArticle.content = RandomStringUtils.randomAlphanumeric(512)
+        forumArticleMapper.insert(forumArticle)
+        val selectList = forumArticleMapper.selectList(QueryWrapper())
+        System.err.println(selectList)
     }
 
 }
