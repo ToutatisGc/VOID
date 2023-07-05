@@ -1,8 +1,10 @@
 package cn.toutatis.xvoid.third.party.aMap;
 
 import cn.hutool.http.Method;
+import cn.toutatis.xvoid.third.party.aMap.args.IPLocationArgs;
 import cn.toutatis.xvoid.third.party.aMap.args.WeatherArgs;
 import cn.toutatis.xvoid.third.party.basic.ApiDocumentInfo;
+import cn.toutatis.xvoid.third.party.basic.ApiSupport;
 import cn.toutatis.xvoid.third.party.basic.BaseAPI;
 import cn.toutatis.xvoid.third.party.basic.DocumentMappingEnumPropertyUtils;
 import cn.toutatis.xvoid.third.party.basic.annotations.APIDocument;
@@ -24,18 +26,27 @@ import java.util.List;
                 "Web服务API对所有用户开放。使用本组服务之前，需要申请应用Key。不同类型用户可获取不同的数据访问能力。",
         url = "https://lbs.amap.com/api/webservice/summary",
         version = "4.2.0")
-public enum AMapWebAPI implements BaseAPI {
+public enum AMapWebAPI implements BaseAPI<AMapWebAPI>, ApiSupport {
 
     /**
      * API条目
      */
     @LogEnum @APIDocument(
-            description = "查询天气情况1111111"
+            description = "天气查询是一个简单的HTTP接口，根据用户输入的adcode，查询目标区域当前/未来的天气情况，数据来源是中国气象局。",
+            url = "https://lbs.amap.com/api/webservice/guide/api/weatherinfo",
+            version = "2023年04月03日"
     )
-    CHECK_WEATHER_FORECASTS("查询天气",Method.GET,"https://restapi.amap.com/v3/weather/weatherInfo",new WeatherArgs());
+    WEATHER_INQUIRY("天气查询",Method.GET,"https://restapi.amap.com/v3/weather/weatherInfo",new WeatherArgs()),
 
+    @LogEnum @APIDocument(
+            description = "IP定位是一套简单的HTTP接口，根据用户输入的IP地址，能够快速的帮用户定位IP的所在位置。IP定位：仅支持IPV4，不支持国外IP解析。",
+            url = "https://lbs.amap.com/api/webservice/guide/api/ipconfig",
+            version = "2022年03月18日"
+    )
+    IP_LOCATION("IP定位",Method.GET,"https://restapi.amap.com/v3/ip",new IPLocationArgs()),
+    ;
 
-    //对象初始化时，执行下面的方法，将注解上的枚举值解析到cache中
+    //初始化解析
     static {
         DocumentMappingEnumPropertyUtils.mappingProperties(AMapWebAPI.class);
     };
@@ -49,12 +60,6 @@ public enum AMapWebAPI implements BaseAPI {
     private final ArgumentsSchema argumentsSchema;
 
 
-    /**
-     * 获取注解的属性
-     */
-    public ApiDocumentInfo resolve() {
-        return DocumentMappingEnumPropertyUtils.resolve(this.name());
-    }
 
     AMapWebAPI(String methodName, Method method, String url, ArgumentsSchema argumentsSchema) {
         this.methodName = methodName;
@@ -89,7 +94,7 @@ public enum AMapWebAPI implements BaseAPI {
 
     @Override
     public void printAPI() {
-        ApiDocumentInfo resolve = resolve();
+        ApiDocumentInfo resolve = resolve(this.name());
         ArgumentsSchema argumentsSchema = resolve.getArgumentsSchema();
         List<Triple<String, Boolean, String>> allParameters = argumentsSchema.getAllParameters();
         StringBuilder sb = new StringBuilder("");
@@ -117,6 +122,7 @@ public enum AMapWebAPI implements BaseAPI {
                 | API集描述: %s
                 |---------------------------------------------------------------
                 | 当前请求方法: [ %s ]     版本: [ %s ]
+                | API地址: [ %s ]
                 | 方法说明: %s
                 | 请求类型: [ %s ] URL: [ %s ]
                 | 请求参数:
@@ -130,11 +136,12 @@ public enum AMapWebAPI implements BaseAPI {
                 StringToolkit.lineWrap("|",3,resolve.getApiSetDescription(), 33),
                 resolve.getMethodName(),
                 resolve.getMethodVersion(),
+                resolve.getMethodUrl(),
                 StringToolkit.lineWrap("|",3,resolve.getMethodDescription(), 33),
                 resolve.getRequestMethod(),
                 resolve.getMethodUrl(),
                 sb.toString()
         );
-
     }
+
 }

@@ -1,13 +1,10 @@
 package cn.toutatis.xvoid.third.party.basic
 
 import cn.hutool.http.Method
-import cn.toutatis.xvoid.third.party.basic.annotations.APIDocument
 import cn.toutatis.xvoid.toolkit.http.base.ArgumentsSchema
-import java.lang.reflect.Field
-import kotlin.reflect.full.findAnnotation
-import kotlin.reflect.full.memberProperties
 
-interface BaseAPI {
+interface BaseAPI<T:Enum<T>> {
+
 
     /**
      * Get name
