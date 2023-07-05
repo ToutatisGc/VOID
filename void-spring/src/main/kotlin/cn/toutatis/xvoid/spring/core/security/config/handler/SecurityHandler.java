@@ -69,19 +69,19 @@ public class SecurityHandler implements AuthenticationSuccessHandler,
 
     private final VoidConfiguration.GlobalServiceConfig globalServiceConfig;
 
-    @Autowired
-    private SystemAuthRoleService systemAuthRoleService;
+    private final SystemAuthRoleService systemAuthRoleService;
 
-    @Autowired
-    private SystemAuthPathService systemAuthPathService;
+    private final SystemAuthPathService systemAuthPathService;
 
 
 
-    public SecurityHandler(RequestMethodResolver requestMethodResolver, ResponseResultDispatcherAdvice responseResultDispatcherAdvice, VoidConfiguration voidConfiguration) {
+    public SecurityHandler(RequestMethodResolver requestMethodResolver, ResponseResultDispatcherAdvice responseResultDispatcherAdvice, VoidConfiguration voidConfiguration, SystemAuthRoleService systemAuthRoleService, SystemAuthPathService systemAuthPathService) {
         this.requestMethodResolver = requestMethodResolver;
         this.responseResultDispatcherAdvice = responseResultDispatcherAdvice;
         this.voidConfiguration = voidConfiguration;
         this.globalServiceConfig = voidConfiguration.getGlobalServiceConfig();
+        this.systemAuthRoleService = systemAuthRoleService;
+        this.systemAuthPathService = systemAuthPathService;
     }
 
 
@@ -176,9 +176,11 @@ public class SecurityHandler implements AuthenticationSuccessHandler,
                 proxyResult.setMessage(ValidationMessage.CONNECT_EXPIRED);
             }else if (exception.getClass() == DisabledException.class) {
                 proxyResult.setMessage(ValidationMessage.ACCOUNT_DISABLED);
-            }else {
+            } else {
                 logger.error("[{}]认证未记录异常：{}", VoidModuleInfo.MODULE_NAME,exception.toString());
             }
+        }else if (exception instanceof AuthenticationServiceException){
+            proxyResult = new ProxyResult(ResultCode.AUTHENTICATION_FAILED);
         }else {
             logger.error("[{}]认证未记录异常：{}", VoidModuleInfo.MODULE_NAME,exception.toString());
             proxyResult = new ProxyResult(ResultCode.INNER_EXCEPTION);

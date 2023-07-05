@@ -1,5 +1,6 @@
 package cn.toutatis.xvoid.spring.core.security.config;
 
+import cn.hutool.http.ContentType;
 import cn.toutatis.xvoid.support.spring.core.aop.filters.AnyPerRequestInjectRidFilter;
 import cn.toutatis.xvoid.support.spring.core.aop.interceptor.RequestLogInterceptor;
 import cn.toutatis.xvoid.toolkit.validator.Validator;
@@ -45,7 +46,20 @@ public class UsernamePasswordAuthenticationJsonFilter extends UsernamePasswordAu
             throw new AuthenticationServiceException("Authentication method not supported: " + request.getMethod());
         }
         if(Validator.strIsBlank(request.getContentType())){
-
+            throw new NullPointerException("Content-Type is required.");
+        }else{
+            String contentType = request.getContentType();
+            System.err.println(contentType);
+            switch (contentType){
+                case "application/json":
+                case "application/x-www-form-urlencoded":
+                    break;
+                default:
+                    if (contentType.startsWith("multipart/form-data")){
+                        break;
+                    }
+                    throw new AuthenticationServiceException("Content-Type not supported: " + contentType);
+            }
         }
         if(request.getContentType().equalsIgnoreCase(MediaType.APPLICATION_JSON_VALUE)){
             Map<String,Object> userInfo;

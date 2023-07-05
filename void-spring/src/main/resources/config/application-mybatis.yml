@@ -20,3 +20,4 @@ mybatis-plus:
       logic-delete-value: 1
 #     表名前缀
       table-prefix: ${void.global-orm-config.table-prefix}
+#  type-aliases-super-type:

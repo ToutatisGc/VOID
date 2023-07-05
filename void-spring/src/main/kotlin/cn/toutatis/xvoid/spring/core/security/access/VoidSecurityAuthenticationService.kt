@@ -13,6 +13,7 @@ import com.github.xiaoymin.knife4j.annotations.ApiSupport
 import io.swagger.annotations.Api
 import io.swagger.annotations.ApiOperation
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.data.redis.core.RedisTemplate
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.core.userdetails.UsernameNotFoundException
@@ -60,6 +61,8 @@ class VoidSecurityAuthenticationService : UserDetailsService {
     @Autowired
     private lateinit var formUserAuthService : FormUserAuthService
 
+    @Autowired
+    private lateinit var redisTemplate: RedisTemplate<String,Any>
 
     /**
      * handler中获取的消息类型
@@ -92,12 +95,9 @@ class VoidSecurityAuthenticationService : UserDetailsService {
             }
             if (identityObj != null && identityObj.isNotEmpty()){
                 val authTypeStr = identityObj.getString("authType")
-//                TODO 三次以后升级要验证码
-//                val session = request.session
-//                val retryTimes = session.getAttribute(AUTH_TIMES_KEY)
-//                if (retryTimes != null){
-//
-//                }
+                val session = request.session
+                val sessionHashOps = redisTemplate.boundHashOps<String, Int>(session.id)
+                sessionHashOps.put("loginTimes",1)
                 if (authTypeStr != null){
                     /*TODO 认证*/
                     when(AuthType.valueOf(authTypeStr)){
