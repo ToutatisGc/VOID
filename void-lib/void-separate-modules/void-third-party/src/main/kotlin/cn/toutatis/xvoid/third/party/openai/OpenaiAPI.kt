@@ -15,7 +15,7 @@ enum class OpenaiAPI constructor(private val methodName:String,
                                  private val method:Method,
                                  private val url:String,
                                  private val argumentsSchema: ArgumentsSchema
-                                 ) : BaseAPI {
+                                 ) : BaseAPI<OpenaiAPI> {
 
     /**
      * ModelsList and describe the various models available in the API.
