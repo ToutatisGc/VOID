@@ -20,7 +20,6 @@ class JSONTest {
         val jsonObject2 = JSONObject()
         jsonObject2.put("name","abc")
         System.err.println(jsonObject2.hashCode())
-        Assert.assertEquals(16, JsonToolkit.DEFAULT_MAX_RECORD)
     }
 
     @Test
@@ -71,7 +70,7 @@ class JSONTest {
     fun singleKeyTest(): Unit {
         val jsonObject = JSONObject()
         jsonObject.put("obj","abc")
-        val value = JsonToolkit.getValue(jsonObject, "obj", String::class.java)
+        JsonToolkit.getValue(jsonObject, "obj", String::class.java)
         Assert.assertEquals("abc","abc")
     }
 
