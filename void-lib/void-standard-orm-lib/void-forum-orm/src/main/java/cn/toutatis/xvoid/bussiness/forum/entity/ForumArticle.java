@@ -13,6 +13,7 @@ import lombok.ToString;
 
 import javax.persistence.*;
 import java.io.Serial;
+import java.util.List;
 
 /**
  * 文章实体类
@@ -141,8 +142,19 @@ public class ForumArticle extends EntityBasicAttribute<ForumArticle> {
     /**
      * 流行指数
      */
-    @Transient()
-    @TableField(exist = false)
+    @Transient() @TableField(exist = false)
     private Integer popularityScore = 0;
+
+    /**
+     * 文章标签
+     */
+    @Transient() @TableField(exist = false)
+    private List<String> tags;
+
+    /**
+     * 所在集合
+     */
+    @Transient() @TableField(exist = false)
+    private List<String> categories;
 
 }
