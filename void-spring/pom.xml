@@ -79,12 +79,6 @@
             <version>0.0.0-ALPHA</version>
             <scope>compile</scope>
         </dependency>
-        <dependency>
-            <groupId>cn.toutatis</groupId>
-            <artifactId>void-base-orm</artifactId>
-            <version>0.0.0-ALPHA</version>
-            <scope>compile</scope>
-        </dependency>
         <!--安全框架-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -126,6 +120,12 @@
         <dependency>
             <groupId>cn.toutatis</groupId>
             <artifactId>void-forum-orm</artifactId>
+            <version>0.0.0-ALPHA</version>
+        </dependency>
+
+        <dependency>
+            <groupId>cn.toutatis</groupId>
+            <artifactId>void-redis</artifactId>
             <version>0.0.0-ALPHA</version>
         </dependency>
 
