@@ -1,5 +1,7 @@
 package cn.toutatis.xvoid.bussiness.forum.enums;
 
+import com.baomidou.mybatisplus.annotation.EnumValue;
+
 /**
  * 文章来源
  * @author Toutatis_Gc
@@ -9,16 +11,33 @@ public enum ArticleSource {
     /**
      * 原创
      */
-    ORIGINAL,
+    ORIGINAL("ORIGINAL","原创"),
 
     /**
      * 转账
      */
-    REPRINT,
+    REPRINT("REPRINT","转载"),
 
     /**
-     * 翻译版
+     * 翻译版本
      */
-    TRANSLATED_EDITION;
+    TRANSLATED_EDITION("TRANSLATED_EDITION","翻译版本");
 
+    @EnumValue
+    private final String name;
+
+    private final String description;
+
+    ArticleSource(String name, String description) {
+        this.name = name;
+        this.description = description;
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+}
