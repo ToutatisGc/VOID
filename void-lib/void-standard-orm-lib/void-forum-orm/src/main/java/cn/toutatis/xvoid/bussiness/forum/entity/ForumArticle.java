@@ -149,12 +149,12 @@ public class ForumArticle extends EntityBasicAttribute<ForumArticle> {
      * 文章标签
      */
     @Transient() @TableField(exist = false)
-    private List<String> tags;
+    private List<ForumArticleTags> tags;
 
     /**
      * 所在集合
      */
     @Transient() @TableField(exist = false)
-    private List<String> categories;
+    private List<ForumArticleCategory> belongToCategories;
 
 }
