@@ -3,12 +3,14 @@ package cn.toutatis.xvoid.spring.business.test
 import cn.toutatis.xvoid.bussiness.forum.entity.ForumArticle
 import cn.toutatis.xvoid.data.common.result.ProxyResult
 import cn.toutatis.xvoid.data.common.result.ResultCode
+import cn.toutatis.xvoid.spring.business.test.persistence.ForumArticleCategoryMapper
+import cn.toutatis.xvoid.spring.business.test.persistence.ForumArticleMapper
+import cn.toutatis.xvoid.spring.business.test.persistence.PersonMapper
 import cn.toutatis.xvoid.support.spring.amqp.AmqpShell
 import cn.toutatis.xvoid.support.spring.amqp.entity.SystemLog
 import cn.toutatis.xvoid.support.spring.amqp.log.LogType
 import cn.toutatis.xvoid.support.spring.annotations.VoidController
 import cn.toutatis.xvoid.support.spring.config.VoidConfiguration
-import cn.toutatis.xvoid.support.spring.core.file.service.SystemResourceService
 import cn.toutatis.xvoid.support.spring.core.file.service.impl.SystemResourceServiceImpl
 import com.alibaba.fastjson.JSONObject
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper
@@ -137,6 +139,9 @@ class TestController {
     @Autowired
     private lateinit var forumArticleMapper: ForumArticleMapper
 
+    @Autowired
+    private lateinit var forumArticleCategoryMapper: ForumArticleCategoryMapper
+
     @RequestMapping("/test123", method = [RequestMethod.POST])
     fun test123() {
         val forumArticle = ForumArticle()
@@ -145,6 +150,9 @@ class TestController {
         forumArticleMapper.insert(forumArticle)
         val selectList = forumArticleMapper.selectList(QueryWrapper())
         System.err.println(selectList)
+
+        val categoryAll = forumArticleCategoryMapper.selectList(null);
+        System.err.println(categoryAll)
     }
 
 }

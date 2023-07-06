@@ -1,4 +1,4 @@
-package cn.toutatis.xvoid.spring.business.test;
+package cn.toutatis.xvoid.spring.business.test.persistence;
 
 import cn.toutatis.xvoid.bussiness.forum.entity.ForumArticle;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
