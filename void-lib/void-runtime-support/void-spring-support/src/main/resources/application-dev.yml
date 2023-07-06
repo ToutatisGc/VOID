@@ -6,7 +6,6 @@ spring:
       enabled: true
     livereload:
       enabled: true
-      port: 55555
   application:
     name: VOID-SPRING | 春野
 #    模板引擎
