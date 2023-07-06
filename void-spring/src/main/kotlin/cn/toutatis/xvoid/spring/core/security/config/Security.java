@@ -8,6 +8,7 @@ import cn.toutatis.xvoid.support.spring.core.aop.filters.AnyPerRequestInjectRidF
 import cn.toutatis.xvoid.support.spring.enhance.mapping.XvoidMappingResolver;
 import cn.toutatis.xvoid.toolkit.log.LoggerToolkit;
 import org.slf4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;

@@ -11,7 +11,7 @@ import org.springframework.session.data.redis.config.annotation.web.http.EnableR
 @VoidApplication
 @ComponentScan(basePackages = [VoidModuleInfo.BASE_SCAN_PACKAGE])
 @EntityScan(basePackages=[VoidModuleInfo.BASE_SCAN_PACKAGE])
-@MapperScan(VoidModuleInfo.BASE_SCAN_PACKAGE+".**")
+@MapperScan(VoidModuleInfo.BASE_SCAN_PACKAGE+".**.persistence")
 @EnableRedisHttpSession
 class VoidSpringApplication
 
