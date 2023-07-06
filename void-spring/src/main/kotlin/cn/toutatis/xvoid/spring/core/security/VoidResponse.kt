@@ -4,8 +4,8 @@ import cn.toutatis.xvoid.spring.core.security.config.VoidHeader.*
 import com.alibaba.fastjson.JSON
 import java.io.IOException
 import java.net.URLEncoder
-import javax.servlet.http.HttpServletRequest
-import javax.servlet.http.HttpServletResponse
+import jakarta.servlet.http.HttpServletRequest
+import jakarta.servlet.http.HttpServletResponse
 
 /*TODO 移动到support http包下*/
 class VoidResponse {

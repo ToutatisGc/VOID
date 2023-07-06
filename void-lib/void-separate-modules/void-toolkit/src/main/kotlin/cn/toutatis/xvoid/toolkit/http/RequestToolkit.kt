@@ -1,8 +1,8 @@
 package cn.toutatis.xvoid.toolkit.http
 
+import jakarta.servlet.http.HttpServletRequest
 import java.net.InetAddress
 import java.net.UnknownHostException
-import javax.servlet.http.HttpServletRequest
 
 
 /**
