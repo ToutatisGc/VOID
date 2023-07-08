@@ -4,6 +4,7 @@ package cn.toutatis.xvoid.bussiness.forum.entity;
 import cn.toutatis.xvoid.BusinessType;
 import cn.toutatis.xvoid.data.common.EntityBasicAttribute;
 import cn.toutatis.xvoid.data.common.result.DataStatus;
+import cn.toutatis.xvoid.structure.Tree;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -14,9 +15,11 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.jetbrains.annotations.NotNull;
 
 import javax.persistence.*;
 import java.io.Serial;
+import java.util.List;
 
 /**
  * 文章归属分类
@@ -29,7 +32,7 @@ import java.io.Serial;
 @Entity @Table(name = "vb_forum_article_category",
         indexes = {@Index(name = "NAME_INDEX", columnList = "name")}
 ) @org.hibernate.annotations.Table(appliesTo = "vb_forum_article_category", comment = "文章归属集合类")
-public class ForumArticleCategory extends EntityBasicAttribute<ForumArticleCategory> {
+public class ForumArticleCategory extends EntityBasicAttribute<ForumArticleCategory> implements Tree<ForumArticleCategory,ForumArticle> {
 
     @Serial
     private static final long serialVersionUID = 1L;
@@ -95,5 +98,42 @@ public class ForumArticleCategory extends EntityBasicAttribute<ForumArticleCateg
     @Column(name="businessType",nullable = false,columnDefinition = "VARCHAR(32) COMMENT '业务类型'")
     private BusinessType businessType = BusinessType.XVOID_FORUM;
 
+    @Transient @TableField(exist = false)
+    private Tree<ForumArticleCategory, ForumArticle> parent;
 
+    @Transient @TableField(exist = false)
+    private List<Tree<ForumArticleCategory, ForumArticle>> branches;
+
+    @Transient @TableField(exist = false)
+    private List<ForumArticle> nodes;
+
+    @NotNull
+    @Override
+    public Tree<ForumArticleCategory, ForumArticle> getParent() {
+        return parent;
+    }
+
+    @NotNull
+    @Override
+    public List<Tree<ForumArticleCategory, ForumArticle>> getBranch() {
+        return branches;
+    }
+
+    @NotNull
+    @Override
+    public List<ForumArticle> getNodes() {
+        return nodes;
+    }
+
+    public void setParent(Tree<ForumArticleCategory, ForumArticle> parent) {
+        this.parent = parent;
+    }
+
+    public void setBranches(List<Tree<ForumArticleCategory, ForumArticle>> branches) {
+        this.branches = branches;
+    }
+
+    public void setNodes(List<ForumArticle> nodes) {
+        this.nodes = nodes;
+    }
 }

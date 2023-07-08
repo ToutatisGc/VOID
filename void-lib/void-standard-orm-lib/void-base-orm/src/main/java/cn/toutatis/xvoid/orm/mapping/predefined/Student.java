@@ -1,7 +1,6 @@
-package cn.toutatis.xvoid.mapping.predefined;
+package cn.toutatis.xvoid.orm.mapping.predefined;
 
-import cn.toutatis.xvoid.mapping.concepts.Real;
-import cn.toutatis.xvoid.mapping.entity.animal.Human;
+import cn.toutatis.xvoid.orm.mapping.entity.animal.Human;
 
 public class Student extends Human {
 

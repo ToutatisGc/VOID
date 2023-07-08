@@ -14,7 +14,7 @@ public enum ArticleSource {
     ORIGINAL("ORIGINAL","原创"),
 
     /**
-     * 转账
+     * 转载
      */
     REPRINT("REPRINT","转载"),
 

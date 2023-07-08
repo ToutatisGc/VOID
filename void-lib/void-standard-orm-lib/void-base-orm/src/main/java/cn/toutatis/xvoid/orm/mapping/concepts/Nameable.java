@@ -1,4 +1,4 @@
-package cn.toutatis.xvoid.mapping.concepts;
+package cn.toutatis.xvoid.orm.mapping.concepts;
 
 /**
  * @author Toutatis_Gc
