@@ -21,7 +21,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
-import springfox.documentation.annotations.ApiIgnore;
+//import springfox.documentation.annotations.ApiIgnore;
 
 import jakarta.servlet.http.HttpServletRequest;
 import java.util.*;
@@ -88,7 +88,7 @@ public class BaseControllerImpl<O extends EntityBasicAttribute<O>, SERVICE exten
         return result;
     }
 
-    @ApiIgnore
+//    @ApiIgnore
     @Override
     @RequestMapping(value = "/getById",method = RequestMethod.POST)
     public Result getById(O entity) {

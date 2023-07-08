@@ -41,11 +41,11 @@
         <servlet.version>4.0.1</servlet.version>
         <junit-jupiter.version>5.7.0</junit-jupiter.version>
         <junit.version>4.12</junit.version>
-        <logback.version>1.2.11</logback.version>
+        <logback.version>1.4.8</logback.version>
         <aspectj.version>1.9.9.1</aspectj.version>
         <ehcache.version>3.10.0</ehcache.version>
         <cacheapi.version>1.1.0</cacheapi.version>
-        <mybatis.version>3.5.2</mybatis.version>
+        <mybatis.version>3.5.3.1</mybatis.version>
         <swagger.version>1.5.22</swagger.version>
         <p6spy.version>3.9.1</p6spy.version>
         <hibernate.version>5.6.7.Final</hibernate.version>
