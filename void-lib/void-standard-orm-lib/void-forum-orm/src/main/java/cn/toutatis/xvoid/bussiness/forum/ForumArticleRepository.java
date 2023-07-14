@@ -1,4 +1,4 @@
-package cn.toutatis.xvoid.bussiness.forum.persistence;
+package cn.toutatis.xvoid.bussiness.forum;
 
 import cn.toutatis.xvoid.bussiness.forum.entity.ForumArticle;
 import cn.toutatis.xvoid.support.jpa.VoidJpaRepo;

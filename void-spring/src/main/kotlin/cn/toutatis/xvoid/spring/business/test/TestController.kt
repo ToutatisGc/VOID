@@ -1,10 +1,10 @@
 package cn.toutatis.xvoid.spring.business.test
 
 import cn.toutatis.xvoid.bussiness.forum.entity.ForumArticle
+import cn.toutatis.xvoid.bussiness.forum.persistence.ForumArticleMapper
+import cn.toutatis.xvoid.bussiness.forum.ForumArticleRepository
 import cn.toutatis.xvoid.data.common.result.ProxyResult
 import cn.toutatis.xvoid.data.common.result.ResultCode
-import cn.toutatis.xvoid.spring.business.test.persistence.ForumArticleCategoryMapper
-import cn.toutatis.xvoid.spring.business.test.persistence.ForumArticleMapper
 import cn.toutatis.xvoid.spring.business.test.persistence.PersonMapper
 import cn.toutatis.xvoid.support.spring.amqp.AmqpShell
 import cn.toutatis.xvoid.support.spring.amqp.entity.SystemLog
@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestMethod
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.multipart.MultipartFile
 import org.springframework.web.servlet.ModelAndView
+import kotlin.jvm.Throws
 
 
 /**
@@ -140,9 +141,13 @@ class TestController {
     private lateinit var forumArticleMapper: ForumArticleMapper
 
     @Autowired
-    private lateinit var forumArticleCategoryMapper: ForumArticleCategoryMapper
+    private lateinit var forumArticleRepository: ForumArticleRepository
+
+    @Autowired
+//    private lateinit var forumArticleCategoryMapper: ForumArticleCategoryMapper
 
     @RequestMapping("/test123", method = [RequestMethod.POST])
+    @Throws(RuntimeException::class)
     fun test123() {
         val forumArticle = ForumArticle()
         forumArticle.title = "Test-${RandomStringUtils.randomAlphabetic(8)}"
@@ -150,9 +155,11 @@ class TestController {
         forumArticleMapper.insert(forumArticle)
         val selectList = forumArticleMapper.selectList(QueryWrapper())
         System.err.println(selectList)
+//        val categoryAll = forumArticleCategoryMapper.selectList(null);
+//        System.err.println(categoryAll)
 
-        val categoryAll = forumArticleCategoryMapper.selectList(null);
-        System.err.println(categoryAll)
+        val findAll = forumArticleRepository.findAll()
+        System.err.println(findAll)
     }
 
 }
