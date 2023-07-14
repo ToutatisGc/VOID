@@ -14,4 +14,4 @@ docker run --name MinIO -p 9000:9000 -itd --env MINIO_ROOT_USER=root --env MINIO
 
 docker run --name MySQL -p 3306:3306 --restart=always -e MYSQL_ROOT_PASSWORD=12345678 -itd  mysql
 
-docker run --name RabbitMQ -p 5672:5672 -p 15672:15672 --restart=always  -itd rabbitmq:management
+docker run --name RabbitMQ -p 5672:5672 -p 15672:15672 --restart=always -itd rabbitmq:management
