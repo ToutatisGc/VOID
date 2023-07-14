@@ -33,7 +33,7 @@ import java.io.Serial;
 @TableName("vb_forum_category_article_intermediate")
 @Entity @Table(name = "vb_forum_category_article_intermediate")
 @org.hibernate.annotations.Table(appliesTo = "vb_forum_category_article_intermediate", comment = "论坛文章合集&文章中间表")
-public class ForumCategoryArticleIntermediate {
+public class ForumCategoryArticleIntermediate extends EntityBasicAttribute<ForumCategoryArticleIntermediate>{
 
     @Serial
     private static final long serialVersionUID = 1L;

@@ -1,4 +1,4 @@
-package cn.toutatis.xvoid.support.spring.config.orm.jpa;
+package cn.toutatis.xvoid.support.jpa;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

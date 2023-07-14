@@ -1,7 +1,7 @@
 package ${package.Mapper};
 
 import ${package.Entity}.${entity};
-import cn.toutatis.xvoid.support.spring.config.orm.jpa.VoidJpaRepo;
+import cn.toutatis.xvoid.support.jpa.VoidJpaRepo;
 
 import java.util.List;
 
