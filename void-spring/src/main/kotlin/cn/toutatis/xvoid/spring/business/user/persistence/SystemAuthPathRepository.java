@@ -1,7 +1,7 @@
 package cn.toutatis.xvoid.spring.business.user.persistence;
 
 import cn.toutatis.xvoid.data.common.security.SystemAuthPath;
-import cn.toutatis.xvoid.support.spring.config.orm.jpa.VoidJpaRepo;
+import cn.toutatis.xvoid.support.jpa.VoidJpaRepo;
 
 /**
  * <p>
