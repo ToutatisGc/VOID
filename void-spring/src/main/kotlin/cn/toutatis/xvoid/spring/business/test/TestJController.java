@@ -1,8 +1,9 @@
 package cn.toutatis.xvoid.spring.business.test;
 
+import cn.toutatis.xvoid.bussiness.forum.entity.ForumArticle;
 import cn.toutatis.xvoid.bussiness.forum.persistence.ForumArticleMapper;
-import cn.toutatis.xvoid.bussiness.forum.ForumArticleRepository;
-import cn.toutatis.xvoid.support.spring.amqp.persistence.SystemLogRepository;
+import cn.toutatis.xvoid.bussiness.forum.persistence.ForumArticleRepository;
+import cn.toutatis.xvoid.spring.business.user.persistence.SystemAuthPathRepository;
 import cn.toutatis.xvoid.support.spring.annotations.VoidController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,20 +14,24 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class TestJController {
 
     @Autowired
-    private ForumArticleRepository forumArticleRepository;
-
-    @Autowired
     private ForumArticleMapper forumArticleMapper;
 
     @Autowired
-    private SystemLogRepository systemLogRepository;
+    private SystemAuthPathRepository systemAuthPathRepository;
+
+    @Autowired
+    private ForumArticleRepository forumArticleRepository;
 
     @RequestMapping(value = "/test1",method = RequestMethod.POST)
     public void test1(){
         System.err.println(forumArticleMapper);
-        System.err.println(forumArticleRepository);
-        System.err.println(systemLogRepository.findAll());
-        System.err.println(forumArticleRepository.findAll());
+        ForumArticle forumArticle = new ForumArticle();
+        forumArticle.setTitle("测试测试");
+        forumArticle.setContent("111111111111111111111111111111111");
+        forumArticleMapper.insert(forumArticle);
+//        System.err.println(1/0);
+//        System.err.println(systemAuthPathRepository.findAll());
+//        System.err.println(forumArticleRepository.findAll());
     }
 
 }

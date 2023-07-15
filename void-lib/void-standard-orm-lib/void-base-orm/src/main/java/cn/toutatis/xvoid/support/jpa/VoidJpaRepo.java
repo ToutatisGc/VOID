@@ -1,6 +1,7 @@
 package cn.toutatis.xvoid.support.jpa;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.NoRepositoryBean;
 
 /**
  *
@@ -8,5 +9,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
  *
  * @author Toutatis_Gc
  */
+@NoRepositoryBean
 public interface VoidJpaRepo<T,ID> extends JpaRepository<T,ID> {
 }

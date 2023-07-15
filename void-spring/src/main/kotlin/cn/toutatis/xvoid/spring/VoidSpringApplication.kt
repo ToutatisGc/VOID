@@ -6,12 +6,10 @@ import org.springframework.boot.autoconfigure.domain.EntityScan
 import org.springframework.boot.runApplication
 import org.springframework.context.ConfigurableApplicationContext
 import org.springframework.context.annotation.ComponentScan
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories
 import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisHttpSession
 
 @VoidApplication
-@ComponentScan(basePackages = [VoidModuleInfo.BASE_SCAN_PACKAGE])
-@EntityScan(basePackages=[VoidModuleInfo.BASE_SCAN_PACKAGE])
-@MapperScan(VoidModuleInfo.BASE_SCAN_PACKAGE+".**.persistence")
 @EnableRedisHttpSession
 class VoidSpringApplication
 
