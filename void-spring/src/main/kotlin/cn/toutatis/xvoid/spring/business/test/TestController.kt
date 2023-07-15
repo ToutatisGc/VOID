@@ -151,8 +151,10 @@ class TestController {
     fun test123() {
         val forumArticle = ForumArticle()
         forumArticle.title = "Test-${RandomStringUtils.randomAlphabetic(8)}"
-        forumArticle.content = RandomStringUtils.randomAlphanumeric(512)
+        forumArticle.content = "6666"
         forumArticleMapper.insert(forumArticle)
+//        System.err.println(1/0)
+
         val selectList = forumArticleMapper.selectList(QueryWrapper())
         System.err.println(selectList)
 //        val categoryAll = forumArticleCategoryMapper.selectList(null);
