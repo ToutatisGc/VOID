@@ -20,12 +20,12 @@ import io.swagger.annotations.ApiOperation
 import org.apache.commons.lang3.RandomStringUtils
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.jdbc.core.JdbcTemplate
+import org.springframework.transaction.annotation.Transactional
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestMethod
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.multipart.MultipartFile
 import org.springframework.web.servlet.ModelAndView
-import kotlin.jvm.Throws
 
 
 /**
@@ -37,7 +37,8 @@ import kotlin.jvm.Throws
 @ApiSupport(order = 0, author = "Toutatis_Gc")
 @VoidController
 @RequestMapping("/test")
-class TestController {
+@Transactional(rollbackFor = [Exception::class])
+open class TestController {
 
     @Autowired
     private lateinit var amqpShell : AmqpShell;
@@ -147,13 +148,13 @@ class TestController {
 //    private lateinit var forumArticleCategoryMapper: ForumArticleCategoryMapper
 
     @RequestMapping("/test123", method = [RequestMethod.POST])
-    @Throws(RuntimeException::class)
-    fun test123() {
+    @Throws(Exception::class)
+    open fun test123() {
         val forumArticle = ForumArticle()
         forumArticle.title = "Test-${RandomStringUtils.randomAlphabetic(8)}"
         forumArticle.content = "6666"
         forumArticleMapper.insert(forumArticle)
-//        System.err.println(1/0)
+        System.err.println(1/0)
 
         val selectList = forumArticleMapper.selectList(QueryWrapper())
         System.err.println(selectList)
