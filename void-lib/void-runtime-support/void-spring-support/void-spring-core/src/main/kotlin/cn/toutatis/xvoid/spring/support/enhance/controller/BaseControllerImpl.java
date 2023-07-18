@@ -1,11 +1,11 @@
 package cn.toutatis.xvoid.spring.support.enhance.controller;
 
 import cn.toutatis.xvoid.common.standard.StandardFields;
-import cn.toutatis.xvoid.data.common.result.Actions;
 import cn.toutatis.xvoid.data.common.EntityBasicAttribute;
+import cn.toutatis.xvoid.data.common.result.Actions;
 import cn.toutatis.xvoid.data.common.result.ProxyResult;
-import cn.toutatis.xvoid.data.common.result.ResultCode;
 import cn.toutatis.xvoid.data.common.result.Result;
+import cn.toutatis.xvoid.data.common.result.ResultCode;
 import cn.toutatis.xvoid.spring.configure.system.VoidConfiguration;
 import cn.toutatis.xvoid.spring.support.config.orm.mybatisplus.support.CommonWrapper;
 import cn.toutatis.xvoid.spring.support.config.orm.mybatisplus.support.PagingQuery;
@@ -20,11 +20,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.*;
-import springfox.documentation.annotations.ApiIgnore;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author Toutatis_Gc
@@ -47,7 +49,7 @@ public class BaseControllerImpl<O extends EntityBasicAttribute<O>, SERVICE exten
 
     private final Boolean platformMode;
 
-    private final CommonWrapper<O> commonWrapper = CommonWrapper.getInstance();
+    private final CommonWrapper<O> commonWrapper = new CommonWrapper<>();
 
     private ProxyResult result;
 
@@ -88,7 +90,6 @@ public class BaseControllerImpl<O extends EntityBasicAttribute<O>, SERVICE exten
         return result;
     }
 
-    @ApiIgnore
     @Override
     @RequestMapping(value = "/getById",method = RequestMethod.POST)
     public Result getById(O entity) {

@@ -7,7 +7,7 @@
   },
   "SECURITY": {
     "OPEN": ["/","/getServiceInfo","/error","/auth/**","/robots.txt"],
-    "DEV": ["/doc.html","/v2/api-docs","/v3/api-docs","/swagger-resources/**","/swagger-resources","/example","/test/**"],
+    "DEV": ["/doc.html","/v2/api-docs","/v3/api-docs/**","/swagger-resources/**","/swagger-resources","/example","/test/**"],
     "PRODUCT": [],
     "VIP": ["/static/**","/favicon.ico","/**/external/**","/ws/**","/webjars/**","/resources/**"]
   }

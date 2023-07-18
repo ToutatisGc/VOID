@@ -1,5 +1,6 @@
 package cn.toutatis.xvoid.spring.support.config.orm.mybatisplus.support;
 
+import cn.toutatis.xvoid.data.common.EntityBasicAttribute;
 import cn.toutatis.xvoid.data.common.result.DataStatus;
 import cn.toutatis.xvoid.spring.support.SheetExportType;
 import cn.toutatis.xvoid.spring.configure.system.VoidConfiguration;
@@ -17,9 +18,9 @@ import java.util.List;
  * @param <M> 继承MybatisPlus的实体类
  * @param <T> 实体类
  */
-public class VoidMybatisServiceImpl<M extends BaseMapper<T>, T> extends ServiceImpl<M, T> implements VoidMybatisService<T> {
+public class VoidMybatisServiceImpl<M extends BaseMapper<T>, T extends EntityBasicAttribute<T>> extends ServiceImpl<M, T> implements VoidMybatisService<T> {
 
-    public CommonWrapper commonWrapper = CommonWrapper.getInstance();
+    public CommonWrapper<T> commonWrapper = new CommonWrapper<>();
 
     @Autowired
     protected M baseMapper;

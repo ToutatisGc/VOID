@@ -1,6 +1,7 @@
 package cn.toutatis.xvoid.spring.support.config.orm.mybatisplus.support;
 
 import cn.toutatis.xvoid.data.common.EntityBasicAttribute;
+import cn.toutatis.xvoid.data.common.result.DataStatus;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 
 /**
@@ -9,25 +10,11 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
  */
 public class CommonWrapper<T extends EntityBasicAttribute<T>> {
 
-    private static volatile CommonWrapper commonWrapper;
-
-    private CommonWrapper(){}
-    public static CommonWrapper getInstance() {
-        if (commonWrapper == null){
-            synchronized (CommonWrapper.class){
-                if (commonWrapper == null){
-                    commonWrapper = new CommonWrapper();
-                }
-            }
-        }
-        return commonWrapper;
-    }
-
     /**
      * @return 获取开放状态的Wrapper
      */
     public QueryWrapper<T> selectOpenWrapper(){
-        return selectByStatusWrapper("SYS_OPEN_0000");
+        return selectByStatusWrapper(DataStatus.SYS_OPEN_0000.getCode());
     }
 
     /**

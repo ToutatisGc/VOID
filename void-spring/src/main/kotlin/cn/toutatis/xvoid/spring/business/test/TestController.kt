@@ -155,7 +155,6 @@ open class TestController {
         forumArticle.content = "6666"
         forumArticleMapper.insert(forumArticle)
         System.err.println(1/0)
-
         val selectList = forumArticleMapper.selectList(QueryWrapper())
         System.err.println(selectList)
 //        val categoryAll = forumArticleCategoryMapper.selectList(null);
