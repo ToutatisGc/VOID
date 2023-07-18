@@ -1,4 +1,4 @@
-package cn.toutatis.xvoid.support.spring.annotations;
+package cn.toutatis.xvoid.spring.annotations.application;
 
 
 import org.springframework.context.annotation.Scope;

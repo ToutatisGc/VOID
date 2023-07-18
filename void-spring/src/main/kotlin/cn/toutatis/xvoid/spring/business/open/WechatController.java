@@ -1,7 +1,7 @@
 package cn.toutatis.xvoid.spring.business.open;
 
 import cn.toutatis.xvoid.spring.business.open.services.WechatOfficialAccountService;
-import cn.toutatis.xvoid.support.spring.annotations.VoidController;
+import cn.toutatis.xvoid.spring.annotations.application.VoidController;
 import cn.toutatis.xvoid.toolkit.log.LoggerToolkit;
 import com.github.xiaoymin.knife4j.annotations.ApiSupport;
 import io.swagger.annotations.Api;

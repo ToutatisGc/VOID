@@ -3,26 +3,18 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>void-lib</artifactId>
+        <artifactId>void-runtime-support</artifactId>
         <groupId>cn.toutatis</groupId>
         <version>0.0.0-ALPHA</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-
-    <groupId>cn.toutatis</groupId>
-    <artifactId>void-runtime-support</artifactId>
-    <version>0.0.0-ALPHA</version>
     <packaging>pom</packaging>
-    <modules>
-        <!--Kotlin开发环境支持-->
-        <module>void-kotlin-runtime-support</module>
 
-        <module>void-vertx-runtime-support</module>
+    <artifactId>xvoid-support</artifactId>
 
-        <module>void-spring-support</module>
-
-        <module>xvoid-support</module>
-
-    </modules>
+    <properties>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+    </properties>
 
 </project>

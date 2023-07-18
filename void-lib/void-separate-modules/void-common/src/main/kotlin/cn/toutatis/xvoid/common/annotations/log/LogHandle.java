@@ -1,4 +1,4 @@
-package cn.toutatis.xvoid.support.spring.annotations;
+package cn.toutatis.xvoid.common.annotations.log;
 
 import java.lang.annotation.*;
 
@@ -11,8 +11,4 @@ import java.lang.annotation.*;
 @Target({ElementType.TYPE,ElementType.METHOD})
 @Inherited
 @Documented
-public @interface LogHandle {
-
-    String value() default "";
-
-}
+public @interface LogHandle { }

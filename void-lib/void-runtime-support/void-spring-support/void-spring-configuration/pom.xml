@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>void-spring-annotations</artifactId>
+    <artifactId>void-spring-configuration</artifactId>
 
     <properties>
         <kotlin.version>1.7.21</kotlin.version>
@@ -19,34 +19,15 @@
     </properties>
 
     <dependencies>
-        <!--Spring事务-->
+        <!--Springboot 注解处理器-->
         <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-tx</artifactId>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
         </dependency>
-        <!--Spring上下文环境-->
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-context</artifactId>
-        </dependency>
-        <!--WebAPI-->
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-web</artifactId>
-        </dependency>
-        <!--SpringBoot自动配置-->
+        <!--自动配置-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-autoconfigure</artifactId>
-        </dependency>
-        <!--Spring Data JPA-->
-        <dependency>
-            <groupId>org.springframework.data</groupId>
-            <artifactId>spring-data-jpa</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.mybatis</groupId>
-            <artifactId>mybatis-spring</artifactId>
         </dependency>
     </dependencies>
 

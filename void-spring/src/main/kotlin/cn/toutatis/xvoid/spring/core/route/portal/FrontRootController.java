@@ -2,7 +2,7 @@ package cn.toutatis.xvoid.spring.core.route.portal;
 
 import cn.toutatis.xvoid.data.common.result.ProxyResult;
 import cn.toutatis.xvoid.spring.core.tools.ViewToolkit;
-import cn.toutatis.xvoid.support.spring.annotations.VoidController;
+import cn.toutatis.xvoid.spring.annotations.application.VoidController;
 import cn.toutatis.xvoid.support.spring.config.VoidConfiguration;
 import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Value;

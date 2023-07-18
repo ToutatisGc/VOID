@@ -1,12 +1,8 @@
 package cn.toutatis.xvoid.spring
 
-import cn.toutatis.xvoid.support.spring.annotations.VoidApplication
-import org.mybatis.spring.annotation.MapperScan
-import org.springframework.boot.autoconfigure.domain.EntityScan
+import cn.toutatis.xvoid.spring.annotations.application.VoidApplication
 import org.springframework.boot.runApplication
 import org.springframework.context.ConfigurableApplicationContext
-import org.springframework.context.annotation.ComponentScan
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories
 import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisHttpSession
 
 @VoidApplication

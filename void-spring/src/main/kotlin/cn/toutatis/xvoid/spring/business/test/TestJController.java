@@ -4,7 +4,7 @@ import cn.toutatis.xvoid.bussiness.forum.entity.ForumArticle;
 import cn.toutatis.xvoid.bussiness.forum.persistence.ForumArticleMapper;
 import cn.toutatis.xvoid.bussiness.forum.persistence.ForumArticleRepository;
 import cn.toutatis.xvoid.spring.business.user.persistence.SystemAuthPathRepository;
-import cn.toutatis.xvoid.support.spring.annotations.VoidController;
+import cn.toutatis.xvoid.spring.annotations.application.VoidController;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
