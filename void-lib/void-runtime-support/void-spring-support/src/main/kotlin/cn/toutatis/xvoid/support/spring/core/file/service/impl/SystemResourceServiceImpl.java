@@ -57,7 +57,7 @@ import java.util.*;
 @Service
 public class SystemResourceServiceImpl extends VoidMybatisServiceImpl<SystemResourceMapper, SystemResource> implements SystemResourceService {
 
-    private Logger logger = LoggerToolkit.getLogger(SystemResourceServiceImpl.class);
+    private final Logger logger = LoggerToolkit.getLogger(SystemResourceServiceImpl.class);
     /**
      * 配置注入类
      */

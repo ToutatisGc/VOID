@@ -91,21 +91,14 @@ public class XvoidMappingResolver {
         }
         JSONObject securityMapping = resourcesMapping.getJSONObject("SECURITY");
         JSONArray openArr = securityMapping.getJSONArray("OPEN");
-        for (Object openPathItem : openArr) {
-            logger.info("[" + VoidModuleInfo.MODULE_NAME + "] 添加OPEN开放路径权限：" + openPathItem);
-        }
+        logger.info("[" + VoidModuleInfo.MODULE_NAME + "] 添加OPEN开放路径权限：" + openArr);
         ArrayList<String> pathArr = new ArrayList<>(openArr.toJavaList(String.class));
         JSONArray vipArr = securityMapping.getJSONArray("VIP");
-        for (Object importItem : vipArr) {
-            logger.info("[" + VoidModuleInfo.MODULE_NAME + "] 添加重要开放路径权限：" + importItem);
-        }
+        logger.info("[" + VoidModuleInfo.MODULE_NAME + "] 添加重要开放路径权限：" + vipArr);
         pathArr.addAll(vipArr.toJavaList(String.class));
-        JSONArray content = securityMapping.getJSONArray(mode.name());
-        for (int i = 0; i < content.size(); i++) {
-            String path = content.getString(i);
-            logger.info("["+ VoidModuleInfo.MODULE_NAME+"] 添加{}模式开放路径权限：{}",mode.name(),path);
-            pathArr.add(path);
-        }
+        JSONArray runModePathArr = securityMapping.getJSONArray(mode.name());
+        logger.info("["+ VoidModuleInfo.MODULE_NAME+"] 添加{}模式开放路径权限：{}",mode.name(),runModePathArr);
+        pathArr.addAll(runModePathArr.toJavaList(String.class));
         openMappings = pathArr.toArray(openMappings);
         return openMappings;
     }
