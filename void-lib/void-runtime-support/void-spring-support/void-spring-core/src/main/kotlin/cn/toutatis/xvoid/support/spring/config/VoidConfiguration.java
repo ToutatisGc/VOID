@@ -35,12 +35,12 @@ public class VoidConfiguration {
      */
     private Boolean showMode = false;
 
-    private VoidConfiguration.GlobalLogConfig globalLogConfig = new GlobalLogConfig();
-    private VoidConfiguration.DocConfig docConfig = new DocConfig();
-    private VoidConfiguration.GlobalOrmConfig globalOrmConfig = new GlobalOrmConfig();
-    private VoidConfiguration.GlobalServiceConfig globalServiceConfig = new GlobalServiceConfig();
-    private VoidConfiguration.MinIoConfig minIoConfig = new MinIoConfig();
-    private VoidConfiguration.QualityOfServiceStrategyConfig qualityOfServiceStrategyConfig = new QualityOfServiceStrategyConfig();
+    private GlobalLogConfig globalLogConfig = new GlobalLogConfig();
+    private DocConfig docConfig = new DocConfig();
+    private GlobalOrmConfig globalOrmConfig = new GlobalOrmConfig();
+    private GlobalServiceConfig globalServiceConfig = new GlobalServiceConfig();
+    private MinIoConfig minIoConfig = new MinIoConfig();
+    private QualityOfServiceStrategyConfig qualityOfServiceStrategyConfig = new QualityOfServiceStrategyConfig();
 
     /**
      * 全局日志环境变量

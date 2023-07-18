@@ -557,11 +557,11 @@ public final class AnnotationBinder {
 				inheritanceStatePerClass
 		);
 
-		javax.persistence.SecondaryTable secTabAnn = clazzToProcess.getAnnotation(
-				javax.persistence.SecondaryTable.class
+		SecondaryTable secTabAnn = clazzToProcess.getAnnotation(
+				SecondaryTable.class
 		);
-		javax.persistence.SecondaryTables secTabsAnn = clazzToProcess.getAnnotation(
-				javax.persistence.SecondaryTables.class
+		SecondaryTables secTabsAnn = clazzToProcess.getAnnotation(
+				SecondaryTables.class
 		);
 		entityBinder.firstLevelSecondaryTablesBinding( secTabAnn, secTabsAnn );
 
@@ -710,7 +710,7 @@ public final class AnnotationBinder {
 
 		//add process complementary Table definition (index & all)
 		entityBinder.processComplementaryTableDefinitions( clazzToProcess.getAnnotation( org.hibernate.annotations.Table.class ) );
-		entityBinder.processComplementaryTableDefinitions( clazzToProcess.getAnnotation( org.hibernate.annotations.Tables.class ) );
+		entityBinder.processComplementaryTableDefinitions( clazzToProcess.getAnnotation( Tables.class ) );
 		entityBinder.processComplementaryTableDefinitions( tabAnn );
 
 		bindCallbacks( clazzToProcess, persistentClass, context );
