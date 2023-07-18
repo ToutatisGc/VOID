@@ -4,7 +4,7 @@ import cn.toutatis.xvoid.Version;
 import cn.toutatis.xvoid.common.standard.StandardFields;
 import cn.toutatis.xvoid.data.common.result.ResultCode;
 import cn.toutatis.xvoid.spring.core.tools.ViewToolkit;
-import cn.toutatis.xvoid.support.spring.config.VoidConfiguration;
+import cn.toutatis.xvoid.spring.configure.system.VoidConfiguration;
 import cn.toutatis.xvoid.toolkit.constant.Time;
 import cn.toutatis.xvoid.toolkit.log.LoggerToolkit;
 import cn.toutatis.xvoid.toolkit.validator.Validator;

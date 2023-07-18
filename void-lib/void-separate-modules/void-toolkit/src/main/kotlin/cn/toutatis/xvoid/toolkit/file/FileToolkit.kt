@@ -33,7 +33,7 @@ object FileToolkit {
      * 默认推荐该文件为resources命名,对于部分web框架如springboot可以将文件目录映射为静态资源文件夹,可以直接从web端访问
      * 对于静态资源api,地址为http://localhost/<context-path>/resources/<image/text..>/<image.jpg/READ-ME.md>具有良好的可读性
      * 对于本框架,该资源目录使用于以下文件
-     * {@link cn.toutatis.xvoid.support.spring.core.file.service.impl.SystemResourceServiceImpl}
+     * {@link cn.toutatis.xvoid.spring.support.core.file.service.impl.SystemResourceServiceImpl}
      */
     const val RESOURCE_FILE_DIR = "resources"
 

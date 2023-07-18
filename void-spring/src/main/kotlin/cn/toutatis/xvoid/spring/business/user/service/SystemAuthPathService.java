@@ -2,7 +2,7 @@ package cn.toutatis.xvoid.spring.business.user.service;
 
 import cn.toutatis.xvoid.data.common.security.SystemAuthPath;
 import cn.toutatis.xvoid.data.common.security.SystemAuthRole;
-import cn.toutatis.xvoid.support.spring.config.orm.mybatisplus.support.VoidMybatisService;
+import cn.toutatis.xvoid.spring.support.config.orm.mybatisplus.support.VoidMybatisService;
 
 import java.util.List;
 

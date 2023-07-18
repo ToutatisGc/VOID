@@ -1,14 +1,14 @@
 package cn.toutatis.xvoid.creater.tools;
 
 
-import cn.toutatis.xvoid.data.common.EntityBasicAttribute;
 import cn.toutatis.xvoid.creater.mybatisplus.generator.AutoGenerator;
 import cn.toutatis.xvoid.creater.mybatisplus.generator.InjectionConfig;
 import cn.toutatis.xvoid.creater.mybatisplus.generator.config.*;
 import cn.toutatis.xvoid.creater.mybatisplus.generator.config.rules.NamingStrategy;
 import cn.toutatis.xvoid.creater.mybatisplus.generator.engine.FreemarkerTemplateEngine;
-import cn.toutatis.xvoid.support.spring.config.orm.mybatisplus.support.VoidMybatisService;
-import cn.toutatis.xvoid.support.spring.config.orm.mybatisplus.support.VoidMybatisServiceImpl;
+import cn.toutatis.xvoid.data.common.EntityBasicAttribute;
+import cn.toutatis.xvoid.spring.support.config.orm.mybatisplus.support.VoidMybatisService;
+import cn.toutatis.xvoid.spring.support.config.orm.mybatisplus.support.VoidMybatisServiceImpl;
 
 /**
  * @author Toutaits_Gc

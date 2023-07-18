@@ -4,7 +4,7 @@ import cn.toutatis.xvoid.common.standard.StandardFields
 import cn.toutatis.xvoid.data.common.result.ResultCode
 import cn.toutatis.xvoid.spring.business.user.persistence.SystemUserLoginMapper
 import cn.toutatis.xvoid.spring.business.user.service.FormUserAuthService
-import cn.toutatis.xvoid.support.spring.config.VoidConfiguration
+import cn.toutatis.xvoid.spring.configure.system.VoidConfiguration
 import cn.toutatis.xvoid.toolkit.log.LoggerToolkit
 import cn.toutatis.xvoid.toolkit.validator.Validator
 import com.alibaba.fastjson.JSON

@@ -2,7 +2,7 @@ package cn.toutatis.xvoid.spring.core.security.config.handler;
 
 
 
-import cn.toutatis.xvoid.support.spring.config.VoidConfiguration;
+import cn.toutatis.xvoid.spring.configure.system.VoidConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

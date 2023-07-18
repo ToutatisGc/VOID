@@ -6,12 +6,12 @@ import cn.toutatis.xvoid.bussiness.forum.persistence.ForumArticleRepository
 import cn.toutatis.xvoid.data.common.result.ProxyResult
 import cn.toutatis.xvoid.data.common.result.ResultCode
 import cn.toutatis.xvoid.spring.business.test.persistence.PersonMapper
-import cn.toutatis.xvoid.support.spring.amqp.AmqpShell
-import cn.toutatis.xvoid.support.spring.amqp.entity.SystemLog
-import cn.toutatis.xvoid.support.spring.amqp.log.LogType
+import cn.toutatis.xvoid.spring.support.amqp.AmqpShell
+import cn.toutatis.xvoid.spring.support.amqp.entity.SystemLog
+import cn.toutatis.xvoid.spring.support.amqp.log.LogType
 import cn.toutatis.xvoid.spring.annotations.application.VoidController
-import cn.toutatis.xvoid.support.spring.config.VoidConfiguration
-import cn.toutatis.xvoid.support.spring.core.file.service.impl.SystemResourceServiceImpl
+import cn.toutatis.xvoid.spring.configure.system.VoidConfiguration
+import cn.toutatis.xvoid.spring.support.core.file.service.impl.SystemResourceServiceImpl
 import com.alibaba.fastjson.JSONObject
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper
 import com.github.xiaoymin.knife4j.annotations.ApiSupport

@@ -3,7 +3,7 @@ package cn.toutatis.xvoid.spring.business.open.services;
 import cn.toutatis.xvoid.data.common.result.ProxyResult;
 import cn.toutatis.xvoid.data.common.result.ResultCode;
 import cn.toutatis.xvoid.spring.business.open.request.WechatOfficialAccountRequest;
-import cn.toutatis.xvoid.support.spring.toolkits.VoidSpringToolkit;
+import cn.toutatis.xvoid.spring.support.toolkits.VoidSpringToolkit;
 import cn.toutatis.xvoid.toolkit.formatting.XmlToolkit;
 import cn.toutatis.xvoid.toolkit.log.LoggerToolkit;
 import cn.toutatis.xvoid.toolkit.validator.Validator;

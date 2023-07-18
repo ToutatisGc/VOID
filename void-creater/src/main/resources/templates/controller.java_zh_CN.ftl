@@ -9,12 +9,12 @@ import org.springframework.web.servlet.ModelAndView;
 <#--import org.springframework.context.annotation.Scope;-->
 <#--import org.springframework.transaction.annotation.Transactional;-->
 <#if restControllerStyle>
-import cn.toutatis.xvoid.support.spring.enhance.controller.BaseControllerImpl;
+import cn.toutatis.xvoid.spring.support.enhance.controller.BaseControllerImpl;
 import ${package.Service}.${table.serviceName};
 import ${package.Entity}.${entity};
-import cn.toutatis.xvoid.support.spring.annotations.VoidController;
-import cn.toutatis.xvoid.support.spring.annotations.LogHandle;
-import cn.toutatis.xvoid.support.spring.config.VoidConfiguration;
+import cn.toutatis.xvoid.spring.support.spring.annotations.VoidController;
+import cn.toutatis.xvoid.spring.support.spring.annotations.LogHandle;
+import cn.toutatis.xvoid.spring.support.config.VoidConfiguration;
 <#--import org.springframework.web.bind.annotation.RestController;-->
 <#else>
 import org.springframework.stereotype.Controller;
