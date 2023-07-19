@@ -1,4 +1,4 @@
-package cn.toutatis.xvoid.spring.support.config.orm.mybatisplus.support;
+package cn.toutatis.xvoid.spring.support.enhance.orm.mybatisplus.support;
 
 import cn.toutatis.xvoid.data.common.EntityBasicAttribute;
 import cn.toutatis.xvoid.data.common.result.DataStatus;

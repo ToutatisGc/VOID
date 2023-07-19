@@ -1,4 +1,4 @@
-package cn.toutatis.xvoid.spring.support.config.orm.mybatisplus
+package cn.toutatis.xvoid.spring.support.enhance.orm.mybatisplus
 
 import com.baomidou.mybatisplus.annotation.DbType
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor

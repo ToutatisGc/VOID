@@ -37,7 +37,7 @@ class VoidKnife4JConfiguration {
                     .url("https://github.com/ToutatisGc")
                 )
                 .title(docConfig.title)
-                .version(Version.`$DEFAULT`.version)
+                .version(Meta.VERSION)
                 .description(docConfig.description)
                 .termsOfService("https://doc.xvoid.cn")
                 .license(License().name("Apache 2.0").url("https://doc.xvoid.cn"))

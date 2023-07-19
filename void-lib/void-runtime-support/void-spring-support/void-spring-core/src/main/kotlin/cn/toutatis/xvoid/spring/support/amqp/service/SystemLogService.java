@@ -1,7 +1,7 @@
 package cn.toutatis.xvoid.spring.support.amqp.service;
 
 import cn.toutatis.xvoid.spring.support.amqp.entity.SystemLog;
-import cn.toutatis.xvoid.spring.support.config.orm.mybatisplus.support.VoidMybatisService;
+import cn.toutatis.xvoid.spring.support.enhance.orm.mybatisplus.support.VoidMybatisService;
 
 /**
  * <p>

@@ -14,7 +14,7 @@ import cn.toutatis.xvoid.spring.configure.system.VoidConfiguration;
 import cn.toutatis.xvoid.spring.support.core.file.MinIOShell;
 import cn.toutatis.xvoid.spring.support.core.file.persistence.SystemResourceMapper;
 import cn.toutatis.xvoid.spring.support.core.file.service.SystemResourceService;
-import cn.toutatis.xvoid.spring.support.config.orm.mybatisplus.support.VoidMybatisServiceImpl;
+import cn.toutatis.xvoid.spring.support.enhance.orm.mybatisplus.support.VoidMybatisServiceImpl;
 import cn.toutatis.xvoid.toolkit.file.FileToolkit;
 import cn.toutatis.xvoid.toolkit.file.image.CompressConfig;
 import cn.toutatis.xvoid.toolkit.file.image.ImageCompressToolKit;

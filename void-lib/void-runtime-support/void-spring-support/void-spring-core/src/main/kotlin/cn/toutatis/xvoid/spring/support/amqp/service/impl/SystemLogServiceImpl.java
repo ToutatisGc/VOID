@@ -3,7 +3,7 @@ package cn.toutatis.xvoid.spring.support.amqp.service.impl;
 import cn.toutatis.xvoid.spring.support.amqp.entity.SystemLog;
 import cn.toutatis.xvoid.spring.support.amqp.persistence.SystemLogMapper;
 import cn.toutatis.xvoid.spring.support.amqp.service.SystemLogService;
-import cn.toutatis.xvoid.spring.support.config.orm.mybatisplus.support.VoidMybatisServiceImpl;
+import cn.toutatis.xvoid.spring.support.enhance.orm.mybatisplus.support.VoidMybatisServiceImpl;
 import org.springframework.stereotype.Service;
 
 /**

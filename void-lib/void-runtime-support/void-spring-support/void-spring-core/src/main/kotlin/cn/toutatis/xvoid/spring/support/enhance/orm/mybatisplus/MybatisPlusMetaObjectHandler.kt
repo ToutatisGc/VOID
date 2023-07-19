@@ -1,4 +1,4 @@
-package cn.toutatis.xvoid.spring.support.config.orm.mybatisplus
+package cn.toutatis.xvoid.spring.support.enhance.orm.mybatisplus
 
 import cn.toutatis.xvoid.data.common.result.DataStatus
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler
