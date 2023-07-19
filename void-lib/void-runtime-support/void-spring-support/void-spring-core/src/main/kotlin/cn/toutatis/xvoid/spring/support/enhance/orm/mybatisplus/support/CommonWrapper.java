@@ -1,7 +1,7 @@
 package cn.toutatis.xvoid.spring.support.enhance.orm.mybatisplus.support;
 
-import cn.toutatis.xvoid.data.common.EntityBasicAttribute;
-import cn.toutatis.xvoid.data.common.result.DataStatus;
+import cn.toutatis.xvoid.orm.base.data.common.EntityBasicAttribute;
+import cn.toutatis.xvoid.orm.base.data.common.result.DataStatus;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 
 /**

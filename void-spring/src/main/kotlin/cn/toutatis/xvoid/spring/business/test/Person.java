@@ -1,6 +1,6 @@
 package cn.toutatis.xvoid.spring.business.test;
 
-import cn.toutatis.xvoid.data.common.EntityBasicAttribute;
+import cn.toutatis.xvoid.orm.base.data.common.EntityBasicAttribute;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import io.swagger.annotations.ApiModel;

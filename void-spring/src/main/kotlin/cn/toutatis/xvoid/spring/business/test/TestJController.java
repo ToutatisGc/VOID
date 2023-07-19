@@ -1,8 +1,8 @@
 package cn.toutatis.xvoid.spring.business.test;
 
-import cn.toutatis.xvoid.bussiness.forum.entity.ForumArticle;
-import cn.toutatis.xvoid.bussiness.forum.persistence.ForumArticleMapper;
-import cn.toutatis.xvoid.bussiness.forum.persistence.ForumArticleRepository;
+import cn.toutatis.xvoid.orm.forum.entity.ForumArticle;
+import cn.toutatis.xvoid.orm.forum.persistence.ForumArticleMapper;
+import cn.toutatis.xvoid.orm.forum.persistence.ForumArticleRepository;
 import cn.toutatis.xvoid.spring.business.user.persistence.SystemAuthPathRepository;
 import cn.toutatis.xvoid.spring.annotations.application.VoidController;
 import org.springframework.beans.factory.annotation.Autowired;

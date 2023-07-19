@@ -17,7 +17,7 @@ import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
 import javax.persistence.MappedSuperclass;
 
-import cn.toutatis.xvoid.data.common.EntityBasicAttribute;
+import cn.toutatis.xvoid.orm.base.data.common.EntityBasicAttribute;
 import org.hibernate.AnnotationException;
 import org.hibernate.annotations.common.reflection.XAnnotatedElement;
 import org.hibernate.annotations.common.reflection.XClass;
@@ -25,11 +25,6 @@ import org.hibernate.annotations.common.reflection.XProperty;
 import org.hibernate.boot.spi.MetadataBuildingContext;
 import org.hibernate.cfg.annotations.EntityBinder;
 import org.hibernate.mapping.PersistentClass;
-
-import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 
 /**
  * 解决hibernate父类属性顺序和当前类属性混乱

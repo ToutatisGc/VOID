@@ -1,7 +1,7 @@
 package cn.toutatis.xvoid.spring.support.amqp.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
-import cn.toutatis.xvoid.data.common.EntityBasicAttribute;
+import cn.toutatis.xvoid.orm.base.data.common.EntityBasicAttribute;
 import com.baomidou.mybatisplus.annotation.TableField;
 import java.io.Serializable;
 import io.swagger.annotations.ApiModel;

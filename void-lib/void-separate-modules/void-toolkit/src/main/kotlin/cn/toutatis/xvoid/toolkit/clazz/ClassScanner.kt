@@ -113,7 +113,4 @@ class ClassScanner : ResourceLoaderAware {
         return false
     }
 
-
-
-
 }

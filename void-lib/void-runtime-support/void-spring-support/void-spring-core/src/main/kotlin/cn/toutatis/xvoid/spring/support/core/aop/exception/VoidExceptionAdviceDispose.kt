@@ -1,8 +1,8 @@
 package cn.toutatis.xvoid.spring.support.core.aop.exception
 
 import cn.toutatis.xvoid.common.standard.StandardFields
-import cn.toutatis.xvoid.data.common.result.ProxyResult
-import cn.toutatis.xvoid.data.common.result.ResultCode
+import cn.toutatis.xvoid.orm.base.data.common.result.ProxyResult
+import cn.toutatis.xvoid.orm.base.data.common.result.ResultCode
 import cn.toutatis.xvoid.spring.configure.system.enums.global.RunMode
 import cn.toutatis.xvoid.spring.configure.system.VoidConfiguration
 import cn.toutatis.xvoid.toolkit.constant.Time

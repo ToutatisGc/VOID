@@ -1,8 +1,8 @@
 package cn.toutatis.xvoid.spring.support.core.file.service;
 
 import cn.toutatis.xvoid.common.enums.FileFields;
-import cn.toutatis.xvoid.data.common.base.SystemResource;
-import cn.toutatis.xvoid.data.common.result.Result;
+import cn.toutatis.xvoid.orm.base.data.common.base.SystemResource;
+import cn.toutatis.xvoid.orm.base.data.common.result.Result;
 import cn.toutatis.xvoid.spring.configure.system.enums.storage.ObjectStorageMode;
 import cn.toutatis.xvoid.spring.support.enhance.orm.mybatisplus.support.VoidMybatisService;
 import org.springframework.web.multipart.MultipartFile;

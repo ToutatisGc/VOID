@@ -1,10 +1,10 @@
 package cn.toutatis.xvoid.spring.business.test
 
-import cn.toutatis.xvoid.bussiness.forum.entity.ForumArticle
-import cn.toutatis.xvoid.bussiness.forum.persistence.ForumArticleMapper
-import cn.toutatis.xvoid.bussiness.forum.persistence.ForumArticleRepository
-import cn.toutatis.xvoid.data.common.result.ProxyResult
-import cn.toutatis.xvoid.data.common.result.ResultCode
+import cn.toutatis.xvoid.orm.forum.entity.ForumArticle
+import cn.toutatis.xvoid.orm.forum.persistence.ForumArticleMapper
+import cn.toutatis.xvoid.orm.forum.persistence.ForumArticleRepository
+import cn.toutatis.xvoid.orm.base.data.common.result.ProxyResult
+import cn.toutatis.xvoid.orm.base.data.common.result.ResultCode
 import cn.toutatis.xvoid.spring.business.test.persistence.PersonMapper
 import cn.toutatis.xvoid.spring.support.amqp.AmqpShell
 import cn.toutatis.xvoid.spring.support.amqp.entity.SystemLog

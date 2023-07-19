@@ -1,8 +1,8 @@
 package cn.toutatis.xvoid.spring.core.route.background.auth;
 
-import cn.toutatis.xvoid.data.common.result.ProxyResult;
-import cn.toutatis.xvoid.data.common.result.ResultCode;
-import cn.toutatis.xvoid.data.common.security.RegistryType;
+import cn.toutatis.xvoid.orm.base.data.common.result.ProxyResult;
+import cn.toutatis.xvoid.orm.base.data.common.result.ResultCode;
+import cn.toutatis.xvoid.orm.base.data.common.security.RegistryType;
 import cn.toutatis.xvoid.spring.core.tools.ViewToolkit;
 import cn.toutatis.xvoid.spring.annotations.application.VoidController;
 import cn.toutatis.xvoid.toolkit.validator.Validator;

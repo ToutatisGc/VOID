@@ -1,6 +1,6 @@
 package cn.toutatis.xvoid.spring.business.user.persistence;
 
-import cn.toutatis.xvoid.data.common.security.SystemUserLogin;
+import cn.toutatis.xvoid.orm.base.data.common.security.SystemUserLogin;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

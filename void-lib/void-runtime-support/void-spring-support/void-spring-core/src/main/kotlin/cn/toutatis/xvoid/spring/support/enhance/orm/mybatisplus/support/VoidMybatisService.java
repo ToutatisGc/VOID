@@ -1,6 +1,6 @@
 package cn.toutatis.xvoid.spring.support.enhance.orm.mybatisplus.support;
 
-import cn.toutatis.xvoid.spring.support.SheetExportType;
+import cn.toutatis.xvoid.common.enums.sheet.SheetExportType;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 

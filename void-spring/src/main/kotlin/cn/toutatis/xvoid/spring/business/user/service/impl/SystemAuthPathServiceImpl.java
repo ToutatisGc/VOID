@@ -1,8 +1,8 @@
 package cn.toutatis.xvoid.spring.business.user.service.impl;
 
-import cn.toutatis.xvoid.data.common.security.SystemAuthPath;
-import cn.toutatis.xvoid.data.common.security.SystemAuthRole;
-import cn.toutatis.xvoid.data.common.security.SystemRolePathRelation;
+import cn.toutatis.xvoid.orm.base.data.common.security.SystemAuthPath;
+import cn.toutatis.xvoid.orm.base.data.common.security.SystemAuthRole;
+import cn.toutatis.xvoid.orm.base.data.common.security.SystemRolePathRelation;
 import cn.toutatis.xvoid.spring.business.user.persistence.SystemAuthPathMapper;
 import cn.toutatis.xvoid.spring.business.user.persistence.SystemRolePathRelationMapper;
 import cn.toutatis.xvoid.spring.business.user.service.SystemAuthPathService;

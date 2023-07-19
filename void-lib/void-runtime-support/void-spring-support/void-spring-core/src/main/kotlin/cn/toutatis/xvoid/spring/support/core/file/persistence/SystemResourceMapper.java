@@ -1,6 +1,6 @@
 package cn.toutatis.xvoid.spring.support.core.file.persistence;
 
-import cn.toutatis.xvoid.data.common.base.SystemResource;
+import cn.toutatis.xvoid.orm.base.data.common.base.SystemResource;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;

@@ -1,6 +1,6 @@
 package cn.toutatis.xvoid.spring.business.user.service;
 
-import cn.toutatis.xvoid.data.common.security.SystemRolePathRelation;
+import cn.toutatis.xvoid.orm.base.data.common.security.SystemRolePathRelation;
 import cn.toutatis.xvoid.spring.support.enhance.orm.mybatisplus.support.VoidMybatisService;
 
 /**

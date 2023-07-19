@@ -1,6 +1,6 @@
 package cn.toutatis.xvoid.spring.business.user.persistence;
 
-import cn.toutatis.xvoid.data.common.security.SystemAuthPath;
+import cn.toutatis.xvoid.orm.base.data.common.security.SystemAuthPath;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
