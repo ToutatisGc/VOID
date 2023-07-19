@@ -1,4 +1,4 @@
-package cn.toutatis.xvoid;
+package cn.toutatis.xvoid.common;
 
 /**
  * @author Toutatis_Gc

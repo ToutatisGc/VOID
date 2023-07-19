@@ -43,7 +43,18 @@ mybatis-plus:
 knife4j:
   enable: true
   setting:
-    enableDebug: true
-    swaggerModelName: 实体类列表
+    enable-debug: true
+    swagger-model-name: 实体类列表
+    enable-version: true
+    enable-footer: false
+    enable-footer-custom: true
+    footer-custom-content: "Apache License 2.0 | Copyright  2020-[XVOID]-[Toutatis_Gc](https://github.com/ToutatisGc)"
+springdoc:
+  model-and-view-allowed: true
+  swagger-ui:
+    try-it-out-enabled: true
+    display-request-duration: true
+#  show-actuator: true
 datasource:
   protocol: jdbc:p6spy:mysql://
+

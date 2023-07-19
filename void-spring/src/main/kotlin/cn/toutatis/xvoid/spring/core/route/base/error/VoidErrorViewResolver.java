@@ -1,6 +1,6 @@
 package cn.toutatis.xvoid.spring.core.route.base.error;
 
-import cn.toutatis.xvoid.Version;
+import cn.toutatis.xvoid.common.Version;
 import cn.toutatis.xvoid.common.standard.StandardFields;
 import cn.toutatis.xvoid.data.common.result.ResultCode;
 import cn.toutatis.xvoid.spring.core.tools.ViewToolkit;

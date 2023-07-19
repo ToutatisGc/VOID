@@ -20,7 +20,7 @@ import java.util.List;
  */
 public class VoidMybatisServiceImpl<M extends BaseMapper<T>, T extends EntityBasicAttribute<T>> extends ServiceImpl<M, T> implements VoidMybatisService<T> {
 
-    public CommonWrapper<T> commonWrapper = new CommonWrapper<>();
+    public CommonWrapper<T> wrapper = new CommonWrapper<>();
 
     @Autowired
     protected M baseMapper;

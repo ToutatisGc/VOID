@@ -15,7 +15,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.v3.oas.annotations.Operation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,7 +36,7 @@ import java.util.Map;
 @Transactional(rollbackFor = Exception.class)
 public class BaseControllerImpl<O extends EntityBasicAttribute<O>, SERVICE extends VoidMybatisService<O>> implements BaseController<O> {
 
-    private final Logger logger = LoggerFactory.getLogger(getClass());
+    protected final Logger logger = LoggerFactory.getLogger(getClass());
 
     @Autowired
     private HttpServletRequest request;
@@ -49,7 +49,7 @@ public class BaseControllerImpl<O extends EntityBasicAttribute<O>, SERVICE exten
 
     private final Boolean platformMode;
 
-    private final CommonWrapper<O> commonWrapper = new CommonWrapper<>();
+    protected final CommonWrapper<O> wrapper = new CommonWrapper<>();
 
     private ProxyResult result;
 
@@ -64,7 +64,7 @@ public class BaseControllerImpl<O extends EntityBasicAttribute<O>, SERVICE exten
     }
 
     @Override
-    @ApiOperation("获取实体列表")
+    @Operation(summary = "获取实体列表")
     @ApiImplicitParams({
             @ApiImplicitParam(name="pagingQuery",value="分页对象",required=false,paramType="query",dataTypeClass = PagingQuery.class),
             @ApiImplicitParam(name="obj",value="操作对象",required=false,paramType="query",dataTypeClass = Object.class)

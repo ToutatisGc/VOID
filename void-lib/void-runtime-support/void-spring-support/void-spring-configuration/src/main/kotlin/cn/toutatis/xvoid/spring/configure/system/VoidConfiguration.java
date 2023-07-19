@@ -1,6 +1,6 @@
 package cn.toutatis.xvoid.spring.configure.system;
 
-import cn.toutatis.xvoid.Version;
+import cn.toutatis.xvoid.common.Version;
 import cn.toutatis.xvoid.spring.configure.system.enums.global.RunMode;
 import cn.toutatis.xvoid.spring.configure.system.enums.qos.AntiLeechStrategy;
 import cn.toutatis.xvoid.spring.configure.system.enums.storage.ObjectStorageMode;
@@ -132,7 +132,7 @@ public class VoidConfiguration {
         /**
          * 文档标题
          */
-        private String title = "VOID文档";
+        private String title = "VOID接口文档";
 
         public String getBasePackage() {
             return basePackage;

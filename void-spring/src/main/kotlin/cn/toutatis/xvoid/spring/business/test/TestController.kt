@@ -144,11 +144,9 @@ open class TestController {
     @Autowired
     private lateinit var forumArticleRepository: ForumArticleRepository
 
-    @Autowired
 //    private lateinit var forumArticleCategoryMapper: ForumArticleCategoryMapper
 
     @RequestMapping("/test123", method = [RequestMethod.POST])
-    @Throws(Exception::class)
     open fun test123() {
         val forumArticle = ForumArticle()
         forumArticle.title = "Test-${RandomStringUtils.randomAlphabetic(8)}"

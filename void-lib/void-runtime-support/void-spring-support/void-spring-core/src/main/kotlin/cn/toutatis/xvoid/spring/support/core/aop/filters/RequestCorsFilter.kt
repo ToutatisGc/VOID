@@ -16,9 +16,10 @@ class RequestCorsFilter : Filter{
         /*TODO 跨域处理器*/
         val httpServletRequest = request as HttpServletRequest
         val headerNames = httpServletRequest.headerNames
-        for (headerName in headerNames) {
-            System.err.println(headerName)
-        }
+        /*TODO 开放HEADERS*/
+//        for (headerName in headerNames) {
+//            System.err.println(headerName)
+//        }
         filterChain.doFilter(request, response)
     }
 
