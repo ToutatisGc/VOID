@@ -15,6 +15,8 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 import org.jetbrains.annotations.NotNull;
 
 import javax.persistence.*;
@@ -29,18 +31,20 @@ import java.util.List;
 @JsonIgnoreProperties({"reservedString","reservedInt"})
 @ApiModel(value="文章归属集合类",description="例如文章在:Python学习&机器学习集合",parent = EntityBasicAttribute.class)
 @TableName("vb_forum_article_category")
+@DynamicInsert @DynamicUpdate
 @Entity @Table(name = "vb_forum_article_category",
         indexes = {@Index(name = "NAME_INDEX", columnList = "name")}
 ) @org.hibernate.annotations.Table(appliesTo = "vb_forum_article_category", comment = "文章归属集合类")
 public class ForumArticleCategory extends EntityBasicAttribute<ForumArticleCategory> implements Tree<ForumArticleCategory,ForumArticle> {
-
     @Serial
     private static final long serialVersionUID = 1L;
+
+    {this.setBusinessType(BusinessType.XVOID_FORUM);}
 
     @ApiModelProperty(value = "主键ID",required = true)
     @Id @TableId(value = "id",type = IdType.AUTO)
     @Column(name="id",columnDefinition = "INT AUTO_INCREMENT COMMENT '主键ID'")
-    private Integer id;
+    private int id;
 
     @ApiModelProperty(value = "父ID")
     @TableField("parentId")

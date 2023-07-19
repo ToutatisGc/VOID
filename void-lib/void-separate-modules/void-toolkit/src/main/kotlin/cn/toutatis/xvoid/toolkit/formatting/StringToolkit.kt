@@ -11,6 +11,30 @@ import java.lang.StringBuilder
  */
 object StringToolkit {
 
+    /**
+     * Concat string
+     * 合并字符串
+     * @param strArr 多个字符串
+     * @param separator 分隔符
+     * @return 字符串连接
+     */
+    @JvmStatic
+    fun concatString(vararg strArr : String,separator:String = ""):String?{
+        if (strArr.isEmpty()){
+            return null
+        }else{
+            if (strArr.size == 1){ return strArr[0] }
+            val stringBuilder = StringBuilder()
+            for (i in strArr.indices){
+                val s = strArr[i]
+                stringBuilder.append(s)
+                if (i != strArr.lastIndex){
+                    stringBuilder.append(separator)
+                }
+            }
+            return stringBuilder.toString()
+        }
+    }
 
     /**
      * Line wrap

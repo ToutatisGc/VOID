@@ -1,7 +1,8 @@
 package cn.toutatis.xvoid.orm.base.data.common;
 
-import cn.toutatis.xvoid.toolkit.constant.Time;
+import cn.toutatis.xvoid.BusinessType;
 import cn.toutatis.xvoid.orm.base.data.common.result.DataStatus;
+import cn.toutatis.xvoid.toolkit.constant.Time;
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableLogic;
@@ -34,7 +35,16 @@ import java.time.format.DateTimeFormatter;
 @Data
 @MappedSuperclass
 @ApiModel(value = "EntityBasicAttribute", description = "基础实体类")
-public class EntityBasicAttribute<O extends Model<?>> extends Model<O> {
+public abstract class EntityBasicAttribute<O extends Model<?>> extends Model<O> {
+
+    /**
+     * 业务类型
+     */
+    @Enumerated(EnumType.STRING)
+    @TableField("businessType")
+    @ApiModelProperty(value="业务类型")
+    @Column(name="businessType",nullable = false,columnDefinition = "VARCHAR(64) NOT NULL COMMENT '业务类型'")
+    protected BusinessType businessType = BusinessType.XVOID_SYSTEM;
 
     /**
      * 预留整型值
@@ -42,7 +52,7 @@ public class EntityBasicAttribute<O extends Model<?>> extends Model<O> {
     @TableField("rInt")
     @ApiModelProperty(value="预留整形值")
     @Column(name="rInt",columnDefinition = "INT COMMENT '预留整形值'")
-    public Integer reservedInt;
+    protected Integer reservedInt;
 
     /**
      * 预留字符串值
@@ -50,7 +60,7 @@ public class EntityBasicAttribute<O extends Model<?>> extends Model<O> {
     @TableField("rStr")
     @ApiModelProperty(value="预留字符串")
     @Column(name="rStr",columnDefinition = "VARCHAR(255) COMMENT '预留字符串'")
-    public String reservedString;
+    protected String reservedString;
 
     /**
      * 创建日期
@@ -58,8 +68,8 @@ public class EntityBasicAttribute<O extends Model<?>> extends Model<O> {
     @JsonIgnore
     @TableField(value = "createTime",fill = FieldFill.INSERT)
     @ApiModelProperty(value="创建日期", required=true)
-    @Column(nullable = false,columnDefinition = "DATETIME DEFAULT current_timestamp() COMMENT '创建日期'")
-    public LocalDateTime createTime;
+    @Column(columnDefinition = "DATETIME NOT NULL DEFAULT current_timestamp() COMMENT '创建日期'")
+    protected LocalDateTime createTime;
 
     /**
      * 创建操作人
@@ -67,8 +77,8 @@ public class EntityBasicAttribute<O extends Model<?>> extends Model<O> {
     @JsonIgnore
     @TableField(value = "createBy")
     @ApiModelProperty(value="创建操作人")
-    @Column(columnDefinition = "VARCHAR(32) DEFAULT 'SYSTEM' COMMENT '创建操作人'")
-    public String createBy;
+    @Column(columnDefinition = "VARCHAR(32) NOT NULL DEFAULT 'SYSTEM' COMMENT '创建操作人'")
+    protected String createBy;
 
     /**
      * 最后更新日期
@@ -76,14 +86,14 @@ public class EntityBasicAttribute<O extends Model<?>> extends Model<O> {
     @JsonIgnore
     @TableField(value = "lastUpdateTime",fill = FieldFill.INSERT_UPDATE)
     @ApiModelProperty(value="最后更新日期", required=true)
-    @Column(nullable = false,columnDefinition = "DATETIME DEFAULT current_timestamp() COMMENT '最后更新日期'")
-    public LocalDateTime lastUpdateTime;
+    @Column(columnDefinition = "DATETIME NOT NULL DEFAULT current_timestamp() COMMENT '最后更新日期'")
+    protected LocalDateTime lastUpdateTime;
 
     @JsonIgnore
     @TableField(value = "updateBy")
     @ApiModelProperty(value="更新操作人")
-    @Column(columnDefinition = "VARCHAR(32) DEFAULT 'SYSTEM' COMMENT '更新操作人'")
-    public String updateBy;
+    @Column(columnDefinition = "VARCHAR(32) NOT NULL DEFAULT 'SYSTEM' COMMENT '更新操作人'")
+    protected String updateBy;
 
     /**
      * 版本号
@@ -92,7 +102,7 @@ public class EntityBasicAttribute<O extends Model<?>> extends Model<O> {
     @Version
     @TableField(value = "version",fill = FieldFill.INSERT)
     @ApiModelProperty(value="数据版本号", required=true)
-    @Column(nullable = false,columnDefinition = "INT DEFAULT 0 COMMENT '版本号'")
+    @Column(columnDefinition = "INT NOT NULL DEFAULT 0 COMMENT '版本号'")
     private Integer version;
 
     /**
@@ -101,8 +111,8 @@ public class EntityBasicAttribute<O extends Model<?>> extends Model<O> {
     @Enumerated(EnumType.ORDINAL)
     @TableField(value = "`status`",fill = FieldFill.INSERT)
     @ApiModelProperty(value="数据状态标志", required=true)
-    @Column(nullable = false,columnDefinition = "TINYINT DEFAULT 0 COMMENT '数据状态'")
-    public DataStatus status;
+    @Column(nullable = false,columnDefinition = "TINYINT NOT NULL DEFAULT 0 COMMENT '数据状态'")
+    protected DataStatus status = DataStatus.SYS_OPEN_0000;
 
     /**
      * 逻辑删除状态
@@ -112,8 +122,8 @@ public class EntityBasicAttribute<O extends Model<?>> extends Model<O> {
     @Enumerated(EnumType.ORDINAL)
     @TableField(value = "logicDeleted",fill = FieldFill.INSERT)
     @ApiModelProperty(value="逻辑删除标志", required=true)
-    @Column(nullable = false,columnDefinition = "TINYINT DEFAULT 0 COMMENT '0正常:1删除'")
-    public DataStatus logicDeleted;
+    @Column(nullable = false,columnDefinition = "TINYINT NOT NULL DEFAULT 0 COMMENT '0正常:1删除'")
+    protected DataStatus logicDeleted = DataStatus.SYS_OPEN_0000;
 
     /**
      * 备注
@@ -121,7 +131,7 @@ public class EntityBasicAttribute<O extends Model<?>> extends Model<O> {
     @TableField("remark")
     @ApiModelProperty(value="备注")
     @Column(columnDefinition = "VARCHAR(255) COMMENT '备注'")
-    public String remark;
+    protected String remark;
 
     /**
      * 归属
@@ -130,20 +140,8 @@ public class EntityBasicAttribute<O extends Model<?>> extends Model<O> {
      */
     @TableField("belongTo")
     @ApiModelProperty(value="归属")
-    @Column(columnDefinition = "VARCHAR(32) DEFAULT 'SYSTEM' COMMENT '归属'")
-    public String belongTo;
-
-    /**
-     * 绑定初始数据
-     */
-    public void bindBaseProperties(){
-        LocalDateTime nowTime = LocalDateTime.now();
-        this.setCreateTime(nowTime);
-        this.setLastUpdateTime(nowTime);
-        this.setStatus(DataStatus.SYS_OPEN_0000);
-        this.setLogicDeleted(DataStatus.SYS_OPEN_0000);
-        this.setVersion(0);
-    }
+    @Column(columnDefinition = "VARCHAR(32) DEFAULT NOT NULL 'SYSTEM' COMMENT '归属'")
+    protected String belongTo;
 
     public Integer getReservedInt() {
         return reservedInt;

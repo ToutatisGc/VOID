@@ -1,6 +1,6 @@
 package cn.toutatis.xvoid.orm.forum.persistence;
 
-import cn.toutatis.xvoid.orm.forum.entity.ForumArticle;
+import cn.toutatis.xvoid.orm.forum.entity.ForumArticleCategory;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
@@ -11,6 +11,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @author Toutatis_Gc
  * @since 2022-11-26
 */
-public interface ForumArticleCategoryRepository extends JpaRepository<ForumArticle,Integer> {
+public interface ForumArticleCategoryRepository extends JpaRepository<ForumArticleCategory,Integer> {
 
 }
