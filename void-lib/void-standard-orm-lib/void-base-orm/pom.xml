@@ -19,6 +19,12 @@
            <version>0.0.0-ALPHA</version>
            <type>pom</type>
        </dependency>
+       <dependency>
+           <groupId>cn.toutatis</groupId>
+           <artifactId>void-spring-configuration</artifactId>
+           <version>0.0.0-ALPHA</version>
+           <scope>compile</scope>
+       </dependency>
    </dependencies>
 
 

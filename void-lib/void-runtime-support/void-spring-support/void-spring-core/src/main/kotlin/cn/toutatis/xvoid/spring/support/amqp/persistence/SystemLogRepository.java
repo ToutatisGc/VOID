@@ -1,7 +1,7 @@
 package cn.toutatis.xvoid.spring.support.amqp.persistence;
 
 import cn.toutatis.xvoid.spring.support.amqp.entity.SystemLog;
-import cn.toutatis.xvoid.spring.support.enhance.orm.jpa.VoidJpaRepo;
+import cn.toutatis.xvoid.orm.support.jpa.VoidJpaRepo;
 
 /**
  * <p>

@@ -1,4 +1,4 @@
-package cn.toutatis.xvoid.spring.support.enhance.orm.mybatisplus.support;
+package cn.toutatis.xvoid.orm.support.mybatisplus;
 
 /**
  * @author Toutatis_Gc

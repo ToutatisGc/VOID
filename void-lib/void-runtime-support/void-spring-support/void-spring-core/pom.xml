@@ -13,6 +13,12 @@
     <packaging>jar</packaging>
 
     <dependencies>
+        <!--基本对象映射-->
+        <dependency>
+            <groupId>cn.toutatis</groupId>
+            <artifactId>void-base-orm</artifactId>
+            <version>0.0.0-ALPHA</version>
+        </dependency>
         <dependency>
             <groupId>cn.toutatis</groupId>
             <artifactId>void-spring-annotations</artifactId>

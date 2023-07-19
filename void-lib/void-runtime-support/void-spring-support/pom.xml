@@ -68,12 +68,6 @@
             <version>0.0.0-ALPHA</version>
             <scope>compile</scope>
         </dependency>
-        <!--基本对象映射-->
-        <dependency>
-            <groupId>cn.toutatis</groupId>
-            <artifactId>void-base-orm</artifactId>
-            <version>0.0.0-ALPHA</version>
-        </dependency>
     </dependencies>
 
 </project>
