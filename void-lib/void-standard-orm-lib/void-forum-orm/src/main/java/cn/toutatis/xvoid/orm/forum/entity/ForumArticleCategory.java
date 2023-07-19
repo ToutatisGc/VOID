@@ -42,6 +42,7 @@ public class ForumArticleCategory extends EntityBasicAttribute<ForumArticleCateg
     {this.setBusinessType(BusinessType.XVOID_FORUM);}
 
     @ApiModelProperty(value = "主键ID",required = true)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id @TableId(value = "id",type = IdType.AUTO)
     @Column(name="id",columnDefinition = "INT AUTO_INCREMENT COMMENT '主键ID'")
     private int id;

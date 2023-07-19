@@ -19,12 +19,6 @@
     <dependencies>
         <dependency>
             <groupId>cn.toutatis</groupId>
-            <artifactId>void-orm-pom-support</artifactId>
-            <version>0.0.0-ALPHA</version>
-            <type>pom</type>
-        </dependency>
-        <dependency>
-            <groupId>cn.toutatis</groupId>
             <artifactId>void-base-orm</artifactId>
             <version>0.0.0-ALPHA</version>
         </dependency>
