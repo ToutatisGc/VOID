@@ -1,7 +1,7 @@
 package cn.toutatis.xvoid.spring.business.user.service;
 
 import cn.toutatis.xvoid.orm.base.data.common.security.SystemAuthRole;
-import cn.toutatis.xvoid.orm.support.mybatisplus.VoidMybatisService;
+import cn.toutatis.xvoid.orm.support.VoidService;
 
 import java.util.List;
 
@@ -13,7 +13,7 @@ import java.util.List;
  * @author Toutatis_Gc
  * @since 2022-11-25
 */
-public interface SystemAuthRoleService extends VoidMybatisService<SystemAuthRole> {
+public interface SystemAuthRoleService extends VoidService<SystemAuthRole> {
 
 
     /**

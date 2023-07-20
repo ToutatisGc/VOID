@@ -2,7 +2,7 @@ package cn.toutatis.xvoid.spring.business.user.service;
 
 import cn.toutatis.xvoid.orm.base.data.common.security.SystemAuthPath;
 import cn.toutatis.xvoid.orm.base.data.common.security.SystemAuthRole;
-import cn.toutatis.xvoid.orm.support.mybatisplus.VoidMybatisService;
+import cn.toutatis.xvoid.orm.support.VoidService;
 
 import java.util.List;
 
@@ -14,7 +14,7 @@ import java.util.List;
  * @author Toutatis_Gc
  * @since 2022-11-26
 */
-public interface SystemAuthPathService extends VoidMybatisService<SystemAuthPath> {
+public interface SystemAuthPathService extends VoidService<SystemAuthPath> {
 
     /**
      * 获取用户角色下的权限信息

@@ -11,7 +11,7 @@ import java.util.List;
 
 /**
  * <p>
- * 系统权限类 Mapper 接口
+ * 论坛业务 文章类 Mapper 接口
  * </p>
  *
  * @author Toutatis_Gc
@@ -20,13 +20,5 @@ import java.util.List;
 @Mapper
 @Repository
 public interface ForumArticleMapper extends BaseMapper<ForumArticle> {
-
-    /**
-     * 直接使用sql获取权限,该方法简单但是不利于流程
-     * @param userId 用户id
-     * @return 权限列表
-     */
-    @Select("")
-    public List<String> selectPermissionsDirect(@Param("userId") String userId);
 
 }

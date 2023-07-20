@@ -1,7 +1,7 @@
 package cn.toutatis.xvoid.spring.business.user.service;
 
 import cn.toutatis.xvoid.orm.base.data.common.security.SystemUserRoleRelation;
-import cn.toutatis.xvoid.orm.support.mybatisplus.VoidMybatisService;
+import cn.toutatis.xvoid.orm.support.VoidService;
 
 /**
  * <p>
@@ -11,6 +11,6 @@ import cn.toutatis.xvoid.orm.support.mybatisplus.VoidMybatisService;
  * @author Toutatis_Gc
  * @since 2022-11-26
 */
-public interface SystemUserRoleRelationService extends VoidMybatisService<SystemUserRoleRelation> {
+public interface SystemUserRoleRelationService extends VoidService<SystemUserRoleRelation> {
 
 }

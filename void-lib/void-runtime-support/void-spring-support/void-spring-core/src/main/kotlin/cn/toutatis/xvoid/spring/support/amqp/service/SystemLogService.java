@@ -1,7 +1,7 @@
 package cn.toutatis.xvoid.spring.support.amqp.service;
 
 import cn.toutatis.xvoid.spring.support.amqp.entity.SystemLog;
-import cn.toutatis.xvoid.orm.support.mybatisplus.VoidMybatisService;
+import cn.toutatis.xvoid.orm.support.VoidService;
 
 /**
  * <p>
@@ -11,6 +11,6 @@ import cn.toutatis.xvoid.orm.support.mybatisplus.VoidMybatisService;
  * @author Toutatis_Gc
  * @since 2022-12-04
 */
-public interface SystemLogService extends VoidMybatisService<SystemLog> {
+public interface SystemLogService extends VoidService<SystemLog> {
 
 }

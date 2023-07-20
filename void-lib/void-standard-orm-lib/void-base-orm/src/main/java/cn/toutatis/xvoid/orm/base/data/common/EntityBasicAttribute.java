@@ -18,7 +18,6 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 /**
- * @author Toutatis_Gc
  * 每个实体类都要继承该类，该类包含了一些公共的属性并且
  * 每张建立表必须字段,除中间表可缺省，其余表不得缺省
  * 注解解释
@@ -31,6 +30,7 @@ import java.time.format.DateTimeFormatter;
  * JsonIgnore 是jackson的注解，用于描述实体类的属性不被序列化
  * Version 是mybatisPlus的注解，用于描述实体类的版本号
  * TableLogic 是mybatisPlus的注解，用于描述实体类的逻辑删除字段
+ * @author Toutatis_Gc
  */
 @Data
 @MappedSuperclass

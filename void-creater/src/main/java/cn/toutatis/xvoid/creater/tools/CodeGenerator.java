@@ -7,7 +7,7 @@ import cn.toutatis.xvoid.creater.mybatisplus.generator.config.*;
 import cn.toutatis.xvoid.creater.mybatisplus.generator.config.rules.NamingStrategy;
 import cn.toutatis.xvoid.creater.mybatisplus.generator.engine.FreemarkerTemplateEngine;
 import cn.toutatis.xvoid.orm.base.data.common.EntityBasicAttribute;
-import cn.toutatis.xvoid.orm.support.mybatisplus.VoidMybatisService;
+import cn.toutatis.xvoid.orm.support.VoidService;
 import cn.toutatis.xvoid.orm.support.mybatisplus.VoidMybatisServiceImpl;
 
 /**
@@ -96,7 +96,7 @@ public class CodeGenerator {
         strategyConfig.setRestControllerStyle(true);
 
 
-        strategyConfig.setSuperServiceClass(VoidMybatisService.class);
+        strategyConfig.setSuperServiceClass(VoidService.class);
         strategyConfig.setSuperServiceImplClass(VoidMybatisServiceImpl.class);
         // 公共父类
 //        strategy.setSuperControllerClass("你自己的父类控制器,没有就不用设置!");

@@ -9,7 +9,7 @@ import cn.toutatis.xvoid.orm.base.data.common.result.ResultCode;
 import cn.toutatis.xvoid.spring.configure.system.VoidConfiguration;
 import cn.toutatis.xvoid.orm.support.mybatisplus.CommonWrapper;
 import cn.toutatis.xvoid.orm.support.mybatisplus.PagingQuery;
-import cn.toutatis.xvoid.orm.support.mybatisplus.VoidMybatisService;
+import cn.toutatis.xvoid.orm.support.VoidService;
 import cn.toutatis.xvoid.toolkit.validator.Validator;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -34,7 +34,7 @@ import java.util.Map;
  * @param <SERVICE>  继承了MP的service
  */
 @Transactional(rollbackFor = Exception.class)
-public class BaseControllerImpl<O extends EntityBasicAttribute<O>, SERVICE extends VoidMybatisService<O>> implements BaseController<O> {
+public class BaseControllerImpl<O extends EntityBasicAttribute<O>, SERVICE extends VoidService<O>> implements BaseController<O> {
 
     protected final Logger logger = LoggerFactory.getLogger(getClass());
 
