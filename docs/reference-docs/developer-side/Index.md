@@ -13,3 +13,12 @@ mvn版本,jdk版本..地址..说明
 idea无法探测注解配置
 如果需要显示注入可以把@VoidApplication注解中的scan拆分出来
 或者把IDEA警告检查设置为弱警告
+
+实时模板设置
+@Serial
+private static final long serialVersionUID = 1L;
+/**
+* 数据库表名以及业务类型
+*/
+public static final String TABLE = "";
+{this.setBusinessType(BusinessType.);}

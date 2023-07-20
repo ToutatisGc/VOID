@@ -40,6 +40,7 @@ public abstract class EntityBasicAttribute<O extends Model<?>> extends Model<O> 
     /**
      * 业务类型
      */
+    @JsonIgnore
     @Enumerated(EnumType.STRING)
     @TableField("businessType")
     @ApiModelProperty(value="业务类型")

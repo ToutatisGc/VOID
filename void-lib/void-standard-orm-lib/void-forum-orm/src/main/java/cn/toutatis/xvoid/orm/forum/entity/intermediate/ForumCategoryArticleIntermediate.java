@@ -1,5 +1,6 @@
 package cn.toutatis.xvoid.orm.forum.entity.intermediate;
 
+import cn.toutatis.xvoid.BusinessType;
 import cn.toutatis.xvoid.orm.base.data.common.EntityBasicAttribute;
 import cn.toutatis.xvoid.orm.forum.entity.ForumArticle;
 import cn.toutatis.xvoid.orm.forum.entity.ForumArticleCategory;
@@ -17,25 +18,31 @@ import lombok.ToString;
 import javax.persistence.*;
 import java.io.Serial;
 
+import static cn.toutatis.xvoid.orm.forum.entity.intermediate.ForumCategoryArticleIntermediate.TABLE;
+
 /**
  * 文章集合和文章的中间表
  * 对应 N:M 的关系
- * 一个文章合集下有多个文章,多个文章合计下也可以有多个相同文章
+ * 一个文章合集下有多个文章,多个文章合集下也可以有多个相同文章
  * @see cn.toutatis.xvoid.orm.forum.entity.ForumArticleCategory 文章合集
  * @see cn.toutatis.xvoid.orm.forum.entity.ForumArticle 文章
  * @author Toutatis_Gc
  */
-@Getter @Setter
-@ToString(callSuper = true)
+@Getter @Setter @ToString(callSuper = true)
 @JsonIgnoreProperties({"reservedString","reservedInt"})
 @ApiModel(value="论坛文章实体类",description="可浏览的文章正文",parent = EntityBasicAttribute.class)
-@TableName("vb_forum_category_article_intermediate")
-@Entity @Table(name = "vb_forum_category_article_intermediate")
-@org.hibernate.annotations.Table(appliesTo = "vb_forum_category_article_intermediate", comment = "论坛文章合集&文章中间表")
+@TableName(TABLE)
+@Entity @Table(name = TABLE)
+@org.hibernate.annotations.Table(appliesTo = TABLE, comment = "论坛文章合集&文章中间表")
 public class ForumCategoryArticleIntermediate extends EntityBasicAttribute<ForumCategoryArticleIntermediate>{
 
     @Serial
     private static final long serialVersionUID = 1L;
+    /**
+     * 数据库表名以及业务类型
+     */
+    public static final String TABLE = "vb_forum_category_article_intermediate";
+    {this.setBusinessType(BusinessType.XVOID_FORUM);}
 
     @ApiModelProperty(value = "主键ID",required = true)
     @Id @TableId(value = "id",type = IdType.AUTO)
@@ -59,7 +66,5 @@ public class ForumCategoryArticleIntermediate extends EntityBasicAttribute<Forum
     @ManyToOne
     @JoinColumn(name = "articleId",insertable = false,updatable = false)
     private ForumArticle article;
-
-
 
 }

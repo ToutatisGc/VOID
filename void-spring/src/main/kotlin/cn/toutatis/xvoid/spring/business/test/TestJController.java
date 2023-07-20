@@ -6,6 +6,7 @@ import cn.toutatis.xvoid.orm.forum.persistence.ForumArticleMapper;
 import cn.toutatis.xvoid.orm.forum.persistence.ForumArticleRepository;
 import cn.toutatis.xvoid.spring.annotations.application.VoidController;
 import cn.toutatis.xvoid.spring.business.user.persistence.SystemAuthPathRepository;
+import com.alibaba.fastjson.JSON;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -39,7 +40,7 @@ public class TestJController {
 //        System.err.println(allWithArticles);
 
         ForumArticleCategory byIdWithArticles = forumArticleCategoryRepository.findByIdWithArticles(10);
-        System.err.println(byIdWithArticles.getCategoryArticles());
+        System.err.println(JSON.toJSONString(byIdWithArticles,true));
 
 //        System.err.println(forumArticleMapper);
 //        ForumArticle forumArticle = new ForumArticle();

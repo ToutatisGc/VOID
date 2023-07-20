@@ -11,10 +11,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serial;
 
 /**
@@ -31,6 +28,7 @@ public class ForumArticleReply extends EntityBasicAttribute<ForumArticleReply> {
     private static final long serialVersionUID = 1L;
 
     @ApiModelProperty(value = "主键ID")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id @TableId(value = "id",type = IdType.AUTO)
     @Column(name="id",columnDefinition = "INT AUTO_INCREMENT COMMENT '主键ID'")
     private Integer id;

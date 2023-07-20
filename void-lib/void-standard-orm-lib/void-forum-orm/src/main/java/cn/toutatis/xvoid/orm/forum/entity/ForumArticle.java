@@ -1,5 +1,6 @@
 package cn.toutatis.xvoid.orm.forum.entity;
 
+import cn.toutatis.xvoid.BusinessType;
 import cn.toutatis.xvoid.orm.forum.enums.ArticleSource;
 import cn.toutatis.xvoid.orm.base.data.common.EntityBasicAttribute;
 import cn.toutatis.xvoid.orm.base.data.common.result.DataStatus;
@@ -16,6 +17,8 @@ import javax.persistence.*;
 import java.io.Serial;
 import java.util.List;
 
+import static cn.toutatis.xvoid.orm.forum.entity.ForumArticle.TABLE;
+
 /**
  * 文章实体类
  * 可浏览的文章正文
@@ -24,12 +27,17 @@ import java.util.List;
 @Getter @Setter @ToString(callSuper = true)
 @JsonIgnoreProperties({"reservedString","reservedInt"})
 @ApiModel(value="论坛文章实体类",description="可浏览的文章正文",parent = EntityBasicAttribute.class)
-@TableName("vb_forum_article")
-@Entity @Table(name = "vb_forum_article") @org.hibernate.annotations.Table(appliesTo = "vb_forum_article", comment = "论坛文章类")
+@TableName(TABLE)
+@Entity @Table(name = TABLE) @org.hibernate.annotations.Table(appliesTo = TABLE, comment = "论坛文章类")
 public class ForumArticle extends EntityBasicAttribute<ForumArticle> implements Node {
 
     @Serial
     private static final long serialVersionUID = 1L;
+    /**
+     * 数据库表名以及业务类型
+     */
+    public static final String TABLE = "vb_forum_article";
+    {this.setBusinessType(BusinessType.XVOID_FORUM);}
 
     @ApiModelProperty(value = "主键ID",required = true)
     @Id @TableId(value = "id",type = IdType.AUTO)
