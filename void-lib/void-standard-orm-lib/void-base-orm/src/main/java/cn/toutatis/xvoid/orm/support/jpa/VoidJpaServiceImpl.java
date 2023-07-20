@@ -4,6 +4,7 @@ import cn.toutatis.xvoid.common.enums.sheet.SheetExportType;
 import cn.toutatis.xvoid.orm.base.data.common.EntityBasicAttribute;
 import cn.toutatis.xvoid.orm.support.VoidService;
 import cn.toutatis.xvoid.orm.support.mybatisplus.PagingQuery;
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.apache.poi.ss.formula.functions.T;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,5 +38,10 @@ public class VoidJpaServiceImpl<R extends VoidJpaRepo<T,ID>,ID,T extends EntityB
     @Override
     public void export(HttpServletResponse response, SheetExportType sheetExportType, List<T> data, String fileName) {
 
+    }
+
+    @Override
+    public T getOne(Wrapper<T> queryWrapper) {
+        return null;
     }
 }
