@@ -49,7 +49,7 @@ public class ForumArticleCategory extends EntityBasicAttribute<ForumArticleCateg
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id @TableId(value = "id",type = IdType.AUTO)
     @Column(name="id",columnDefinition = "INT AUTO_INCREMENT COMMENT '主键ID'")
-    private int id;
+    private Integer id;
 
     @ApiModelProperty(value = "父ID")
     @TableField("parentId")

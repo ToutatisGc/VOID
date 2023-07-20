@@ -3,6 +3,7 @@ package cn.toutatis.xvoid.orm.forum.persistence;
 import cn.toutatis.xvoid.orm.forum.entity.ForumArticleCategory;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
@@ -16,9 +17,24 @@ import java.util.List;
 */
 public interface ForumArticleCategoryRepository extends JpaRepository<ForumArticleCategory,Integer> {
 
+    /**
+     * 查询所有文章集合下的文章
+     * @return 集合文章列表
+     */
     @Query("SELECT DISTINCT fac FROM ForumArticleCategory fac " +
             "LEFT JOIN FETCH fac.categoryArticles cai " +
             "LEFT JOIN FETCH cai.article")
     List<ForumArticleCategory> findAllWithArticles();
+
+    /**
+     * 查询置顶ID文章集合下的文章
+     * @param categoryId 集合ID
+     * @return 集合文章列表
+     */
+    @Query("SELECT DISTINCT fac FROM ForumArticleCategory fac " +
+            "LEFT JOIN FETCH fac.categoryArticles cai " +
+            "LEFT JOIN FETCH cai.article " +
+            "WHERE fac.id = :categoryId")
+    ForumArticleCategory findByIdWithArticles(@Param("categoryId") Integer categoryId);
 
 }

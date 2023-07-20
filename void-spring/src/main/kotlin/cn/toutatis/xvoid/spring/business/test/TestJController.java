@@ -35,9 +35,11 @@ public class TestJController {
 //        forumArticleCategory.setName("测试节点-"+ RandomStringUtils.randomAlphabetic(3));
 //        forumArticleCategoryRepository.save(forumArticleCategory);
 
+//        List<ForumArticleCategory> allWithArticles = forumArticleCategoryRepository.findAllWithArticles();
+//        System.err.println(allWithArticles);
 
-        List<ForumArticleCategory> allWithArticles = forumArticleCategoryRepository.findAllWithArticles();
-        System.err.println(allWithArticles);
+        ForumArticleCategory byIdWithArticles = forumArticleCategoryRepository.findByIdWithArticles(10);
+        System.err.println(byIdWithArticles.getCategoryArticles());
 
 //        System.err.println(forumArticleMapper);
 //        ForumArticle forumArticle = new ForumArticle();
