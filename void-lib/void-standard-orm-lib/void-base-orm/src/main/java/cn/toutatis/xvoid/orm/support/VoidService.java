@@ -1,7 +1,9 @@
 package cn.toutatis.xvoid.orm.support;
 
 import cn.toutatis.xvoid.common.enums.sheet.SheetExportType;
+import cn.toutatis.xvoid.orm.base.data.common.EntityBasicAttribute;
 import cn.toutatis.xvoid.orm.support.mybatisplus.PagingQuery;
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -13,7 +15,7 @@ import java.util.List;
  * 继承抽象服务
  * @param <T> 实体类
  */
-public interface VoidService<T>{
+public interface VoidService<T extends EntityBasicAttribute<T>>{
 
     /**
      * @param pagingQuery 分页对象
@@ -38,5 +40,7 @@ public interface VoidService<T>{
      * @param fileName 导出文件名
      */
     void export(HttpServletResponse response, SheetExportType sheetExportType, List<T> data, String fileName);
+
+    T getOne(Wrapper<T> queryWrapper);
 
 }
