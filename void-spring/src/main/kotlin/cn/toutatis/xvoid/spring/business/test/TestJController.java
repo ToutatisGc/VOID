@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import java.util.List;
+
 @VoidController
 @RequestMapping("/test")
 public class TestJController {
@@ -29,9 +31,13 @@ public class TestJController {
 
     @RequestMapping(value = "/test1",method = RequestMethod.POST)
     public void test1(){
-        ForumArticleCategory forumArticleCategory = new ForumArticleCategory();
-        forumArticleCategory.setName("测试节点-"+ RandomStringUtils.randomAlphabetic(3));
-        forumArticleCategoryRepository.save(forumArticleCategory);
+//        ForumArticleCategory forumArticleCategory = new ForumArticleCategory();
+//        forumArticleCategory.setName("测试节点-"+ RandomStringUtils.randomAlphabetic(3));
+//        forumArticleCategoryRepository.save(forumArticleCategory);
+
+
+        List<ForumArticleCategory> allWithArticles = forumArticleCategoryRepository.findAllWithArticles();
+        System.err.println(allWithArticles);
 
 //        System.err.println(forumArticleMapper);
 //        ForumArticle forumArticle = new ForumArticle();

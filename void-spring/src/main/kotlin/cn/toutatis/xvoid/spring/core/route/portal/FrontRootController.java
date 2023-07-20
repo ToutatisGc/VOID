@@ -22,16 +22,15 @@ public class FrontRootController {
 
     private static final String BASE_PATH = "pages/portal";
 
-    private final ViewToolkit viewToolkit;
-
-    private final VoidConfiguration.GlobalServiceConfig globalServiceConfig;
+    private final ViewToolkit viewToolkit = new ViewToolkit(BASE_PATH);;
 
     private final VoidConfiguration voidConfiguration;
+
+    private final VoidConfiguration.GlobalServiceConfig globalServiceConfig;
 
     public FrontRootController(VoidConfiguration voidConfiguration) {
         this.voidConfiguration = voidConfiguration;
         globalServiceConfig = voidConfiguration.getGlobalServiceConfig();
-        viewToolkit = new ViewToolkit(BASE_PATH);
     }
 
     @RequestMapping(value = "/",method = RequestMethod.GET)

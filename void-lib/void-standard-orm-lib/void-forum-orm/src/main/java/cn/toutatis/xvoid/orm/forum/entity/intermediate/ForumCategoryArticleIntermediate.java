@@ -1,6 +1,8 @@
 package cn.toutatis.xvoid.orm.forum.entity.intermediate;
 
 import cn.toutatis.xvoid.orm.base.data.common.EntityBasicAttribute;
+import cn.toutatis.xvoid.orm.forum.entity.ForumArticle;
+import cn.toutatis.xvoid.orm.forum.entity.ForumArticleCategory;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -12,10 +14,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serial;
 
 /**
@@ -52,6 +51,14 @@ public class ForumCategoryArticleIntermediate extends EntityBasicAttribute<Forum
     @TableField("articleId")
     @Column(name="articleId",nullable = false,columnDefinition = "INT COMMENT '文章ID'")
     private Integer articleId;
+
+    @ManyToOne
+    @JoinColumn(name = "categoryId",insertable = false,updatable = false)
+    private ForumArticleCategory category;
+
+    @ManyToOne
+    @JoinColumn(name = "articleId",insertable = false,updatable = false)
+    private ForumArticle article;
 
 
 

@@ -4,6 +4,7 @@ package cn.toutatis.xvoid.orm.forum.entity;
 import cn.toutatis.xvoid.BusinessType;
 import cn.toutatis.xvoid.orm.base.data.common.EntityBasicAttribute;
 import cn.toutatis.xvoid.orm.base.data.common.result.DataStatus;
+import cn.toutatis.xvoid.orm.forum.entity.intermediate.ForumCategoryArticleIntermediate;
 import cn.toutatis.xvoid.orm.structure.Tree;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
@@ -23,6 +24,8 @@ import javax.persistence.*;
 import java.io.Serial;
 import java.util.List;
 
+import static cn.toutatis.xvoid.orm.forum.entity.ForumArticleCategory.*;
+
 /**
  * 文章归属分类
  * @author Toutatis_Gc
@@ -30,14 +33,15 @@ import java.util.List;
 @Getter @Setter @ToString(callSuper = true)
 @JsonIgnoreProperties({"reservedString","reservedInt"})
 @ApiModel(value="文章归属集合类",description="例如文章在:Python学习&机器学习集合",parent = EntityBasicAttribute.class)
-@TableName("vb_forum_article_category")
+@TableName(TABLE)
 @DynamicInsert @DynamicUpdate
-@Entity @Table(name = "vb_forum_article_category",
-        indexes = {@Index(name = "NAME_INDEX", columnList = "name")}
-) @org.hibernate.annotations.Table(appliesTo = "vb_forum_article_category", comment = "文章归属集合类")
-public class ForumArticleCategory extends EntityBasicAttribute<ForumArticleCategory> implements Tree<ForumArticleCategory,ForumArticle> {
+@Entity @Table(name = TABLE, indexes = {@Index(name = "NAME_INDEX", columnList = "name")}
+) @org.hibernate.annotations.Table(appliesTo = TABLE, comment = "文章归属集合类")
+public class ForumArticleCategory extends EntityBasicAttribute<ForumArticleCategory> {
     @Serial
     private static final long serialVersionUID = 1L;
+
+    public static final String TABLE = "vb_forum_article_category";
 
     {this.setBusinessType(BusinessType.XVOID_FORUM);}
 
@@ -97,48 +101,8 @@ public class ForumArticleCategory extends EntityBasicAttribute<ForumArticleCateg
     @Transient @TableField(exist = false)
     private Integer associatedCount;
 
-    @Enumerated(EnumType.STRING)
-    @ApiModelProperty(value = "业务类型")
-    @TableField("businessType")
-    @Column(name="businessType",nullable = false,columnDefinition = "VARCHAR(32) COMMENT '业务类型'")
-    private BusinessType businessType = BusinessType.XVOID_FORUM;
+    @ToString.Exclude
+    @OneToMany(mappedBy = "category", fetch = FetchType.LAZY)
+    private List<ForumCategoryArticleIntermediate> categoryArticles;
 
-    @Transient @TableField(exist = false)
-    private Tree<ForumArticleCategory, ForumArticle> parent;
-
-    @Transient @TableField(exist = false)
-    private List<Tree<ForumArticleCategory, ForumArticle>> branches;
-
-    @Transient @TableField(exist = false)
-    private List<ForumArticle> nodes;
-
-    @NotNull
-    @Override
-    public Tree<ForumArticleCategory, ForumArticle> getParent() {
-        return parent;
-    }
-
-    @NotNull
-    @Override
-    public List<Tree<ForumArticleCategory, ForumArticle>> getBranch() {
-        return branches;
-    }
-
-    @NotNull
-    @Override
-    public List<ForumArticle> getNodes() {
-        return nodes;
-    }
-
-    public void setParent(Tree<ForumArticleCategory, ForumArticle> parent) {
-        this.parent = parent;
-    }
-
-    public void setBranches(List<Tree<ForumArticleCategory, ForumArticle>> branches) {
-        this.branches = branches;
-    }
-
-    public void setNodes(List<ForumArticle> nodes) {
-        this.nodes = nodes;
-    }
 }

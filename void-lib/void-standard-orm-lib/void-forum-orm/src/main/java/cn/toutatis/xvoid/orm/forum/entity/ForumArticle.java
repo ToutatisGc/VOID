@@ -152,10 +152,4 @@ public class ForumArticle extends EntityBasicAttribute<ForumArticle> implements 
     @Transient() @TableField(exist = false)
     private List<ForumArticleTags> tags;
 
-    /**
-     * 所在集合
-     */
-    @Transient() @TableField(exist = false)
-    private List<ForumArticleCategory> belongToCategories;
-
 }
