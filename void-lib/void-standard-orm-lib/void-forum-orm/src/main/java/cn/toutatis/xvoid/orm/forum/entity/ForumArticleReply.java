@@ -1,5 +1,6 @@
 package cn.toutatis.xvoid.orm.forum.entity;
 
+import cn.toutatis.xvoid.BusinessType;
 import cn.toutatis.xvoid.orm.base.data.common.EntityBasicAttribute;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -26,6 +27,11 @@ public class ForumArticleReply extends EntityBasicAttribute<ForumArticleReply> {
 
     @Serial
     private static final long serialVersionUID = 1L;
+    /**
+     * 数据库表名以及业务类型
+     */
+    public static final String TABLE = "vb_forum_article_reply";
+    {this.setBusinessType(BusinessType.XVOID_FORUM);}
 
     @ApiModelProperty(value = "主键ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)

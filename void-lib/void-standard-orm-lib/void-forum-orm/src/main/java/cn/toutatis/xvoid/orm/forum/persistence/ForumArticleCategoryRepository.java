@@ -1,7 +1,11 @@
 package cn.toutatis.xvoid.orm.forum.persistence;
 
 import cn.toutatis.xvoid.orm.forum.entity.ForumArticleCategory;
+import cn.toutatis.xvoid.orm.forum.entity.projection.ForumArticleCategoryProjection;
 import cn.toutatis.xvoid.orm.support.jpa.VoidJpaRepo;
+import org.hibernate.annotations.OrderBy;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -22,20 +26,16 @@ public interface ForumArticleCategoryRepository extends VoidJpaRepo<ForumArticle
      * 查询所有文章集合下的文章
      * @return 集合文章列表
      */
-    @Query("SELECT DISTINCT fac FROM ForumArticleCategory fac " +
-            "LEFT JOIN FETCH fac.categoryArticles cai " +
-            "LEFT JOIN FETCH cai.article")
-    List<ForumArticleCategory> findAllWithArticles();
+    @Query("""
+            SELECT fac
+            FROM ForumArticleCategory fac
+            LEFT JOIN fac.categoryArticles cai
+            LEFT JOIN cai.article
+            WHERE fac.businessType = 'XVOID_FORUM'
+            order by fac.categoryOrder DESC
+            """)
+    Page<ForumArticleCategoryProjection> findCategoryPage(Pageable pageable);
 
-    /**
-     * 查询置顶ID文章集合下的文章
-     * @param categoryId 集合ID
-     * @return 集合文章列表
-     */
-    @Query("SELECT DISTINCT fac FROM ForumArticleCategory fac " +
-            "LEFT JOIN FETCH fac.categoryArticles cai " +
-            "LEFT JOIN FETCH cai.article " +
-            "WHERE fac.id = :categoryId")
-    ForumArticleCategory findByIdWithArticles(@Param("categoryId") Integer categoryId);
+
 
 }

@@ -22,6 +22,7 @@ import org.jetbrains.annotations.NotNull;
 
 import javax.persistence.*;
 import java.io.Serial;
+import java.util.ArrayList;
 import java.util.List;
 
 import static cn.toutatis.xvoid.orm.forum.entity.ForumArticleCategory.*;
@@ -60,6 +61,11 @@ public class ForumArticleCategory extends EntityBasicAttribute<ForumArticleCateg
     @TableField("redundantId")
     @Column(name="redundantId",columnDefinition = "VARCHAR(256) COMMENT '冗余ID'")
     private String redundantId;
+
+    @ApiModelProperty(value = "层级")
+    @TableField("level")
+    @Column(name="level",nullable = false,columnDefinition = "INT DEFAULT 0 COMMENT '层级'")
+    private Integer level = 0;
 
     @ApiModelProperty(value = "集合名称")
     @TableField("name")
@@ -101,8 +107,8 @@ public class ForumArticleCategory extends EntityBasicAttribute<ForumArticleCateg
     @Transient @TableField(exist = false)
     private Integer associatedCount;
 
-    @ToString.Exclude
-    @OneToMany(mappedBy = "category", fetch = FetchType.LAZY)
-    private List<ForumCategoryArticleIntermediate> categoryArticles;
+    @TableField(exist = false)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "category")
+    private List<ForumCategoryArticleIntermediate> categoryArticles = new ArrayList<>();
 
 }

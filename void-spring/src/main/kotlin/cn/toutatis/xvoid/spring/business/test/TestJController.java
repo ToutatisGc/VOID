@@ -1,6 +1,7 @@
 package cn.toutatis.xvoid.spring.business.test;
 
 import cn.toutatis.xvoid.orm.forum.entity.ForumArticleCategory;
+import cn.toutatis.xvoid.orm.forum.entity.projection.ForumArticleCategoryProjection;
 import cn.toutatis.xvoid.orm.forum.persistence.ForumArticleCategoryRepository;
 import cn.toutatis.xvoid.orm.forum.persistence.ForumArticleMapper;
 import cn.toutatis.xvoid.orm.forum.persistence.ForumArticleRepository;
@@ -9,6 +10,8 @@ import cn.toutatis.xvoid.spring.business.user.persistence.SystemAuthPathReposito
 import com.alibaba.fastjson.JSON;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -32,24 +35,14 @@ public class TestJController {
 
     @RequestMapping(value = "/test1",method = RequestMethod.POST)
     public void test1(){
-//        ForumArticleCategory forumArticleCategory = new ForumArticleCategory();
-//        forumArticleCategory.setName("测试节点-"+ RandomStringUtils.randomAlphabetic(3));
-//        forumArticleCategoryRepository.save(forumArticleCategory);
-
-//        List<ForumArticleCategory> allWithArticles = forumArticleCategoryRepository.findAllWithArticles();
-//        System.err.println(allWithArticles);
-
-        ForumArticleCategory byIdWithArticles = forumArticleCategoryRepository.findByIdWithArticles(10);
-        System.err.println(JSON.toJSONString(byIdWithArticles,true));
-
-//        System.err.println(forumArticleMapper);
-//        ForumArticle forumArticle = new ForumArticle();
-//        forumArticle.setTitle("测试测试");
-//        forumArticle.setContent("111111111111111111111111111111111");
-//        forumArticleMapper.insert(forumArticle);
-////        System.err.println(1/0);
-////        System.err.println(systemAuthPathRepository.findAll());
-////        System.err.println(forumArticleRepository.findAll());
+        PageRequest pageRequest = PageRequest.of(0, 15);
+        Page<ForumArticleCategoryProjection> categoryPage = forumArticleCategoryRepository.findCategoryPage(pageRequest);
+        List<ForumArticleCategoryProjection> forumArticleCategoryProjections = categoryPage.stream().toList();
+//        for (ForumArticleCategoryProjection forumArticleCategoryProjection : forumArticleCategoryProjections) {
+//            System.err.println(forumArticleCategoryProjection.getName());
+//            System.err.println(forumArticleCategoryProjection.getCategoryArticles());
+//        }
+        System.err.println(forumArticleCategoryProjections);
     }
 
 }

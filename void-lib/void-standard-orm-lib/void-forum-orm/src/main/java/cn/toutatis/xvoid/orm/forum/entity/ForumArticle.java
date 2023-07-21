@@ -1,6 +1,7 @@
 package cn.toutatis.xvoid.orm.forum.entity;
 
 import cn.toutatis.xvoid.BusinessType;
+import cn.toutatis.xvoid.orm.forum.entity.intermediate.ForumArticleTagsIntermediate;
 import cn.toutatis.xvoid.orm.forum.enums.ArticleSource;
 import cn.toutatis.xvoid.orm.base.data.common.EntityBasicAttribute;
 import cn.toutatis.xvoid.orm.base.data.common.result.DataStatus;
@@ -157,7 +158,9 @@ public class ForumArticle extends EntityBasicAttribute<ForumArticle> implements 
     /**
      * 文章标签
      */
-    @Transient() @TableField(exist = false)
-    private List<ForumArticleTags> tags;
+    @ToString.Exclude
+    @TableField(exist = false)
+    @OneToMany(mappedBy = "article", fetch = FetchType.LAZY)
+    private List<ForumArticleTagsIntermediate> forumArticleTagsIntermediates;
 
 }
