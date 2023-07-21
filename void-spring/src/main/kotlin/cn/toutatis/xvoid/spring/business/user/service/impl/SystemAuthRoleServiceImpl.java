@@ -46,7 +46,7 @@ public class SystemAuthRoleServiceImpl extends VoidMybatisServiceImpl<SystemAuth
             }
             QueryWrapper<SystemAuthRole> systemAuthRoleQueryWrapper = new QueryWrapper<>();
             systemAuthRoleQueryWrapper.in("id", roleIds);
-            return baseMapper.selectList(systemAuthRoleQueryWrapper);
+            return mapper.selectList(systemAuthRoleQueryWrapper);
         }
     }
 }

@@ -4,6 +4,7 @@ import cn.toutatis.xvoid.common.enums.sheet.SheetExportType;
 import cn.toutatis.xvoid.orm.base.data.common.EntityBasicAttribute;
 import cn.toutatis.xvoid.orm.support.mybatisplus.PagingQuery;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 
@@ -41,6 +42,6 @@ public interface VoidService<T extends EntityBasicAttribute<T>>{
      */
     void export(HttpServletResponse response, SheetExportType sheetExportType, List<T> data, String fileName);
 
-    T getOne(Wrapper<T> queryWrapper);
+    T getOne(QueryWrapper<T> queryWrapper);
 
 }

@@ -49,7 +49,7 @@ public class SystemAuthPathServiceImpl extends VoidMybatisServiceImpl<SystemAuth
                 }
                 QueryWrapper<SystemAuthPath> authPathQueryWrapper = new QueryWrapper<>();
                 authPathQueryWrapper.in("id",pathIds);
-                return baseMapper.selectList(authPathQueryWrapper);
+                return mapper.selectList(authPathQueryWrapper);
             }
         }
         return null;

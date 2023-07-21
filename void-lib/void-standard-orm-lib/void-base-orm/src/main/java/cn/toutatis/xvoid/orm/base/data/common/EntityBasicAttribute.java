@@ -47,7 +47,7 @@ public abstract class EntityBasicAttribute<O extends Model<?>> extends Model<O> 
     @Enumerated(EnumType.STRING)
     @TableField("businessType")
     @ApiModelProperty(value="业务类型")
-    @Column(name="businessType",nullable = false,columnDefinition = "VARCHAR(64) NOT NULL COMMENT '业务类型'")
+    @Column(name="businessType",nullable = false,columnDefinition = "VARCHAR(64) COMMENT '业务类型'")
     protected BusinessType businessType = BusinessType.XVOID_SYSTEM;
 
     /**
@@ -144,7 +144,7 @@ public abstract class EntityBasicAttribute<O extends Model<?>> extends Model<O> 
      */
     @TableField("belongTo")
     @ApiModelProperty(value="归属")
-    @Column(columnDefinition = "VARCHAR(32) DEFAULT NOT NULL 'SYSTEM' COMMENT '归属'")
+    @Column(columnDefinition = "VARCHAR(32) NOT NULL DEFAULT 'SYSTEM' COMMENT '归属'")
     protected String belongTo;
 
     public Integer getReservedInt() {

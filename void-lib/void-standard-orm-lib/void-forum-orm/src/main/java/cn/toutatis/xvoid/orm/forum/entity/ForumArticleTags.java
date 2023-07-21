@@ -37,8 +37,7 @@ public class ForumArticleTags extends EntityBasicAttribute<ForumArticleTags> {
     {this.setBusinessType(BusinessType.XVOID_FORUM);}
 
     @ApiModelProperty(value = "主键ID",required = true)
-    @Id
-    @TableId(value = "id",type = IdType.AUTO)
+    @Id @TableId(value = "id",type = IdType.AUTO)
     @Column(name="id",columnDefinition = "INT AUTO_INCREMENT COMMENT '主键ID'")
     private Integer id;
 

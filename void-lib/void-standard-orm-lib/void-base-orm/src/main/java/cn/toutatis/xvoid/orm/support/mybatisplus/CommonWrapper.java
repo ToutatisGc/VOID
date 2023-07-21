@@ -10,18 +10,24 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
  */
 public class CommonWrapper<T extends EntityBasicAttribute<T>> {
 
+    public QueryWrapper<T> getOpenByIdWrapper(String userId){
+        QueryWrapper<T> openStatus = getOpenStatus();
+        openStatus.eq("createBy", userId);
+        return openStatus;
+    }
+
     /**
      * @return 获取开放状态的Wrapper
      */
-    public QueryWrapper<T> selectOpenWrapper(){
-        return selectByStatusWrapper(DataStatus.SYS_OPEN_0000.getCode());
+    public QueryWrapper<T> getOpenStatus(){
+        return getWrapperByDataStatus(DataStatus.SYS_OPEN_0000.getCode());
     }
 
     /**
      * @param status 列的状态
      * @return 根据status的Wrapper
      */
-    public QueryWrapper<T> selectByStatusWrapper(String status){
+    public QueryWrapper<T> getWrapperByDataStatus(String status){
         return singletonEqWrapper("status", status);
     }
 

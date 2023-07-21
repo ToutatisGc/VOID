@@ -5,6 +5,7 @@ import cn.toutatis.xvoid.orm.base.data.common.EntityBasicAttribute;
 import cn.toutatis.xvoid.orm.support.VoidService;
 import cn.toutatis.xvoid.orm.support.mybatisplus.PagingQuery;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.apache.poi.ss.formula.functions.T;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,7 +42,8 @@ public class VoidJpaServiceImpl<R extends VoidJpaRepo<T,ID>,ID,T extends EntityB
     }
 
     @Override
-    public T getOne(Wrapper<T> queryWrapper) {
+    public T getOne(QueryWrapper<T> queryWrapper) {
         return null;
     }
+
 }

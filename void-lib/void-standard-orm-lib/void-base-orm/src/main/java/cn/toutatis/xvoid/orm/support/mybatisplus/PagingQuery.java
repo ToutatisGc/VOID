@@ -2,7 +2,7 @@ package cn.toutatis.xvoid.orm.support.mybatisplus;
 
 /**
  * @author Toutatis_Gc
- * mybatis plus 分页查询对象
+ * 分页查询对象
  */
 public class PagingQuery {
 
