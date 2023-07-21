@@ -12,6 +12,10 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
+import org.springframework.data.annotation.CreatedBy;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedBy;
+import org.springframework.data.annotation.LastModifiedDate;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -70,6 +74,7 @@ public abstract class EntityBasicAttribute<O extends Model<?>> extends Model<O> 
      * 创建日期
      */
     @JsonIgnore
+    @CreatedDate
     @TableField(value = "createTime",fill = FieldFill.INSERT)
     @ApiModelProperty(value="创建日期", required=true)
     @Column(columnDefinition = "DATETIME NOT NULL DEFAULT current_timestamp() COMMENT '创建日期'")
@@ -79,6 +84,7 @@ public abstract class EntityBasicAttribute<O extends Model<?>> extends Model<O> 
      * 创建操作人
      */
     @JsonIgnore
+    @CreatedBy
     @TableField(value = "createBy")
     @ApiModelProperty(value="创建操作人")
     @Column(columnDefinition = "VARCHAR(32) NOT NULL DEFAULT 'SYSTEM' COMMENT '创建操作人'")
@@ -88,12 +94,14 @@ public abstract class EntityBasicAttribute<O extends Model<?>> extends Model<O> 
      * 最后更新日期
      */
     @JsonIgnore
+    @LastModifiedDate
     @TableField(value = "lastUpdateTime",fill = FieldFill.INSERT_UPDATE)
     @ApiModelProperty(value="最后更新日期", required=true)
     @Column(columnDefinition = "DATETIME NOT NULL DEFAULT current_timestamp() COMMENT '最后更新日期'")
     protected LocalDateTime lastUpdateTime;
 
     @JsonIgnore
+    @LastModifiedBy
     @TableField(value = "updateBy")
     @ApiModelProperty(value="更新操作人")
     @Column(columnDefinition = "VARCHAR(32) NOT NULL DEFAULT 'SYSTEM' COMMENT '更新操作人'")
