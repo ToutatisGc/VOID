@@ -3,7 +3,7 @@ package cn.toutatis.xvoid.spring.support.core.file.service.impl;
 
 import cn.toutatis.xvoid.common.enums.FileFields;
 import cn.toutatis.xvoid.common.exception.ContinueTransactionException;
-import cn.toutatis.xvoid.orm.base.data.common.base.SystemResource;
+import cn.toutatis.xvoid.orm.base.infrastructure.entity.SystemResource;
 import cn.toutatis.xvoid.orm.base.data.common.result.ProxyResult;
 import cn.toutatis.xvoid.orm.base.data.common.result.Result;
 import cn.toutatis.xvoid.orm.base.data.common.result.ResultCode;

@@ -1,6 +1,7 @@
-package cn.toutatis.xvoid.orm.base.data.common.security;
+package cn.toutatis.xvoid.orm.base.authentication.entity;
 
 import cn.toutatis.xvoid.orm.base.data.common.EntityBasicAttribute;
+import cn.toutatis.xvoid.orm.base.authentication.enums.RegistryType;
 import cn.toutatis.xvoid.toolkit.constant.Time;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;

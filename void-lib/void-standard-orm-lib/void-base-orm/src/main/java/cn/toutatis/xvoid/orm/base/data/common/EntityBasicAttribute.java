@@ -11,12 +11,13 @@ import com.baomidou.mybatisplus.extension.activerecord.Model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Data;
+import lombok.*;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+
 /**
  * 每个实体类都要继承该类，该类包含了一些公共的属性并且
  * 每张建立表必须字段,除中间表可缺省，其余表不得缺省
@@ -32,10 +33,12 @@ import java.time.format.DateTimeFormatter;
  * TableLogic 是mybatisPlus的注解，用于描述实体类的逻辑删除字段
  * @author Toutatis_Gc
  */
-@Data
+@Getter @Setter @ToString
 @MappedSuperclass
 @ApiModel(value = "EntityBasicAttribute", description = "基础实体类")
 public abstract class EntityBasicAttribute<O extends Model<?>> extends Model<O> {
+
+    protected EntityBasicAttribute(){}
 
     /**
      * 业务类型
@@ -251,4 +254,5 @@ public abstract class EntityBasicAttribute<O extends Model<?>> extends Model<O> 
     public void setBelongTo(String belongTo) {
         this.belongTo = belongTo;
     }
+
 }

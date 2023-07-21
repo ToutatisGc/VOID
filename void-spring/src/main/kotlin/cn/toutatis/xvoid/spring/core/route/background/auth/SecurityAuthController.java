@@ -2,13 +2,12 @@ package cn.toutatis.xvoid.spring.core.route.background.auth;
 
 import cn.toutatis.xvoid.orm.base.data.common.result.ProxyResult;
 import cn.toutatis.xvoid.orm.base.data.common.result.ResultCode;
-import cn.toutatis.xvoid.orm.base.data.common.security.RegistryType;
+import cn.toutatis.xvoid.orm.base.authentication.enums.RegistryType;
 import cn.toutatis.xvoid.spring.core.tools.ViewToolkit;
 import cn.toutatis.xvoid.spring.annotations.application.VoidController;
 import cn.toutatis.xvoid.toolkit.validator.Validator;
 import com.alibaba.fastjson.JSONObject;
 import com.github.xiaoymin.knife4j.annotations.ApiSupport;
-import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.v3.oas.annotations.Operation;

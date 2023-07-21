@@ -1,4 +1,4 @@
-package cn.toutatis.xvoid.orm.base.data.common.base;
+package cn.toutatis.xvoid.orm.base.infrastructure.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.baomidou.mybatisplus.annotation.IdType;

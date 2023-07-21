@@ -3,7 +3,7 @@ package cn.toutatis.xvoid.spring.business.user.service;
 import cn.toutatis.xvoid.common.standard.StandardFields;
 import cn.toutatis.xvoid.orm.base.data.common.result.DataStatus;
 import cn.toutatis.xvoid.orm.base.data.common.result.ResultCode;
-import cn.toutatis.xvoid.orm.base.data.common.security.SystemUserLogin;
+import cn.toutatis.xvoid.orm.base.authentication.entity.SystemUserLogin;
 import cn.toutatis.xvoid.spring.core.security.access.ValidationMessage;
 import cn.toutatis.xvoid.spring.core.security.access.VoidSecurityAuthenticationService;
 import cn.toutatis.xvoid.spring.business.user.entity.FormUserDetails;

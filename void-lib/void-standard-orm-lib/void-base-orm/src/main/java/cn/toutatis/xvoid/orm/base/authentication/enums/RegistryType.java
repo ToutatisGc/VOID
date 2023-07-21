@@ -1,4 +1,4 @@
-package cn.toutatis.xvoid.orm.base.data.common.security;
+package cn.toutatis.xvoid.orm.base.authentication.enums;
 
 /**
  * @author Toutatis_Gc

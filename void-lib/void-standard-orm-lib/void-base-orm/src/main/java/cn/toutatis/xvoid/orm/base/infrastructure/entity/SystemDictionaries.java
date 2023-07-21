@@ -1,4 +1,4 @@
-package cn.toutatis.xvoid.orm.base.data.common.base;
+package cn.toutatis.xvoid.orm.base.infrastructure.entity;
 
 import cn.toutatis.xvoid.orm.base.data.common.EntityBasicAttribute;
 import com.baomidou.mybatisplus.annotation.TableField;

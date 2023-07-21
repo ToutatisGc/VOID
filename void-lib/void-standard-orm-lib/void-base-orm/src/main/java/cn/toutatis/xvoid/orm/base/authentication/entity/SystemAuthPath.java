@@ -1,5 +1,6 @@
-package cn.toutatis.xvoid.orm.base.data.common.security;
+package cn.toutatis.xvoid.orm.base.authentication.entity;
 
+import cn.toutatis.xvoid.BusinessType;
 import cn.toutatis.xvoid.orm.base.data.common.EntityBasicAttribute;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -13,6 +14,7 @@ import org.hibernate.Hibernate;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.io.Serial;
 import java.util.Objects;
 
 /**
@@ -23,6 +25,14 @@ import java.util.Objects;
 @ApiModel(value = "SystemAuth 系统权限类", description = "系统权限类", parent = EntityBasicAttribute.class)
 @Table(name = "vb_system_auth_path") @org.hibernate.annotations.Table(appliesTo = "vb_system_auth_path", comment = "系统权限类")
 public class SystemAuthPath extends EntityBasicAttribute<SystemAuthPath> {
+
+    @Serial
+    private static final long serialVersionUID = 1L;
+    /**
+     * 数据库表名以及业务类型
+     */
+    public static final String TABLE = "";
+    {this.setBusinessType(BusinessType.XVOID_SYSTEM);}
 
     @Id @TableId
     @ApiModelProperty(value="主键ID",required = true, example = "0b01f8466bcf11eda9c1b827eb90cfbc")

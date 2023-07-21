@@ -1,6 +1,6 @@
 package cn.toutatis.xvoid.spring.business.user.service;
 
-import cn.toutatis.xvoid.orm.base.data.common.security.SystemAuthRole;
+import cn.toutatis.xvoid.orm.base.authentication.entity.SystemAuthRole;
 import cn.toutatis.xvoid.orm.support.VoidService;
 
 import java.util.List;

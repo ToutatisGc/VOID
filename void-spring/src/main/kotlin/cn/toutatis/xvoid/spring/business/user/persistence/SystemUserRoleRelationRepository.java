@@ -1,6 +1,6 @@
 package cn.toutatis.xvoid.spring.business.user.persistence;
 
-import cn.toutatis.xvoid.orm.base.data.common.security.SystemUserRoleRelation;
+import cn.toutatis.xvoid.orm.base.authentication.entity.SystemUserRoleRelation;
 import cn.toutatis.xvoid.orm.support.jpa.VoidJpaRepo;
 
 /**

@@ -1,6 +1,6 @@
 package cn.toutatis.xvoid.spring.business.user.service.impl;
 
-import cn.toutatis.xvoid.orm.base.data.common.security.SystemRolePathRelation;
+import cn.toutatis.xvoid.orm.base.authentication.entity.SystemRolePathRelation;
 import cn.toutatis.xvoid.spring.business.user.persistence.SystemRolePathRelationMapper;
 import cn.toutatis.xvoid.spring.business.user.service.SystemRolePathRelationService;
 import cn.toutatis.xvoid.orm.support.mybatisplus.VoidMybatisServiceImpl;

@@ -1,6 +1,6 @@
 package cn.toutatis.xvoid.spring.business.user.service.impl;
 
-import cn.toutatis.xvoid.orm.base.data.common.security.SystemUserLogin;
+import cn.toutatis.xvoid.orm.base.authentication.entity.SystemUserLogin;
 import cn.toutatis.xvoid.spring.business.user.persistence.SystemUserLoginMapper;
 import cn.toutatis.xvoid.spring.business.user.service.SystemUserLoginService;
 import cn.toutatis.xvoid.orm.support.mybatisplus.VoidMybatisServiceImpl;
