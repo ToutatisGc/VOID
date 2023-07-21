@@ -7,6 +7,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.EqualsAndHashCode;
 import org.slf4j.Logger;
 
@@ -22,8 +23,8 @@ import java.util.Objects;
  * 调用顺序: new constructor() > setData()方法 > setResultCode()/setMessage()等
  */
 @EqualsAndHashCode(callSuper = false)
-@ApiModel(
-        value = "代理返回结果(最终返回结果为Result的派生类)",
+@Schema(
+        name = "代理返回结果(最终返回结果为Result的派生类)",
         description = "Controller标准返回结果,经过 ResponseResultDispatcherAdvice 分发到派生类")
 public class ProxyResult extends AbstractResult implements Result {
 
@@ -39,28 +40,28 @@ public class ProxyResult extends AbstractResult implements Result {
      * [具体分发到派生类]
      * 返回结果响应码
      */
-    @ApiModelProperty(name="状态码",required=true,example = "NORMAL_SUCCESS")
+    @Schema(name="状态码",requiredMode= Schema.RequiredMode.REQUIRED,example = "NORMAL_SUCCESS")
     private ResultCode resultCode;
 
     /**
      * [具体分发到派生类]
      * 返回响应消息
      */
-    @ApiModelProperty(name="响应消息",required=true,example = "请求成功")
+    @Schema(name="响应消息",requiredMode= Schema.RequiredMode.REQUIRED,example = "请求成功")
     private String message;
 
     /**
      * [具体分发到派生类]
      * 辅助响应消息
      */
-    @ApiModelProperty(name="响应消息",required=true,example = "请求成功")
+    @Schema(name="响应消息",requiredMode= Schema.RequiredMode.REQUIRED,example = "请求成功")
     private String supportMessage;
 
     /**
      * [具体分发到派生类]
      * 当前请求产生id
      */
-    @ApiModelProperty(name="请求序列",required=false,example = "1111-2222-3333-DDDD")
+    @Schema(name="请求序列",requiredMode= Schema.RequiredMode.NOT_REQUIRED,example = "1111-2222-3333-DDDD")
     private String requestId;
 
     /**
