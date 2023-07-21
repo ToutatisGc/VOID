@@ -2,6 +2,7 @@ package cn.toutatis.xvoid.orm.base.data.common.result;
 
 import cn.toutatis.xvoid.toolkit.formatting.JsonToolkit;
 import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -18,7 +19,7 @@ public abstract class AbstractResult implements Result {
      * [具体分发到派生类]
      * 响应数据
      */
-    @ApiModelProperty(name="请求响应数据",required=false,example = "{'name':'Toutatis_Gc'}")
+    @Schema(name="请求响应数据",requiredMode = Schema.RequiredMode.REQUIRED,example = "{'name':'Toutatis_Gc'}")
     protected Object data;
 
     public Object getData() {
