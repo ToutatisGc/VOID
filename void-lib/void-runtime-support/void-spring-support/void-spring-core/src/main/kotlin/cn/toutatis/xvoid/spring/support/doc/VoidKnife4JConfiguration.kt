@@ -27,7 +27,7 @@ class VoidKnife4JConfiguration {
     private lateinit var voidConfiguration : VoidConfiguration
 
     @Bean
-    fun openAPI(): OpenAPI {
+    open fun openAPI(): OpenAPI {
         val docConfig = voidConfiguration.docConfig
         return OpenAPI()
             .info(Info()
@@ -45,14 +45,14 @@ class VoidKnife4JConfiguration {
     }
 
     @Bean
-    fun publicApi(): GroupedOpenApi = GroupedOpenApi.builder()
+    open fun publicApi(): GroupedOpenApi = GroupedOpenApi.builder()
         .group("all")
         .pathsToMatch("/**")
         .displayName("所有接口")
         .build()
 
     @Bean
-    fun thirdPartyApi(): GroupedOpenApi = GroupedOpenApi.builder()
+    open fun thirdPartyApi(): GroupedOpenApi = GroupedOpenApi.builder()
         .group("third-party-api")
         .pathsToMatch("/third-party/**")
         .displayName("第三方接口")

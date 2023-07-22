@@ -5,7 +5,6 @@ import cn.toutatis.xvoid.orm.forum.entity.intermediate.ForumArticleTagsIntermedi
 import cn.toutatis.xvoid.orm.forum.enums.ArticleSource;
 import cn.toutatis.xvoid.orm.base.data.common.EntityBasicAttribute;
 import cn.toutatis.xvoid.orm.base.data.common.result.DataStatus;
-import cn.toutatis.xvoid.orm.structure.Node;
 import com.baomidou.mybatisplus.annotation.*;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import io.swagger.annotations.ApiModel;
@@ -30,7 +29,7 @@ import static cn.toutatis.xvoid.orm.forum.entity.ForumArticle.TABLE;
 @ApiModel(value="论坛文章实体类",description="可浏览的文章正文",parent = EntityBasicAttribute.class)
 @TableName(TABLE)
 @Entity @Table(name = TABLE) @org.hibernate.annotations.Table(appliesTo = TABLE, comment = "论坛文章类")
-public class ForumArticle extends EntityBasicAttribute<ForumArticle> implements Node {
+public class ForumArticle extends EntityBasicAttribute<ForumArticle> {
 
     @Serial
     private static final long serialVersionUID = 1L;

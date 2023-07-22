@@ -5,7 +5,6 @@ import cn.toutatis.xvoid.BusinessType;
 import cn.toutatis.xvoid.orm.base.data.common.EntityBasicAttribute;
 import cn.toutatis.xvoid.orm.base.data.common.result.DataStatus;
 import cn.toutatis.xvoid.orm.forum.entity.intermediate.ForumCategoryArticleIntermediate;
-import cn.toutatis.xvoid.orm.structure.Tree;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -18,7 +17,6 @@ import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
-import org.jetbrains.annotations.NotNull;
 
 import javax.persistence.*;
 import java.io.Serial;
@@ -107,6 +105,7 @@ public class ForumArticleCategory extends EntityBasicAttribute<ForumArticleCateg
     @Transient @TableField(exist = false)
     private Integer associatedCount;
 
+    @ToString.Exclude
     @TableField(exist = false)
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "category")
     private List<ForumCategoryArticleIntermediate> categoryArticles = new ArrayList<>();

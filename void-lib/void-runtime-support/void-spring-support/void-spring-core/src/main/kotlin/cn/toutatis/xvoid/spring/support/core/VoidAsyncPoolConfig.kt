@@ -14,7 +14,7 @@ import java.util.concurrent.ThreadPoolExecutor
 open class VoidAsyncPoolConfig {
 
     @Bean(StandardComponentPool.VOID_ASYNC_THREAD_POOL)
-    fun voidAsyncThreadPoolTaskExecutor(): ThreadPoolTaskExecutor {
+    open fun voidAsyncThreadPoolTaskExecutor(): ThreadPoolTaskExecutor {
         val executor = ThreadPoolTaskExecutor()
         executor.corePoolSize = 20
         executor.maxPoolSize = 200

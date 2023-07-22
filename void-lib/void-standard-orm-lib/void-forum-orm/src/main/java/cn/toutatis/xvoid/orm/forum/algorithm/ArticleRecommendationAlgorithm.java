@@ -14,7 +14,7 @@ public class ArticleRecommendationAlgorithm {
 
     public static Integer defaultWeightedAlgorithm(ForumArticle forumArticle){
         Integer score = 0;
-
+        // TODO 算法
         return 0;
     }
 
