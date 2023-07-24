@@ -17,20 +17,4 @@ import org.springframework.data.jpa.repository.Query;
 */
 public interface ForumArticleCategoryRepository extends VoidJpaRepo<ForumArticleCategory,Integer> {
 
-    /**
-     * 查询所有文章集合下的文章
-     * @return 集合文章列表
-     */
-    @Query("""
-            SELECT fac
-            FROM ForumArticleCategory fac
-            LEFT JOIN fac.categoryArticles cai
-            LEFT JOIN cai.article
-            WHERE fac.businessType = 'XVOID_FORUM'
-            order by fac.categoryOrder DESC
-            """)
-    Page<ForumArticleCategoryProjection> findCategoryPage(Pageable pageable);
-
-
-
 }

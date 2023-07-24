@@ -155,14 +155,8 @@ public class ForumArticle extends EntityBasicAttribute<ForumArticle> {
     @Transient() @TableField(exist = false)
     private Integer popularityScore = 0;
 
-    /**
-     * 文章标签
-     */
-    @JsonIgnore
-    @ToString.Exclude
-    @TableField(exist = false)
-    @OneToMany(mappedBy = "article", fetch = FetchType.LAZY)
-    private List<ForumArticleTagsIntermediate> forumArticleTagsIntermediates;
+    @ManyToMany(mappedBy = "articles")
+    private List<ForumArticleCategory> categories;
 
     @Transient
     @TableField(exist = false)

@@ -105,9 +105,12 @@ public class ForumArticleCategory extends EntityBasicAttribute<ForumArticleCateg
     @Transient @TableField(exist = false)
     private Integer associatedCount;
 
-    @ToString.Exclude
-    @TableField(exist = false)
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "category")
-    private List<ForumCategoryArticleIntermediate> categoryArticles = new ArrayList<>();
+    @ManyToMany
+    @JoinTable(
+            name = ForumCategoryArticleIntermediate.TABLE,
+            joinColumns = @JoinColumn(name = "categoryId"),
+            inverseJoinColumns = @JoinColumn(name = "articleId")
+    )
+    private List<ForumArticle> articles;
 
 }
