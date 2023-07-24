@@ -6,6 +6,7 @@ import cn.toutatis.xvoid.orm.forum.enums.ArticleSource;
 import cn.toutatis.xvoid.orm.base.data.common.EntityBasicAttribute;
 import cn.toutatis.xvoid.orm.base.data.common.result.DataStatus;
 import com.baomidou.mybatisplus.annotation.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -25,7 +26,7 @@ import static cn.toutatis.xvoid.orm.forum.entity.ForumArticle.TABLE;
  * @author Toutatis_Gc
  */
 @Getter @Setter @ToString(callSuper = true)
-@JsonIgnoreProperties({"reservedString","reservedInt"})
+@JsonIgnoreProperties({"reservedString","reservedInt","createTimeMs","lastUpdateTimeMs"})
 @ApiModel(value="论坛文章实体类",description="可浏览的文章正文",parent = EntityBasicAttribute.class)
 @TableName(TABLE)
 @Entity @Table(name = TABLE) @org.hibernate.annotations.Table(appliesTo = TABLE, comment = "论坛文章类")
@@ -157,9 +158,14 @@ public class ForumArticle extends EntityBasicAttribute<ForumArticle> {
     /**
      * 文章标签
      */
+    @JsonIgnore
     @ToString.Exclude
     @TableField(exist = false)
     @OneToMany(mappedBy = "article", fetch = FetchType.LAZY)
     private List<ForumArticleTagsIntermediate> forumArticleTagsIntermediates;
+
+    @Transient
+    @TableField(exist = false)
+    private List<ForumArticleTags> tags;
 
 }

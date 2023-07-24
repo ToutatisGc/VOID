@@ -20,4 +20,6 @@ public interface ForumArticleService extends VoidService<ForumArticle> {
      */
     List<ForumArticle> selectForumArticleListByUser(String userId);
 
+//    List<ForumArticle> select
+
 }

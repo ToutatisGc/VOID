@@ -4,7 +4,7 @@ mybatis-plus:
 #   数据库字段映射策略
     mapUnderscoreToCamelCase: true
     auto-mapping-behavior: PARTIAL
-    auto-mapping-unknown-column-behavior: WARNING
+    auto-mapping-unknown-column-behavior: NONE
 #   单体服务可以开启一级缓存，微服务架构需要关闭缓存
     localCacheScope: SESSION
 #   二级缓存开启
@@ -20,4 +20,3 @@ mybatis-plus:
       logic-delete-value: 1
 #     表名前缀
       table-prefix: ${void.global-orm-config.table-prefix}
-#  type-aliases-super-type:

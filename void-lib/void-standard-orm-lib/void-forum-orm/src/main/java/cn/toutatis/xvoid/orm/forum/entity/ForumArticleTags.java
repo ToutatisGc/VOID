@@ -23,7 +23,7 @@ import java.io.Serial;
 import static cn.toutatis.xvoid.orm.forum.entity.ForumArticleTags.TABLE;
 
 @Getter @Setter @ToString(callSuper = true)
-@JsonIgnoreProperties({"reservedString","reservedInt"})
+@JsonIgnoreProperties({"reservedString","reservedInt","createTimeMs","lastUpdateTimeMs"})
 @ApiModel(value="论坛文章标签类",description="文章所拥有的标签",parent = EntityBasicAttribute.class)
 @TableName(TABLE) @Entity
 @Table(name = TABLE) @org.hibernate.annotations.Table(appliesTo = TABLE, comment = "论坛文章标签类")

@@ -1,5 +1,7 @@
 package cn.toutatis.xvoid.spring.business.test;
 
+import cn.toutatis.xvoid.orm.base.data.common.result.ProxyResult;
+import cn.toutatis.xvoid.orm.forum.entity.ForumArticle;
 import cn.toutatis.xvoid.orm.forum.entity.ForumArticleCategory;
 import cn.toutatis.xvoid.orm.forum.entity.projection.ForumArticleCategoryProjection;
 import cn.toutatis.xvoid.orm.forum.persistence.ForumArticleCategoryRepository;
@@ -34,15 +36,18 @@ public class TestJController {
     private ForumArticleCategoryRepository forumArticleCategoryRepository;
 
     @RequestMapping(value = "/test1",method = RequestMethod.POST)
-    public void test1(){
-        PageRequest pageRequest = PageRequest.of(0, 15);
-        Page<ForumArticleCategoryProjection> categoryPage = forumArticleCategoryRepository.findCategoryPage(pageRequest);
-        List<ForumArticleCategoryProjection> forumArticleCategoryProjections = categoryPage.stream().toList();
-//        for (ForumArticleCategoryProjection forumArticleCategoryProjection : forumArticleCategoryProjections) {
-//            System.err.println(forumArticleCategoryProjection.getName());
-//            System.err.println(forumArticleCategoryProjection.getCategoryArticles());
-//        }
-        System.err.println(forumArticleCategoryProjections);
+    public Object test1(){
+//        PageRequest pageRequest = PageRequest.of(0, 15);
+//        Page<ForumArticleCategoryProjection> categoryPage = forumArticleCategoryRepository.findCategoryPage(pageRequest);
+//        List<ForumArticleCategoryProjection> forumArticleCategoryProjections = categoryPage.stream().toList();
+////        for (ForumArticleCategoryProjection forumArticleCategoryProjection : forumArticleCategoryProjections) {
+////            System.err.println(forumArticleCategoryProjection.getName());
+////            System.err.println(forumArticleCategoryProjection.getCategoryArticles());
+////        }
+//        System.err.println(forumArticleCategoryProjections);
+
+        ForumArticle article = forumArticleMapper.findArticle(1);
+        return new ProxyResult(article);
     }
 
 }

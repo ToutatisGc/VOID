@@ -150,6 +150,7 @@ public abstract class EntityBasicAttribute<O extends Model<?>> extends Model<O> 
      * 任何非中间表都应当有一个归属，举例如归属于上下级，归属于某渠道。
      * 例如应用作为平台模式，平台下有多渠道商，各渠道商的数据需要靠归属标志区分各自数据。
      */
+    @JsonIgnore
     @TableField("belongTo")
     @ApiModelProperty(value="归属")
     @Column(columnDefinition = "VARCHAR(32) NOT NULL DEFAULT 'SYSTEM' COMMENT '归属'")
