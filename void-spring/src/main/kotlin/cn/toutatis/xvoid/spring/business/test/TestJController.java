@@ -2,22 +2,14 @@ package cn.toutatis.xvoid.spring.business.test;
 
 import cn.toutatis.xvoid.orm.base.data.common.result.ProxyResult;
 import cn.toutatis.xvoid.orm.forum.entity.ForumArticle;
-import cn.toutatis.xvoid.orm.forum.entity.ForumArticleCategory;
-import cn.toutatis.xvoid.orm.forum.entity.projection.ForumArticleCategoryProjection;
 import cn.toutatis.xvoid.orm.forum.persistence.ForumArticleCategoryRepository;
 import cn.toutatis.xvoid.orm.forum.persistence.ForumArticleMapper;
 import cn.toutatis.xvoid.orm.forum.persistence.ForumArticleRepository;
 import cn.toutatis.xvoid.spring.annotations.application.VoidController;
 import cn.toutatis.xvoid.spring.business.user.persistence.SystemAuthPathRepository;
-import com.alibaba.fastjson.JSON;
-import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-
-import java.util.List;
 
 @VoidController
 @RequestMapping("/test")
