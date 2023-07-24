@@ -23,7 +23,7 @@
         <module>void-runtime-support</module>
 
         <!--标准化ORM库-->
-        <module>void-standard-orm-lib</module>
+        <module>void-orm-lib</module>
 
         <!--独立模块-->
         <module>void-separate-modules</module>

@@ -5,7 +5,7 @@
 |  ✔   | void-feature-support  |         VOID项目支持所需依赖库         |    目前web项目所需大部分已经补充     |
 |  ❗🔽  | void-separate-modules |            单体依赖分离模块            |  （进行中）[参考文档](../README.md)  |
 |  ❗🔽  | void-runtime-support  |           VOID运行及依赖支持           | （进行中）目前优先完成Springboot部分 |
-|  ❗   | void-standard-orm-lib |             标准属性映射库             |   （进行中）优先完成通用标准的映射   |
+|  ❗   | void-orm-lib |             标准属性映射库             |   （进行中）优先完成通用标准的映射   |
 |  ✖   |      void-depth       | 概念库（区块链，机器学习，图形处理等） |               暂无安排               |
 
 ------
