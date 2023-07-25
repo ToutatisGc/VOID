@@ -1,6 +1,7 @@
 package cn.toutatis.xvoid.creater.tools;
 
 
+import cn.hutool.core.util.ReflectUtil;
 import cn.toutatis.xvoid.creater.mybatisplus.generator.AutoGenerator;
 import cn.toutatis.xvoid.creater.mybatisplus.generator.InjectionConfig;
 import cn.toutatis.xvoid.creater.mybatisplus.generator.config.*;
@@ -10,6 +11,11 @@ import cn.toutatis.xvoid.orm.base.data.common.EntityBasicAttribute;
 import cn.toutatis.xvoid.orm.support.VoidService;
 import cn.toutatis.xvoid.orm.support.jpa.VoidJpaRepo;
 import cn.toutatis.xvoid.orm.support.mybatisplus.VoidMybatisServiceImpl;
+import com.baomidou.mybatisplus.annotation.TableField;
+
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author Toutaits_Gc
@@ -119,9 +125,16 @@ public class CodeGenerator {
 //        strategy.setSuperControllerClass("你自己的父类控制器,没有就不用设置!");
         // 写于父类中的公共字段
         strategyConfig.setSuperEntityClass(EntityBasicAttribute.class);
-        strategyConfig.setSuperEntityColumns(
-                "rInt","rStr","createTime","status","logicDeleted",
-                "createBy","lastUpdateTime","updateBy","version","remark","belongTo");
+        Field[] fields = ReflectUtil.getFields(EntityBasicAttribute.class);
+        List<String> superClassColumns = new ArrayList<>(fields.length);
+        for (Field field : fields) {
+            TableField tableField = field.getAnnotation(TableField.class);
+            if (tableField != null){
+                superClassColumns.add(tableField.value().replace("`",""));
+            }
+        }
+        strategyConfig.setSuperEntityColumns(superClassColumns.toArray(new String[0]));
+
         strategyConfig.setInclude(tableListArrayString);
         strategyConfig.setControllerMappingHyphenStyle(false);
         strategyConfig.setTablePrefix(manifestToolkit.getConfigProperties("tablePrefix"));
