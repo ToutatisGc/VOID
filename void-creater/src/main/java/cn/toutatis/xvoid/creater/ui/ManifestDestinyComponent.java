@@ -7,6 +7,7 @@ import cn.toutatis.xvoid.creater.mapper.BasicMapper;
 import cn.toutatis.xvoid.creater.tools.ConfigurationTable;
 import cn.toutatis.xvoid.creater.tools.ManifestToolkit;
 import cn.toutatis.xvoid.creater.tools.Parameter;
+import cn.toutatis.xvoid.toolkit.file.FileToolkit;
 import org.apache.log4j.Logger;
 
 import javax.swing.*;
@@ -18,6 +19,7 @@ import java.awt.*;
 import java.awt.event.*;
 import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -166,10 +168,9 @@ public class ManifestDestinyComponent {
         return leftPanel;
     }
 
-    public static JFrame manifest(Connection connect) throws IOException {
+    public static JFrame manifest(Connection connect) throws IOException, URISyntaxException {
         JFrame manifest = new JFrame(ConfigurationTable.APP_NAME.getInfo());
-
-        File iconFile = new File(manifestToolkit.getRootPath()+ "/img/darkStar.png");
+        File iconFile = new File(Objects.requireNonNull(FileToolkit.findFileInPossibleLocation("/img/logo.png")).toURI());
         byte[] iconBytes = Files.readAllBytes(iconFile.toPath());
         manifest.setIconImage(new ImageIcon(iconBytes).getImage());
         manifest.setLayout(new FlowLayout(FlowLayout.LEFT));

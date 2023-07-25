@@ -98,6 +98,15 @@ object FileToolkit {
         return Thread.currentThread().contextClassLoader.getResource(filename)
     }
 
+    @JvmStatic
+    fun getClassesFile(filename:String): URL?{
+        var formatFilename: String = filename
+        if (filename.startsWith("/")){
+            formatFilename = filename.substring(1)
+        }
+        return File(this.getThreadPath()+formatFilename).toURL()
+    }
+
     /**
      * Gets the run path of the JAR.
      */
@@ -202,6 +211,12 @@ object FileToolkit {
             if (jarResource != null && File(jarResource.toURI()).exists()){
                 return File(jarResource.toURI()).apply {
                     logger.trace("Found the file!this file is a JAR package file,please use getJarResource method! ")
+                }
+            }
+            val threadPath = this.getClassesFile(path)
+            if (File(threadPath?.toURI()!!).exists()){
+                return File(threadPath.toURI()).apply {
+                    logger.trace("Found the file!this file is a JAR package file,please use getClassesFile method! ")
                 }
             }
             throw FileNotFoundException("Can't find [$path] this file location. QAQ")

@@ -35,11 +35,11 @@ public class ManifestDestiny {
 
     public enum DirClassify{BLANK,POM}
 
-    private static Logger logger = Logger.getLogger(ManifestDestiny.class);
+    private static final Logger logger = Logger.getLogger(ManifestDestiny.class);
     /**
      * 初始化工具箱
      */
-    private static ManifestToolkit manifestToolkit = ManifestToolkit.getInstance();
+    private static final ManifestToolkit manifestToolkit = ManifestToolkit.getInstance();
     /**
      * 窗体配置
      */

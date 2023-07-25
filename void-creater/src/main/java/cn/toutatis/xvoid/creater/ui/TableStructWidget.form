@@ -100,7 +100,7 @@
                   </grid>
                 </constraints>
                 <properties>
-                  <text value="使用swagger2文档"/>
+                  <text value="使用Swagger文档"/>
                 </properties>
               </component>
               <component id="daabc" class="javax.swing.JLabel" binding="entityParamLabel">
@@ -173,7 +173,7 @@
                   </grid>
                 </constraints>
                 <properties>
-                  <text value="使用lombok模型"/>
+                  <text value="使用Lombok模型"/>
                   <toolTipText value="如果使用lombok模型,请选择Java生成,Kotlin不支持lombok"/>
                 </properties>
               </component>
@@ -184,7 +184,7 @@
                   </grid>
                 </constraints>
                 <properties>
-                  <text value="使用hibernate注解"/>
+                  <text value="使用Hibernate注解"/>
                 </properties>
               </component>
               <component id="55c95" class="javax.swing.JLabel" binding="devLangLabel">
