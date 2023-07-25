@@ -1,27 +1,45 @@
 package cn.toutatis.xvoid.orm.base.infrastructure.entity;
 
+import cn.toutatis.xvoid.BusinessType;
 import cn.toutatis.xvoid.orm.base.data.common.EntityBasicAttribute;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
+import java.io.Serial;
+
+import static cn.toutatis.xvoid.orm.base.infrastructure.entity.SystemDictionaries.*;
+
 
 /**
+ * [系统业务] 字典类
+ * 可浏览的文章正文
  * @author Toutatis_Gc
  */
-//@Getter
-//@Setter
-//@ToString(callSuper = true)
-//@ApiModel(
-//        value = "SystemDictionaries 系统字典实体类",
-//        description = "系统字典实体类",
-//        parent = EntityBasicAttribute.class)
-//@Table(name="vb_system_dictionaries")
-//@Entity
-//@JsonIgnoreProperties({"reservedString","reservedInt"})
-//@org.hibernate.annotations.Table(appliesTo = "vb_system_dictionaries", comment = "系统用户类")
+@Getter
+@Setter
+@ToString(callSuper = true)
+@JsonIgnoreProperties({"reservedString","reservedInt","createTimeMs","lastUpdateTimeMs"})
+@ApiModel(value="[系统业务] 字典类",description="键值字典",parent = EntityBasicAttribute.class)
+@TableName(TABLE)
+@Entity @Table(name = TABLE) @org.hibernate.annotations.Table(appliesTo = TABLE, comment = "[系统业务] 字典类")
 public class SystemDictionaries extends EntityBasicAttribute<SystemDictionaries> {
+
+    @Serial
+    private static final long serialVersionUID = 1L;
+    /**
+     * 数据库表名以及业务类型
+     */
+    private static final String TABLE = "vb_system_dictionaries";
+
+    {this.setBusinessType(BusinessType.XVOID_SYSTEM);}
 
     @Id @TableId
     @ApiModelProperty(value="主键ID",required = true, example = "0")

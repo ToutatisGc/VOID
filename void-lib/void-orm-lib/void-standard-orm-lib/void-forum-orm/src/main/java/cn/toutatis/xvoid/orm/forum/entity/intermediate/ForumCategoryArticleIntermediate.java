@@ -61,11 +61,11 @@ public class ForumCategoryArticleIntermediate extends EntityBasicAttribute<Forum
     private Integer articleId;
 
     @ManyToOne
-    @JoinColumn(name = "categoryId")
+    @JoinColumn(name = "categoryId",insertable = false,updatable = false)
     private ForumArticleCategory category;
 
     @ManyToOne
-    @JoinColumn(name = "articleId")
+    @JoinColumn(name = "articleId",insertable = false,updatable = false)
     private ForumArticle article;
 
 }

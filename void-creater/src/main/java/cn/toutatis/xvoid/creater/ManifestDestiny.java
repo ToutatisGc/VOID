@@ -103,7 +103,7 @@ public class ManifestDestiny {
     private static SqlSession sqlExecutor = null;
 
 
-    private static Border lineBorder = BorderFactory.createLineBorder(PANEL_BORDER_COLOR);
+    private static final Border lineBorder = BorderFactory.createLineBorder(PANEL_BORDER_COLOR);
 
     public static void main(String[] args) throws Exception {
 

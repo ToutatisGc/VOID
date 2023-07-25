@@ -34,10 +34,6 @@ public class TestJController {
 
     @RequestMapping(value = "/test1",method = RequestMethod.POST)
     public Object test1(){
-//        PageRequest pageRequest = PageRequest.of(1, 5);
-//        Page<ForumArticleCategoryProjection> categoryPage = forumArticleCategoryRepository.findCategoryPage(pageRequest);
-//        List<ForumArticleCategoryProjection> forumArticleCategoryProjections = categoryPage.stream().toList();
-//        Optional<ForumArticleCategory> byId = forumArticleCategoryRepository.findById(10);
         return null;
     }
 

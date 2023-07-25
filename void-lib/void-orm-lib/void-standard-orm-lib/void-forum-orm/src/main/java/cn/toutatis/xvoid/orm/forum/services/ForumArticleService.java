@@ -19,6 +19,11 @@ public interface ForumArticleService extends VoidService<ForumArticle> {
      */
     List<ForumArticle> selectForumArticleListByUser(String userId);
 
-//    List<ForumArticle> select
+    /**
+     * 匿名访问用户获取热点文章和推荐文章
+     * @return 外部访问
+     */
+    List<ForumArticle> selectForumArticleListByAnonymous();
+
 
 }

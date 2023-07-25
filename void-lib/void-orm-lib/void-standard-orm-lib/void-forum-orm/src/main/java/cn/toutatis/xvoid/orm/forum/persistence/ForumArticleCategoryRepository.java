@@ -5,7 +5,10 @@ import cn.toutatis.xvoid.orm.forum.entity.projection.ForumArticleCategoryProject
 import cn.toutatis.xvoid.orm.support.jpa.VoidJpaRepo;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.Query;
+
+import java.util.List;
 
 /**
  * <p>
@@ -17,4 +20,8 @@ import org.springframework.data.jpa.repository.Query;
 */
 public interface ForumArticleCategoryRepository extends VoidJpaRepo<ForumArticleCategory,Integer> {
 
+
+    @EntityGraph(value = "ForumArticleCategory.Graph", type = EntityGraph.EntityGraphType.LOAD)
+    @Override
+    List<ForumArticleCategory> findAll();
 }

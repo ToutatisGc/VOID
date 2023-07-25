@@ -36,6 +36,10 @@ import static cn.toutatis.xvoid.orm.forum.entity.ForumArticleCategory.*;
 @DynamicInsert @DynamicUpdate
 @Entity @Table(name = TABLE, indexes = {@Index(name = "NAME_INDEX", columnList = "name")}
 ) @org.hibernate.annotations.Table(appliesTo = TABLE, comment = "文章归属集合类")
+@NamedEntityGraph(
+        name = "ForumArticleCategory.Graph",
+        attributeNodes = @NamedAttributeNode("articles")
+)
 public class ForumArticleCategory extends EntityBasicAttribute<ForumArticleCategory> {
     @Serial
     private static final long serialVersionUID = 1L;
@@ -105,6 +109,7 @@ public class ForumArticleCategory extends EntityBasicAttribute<ForumArticleCateg
     @Transient @TableField(exist = false)
     private Integer associatedCount;
 
+    @ToString.Exclude
     @ManyToMany
     @JoinTable(
             name = ForumCategoryArticleIntermediate.TABLE,
