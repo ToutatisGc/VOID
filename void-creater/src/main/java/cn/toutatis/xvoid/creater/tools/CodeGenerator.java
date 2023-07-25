@@ -8,6 +8,7 @@ import cn.toutatis.xvoid.creater.mybatisplus.generator.config.rules.NamingStrate
 import cn.toutatis.xvoid.creater.mybatisplus.generator.engine.FreemarkerTemplateEngine;
 import cn.toutatis.xvoid.orm.base.data.common.EntityBasicAttribute;
 import cn.toutatis.xvoid.orm.support.VoidService;
+import cn.toutatis.xvoid.orm.support.jpa.VoidJpaRepo;
 import cn.toutatis.xvoid.orm.support.mybatisplus.VoidMybatisServiceImpl;
 
 /**
@@ -95,9 +96,25 @@ public class CodeGenerator {
         strategyConfig.setEntityLombokModel(Boolean.parseBoolean(manifestToolkit.getConfigProperties("useLombok")));
         strategyConfig.setRestControllerStyle(true);
 
+        String serviceType = manifestToolkit.getConfigProperties("serviceType");
+        // TODO service 类型
+        switch (serviceType){
+            case "Mybatis-Plus" ->{
+                strategyConfig.setSuperServiceClass(VoidService.class);
+                strategyConfig.setSuperServiceImplClass(VoidMybatisServiceImpl.class);
+            }
+            case "Spring Data JPA" ->{
+                strategyConfig.setSuperServiceClass(VoidJpaRepo.class);
+//                strategyConfig.setSuperServiceImplClass(VoidMybatisServiceImpl.class);
+            }
+            case "mixed" ->{
 
-        strategyConfig.setSuperServiceClass(VoidService.class);
-        strategyConfig.setSuperServiceImplClass(VoidMybatisServiceImpl.class);
+            }
+            default -> {
+                throw new IllegalArgumentException(serviceType);
+            }
+        }
+
         // 公共父类
 //        strategy.setSuperControllerClass("你自己的父类控制器,没有就不用设置!");
         // 写于父类中的公共字段
