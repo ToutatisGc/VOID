@@ -37,7 +37,7 @@ public class SystemDictionaries extends EntityBasicAttribute<SystemDictionaries>
     /**
      * 数据库表名以及业务类型
      */
-    private static final String TABLE = "vb_system_dictionaries";
+    public static final String TABLE = "vb_system_dictionaries";
 
     {this.setBusinessType(BusinessType.XVOID_SYSTEM);}
 

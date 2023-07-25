@@ -5,6 +5,7 @@ import cn.toutatis.xvoid.creater.tools.ConfigurationTable;
 import cn.toutatis.xvoid.creater.tools.ManifestToolkit;
 
 import cn.toutatis.xvoid.creater.ui.ManifestDestinyComponent;
+import cn.toutatis.xvoid.creater.ui.listener.PlaceholderFocusListener;
 import com.formdev.flatlaf.FlatIntelliJLaf;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -14,6 +15,10 @@ import org.apache.log4j.Logger;
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -191,6 +196,19 @@ public class ManifestDestiny {
         JDialog dataBaseConfigFrame = new JDialog(manifest,ConfigurationTable.LEFT_PANEL_DATABASE_CONFIGURATION_BUTTON.getInfo(),true);
 
         dataBaseConfigFrame.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
+
+        dataBaseConfigFrame.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                String lastTimeIsSuccessful = manifestToolkit.getConfigProperties("lastTimeIsSuccessful");
+                if ("1".equals(lastTimeIsSuccessful)){
+                    dataBaseConfigFrame.dispose();
+                }else{
+                    super.windowClosing(e);
+                }
+            }
+        });
+
         dataBaseConfigFrame.setLayout(new FlowLayout());
 //        dataBaseConfigFrame.setLayout(null);
         JPanel databasePanel = new JPanel();
@@ -199,6 +217,7 @@ public class ManifestDestiny {
         databaseSource.add(databaseSource_label,BorderLayout.WEST);
         String databaseUrl = manifestToolkit.getConfigProperties("databaseUrl");
         JTextField databaseSource_field = new JTextField("".equals(databaseUrl) ? ConfigurationTable.DATA_SOURCE_LABEL.getInfo() : databaseUrl,FIELD_WEIGHT);
+        databaseSource_field.addFocusListener(new PlaceholderFocusListener(databaseSource_field,ConfigurationTable.DATA_SOURCE_LABEL.getInfo()));
         databaseSource_field.setCaretPosition(0);
         databaseSource.add(databaseSource_field);
 
@@ -207,6 +226,7 @@ public class ManifestDestiny {
         databaseUserName.add(databaseUserName_label,BorderLayout.WEST);
         String user = manifestToolkit.getConfigProperties("user");
         JTextField databaseUserName_field = new JTextField("".equals(user) ? ConfigurationTable.DATA_USERNAME_LABEL.getInfo() : user,FIELD_WEIGHT);
+        databaseUserName_field.addFocusListener(new PlaceholderFocusListener(databaseUserName_field,ConfigurationTable.DATA_USERNAME_LABEL.getInfo()));
         databaseUserName.add(databaseUserName_field);
 
         JPanel databasePassword = new JPanel();
@@ -216,6 +236,7 @@ public class ManifestDestiny {
         StringBuilder star = new StringBuilder();
         for (int i = 0; i < password.length(); i++) { star.append("*"); }
         JTextField jPasswordField = new JTextField("".equals(password) ? ConfigurationTable.DATA_PASSWORD_LABEL.getInfo() : star.toString(),FIELD_WEIGHT);
+        jPasswordField.addFocusListener(new PlaceholderFocusListener(jPasswordField,ConfigurationTable.DATA_USERNAME_LABEL.getInfo()));
         databasePassword.add(databasePassword_label,BorderLayout.WEST);
         databasePassword.add(jPasswordField);
 

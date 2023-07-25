@@ -4,6 +4,7 @@ import cn.toutatis.xvoid.creater.ManifestDestiny;
 import cn.toutatis.xvoid.creater.tools.CodeGenerator;
 import cn.toutatis.xvoid.creater.tools.ConfigurationTable;
 import cn.toutatis.xvoid.creater.tools.ManifestToolkit;
+import cn.toutatis.xvoid.creater.ui.listener.PlaceholderFocusListener;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
@@ -48,10 +49,14 @@ public class TableStructWidget {
     public TableStructWidget() {
         /*绑定配置中的包路径和输入事件*/
         selectPackPath.setText(manifestToolkit.getConfigProperties("packagePath"));
+        String example = "举例: cn.toutatis.xvoid.xxx";
+        selectPackPath.addFocusListener(new PlaceholderFocusListener(selectPackPath,example));
         Document packagePathDocument = selectPackPath.getDocument();
         packagePathDocument.addDocumentListener(new DocumentListener() {
             private void updatePackagePath(){
-                manifestToolkit.saveConfiguration("packagePath",selectPackPath.getText());
+                if (!example.equals(selectPackPath.getText())){
+                    manifestToolkit.saveConfiguration("packagePath",selectPackPath.getText());
+                }
             }
             @Override public void insertUpdate(DocumentEvent e) {
                 updatePackagePath();
