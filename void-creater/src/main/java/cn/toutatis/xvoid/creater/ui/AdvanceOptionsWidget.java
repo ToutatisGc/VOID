@@ -23,6 +23,8 @@ public class AdvanceOptionsWidget {
     private JCheckBox useKotlinUseJavaModel;
     private JTextField authorInfoText;
     private JLabel authorLabel;
+    public JComboBox<String> serviceTypeComboBox;
+    private JLabel serviceLabel;
 
     public AdvanceOptionsWidget() {
         authorInfoText.setText(manifestToolkit.getConfigProperties("author"));
@@ -40,6 +42,9 @@ public class AdvanceOptionsWidget {
             @Override public void changedUpdate(DocumentEvent e) {
                 updatePackagePath();
             }
+        });
+        serviceTypeComboBox.addActionListener(e -> {
+            manifestToolkit.saveConfiguration("serviceType", (String) serviceTypeComboBox.getSelectedItem());
         });
     }
 }

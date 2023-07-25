@@ -4,8 +4,7 @@ package ${package.Entity};
 import ${pkg};
 </#list>
 <#if swagger2>
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 </#if>
 <#if entityLombokModel>
     <#if usePersistence>
@@ -30,6 +29,8 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.IdType;
 import java.text.SimpleDateFormat;
+
+import static ${package.Entity}.${realName}.TABLE;
 
 /**
  * <p>
@@ -58,15 +59,15 @@ import java.text.SimpleDateFormat;
 @Accessors(chain = true)
     </#if>
 </#if>
-<#if table.convert>
-@TableName("${table.name}")
-</#if>
-@JsonIgnoreProperties({"reservedString","reservedInt"})
+@JsonIgnoreProperties({"reservedString","reservedInt","createTimeMs","lastUpdateTimeMs"})
 <#if swagger2>
-@ApiModel(value="${realName}对象",description="${table.comment!}"<#if superEntityClass??>,parent = ${superEntityClass}.class</#if>)
+@Schema(name="${realName}对象",description="${table.comment!}"<#if superEntityClass??>,parent = ${superEntityClass}.class</#if>)
+</#if>
+<#if table.convert>
+@TableName(TABLE)
 </#if>
 <#if usePersistence>
-@Entity @Table(name = "${realTableName}") @org.hibernate.annotations.Table(appliesTo = "${realTableName}", comment = "${table.comment!}")
+@Entity @Table(name = TABLE ) @org.hibernate.annotations.Table(appliesTo = TABLE, comment = "${table.comment!}")
 </#if>
 <#if superEntityClass??>
 public class ${realName} extends ${superEntityClass}<#if activeRecord><${realName}></#if> {
@@ -79,6 +80,9 @@ public class ${realName} implements Serializable {
 <#if entitySerialVersionUID>
     private static final long serialVersionUID = 1L;
 </#if>
+    public static final String TABLE = "vb_forum_article";
+    // FIXME 请修改业务类型
+    {this.setBusinessType(BusinessType.XVOID_SYSTEM);}
 <#-- ----------  BEGIN 字段循环遍历  ---------->
 <#list table.fields as field>
     <#if field.keyFlag>
@@ -87,40 +91,35 @@ public class ${realName} implements Serializable {
 
     <#if field.comment!?length gt 0>
         <#if swagger2>
-    @ApiModelProperty(value = "${field.comment}")
+    @Schema(name = "${field.comment}")
         <#else>
     /**
      * ${field.comment}
      */
         </#if>
     </#if>
+    <#--判断主键(只能使用uuid和id两种名称)-->
     <#if field.propertyName == 'uuid' || field.propertyName == 'id'>
-        <#if usePersistence>
-    @Id
-           <#if field.propertyType == 'String'>
-    @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
-    @GeneratedValue(generator = "UUID")
-    @TableId(value = "uuid",type = IdType.ASSIGN_UUID)
-           </#if>
-           <#if field.propertyType == 'Integer'>
-    @TableId(value = "id",type = IdType.AUTO)
-           </#if>
+        <#if field.propertyType == 'String'>
+    <#if usePersistence>@Id </#if>@TableId(value = "uuid",type = IdType.ASSIGN_UUID)
+        @GeneratedValue(generator = "UUID")
+        @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
+        </#if>
+        <#if field.propertyType == 'Integer'>
+    <#if usePersistence>@Id </#if>@TableId(value = "id",type = IdType.AUTO)
         </#if>
     </#if>
-        <#-- 普通字段 -->
-    <#if field.fill??>
-    <#-- -----   存在字段填充设置   ----->
-        <#if field.convert>
-    @TableField(value = "${field.annotationColumnName}", fill = FieldFill.${field.fill})
-        <#else>
-    @TableField(fill = FieldFill.${field.fill})
-        </#if>
-    <#elseif field.convert>
+    <#-- 普通字段 -->
+    <#if field.propertyName != 'uuid' && field.propertyName != 'id'>
     @TableField("${field.annotationColumnName}")
-    </#if>
-    <#if usePersistence>
-        <#if field.propertyName != 'uuid' || field.propertyName != 'id'>
-    @Column(name="${field.propertyName}",columnDefinition = "COMMENT '${field.comment}'")
+        <#if usePersistence>
+            <#if field.propertyType == 'Integer'>
+    @Column(name="${field.annotationColumnName}",columnDefinition = "INT COMMENT '${field.comment}'")
+            <#elseif field.propertyType == 'String'>
+    @Column(name="${field.annotationColumnName}",columnDefinition = "VARCHAR(255) COMMENT '${field.comment}'")
+            <#elseif field.propertyType == 'LocalDateTime'>
+    @Column(name="${field.annotationColumnName}",columnDefinition = "DATETIME COMMENT '${field.comment}'")
+            </#if>
         </#if>
     </#if>
     private ${field.propertyType} ${field.propertyName};
