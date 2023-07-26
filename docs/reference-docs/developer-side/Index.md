@@ -22,3 +22,15 @@ private static final long serialVersionUID = 1L;
 */
 public static final String TABLE = "";
 {this.setBusinessType(BusinessType.);}
+  
+项目启动失败?
+
+中间件端口占用
+例如redis
+netstat -ano | findstr 6379
+
+TCP    0.0.0.0:6379           0.0.0.0:0              LISTENING       11684
+TCP    127.0.0.1:6379         127.0.0.1:13128        ESTABLISHED     11684
+
+停止占用
+taskkill /PID 11684

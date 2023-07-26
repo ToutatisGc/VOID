@@ -30,7 +30,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @Getter @Setter @ToString(callSuper = true)
 @TableName("vb_system_resource")
 @JsonIgnoreProperties({"reservedString","reservedInt"})
-@ApiModel(value="SystemResource对象",description="系统用户类",parent = EntityBasicAttribute.class)
+@ApiModel(value="SystemResource对象",description="系统资源类",parent = EntityBasicAttribute.class)
 @Entity @Table(name = "vb_system_resource") @org.hibernate.annotations.Table(appliesTo = "vb_system_resource", comment = "系统资源类")
 public class SystemResource extends EntityBasicAttribute<SystemResource> {
 
