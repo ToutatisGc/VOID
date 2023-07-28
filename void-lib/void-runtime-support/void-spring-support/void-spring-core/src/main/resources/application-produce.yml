@@ -45,5 +45,12 @@ knife4j:
     redis:
       repositories:
         enabled: false
+springdoc:
+  model-and-view-allowed: true
+  swagger-ui:
+    try-it-out-enabled: true
+    display-request-duration: true
+  show-login-endpoint: true
+  remove-broken-reference-definitions: false
 datasource:
   protocol: jdbc:mysql://

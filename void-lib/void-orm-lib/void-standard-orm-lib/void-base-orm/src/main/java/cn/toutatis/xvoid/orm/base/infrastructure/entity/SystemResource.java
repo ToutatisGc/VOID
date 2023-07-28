@@ -10,6 +10,8 @@ import java.io.Serial;
 import java.io.Serializable;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.Hidden;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -30,7 +32,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @Getter @Setter @ToString(callSuper = true)
 @TableName("vb_system_resource")
 @JsonIgnoreProperties({"reservedString","reservedInt"})
-@ApiModel(value="SystemResource对象",description="系统资源类",parent = EntityBasicAttribute.class)
+@Schema(name="SystemResource对象",description="系统资源类")
 @Entity @Table(name = "vb_system_resource") @org.hibernate.annotations.Table(appliesTo = "vb_system_resource", comment = "系统资源类")
 public class SystemResource extends EntityBasicAttribute<SystemResource> {
 

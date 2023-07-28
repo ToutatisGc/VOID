@@ -1,8 +1,8 @@
 {
   "properties": [
     {
-      "name": "void.doc.base-package",
+      "name": "datasource.protocol",
       "type": "java.lang.String",
-      "description": "Description for void.doc.base-package."
-  }
-] }
+      "description": "数据源协议配置."
+    }
+  ] }

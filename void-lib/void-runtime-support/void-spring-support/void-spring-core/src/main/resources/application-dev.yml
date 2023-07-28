@@ -54,6 +54,8 @@ springdoc:
   swagger-ui:
     try-it-out-enabled: true
     display-request-duration: true
+  show-login-endpoint: true
+  remove-broken-reference-definitions: false
 #  show-actuator: true
 datasource:
   protocol: jdbc:p6spy:mysql://
