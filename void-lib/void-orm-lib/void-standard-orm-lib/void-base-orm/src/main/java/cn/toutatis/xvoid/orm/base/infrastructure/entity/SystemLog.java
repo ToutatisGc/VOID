@@ -1,4 +1,4 @@
-package cn.toutatis.xvoid.spring.support.amqp.entity;
+package cn.toutatis.xvoid.orm.base.infrastructure.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import cn.toutatis.xvoid.orm.base.data.common.EntityBasicAttribute;

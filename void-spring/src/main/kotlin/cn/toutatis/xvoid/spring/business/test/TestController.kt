@@ -7,8 +7,8 @@ import cn.toutatis.xvoid.orm.base.data.common.result.ProxyResult
 import cn.toutatis.xvoid.orm.base.data.common.result.ResultCode
 import cn.toutatis.xvoid.spring.business.test.persistence.PersonMapper
 import cn.toutatis.xvoid.spring.support.amqp.AmqpShell
-import cn.toutatis.xvoid.spring.support.amqp.entity.SystemLog
-import cn.toutatis.xvoid.spring.support.amqp.log.LogType
+import cn.toutatis.xvoid.orm.base.infrastructure.entity.SystemLog
+import cn.toutatis.xvoid.orm.base.infrastructure.enums.LogType
 import cn.toutatis.xvoid.spring.annotations.application.VoidController
 import cn.toutatis.xvoid.spring.configure.system.VoidConfiguration
 import cn.toutatis.xvoid.spring.support.core.file.service.impl.SystemResourceServiceImpl

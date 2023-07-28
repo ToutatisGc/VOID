@@ -1,9 +1,9 @@
 package cn.toutatis.xvoid.spring.support.amqp;
 
 import cn.toutatis.xvoid.common.standard.StandardFields;
-//import cn.toutatis.xvoid.spring.support.amqp.entity.SystemLog;
-import cn.toutatis.xvoid.spring.support.amqp.entity.SystemLog;
-import cn.toutatis.xvoid.spring.support.amqp.log.LogType;
+//import cn.toutatis.xvoid.orm.base.infrastructure.entity.SystemLog;
+import cn.toutatis.xvoid.orm.base.infrastructure.entity.SystemLog;
+import cn.toutatis.xvoid.orm.base.infrastructure.enums.LogType;
 import cn.toutatis.xvoid.toolkit.validator.Validator;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;

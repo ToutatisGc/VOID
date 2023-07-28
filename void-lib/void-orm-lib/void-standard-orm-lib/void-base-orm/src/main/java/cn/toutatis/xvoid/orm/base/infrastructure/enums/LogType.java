@@ -1,4 +1,4 @@
-package cn.toutatis.xvoid.spring.support.amqp.log;
+package cn.toutatis.xvoid.orm.base.infrastructure.enums;
 
 /**
  * @author Toutatis_Gc
