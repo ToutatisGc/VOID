@@ -1,11 +1,10 @@
-package cn.toutatis.xvoid.spring.configure.system.enums.global;
+package cn.toutatis.xvoid.spring.configure.system.enums.global
 
 /**
  * @author Toutatis_Gc
  * @date 2022/10/26 21:16
  */
-public enum RunMode {
-
+enum class RunMode {
     /**
      * 允许所有方法/权限访问
      */
@@ -21,6 +20,5 @@ public enum RunMode {
      * 生产模式
      * 此模式下隐藏调试信息,并禁止部分接口调用
      */
-    PRODUCT;
-
+    PRODUCT
 }

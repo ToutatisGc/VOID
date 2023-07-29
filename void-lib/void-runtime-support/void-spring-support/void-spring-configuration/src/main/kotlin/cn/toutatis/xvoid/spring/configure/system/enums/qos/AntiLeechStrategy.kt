@@ -1,10 +1,9 @@
-package cn.toutatis.xvoid.spring.configure.system.enums.qos;
+package cn.toutatis.xvoid.spring.configure.system.enums.qos
 
 /**
  * 盗链策略
  */
-public enum AntiLeechStrategy {
-
+enum class AntiLeechStrategy {
     /**
      * 允许任何外部连接访问接口或文件
      */
@@ -18,6 +17,5 @@ public enum AntiLeechStrategy {
     /**
      * 拒绝任何外部服务访问
      */
-    DENY;
-
+    DENY
 }

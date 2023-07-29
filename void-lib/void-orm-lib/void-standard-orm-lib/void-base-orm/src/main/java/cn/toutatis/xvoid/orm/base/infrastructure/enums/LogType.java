@@ -7,6 +7,10 @@ package cn.toutatis.xvoid.orm.base.infrastructure.enums;
 public enum LogType {
 
     /**
+     * 系统内部
+     */
+    SYSTEM,
+    /**
      * 鉴权
      */
     AUTH,
