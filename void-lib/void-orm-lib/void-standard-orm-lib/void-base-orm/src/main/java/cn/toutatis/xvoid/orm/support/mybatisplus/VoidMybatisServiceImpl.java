@@ -1,17 +1,19 @@
 package cn.toutatis.xvoid.orm.support.mybatisplus;
 
 import cn.toutatis.xvoid.orm.base.data.common.EntityBasicAttribute;
-import cn.toutatis.xvoid.orm.base.data.common.result.DataStatus;
-import cn.toutatis.xvoid.common.enums.sheet.SheetExportType;
 import cn.toutatis.xvoid.spring.configure.system.VoidConfiguration;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import cn.toutatis.xvoid.toolkit.data.DataExportConfig;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.Serializable;
+import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 增强mpp的service
@@ -29,42 +31,74 @@ public class VoidMybatisServiceImpl<M extends BaseMapper<T>, T extends EntityBas
     @Autowired
     protected VoidConfiguration config;
 
+
     @Override
-    public Page<T> getList(PagingQuery pagingQuery, T obj) {
-        QueryWrapper<T> queryWrapper = new QueryWrapper<>(obj);
-        queryWrapper.orderByDesc("createTime");
-        queryWrapper.eq("status", DataStatus.SYS_OPEN_0000.getIndex());
-        mapper.selectList(queryWrapper);
-        Page<T> page = new Page<>(pagingQuery.getCurrentPage(), pagingQuery.getPageSize());
-        page = mapper.selectPage(page, queryWrapper);
-        return page;
+    public boolean removeByEntity(T entity) {
+        return false;
     }
 
     @Override
-    public Page<T> getList(PagingQuery pagingQuery, T obj, String mchId) {
-        if (mchId == null || mchId.length() == 0) {
-            return this.getList(pagingQuery, obj);
-        } else {
-            QueryWrapper<T> queryWrapper = new QueryWrapper<>(obj);
-            queryWrapper.orderByDesc("createTime");
-            queryWrapper.eq("status", DataStatus.SYS_OPEN_0000.getIndex());
-            queryWrapper.eq("mchId", mchId);
-            mapper.selectList(queryWrapper);
-            Page<T> page = new Page<>(pagingQuery.getCurrentPage(), pagingQuery.getPageSize());
-            page = mapper.selectPage(page, queryWrapper);
-            return page;
-        }
+    public boolean tombstone(T entity) {
+        return false;
     }
 
     @Override
-    public void export(HttpServletResponse response, SheetExportType sheetExportType, List<T> data, String fileName) {
-
+    public boolean tombstone(Serializable id) {
+        return false;
     }
 
     @Override
-    public T getOne(QueryWrapper<T> queryWrapper) {
+    public Page<T> pageList(PagingQuery pagingQuery, T t) {
         return null;
     }
 
+    @Override
+    public Page<T> pageList(PagingQuery pagingQuery, T t, String mchId) {
+        return null;
+    }
 
+    @Override
+    public void export(HttpServletResponse response, DataExportConfig dataExportConfig) {
+
+    }
+
+    @Override
+    public void selectExportStatus(HttpServletRequest request, HttpServletResponse response, DataExportConfig dataExportConfig) {
+
+    }
+
+    @Override
+    public boolean save(T entity) {
+        return super.save(entity);
+    }
+
+    @Override
+    public boolean saveBatch(Collection<T> entityList) {
+        return super.saveBatch(entityList);
+    }
+
+    @Override
+    public boolean saveOrUpdateBatch(Collection<T> entityList) {
+        return super.saveOrUpdateBatch(entityList);
+    }
+
+    @Override
+    public boolean updateById(T entity) {
+        return super.updateById(entity);
+    }
+
+    @Override
+    public T getById(Serializable id) {
+        return super.getById(id);
+    }
+
+    @Override
+    public long count() {
+        return super.count();
+    }
+
+    @Override
+    public List<T> list() {
+        return super.list();
+    }
 }

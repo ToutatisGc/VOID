@@ -1,12 +1,8 @@
 package cn.toutatis.xvoid.orm.support;
 
-import cn.toutatis.xvoid.common.enums.sheet.SheetExportType;
-import cn.toutatis.xvoid.common.standard.DatabaseConstant;
 import cn.toutatis.xvoid.orm.base.data.common.EntityBasicAttribute;
 import cn.toutatis.xvoid.orm.support.mybatisplus.PagingQuery;
 import cn.toutatis.xvoid.toolkit.data.DataExportConfig;
-import com.baomidou.mybatisplus.core.conditions.Wrapper;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -96,8 +92,8 @@ public interface VoidService<T extends EntityBasicAttribute<T>>{
      * @param condition 条件构造器
      * @return 删除成功
      */
-    @Transactional(rollbackFor = Exception.class)
-    boolean remove(Object condition);
+//    @Transactional(rollbackFor = Exception.class)
+//    boolean remove(Condition condition);
 
     /**
      * 根据ID列表删除实体
@@ -137,8 +133,8 @@ public interface VoidService<T extends EntityBasicAttribute<T>>{
      * @param condition 条件构造器
      * @return 逻辑删除成功
      */
-    @Transactional(rollbackFor = Exception.class)
-    boolean tombstone(Object condition);
+//    @Transactional(rollbackFor = Exception.class)
+//    boolean tombstone(Condition condition);
 
     /**
      * 根据实体更新记录
@@ -158,8 +154,8 @@ public interface VoidService<T extends EntityBasicAttribute<T>>{
      * @param condition 条件构造器
      * @return 更新成功
      */
-    @Transactional(rollbackFor = Exception.class)
-    boolean update(Object condition);
+//    @Transactional(rollbackFor = Exception.class)
+//    boolean update(Condition condition);
 
     /**
      * 根据主键ID查询实体
@@ -174,7 +170,7 @@ public interface VoidService<T extends EntityBasicAttribute<T>>{
      * @param condition 条件构造器
      * @return 实体
      */
-    T getOne(Object condition);
+//    T getOne(Condition condition);
 
     /**
      * 根据条件构造器查询单个实体
@@ -182,21 +178,21 @@ public interface VoidService<T extends EntityBasicAttribute<T>>{
      * @param throwEx 是否抛出异常
      * @return 实体
      */
-    T getOne(Object condition, boolean throwEx);
+//    T getOne(Condition condition, boolean throwEx);
 
     /**
      * 不指定实体类,查询Map映射
      * @param condition 条件构造器
      * @return MAP数据
      */
-    Map<String, Object> getMap(Object condition);
+//    Map<String, Object> getMap(Condition condition);
 
     /**
      * 查询List映射
      * @param condition 条件构造器
      * @return List映射
      */
-    List<Map<String,Object>> getMapList(Object condition);
+//    List<Map<String,Object>> getMapList(Condition condition);
 
     /**
      * 查询表记录总数
@@ -209,7 +205,7 @@ public interface VoidService<T extends EntityBasicAttribute<T>>{
      * @param condition 条件构造器
      * @return 条件限定表记录数
      */
-    long count(Object condition);
+//    long count(Condition condition);
 
     /**
      * 查询所有记录
@@ -222,7 +218,7 @@ public interface VoidService<T extends EntityBasicAttribute<T>>{
      * @param condition 条件构造器
      * @return 记录列表
      */
-    List<T> list(Object condition);
+//    List<T> list(Condition condition);
 
     /**
      * 根据ID列表查询查询实体集合
