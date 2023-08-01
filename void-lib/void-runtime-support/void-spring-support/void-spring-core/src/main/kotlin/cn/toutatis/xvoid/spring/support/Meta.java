@@ -1,6 +1,6 @@
 package cn.toutatis.xvoid.spring.support;
 
-public class VoidModuleInfo {
+public class Meta {
 
     public static final String PKG_NAME = "cn.toutatis.xvoid.spring.support";
 

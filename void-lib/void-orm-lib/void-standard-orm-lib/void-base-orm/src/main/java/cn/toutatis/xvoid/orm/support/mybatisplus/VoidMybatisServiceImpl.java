@@ -14,9 +14,10 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
+ * 增强mpp的service
  * @author Toutatis_Gc
- * @param <M> 继承MybatisPlus的实体类
- * @param <T> 实体类
+ * @param <M> 继承MybatisPlus的Mapper
+ * @param <T> 继承了EntityBasicAttribute的实体类
  */
 public class VoidMybatisServiceImpl<M extends BaseMapper<T>, T extends EntityBasicAttribute<T>> extends ServiceImpl<M, T> implements VoidMybatisService<T> {
 

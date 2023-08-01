@@ -29,7 +29,7 @@ import java.util.concurrent.*;
  */
 public class DataExporter {
 
-    private static Logger logger = LoggerToolkit.getLogger(DataExporter.class);
+    private static final Logger logger = LoggerToolkit.getLogger(DataExporter.class);
 
     public static Sheet defaultStyleSheet(Workbook workbook,String sheetName,PoiStandardModel model) {
         if (workbook instanceof SXSSFWorkbook) {
@@ -223,7 +223,7 @@ public class DataExporter {
         headers.put("name","姓名");
         headers.put("random","随机测试");
         List<JSONObject> data = new ArrayList<>();
-        for (int i = 0; i < 1000; i++) {
+        for (int i = 0; i < 10000; i++) {
             JSONObject jsonObject = new JSONObject(2);
             jsonObject.put("id",i);
             jsonObject.put("name","张三"+i);

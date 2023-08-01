@@ -8,7 +8,7 @@ import cn.toutatis.xvoid.orm.base.data.common.result.ProxyResult;
 import cn.toutatis.xvoid.orm.base.data.common.result.Result;
 import cn.toutatis.xvoid.orm.base.data.common.result.ResultCode;
 import cn.toutatis.xvoid.orm.base.data.common.result.SimpleResultMessage;
-import cn.toutatis.xvoid.spring.support.VoidModuleInfo;
+import cn.toutatis.xvoid.spring.support.Meta;
 import cn.toutatis.xvoid.spring.configure.system.enums.storage.ObjectStorageMode;
 import cn.toutatis.xvoid.spring.configure.system.VoidConfiguration;
 import cn.toutatis.xvoid.spring.support.core.file.MinIOShell;
@@ -179,7 +179,7 @@ public class SystemResourceServiceImpl extends VoidMybatisServiceImpl<SystemReso
                             InvalidKeyException | InvalidResponseException | NoSuchAlgorithmException
                             | ServerException | XmlParserException e) {
                         e.printStackTrace();
-                        String message = "[%s]上传文件[%s]转储MINIO服务异常,请查看日志解决问题.".formatted(VoidModuleInfo.MODULE_NAME, originalFilename);
+                        String message = "[%s]上传文件[%s]转储MINIO服务异常,请查看日志解决问题.".formatted(Meta.MODULE_NAME, originalFilename);
                         logger.error(message);
                         throw new ContinueTransactionException(message);
                     }

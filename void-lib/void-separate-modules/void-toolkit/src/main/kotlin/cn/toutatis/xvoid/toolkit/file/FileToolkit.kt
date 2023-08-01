@@ -194,6 +194,12 @@ object FileToolkit {
         return file.exists()
     }
 
+    /**
+     * Find file in possible location
+     * 寻找文件可能存在的位置
+     * @param path 文件路径
+     * @return 文件
+     */
     @JvmStatic
     fun findFileInPossibleLocation(path:String): File {
         if (File(path).exists()){
@@ -216,7 +222,7 @@ object FileToolkit {
             val threadPath = this.getClassesFile(path)
             if (File(threadPath?.toURI()!!).exists()){
                 return File(threadPath.toURI()).apply {
-                    logger.trace("Found the file!this file is a JAR package file,please use getClassesFile method! ")
+                    logger.trace("Found the file!this file is a runtime path file,please use getClassesFile method! ")
                 }
             }
             throw FileNotFoundException("Can't find [$path] this file location. QAQ")

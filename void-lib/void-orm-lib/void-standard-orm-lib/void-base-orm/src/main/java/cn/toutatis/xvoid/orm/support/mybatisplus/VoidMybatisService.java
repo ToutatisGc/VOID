@@ -16,15 +16,5 @@ import java.util.List;
  */
 public interface VoidMybatisService<T extends EntityBasicAttribute<T>> extends VoidService<T>,IService<T> {
 
-    @Override
-    Page<T> getList(PagingQuery pagingQuery, T t);
-
-    @Override
-    Page<T> getList(PagingQuery pagingQuery, T t, String mchId);
-
-    @Override
-    void export(HttpServletResponse response, SheetExportType sheetExportType, List<T> data, String fileName);
-
-    T getOne(QueryWrapper<T> queryWrapper);
 
 }

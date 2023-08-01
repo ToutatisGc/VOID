@@ -1,6 +1,6 @@
 package cn.toutatis.xvoid.spring.support.enhance.mapping;
 
-import cn.toutatis.xvoid.spring.support.VoidModuleInfo;
+import cn.toutatis.xvoid.spring.support.Meta;
 import cn.toutatis.xvoid.spring.configure.system.enums.global.RunMode;
 import cn.toutatis.xvoid.spring.configure.system.VoidConfiguration;
 import cn.toutatis.xvoid.toolkit.file.FileToolkit;
@@ -70,7 +70,7 @@ public class XvoidMappingResolver {
         ArrayList<ResourcesMapping> resourcesMappings = new ArrayList<>(staticResourcesMappingObject.keySet().size());
         for (String key : staticResourcesMappingObject.keySet()) {
             List<String> locations = staticResourcesMappingObject.getJSONArray(key).toJavaList(String.class);
-            logger.info("[{}]解析静态资源路径:{},资源位置:{}", VoidModuleInfo.MODULE_NAME,key,locations);
+            logger.info("[{}]解析静态资源路径:{},资源位置:{}", Meta.MODULE_NAME,key,locations);
             ResourcesMapping resourcesMapping = new ResourcesMapping(key, locations);
             resourcesMappings.add(resourcesMapping);
         }
@@ -82,22 +82,22 @@ public class XvoidMappingResolver {
      */
     public String[] getSecurityPermittedPaths() {
         RunMode mode = voidConfiguration.getMode();
-        logger.info("[{}]当前启动模式为:{}", VoidModuleInfo.MODULE_NAME,mode);
+        logger.info("[{}]当前启动模式为:{}", Meta.MODULE_NAME,mode);
         String[] openMappings = new String[1];
         if (mode == RunMode.DEBUG){
-            logger.warn("[{}]注意开发模式为:DEBUG[调试模式],将忽略所有权限控制.", VoidModuleInfo.MODULE_NAME);
+            logger.warn("[{}]注意开发模式为:DEBUG[调试模式],将忽略所有权限控制.", Meta.MODULE_NAME);
             openMappings[0] = "/**";
             return openMappings;
         }
         JSONObject securityMapping = resourcesMapping.getJSONObject("SECURITY");
         JSONArray openArr = securityMapping.getJSONArray("OPEN");
-        logger.info("[" + VoidModuleInfo.MODULE_NAME + "] 添加OPEN开放路径权限：" + openArr);
+        logger.info("[" + Meta.MODULE_NAME + "] 添加OPEN开放路径权限：" + openArr);
         ArrayList<String> pathArr = new ArrayList<>(openArr.toJavaList(String.class));
         JSONArray vipArr = securityMapping.getJSONArray("VIP");
-        logger.info("[" + VoidModuleInfo.MODULE_NAME + "] 添加重要开放路径权限：" + vipArr);
+        logger.info("[" + Meta.MODULE_NAME + "] 添加重要开放路径权限：" + vipArr);
         pathArr.addAll(vipArr.toJavaList(String.class));
         JSONArray runModePathArr = securityMapping.getJSONArray(mode.name());
-        logger.info("["+ VoidModuleInfo.MODULE_NAME+"] 添加{}模式开放路径权限：{}",mode.name(),runModePathArr);
+        logger.info("["+ Meta.MODULE_NAME+"] 添加{}模式开放路径权限：{}",mode.name(),runModePathArr);
         pathArr.addAll(runModePathArr.toJavaList(String.class));
         openMappings = pathArr.toArray(openMappings);
         return openMappings;

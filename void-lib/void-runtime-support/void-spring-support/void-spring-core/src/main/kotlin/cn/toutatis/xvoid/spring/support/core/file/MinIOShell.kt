@@ -1,6 +1,6 @@
 package cn.toutatis.xvoid.spring.support.core.file
 
-import cn.toutatis.xvoid.spring.support.VoidModuleInfo
+import cn.toutatis.xvoid.spring.support.Meta
 import cn.toutatis.xvoid.spring.configure.system.VoidConfiguration
 import cn.toutatis.xvoid.toolkit.file.FileToolkit
 import cn.toutatis.xvoid.toolkit.log.LoggerToolkit
@@ -62,10 +62,10 @@ open class MinIOShell {
                 // 测试客户端连接
                 try {
                     val listBuckets = minioClient!!.listBuckets()
-                    logger.infoWithModule(VoidModuleInfo.MODULE_NAME,"MinIO",
+                    logger.infoWithModule(Meta.MODULE_NAME,"MinIO",
                         "已创建MinIO客户端,服务端为[${minIoConfig.endpoint}],Access-Key为:[${minIoConfig.accessKey}]")
                 }catch (exception: Exception){
-                    logger.errorWithModule(VoidModuleInfo.MODULE_NAME,"MinIO",
+                    logger.errorWithModule(Meta.MODULE_NAME,"MinIO",
                         "MinIO客户端连接失败,服务端为[${minIoConfig.endpoint}],Access-Key为:[${minIoConfig.accessKey}]")
                 }
             }
@@ -87,7 +87,7 @@ open class MinIOShell {
                 makeBucketArgs.objectLock(false)
                 makeBucketArgs.bucket(bucket)
                 minioClient!!.makeBucket(makeBucketArgs.build())
-                logger.infoWithModule(VoidModuleInfo.MODULE_NAME,"MinIO","已创建桶[${bucket}]")
+                logger.infoWithModule(Meta.MODULE_NAME,"MinIO","已创建桶[${bucket}]")
             }else{
                 bucketBucket[bucket] = true
             }
