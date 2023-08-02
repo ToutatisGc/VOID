@@ -18,14 +18,15 @@
 
         <!--父依赖管理库-->
         <module>void-feature-support</module>
+        <!--独立模块-->
+        <module>void-separate-modules</module>
         <!--公共部分-->
         <module>void-common</module>
         <!--各环境支持及增强-->
         <module>void-runtime-support</module>
         <!--标准化ORM库-->
         <module>void-orm-lib</module>
-        <!--独立模块-->
-        <module>void-separate-modules</module>
+
         <!--切面测试-->
         <module>void-aspect</module>
         <!--深度模块-->

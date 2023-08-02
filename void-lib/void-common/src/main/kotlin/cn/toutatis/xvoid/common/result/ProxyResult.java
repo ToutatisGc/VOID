@@ -1,7 +1,8 @@
 package cn.toutatis.xvoid.common.result;
 
-import cn.toutatis.xvoid.VoidModuleInfo;
+import cn.toutatis.xvoid.common.Meta;
 import cn.toutatis.xvoid.common.exception.MissingParameterException;
+import cn.toutatis.xvoid.toolkit.VoidModuleInfo;
 import cn.toutatis.xvoid.toolkit.log.LoggerToolkit;
 import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -225,7 +226,7 @@ public class ProxyResult extends AbstractResult implements Result {
             Map<String,Object> data =(Map<String,Object>) this.data;
             data.put(key, value);
         }else {
-            throw new IllegalArgumentException("[%s-DATA]该类型并不是Map.class的子类,无法put数据.".formatted(VoidModuleInfo.MODULE_NAME));
+            throw new IllegalArgumentException("[%s-DATA]该类型并不是Map.class的子类,无法put数据.".formatted(Meta.MODULE_NAME));
         }
         this.alreadyEdited = true;
         setContent(data);

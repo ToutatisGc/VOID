@@ -16,10 +16,10 @@ class SqliteTest {
             connection.autoCommit = true
             connection.createStatement().use { statement ->
                 {
-                    val execute = statement.executeUpdate("""
-                      INSERT INTO config(key,value) values ('foo','bar')
-                """.trimIndent())
-                    System.err.println(execute)
+//                    val execute = statement.executeUpdate("""
+//                      INSERT INTO config(key,value) values ('foo','bar')
+//                """.trimIndent())
+//                    System.err.println(execute)
                 }
             }.invoke()
         }

@@ -35,22 +35,10 @@
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-annotations</artifactId>
         </dependency>
-        <!--MybatisPlus 注解-->
-        <dependency>
-            <groupId>com.baomidou</groupId>
-            <artifactId>mybatis-plus-annotation</artifactId>
-        </dependency>
         <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-extension</artifactId>
         </dependency>
-        <!--VOID工具包-->
-        <dependency>
-            <groupId>cn.toutatis</groupId>
-            <artifactId>void-toolkit</artifactId>
-            <version>0.0.0-ALPHA</version>
-        </dependency>
-
         <dependency>
             <groupId>cn.toutatis</groupId>
             <artifactId>void-common</artifactId>
