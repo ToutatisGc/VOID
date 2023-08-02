@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @author Toutatis
@@ -106,7 +105,7 @@ public interface VoidService<T extends EntityBasicAttribute<T>>{
     /**
      * 记录逻辑删除
      * 本身操作是更新dataStatus为逻辑删除状态
-     * @see cn.toutatis.xvoid.orm.base.data.common.result.DataStatus 数据状态
+     * @see cn.toutatis.xvoid.common.result.DataStatus 数据状态
      * @see EntityBasicAttribute 逻辑删除字段
      * @param entity 实体
      * @return 逻辑删除成功
@@ -117,7 +116,7 @@ public interface VoidService<T extends EntityBasicAttribute<T>>{
     /**
      * 记录逻辑删除
      * 本身操作是更新dataStatus为逻辑删除状态
-     * @see cn.toutatis.xvoid.orm.base.data.common.result.DataStatus 数据状态
+     * @see cn.toutatis.xvoid.common.result.DataStatus 数据状态
      * @see EntityBasicAttribute 逻辑删除字段
      * @param id 实体ID
      * @return 逻辑删除成功
@@ -128,7 +127,7 @@ public interface VoidService<T extends EntityBasicAttribute<T>>{
     /**
      * 记录逻辑删除
      * 本身操作是更新dataStatus为逻辑删除状态
-     * @see cn.toutatis.xvoid.orm.base.data.common.result.DataStatus 数据状态
+     * @see cn.toutatis.xvoid.common.result.DataStatus 数据状态
      * @see EntityBasicAttribute 逻辑删除字段
      * @param condition 条件构造器
      * @return 逻辑删除成功

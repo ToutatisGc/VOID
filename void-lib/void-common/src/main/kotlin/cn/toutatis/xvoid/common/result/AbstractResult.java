@@ -1,4 +1,4 @@
-package cn.toutatis.xvoid.orm.base.data.common.result;
+package cn.toutatis.xvoid.common.result;
 
 import cn.toutatis.xvoid.toolkit.formatting.JsonToolkit;
 import io.swagger.v3.oas.annotations.media.Schema;

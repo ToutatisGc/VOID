@@ -1,6 +1,6 @@
 package cn.toutatis.xvoid.spring.core.route.portal;
 
-import cn.toutatis.xvoid.orm.base.data.common.result.ProxyResult;
+import cn.toutatis.xvoid.common.result.ProxyResult;
 import cn.toutatis.xvoid.spring.core.tools.ViewToolkit;
 import cn.toutatis.xvoid.spring.annotations.application.VoidController;
 import cn.toutatis.xvoid.spring.configure.system.VoidConfiguration;

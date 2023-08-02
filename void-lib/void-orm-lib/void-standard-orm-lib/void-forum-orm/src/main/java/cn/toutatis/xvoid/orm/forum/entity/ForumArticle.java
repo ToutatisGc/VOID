@@ -1,12 +1,10 @@
 package cn.toutatis.xvoid.orm.forum.entity;
 
 import cn.toutatis.xvoid.BusinessType;
-import cn.toutatis.xvoid.orm.forum.entity.intermediate.ForumArticleTagsIntermediate;
 import cn.toutatis.xvoid.orm.forum.enums.ArticleSource;
 import cn.toutatis.xvoid.orm.base.data.common.EntityBasicAttribute;
-import cn.toutatis.xvoid.orm.base.data.common.result.DataStatus;
+import cn.toutatis.xvoid.common.result.DataStatus;
 import com.baomidou.mybatisplus.annotation.*;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;

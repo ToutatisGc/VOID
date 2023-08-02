@@ -2,7 +2,7 @@ package cn.toutatis.xvoid.spring.core.route.base.error;
 
 import cn.toutatis.xvoid.common.Version;
 import cn.toutatis.xvoid.common.standard.StandardFields;
-import cn.toutatis.xvoid.orm.base.data.common.result.ResultCode;
+import cn.toutatis.xvoid.common.result.ResultCode;
 import cn.toutatis.xvoid.spring.core.tools.ViewToolkit;
 import cn.toutatis.xvoid.spring.configure.system.VoidConfiguration;
 import cn.toutatis.xvoid.toolkit.constant.Time;

@@ -1,7 +1,7 @@
 package cn.toutatis.xvoid.spring.business.open.services;
 
-import cn.toutatis.xvoid.orm.base.data.common.result.ProxyResult;
-import cn.toutatis.xvoid.orm.base.data.common.result.ResultCode;
+import cn.toutatis.xvoid.common.result.ProxyResult;
+import cn.toutatis.xvoid.common.result.ResultCode;
 import cn.toutatis.xvoid.spring.business.open.request.WechatOfficialAccountRequest;
 import cn.toutatis.xvoid.spring.support.toolkits.VoidSpringToolkit;
 import cn.toutatis.xvoid.toolkit.formatting.XmlToolkit;

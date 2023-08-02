@@ -1,7 +1,7 @@
 package cn.toutatis.xvoid.orm.support.mybatisplus;
 
 import cn.toutatis.xvoid.orm.base.data.common.EntityBasicAttribute;
-import cn.toutatis.xvoid.orm.base.data.common.result.DataStatus;
+import cn.toutatis.xvoid.common.result.DataStatus;
 import cn.toutatis.xvoid.orm.support.VoidService;
 import cn.toutatis.xvoid.toolkit.data.DataExportConfig;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
@@ -16,7 +16,6 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Function;
 
 /**
  *
@@ -31,7 +30,7 @@ public interface VoidMybatisService<T extends EntityBasicAttribute<T>> extends V
      * @return 插入成功
      */
     @Override
-    boolean save(T entity);
+    default boolean save(T entity){return IService.super.save(entity);};
 
     /**
      * TableId 注解存在更新记录，否插入一条记录

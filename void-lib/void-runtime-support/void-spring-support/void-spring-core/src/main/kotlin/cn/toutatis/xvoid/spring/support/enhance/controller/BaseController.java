@@ -1,6 +1,6 @@
 package cn.toutatis.xvoid.spring.support.enhance.controller;
 
-import cn.toutatis.xvoid.orm.base.data.common.result.Result;
+import cn.toutatis.xvoid.common.result.Result;
 import cn.toutatis.xvoid.orm.support.mybatisplus.PagingQuery;
 
 /**

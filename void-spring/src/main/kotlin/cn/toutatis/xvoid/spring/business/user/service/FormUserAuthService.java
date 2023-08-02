@@ -1,8 +1,8 @@
 package cn.toutatis.xvoid.spring.business.user.service;
 
 import cn.toutatis.xvoid.common.standard.StandardFields;
-import cn.toutatis.xvoid.orm.base.data.common.result.DataStatus;
-import cn.toutatis.xvoid.orm.base.data.common.result.ResultCode;
+import cn.toutatis.xvoid.common.result.DataStatus;
+import cn.toutatis.xvoid.common.result.ResultCode;
 import cn.toutatis.xvoid.orm.base.authentication.entity.SystemUserLogin;
 import cn.toutatis.xvoid.spring.core.security.access.ValidationMessage;
 import cn.toutatis.xvoid.spring.core.security.access.VoidSecurityAuthenticationService;
@@ -10,7 +10,6 @@ import cn.toutatis.xvoid.spring.business.user.entity.FormUserDetails;
 import cn.toutatis.xvoid.toolkit.validator.Validator;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

@@ -1,4 +1,4 @@
-package cn.toutatis.xvoid.orm.base.data.common.result;
+package cn.toutatis.xvoid.common.result;
 
 /**
  * 常用响应消息

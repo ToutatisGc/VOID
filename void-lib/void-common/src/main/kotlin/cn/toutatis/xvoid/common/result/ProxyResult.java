@@ -1,4 +1,4 @@
-package cn.toutatis.xvoid.orm.base.data.common.result;
+package cn.toutatis.xvoid.common.result;
 
 import cn.toutatis.xvoid.VoidModuleInfo;
 import cn.toutatis.xvoid.common.exception.MissingParameterException;

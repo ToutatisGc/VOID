@@ -1,7 +1,7 @@
 package cn.toutatis.xvoid.orm.base.data.common;
 
 import cn.toutatis.xvoid.BusinessType;
-import cn.toutatis.xvoid.orm.base.data.common.result.DataStatus;
+import cn.toutatis.xvoid.common.result.DataStatus;
 import cn.toutatis.xvoid.toolkit.constant.Time;
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;

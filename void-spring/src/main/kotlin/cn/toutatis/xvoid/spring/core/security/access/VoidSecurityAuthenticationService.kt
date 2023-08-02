@@ -1,7 +1,7 @@
 package cn.toutatis.xvoid.spring.core.security.access
 
 import cn.toutatis.xvoid.common.standard.StandardFields
-import cn.toutatis.xvoid.orm.base.data.common.result.ResultCode
+import cn.toutatis.xvoid.common.result.ResultCode
 import cn.toutatis.xvoid.spring.business.user.persistence.SystemUserLoginMapper
 import cn.toutatis.xvoid.spring.business.user.service.FormUserAuthService
 import cn.toutatis.xvoid.spring.configure.system.VoidConfiguration

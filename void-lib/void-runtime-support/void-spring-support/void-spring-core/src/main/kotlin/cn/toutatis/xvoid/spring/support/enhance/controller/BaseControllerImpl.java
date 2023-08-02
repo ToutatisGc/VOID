@@ -2,10 +2,10 @@ package cn.toutatis.xvoid.spring.support.enhance.controller;
 
 import cn.toutatis.xvoid.common.standard.StandardFields;
 import cn.toutatis.xvoid.orm.base.data.common.EntityBasicAttribute;
-import cn.toutatis.xvoid.orm.base.data.common.result.Actions;
-import cn.toutatis.xvoid.orm.base.data.common.result.ProxyResult;
-import cn.toutatis.xvoid.orm.base.data.common.result.Result;
-import cn.toutatis.xvoid.orm.base.data.common.result.ResultCode;
+import cn.toutatis.xvoid.common.result.Actions;
+import cn.toutatis.xvoid.common.result.ProxyResult;
+import cn.toutatis.xvoid.common.result.Result;
+import cn.toutatis.xvoid.common.result.ResultCode;
 import cn.toutatis.xvoid.spring.configure.system.VoidConfiguration;
 import cn.toutatis.xvoid.orm.support.mybatisplus.CommonWrapper;
 import cn.toutatis.xvoid.orm.support.mybatisplus.PagingQuery;

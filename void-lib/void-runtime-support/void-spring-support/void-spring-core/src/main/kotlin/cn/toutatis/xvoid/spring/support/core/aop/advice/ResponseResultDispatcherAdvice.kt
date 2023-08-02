@@ -1,10 +1,10 @@
 package cn.toutatis.xvoid.spring.support.core.aop.advice
 
 import cn.toutatis.xvoid.common.standard.StandardFields
-import cn.toutatis.xvoid.orm.base.data.common.result.ProxyResult
-import cn.toutatis.xvoid.orm.base.data.common.result.Result
-import cn.toutatis.xvoid.orm.base.data.common.result.branch.DetailedResult
-import cn.toutatis.xvoid.orm.base.data.common.result.branch.SimpleResult
+import cn.toutatis.xvoid.common.result.ProxyResult
+import cn.toutatis.xvoid.common.result.Result
+import cn.toutatis.xvoid.common.result.branch.DetailedResult
+import cn.toutatis.xvoid.common.result.branch.SimpleResult
 import cn.toutatis.xvoid.spring.configure.system.VoidConfiguration
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.core.MethodParameter

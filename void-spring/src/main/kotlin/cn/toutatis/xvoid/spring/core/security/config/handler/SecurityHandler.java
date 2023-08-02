@@ -1,8 +1,8 @@
 package cn.toutatis.xvoid.spring.core.security.config.handler;
 
 import cn.toutatis.xvoid.common.standard.StandardFields;
-import cn.toutatis.xvoid.orm.base.data.common.result.ProxyResult;
-import cn.toutatis.xvoid.orm.base.data.common.result.ResultCode;
+import cn.toutatis.xvoid.common.result.ProxyResult;
+import cn.toutatis.xvoid.common.result.ResultCode;
 import cn.toutatis.xvoid.orm.base.authentication.entity.SystemAuthRole;
 import cn.toutatis.xvoid.spring.VoidModuleInfo;
 import cn.toutatis.xvoid.spring.business.user.entity.AuthInfo;

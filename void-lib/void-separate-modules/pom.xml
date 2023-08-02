@@ -45,8 +45,6 @@
     <modules>
         <!--通用工具包-->
         <module>void-toolkit</module>
-        <!--公共部分-->
-        <module>void-common</module>
         <!--Redis数据库支持-->
         <module>void-redis</module>
         <!--缓存-->

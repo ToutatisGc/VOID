@@ -3,7 +3,7 @@ package cn.toutatis.xvoid.orm.forum.entity;
 
 import cn.toutatis.xvoid.BusinessType;
 import cn.toutatis.xvoid.orm.base.data.common.EntityBasicAttribute;
-import cn.toutatis.xvoid.orm.base.data.common.result.DataStatus;
+import cn.toutatis.xvoid.common.result.DataStatus;
 import cn.toutatis.xvoid.orm.forum.entity.intermediate.ForumCategoryArticleIntermediate;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
@@ -20,7 +20,6 @@ import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
 import java.io.Serial;
-import java.util.ArrayList;
 import java.util.List;
 
 import static cn.toutatis.xvoid.orm.forum.entity.ForumArticleCategory.*;

@@ -14,7 +14,7 @@
  *    limitations under the License.
  */
 
-package cn.toutatis.xvoid.orm.base.data.common.result;
+package cn.toutatis.xvoid.common.result;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
