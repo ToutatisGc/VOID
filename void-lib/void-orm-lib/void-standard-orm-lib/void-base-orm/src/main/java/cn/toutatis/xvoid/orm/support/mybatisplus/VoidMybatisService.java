@@ -2,6 +2,7 @@ package cn.toutatis.xvoid.orm.support.mybatisplus;
 
 import cn.toutatis.xvoid.orm.base.data.common.EntityBasicAttribute;
 import cn.toutatis.xvoid.common.result.DataStatus;
+import cn.toutatis.xvoid.orm.support.Condition;
 import cn.toutatis.xvoid.orm.support.VoidService;
 import cn.toutatis.xvoid.toolkit.data.DataExportConfig;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
@@ -96,6 +97,19 @@ public interface VoidMybatisService<T extends EntityBasicAttribute<T>> extends V
      */
     @Override
     boolean removeByEntity(T entity);
+
+    /**
+     * 根据条件构造器删除记录
+     * 需要根据不同的ORM框架进行派生
+     *
+     * @param condition 条件构造器
+     * @return 删除成功
+     */
+    @Override
+    default boolean remove(Condition<T> condition){
+        Wrapper<T> wrapper = (Wrapper<T>) condition;
+        return IService.super.remove(wrapper);
+    };
 
     /**
      * 根据ID列表删除实体

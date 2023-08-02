@@ -23,18 +23,16 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 /**
- * 每个实体类都要继承该类，该类包含了一些公共的属性并且
- * 每张建立表必须字段,除中间表可缺省，其余表不得缺省
- * 注解解释
- * MappedSuperclass hibernate的注解，用于指定继承的父类，并且该类会被映射到数据库表中
- *
- * TableField 和 Column 可以同时使用，
- *      TableField 是指定MybatisPlus数据库表的字段名，
- *      Column 是hibernate指定数据库表的字段类型
- * ApiModelProperty 是swagger的注解，用于描述实体类的属性
- * JsonIgnore 是jackson的注解，用于描述实体类的属性不被序列化
- * Version 是mybatisPlus的注解，用于描述实体类的版本号
- * TableLogic 是mybatisPlus的注解，用于描述实体类的逻辑删除字段
+ * <p>每个实体类都要继承该类，该类包含了一些公共的属性并且</p>
+ * <p>每张建立表必须字段,除中间表可缺省，其余表不得缺省注解</p>
+ * <p>@MappedSuperclass hibernate的注解，用于指定继承的父类，并且该类会被映射到数据库表中</p>
+ * <p>@TableField 和 @Column 可以同时使用，</p>
+ * <p>@TableField 是指定MybatisPlus数据库表的字段名，</p>
+ * <p>@Column 是hibernate指定数据库表的字段类型</p>
+ * <p>@ApiModelProperty 是swagger的注解，用于描述实体类的属性</p>
+ * <p>@JsonIgnore 是jackson的注解，用于描述实体类的属性不被序列化</p>
+ * <p>@Version 是mybatisPlus的注解，用于描述实体类的版本号</p>
+ * <p>@TableLogic 是mybatisPlus的注解，用于描述实体类的逻辑删除字段</p>
  * @author Toutatis_Gc
  */
 @Getter @Setter @ToString

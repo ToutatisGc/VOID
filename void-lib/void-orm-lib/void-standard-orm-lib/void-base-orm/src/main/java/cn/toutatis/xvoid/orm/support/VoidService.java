@@ -91,8 +91,8 @@ public interface VoidService<T extends EntityBasicAttribute<T>>{
      * @param condition 条件构造器
      * @return 删除成功
      */
-//    @Transactional(rollbackFor = Exception.class)
-//    boolean remove(Condition condition);
+    @Transactional(rollbackFor = Exception.class)
+    boolean remove(Condition<T> condition);
 
     /**
      * 根据ID列表删除实体
