@@ -1,6 +1,8 @@
 package cn.toutatis.xvoid.orm.support.mybatisplus;
 
+import cn.toutatis.xvoid.common.result.ProxyResult;
 import cn.toutatis.xvoid.orm.base.data.common.EntityBasicAttribute;
+import cn.toutatis.xvoid.orm.support.Condition;
 import cn.toutatis.xvoid.spring.configure.system.VoidConfiguration;
 import cn.toutatis.xvoid.toolkit.data.DataExportConfig;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
@@ -33,11 +35,6 @@ public class VoidMybatisServiceImpl<M extends BaseMapper<T>, T extends EntityBas
 
 
     @Override
-    public boolean removeByEntity(T entity) {
-        return false;
-    }
-
-    @Override
     public boolean tombstone(T entity) {
         return false;
     }
@@ -45,6 +42,21 @@ public class VoidMybatisServiceImpl<M extends BaseMapper<T>, T extends EntityBas
     @Override
     public boolean tombstone(Serializable id) {
         return false;
+    }
+
+    @Override
+    public boolean tombstone(Condition<T> condition) {
+        return false;
+    }
+
+    @Override
+    public T getOne(Condition<T> condition, boolean throwEx) {
+        return null;
+    }
+
+    @Override
+    public Map<String, Object> getMap(Condition<T> condition) {
+        return null;
     }
 
     @Override
@@ -63,42 +75,7 @@ public class VoidMybatisServiceImpl<M extends BaseMapper<T>, T extends EntityBas
     }
 
     @Override
-    public void selectExportStatus(HttpServletRequest request, HttpServletResponse response, DataExportConfig dataExportConfig) {
-
-    }
-
-    @Override
-    public boolean save(T entity) {
-        return super.save(entity);
-    }
-
-    @Override
-    public boolean saveBatch(Collection<T> entityList) {
-        return super.saveBatch(entityList);
-    }
-
-    @Override
-    public boolean saveOrUpdateBatch(Collection<T> entityList) {
-        return super.saveOrUpdateBatch(entityList);
-    }
-
-    @Override
-    public boolean updateById(T entity) {
-        return super.updateById(entity);
-    }
-
-    @Override
-    public T getById(Serializable id) {
-        return super.getById(id);
-    }
-
-    @Override
-    public long count() {
-        return super.count();
-    }
-
-    @Override
-    public List<T> list() {
-        return super.list();
+    public ProxyResult selectExportStatus(HttpServletRequest request, HttpServletResponse response, DataExportConfig dataExportConfig) {
+        return null;
     }
 }

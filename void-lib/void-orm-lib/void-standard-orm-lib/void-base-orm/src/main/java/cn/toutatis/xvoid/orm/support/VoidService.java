@@ -1,5 +1,6 @@
 package cn.toutatis.xvoid.orm.support;
 
+import cn.toutatis.xvoid.common.result.ProxyResult;
 import cn.toutatis.xvoid.orm.base.data.common.EntityBasicAttribute;
 import cn.toutatis.xvoid.orm.support.mybatisplus.PagingQuery;
 import cn.toutatis.xvoid.toolkit.data.DataExportConfig;
@@ -11,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Toutatis
@@ -132,8 +134,8 @@ public interface VoidService<T extends EntityBasicAttribute<T>>{
      * @param condition 条件构造器
      * @return 逻辑删除成功
      */
-//    @Transactional(rollbackFor = Exception.class)
-//    boolean tombstone(Condition condition);
+    @Transactional(rollbackFor = Exception.class)
+    boolean tombstone(Condition<T> condition);
 
     /**
      * 根据实体更新记录
@@ -153,8 +155,8 @@ public interface VoidService<T extends EntityBasicAttribute<T>>{
      * @param condition 条件构造器
      * @return 更新成功
      */
-//    @Transactional(rollbackFor = Exception.class)
-//    boolean update(Condition condition);
+    @Transactional(rollbackFor = Exception.class)
+    boolean update(Condition<T> condition);
 
     /**
      * 根据主键ID查询实体
@@ -169,7 +171,7 @@ public interface VoidService<T extends EntityBasicAttribute<T>>{
      * @param condition 条件构造器
      * @return 实体
      */
-//    T getOne(Condition condition);
+    T getOne(Condition<T> condition);
 
     /**
      * 根据条件构造器查询单个实体
@@ -177,21 +179,21 @@ public interface VoidService<T extends EntityBasicAttribute<T>>{
      * @param throwEx 是否抛出异常
      * @return 实体
      */
-//    T getOne(Condition condition, boolean throwEx);
+    T getOne(Condition<T> condition, boolean throwEx);
 
     /**
      * 不指定实体类,查询Map映射
      * @param condition 条件构造器
      * @return MAP数据
      */
-//    Map<String, Object> getMap(Condition condition);
+    Map<String, Object> getMap(Condition<T> condition);
 
     /**
      * 查询List映射
      * @param condition 条件构造器
      * @return List映射
      */
-//    List<Map<String,Object>> getMapList(Condition condition);
+    List<Map<String,Object>> getMapList(Condition<T> condition);
 
     /**
      * 查询表记录总数
@@ -204,7 +206,7 @@ public interface VoidService<T extends EntityBasicAttribute<T>>{
      * @param condition 条件构造器
      * @return 条件限定表记录数
      */
-//    long count(Condition condition);
+    long count(Condition<T> condition);
 
     /**
      * 查询所有记录
@@ -217,7 +219,7 @@ public interface VoidService<T extends EntityBasicAttribute<T>>{
      * @param condition 条件构造器
      * @return 记录列表
      */
-//    List<T> list(Condition condition);
+    List<T> list(Condition<T> condition);
 
     /**
      * 根据ID列表查询查询实体集合
@@ -256,6 +258,6 @@ public interface VoidService<T extends EntityBasicAttribute<T>>{
      * @param response 响应
      * @param dataExportConfig 导出配置
      */
-    void selectExportStatus(HttpServletRequest request, HttpServletResponse response, DataExportConfig dataExportConfig);
+    ProxyResult selectExportStatus(HttpServletRequest request, HttpServletResponse response, DataExportConfig dataExportConfig);
 
 }

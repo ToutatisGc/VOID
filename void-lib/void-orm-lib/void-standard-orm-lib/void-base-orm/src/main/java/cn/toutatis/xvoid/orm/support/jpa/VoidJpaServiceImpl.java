@@ -23,24 +23,6 @@ public class VoidJpaServiceImpl<R extends VoidJpaRepo<T,ID>,ID,T extends EntityB
     @Autowired
     protected R repository;
 
-    @Override
-    public Page<T> getList(PagingQuery pagingQuery, T t) {
-        return null;
-    }
 
-    @Override
-    public Page<T> getList(PagingQuery pagingQuery, T t, String mchId) {
-        return null;
-    }
-
-    @Override
-    public void export(HttpServletResponse response, SheetExportType sheetExportType, List<T> data, String fileName) {
-
-    }
-
-    @Override
-    public T getOne(QueryWrapper<T> queryWrapper) {
-        return null;
-    }
 
 }

@@ -1,5 +1,6 @@
 package cn.toutatis.xvoid.orm.support.mybatisplus;
 
+import cn.toutatis.xvoid.common.result.ProxyResult;
 import cn.toutatis.xvoid.orm.base.data.common.EntityBasicAttribute;
 import cn.toutatis.xvoid.common.result.DataStatus;
 import cn.toutatis.xvoid.orm.support.Condition;
@@ -17,6 +18,7 @@ import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
 
 /**
  *
@@ -49,7 +51,9 @@ public interface VoidMybatisService<T extends EntityBasicAttribute<T>> extends V
      * @return 插入成功
      */
     @Override
-    boolean saveBatch(Collection<T> entityList);
+    default boolean saveBatch(Collection<T> entityList) {
+        return saveBatch(entityList, DEFAULT_BATCH_SIZE);
+    }
 
     /**
      * 分批次像数据库插入实体
@@ -68,7 +72,9 @@ public interface VoidMybatisService<T extends EntityBasicAttribute<T>> extends V
      * @return 插入成功
      */
     @Override
-    boolean saveOrUpdateBatch(Collection<T> entityList);
+    default boolean saveOrUpdateBatch(Collection<T> entityList){
+        return saveOrUpdateBatch(entityList, DEFAULT_BATCH_SIZE);
+    }
 
     /**
      * 批量修改插入
@@ -87,7 +93,9 @@ public interface VoidMybatisService<T extends EntityBasicAttribute<T>> extends V
      * @return 删除成功
      */
     @Override
-    boolean removeById(Serializable id);
+    default boolean removeById(Serializable id){
+        return IService.super.removeById(id);
+    };
 
     /**
      * 根据实体主键ID删除记录
@@ -96,7 +104,9 @@ public interface VoidMybatisService<T extends EntityBasicAttribute<T>> extends V
      * @return 删除成功
      */
     @Override
-    boolean removeByEntity(T entity);
+    default boolean removeByEntity(T entity){
+        return IService.super.removeById(entity);
+    };
 
     /**
      * 根据条件构造器删除记录
@@ -107,8 +117,7 @@ public interface VoidMybatisService<T extends EntityBasicAttribute<T>> extends V
      */
     @Override
     default boolean remove(Condition<T> condition){
-        Wrapper<T> wrapper = (Wrapper<T>) condition;
-        return IService.super.remove(wrapper);
+        return IService.super.remove((Wrapper<T>) condition);
     };
 
     /**
@@ -118,7 +127,9 @@ public interface VoidMybatisService<T extends EntityBasicAttribute<T>> extends V
      * @return 删除成功
      */
     @Override
-    boolean removeByIds(Collection<?> idList);
+    default boolean removeByIds(Collection<?> idList){
+        return IService.super.removeByIds(idList);
+    }
 
     /**
      * 记录逻辑删除
@@ -145,6 +156,18 @@ public interface VoidMybatisService<T extends EntityBasicAttribute<T>> extends V
     boolean tombstone(Serializable id);
 
     /**
+     * 记录逻辑删除
+     * 本身操作是更新dataStatus为逻辑删除状态
+     *
+     * @param condition 条件构造器
+     * @return 逻辑删除成功
+     * @see DataStatus 数据状态
+     * @see EntityBasicAttribute 逻辑删除字段
+     */
+    @Override
+    boolean tombstone(Condition<T> condition);
+
+    /**
      * 根据实体更新记录
      * 注意:更新时需要更新版本号
      *
@@ -153,7 +176,22 @@ public interface VoidMybatisService<T extends EntityBasicAttribute<T>> extends V
      * @see EntityBasicAttribute 版本号VERSION字段
      */
     @Override
-    boolean updateById(T entity);
+    default boolean updateById(T entity){
+        return IService.super.updateById(entity);
+    }
+
+    /**
+     * 根据条件构造器更新表
+     * 注意:更新时需要更新版本号
+     *
+     * @param condition 条件构造器
+     * @return 更新成功
+     * @see EntityBasicAttribute 版本号VERSION字段
+     */
+    @Override
+    default boolean update(Condition<T> condition){
+        return IService.super.update((Wrapper<T>) condition);
+    }
 
     /**
      * 根据ID 批量更新
@@ -171,7 +209,50 @@ public interface VoidMybatisService<T extends EntityBasicAttribute<T>> extends V
      * @return 实体
      */
     @Override
-    T getById(Serializable id);
+    default T getById(Serializable id){
+        return IService.super.getById(id);
+    }
+
+    /**
+     * 根据条件构造器查询单个实体
+     *
+     * @param condition 条件构造器
+     * @return 实体
+     */
+    @Override
+    default T getOne(Condition<T> condition){
+        return IService.super.getOne((Wrapper<T>) condition);
+    };
+
+    /**
+     * 根据条件构造器查询单个实体
+     *
+     * @param condition 条件构造器
+     * @param throwEx   是否抛出异常
+     * @return 实体
+     */
+    @Override
+    T getOne(Condition<T> condition, boolean throwEx);
+
+    /**
+     * 不指定实体类,查询Map映射
+     *
+     * @param condition 条件构造器
+     * @return MAP数据
+     */
+    @Override
+    Map<String, Object> getMap(Condition<T> condition);
+
+    /**
+     * 查询List映射
+     *
+     * @param condition 条件构造器
+     * @return List映射
+     */
+    @Override
+    default List<Map<String, Object>> getMapList(Condition<T> condition){
+        return IService.super.listMaps((Wrapper<T>) condition);
+    }
 
     /**
      * 查询表记录总数
@@ -179,7 +260,20 @@ public interface VoidMybatisService<T extends EntityBasicAttribute<T>> extends V
      * @return 表记录总数
      */
     @Override
-    long count();
+    default long count(){
+        return IService.super.count();
+    }
+
+    /**
+     * 查询表记录数
+     *
+     * @param condition 条件构造器
+     * @return 条件限定表记录数
+     */
+    @Override
+    default long count(Condition<T> condition){
+        return IService.super.count((Wrapper<T>) condition);
+    }
 
     /**
      * 查询所有记录
@@ -187,7 +281,9 @@ public interface VoidMybatisService<T extends EntityBasicAttribute<T>> extends V
      * @return 所有记录
      */
     @Override
-    List<T> list();
+    default List<T> list(){
+        return IService.super.list();
+    }
 
     /**
      * 获取对应 entity 的 BaseMapper
@@ -206,13 +302,26 @@ public interface VoidMybatisService<T extends EntityBasicAttribute<T>> extends V
     Class<T> getEntityClass();
 
     /**
+     * 根据条件构造器查询列表
+     *
+     * @param condition 条件构造器
+     * @return 记录列表
+     */
+    @Override
+    default List<T> list(Condition<T> condition){
+        return IService.super.list((Wrapper<T>) condition);
+    }
+
+    /**
      * 根据ID列表查询查询实体集合
      *
      * @param idList ID列表
      * @return 实体集合
      */
     @Override
-    List<T> listByIds(Collection<? extends Serializable> idList);
+    default List<T> listByIds(Collection<? extends Serializable> idList){
+        return IService.super.listByIds(idList);
+    }
 
     /**
      * 根据 Wrapper，查询一条记录
@@ -231,6 +340,14 @@ public interface VoidMybatisService<T extends EntityBasicAttribute<T>> extends V
     @Override
     Map<String, Object> getMap(Wrapper<T> queryWrapper);
 
+    /**
+     * 根据 Wrapper，查询一条记录
+     *
+     * @param queryWrapper 实体对象封装操作类 {@link QueryWrapper}
+     * @param mapper       转换函数
+     */
+    @Override
+    <V> V getObj(Wrapper<T> queryWrapper, Function<? super Object, V> mapper);
 
     /**
      * 获取分页列表
@@ -270,5 +387,5 @@ public interface VoidMybatisService<T extends EntityBasicAttribute<T>> extends V
      * @param dataExportConfig 导出配置
      */
     @Override
-    void selectExportStatus(HttpServletRequest request, HttpServletResponse response, DataExportConfig dataExportConfig);
+    ProxyResult selectExportStatus(HttpServletRequest request, HttpServletResponse response, DataExportConfig dataExportConfig);
 }
