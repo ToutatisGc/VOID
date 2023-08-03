@@ -18,29 +18,35 @@ import java.util.*
 object Time {
 
     /**
-     * 日期格式正则表达式：yyyy-MM-dd
+     * 横杠日期格式正则表达式
      * 获取年月日
      */
-    const val YYYYMMDD_FORMAT_REGEX = "yyyy-MM-dd"
+    const val YMD_HORIZONTAL_FORMAT_REGEX = "yyyy-MM-dd"
 
     /**
-     * 日期时间格式正则表达式：yyyy-MM-dd HH:mm:ss
-     * 精确到年月日时分秒
+     * YMD Slash Format Regex
+     * 斜杠日期正则表达式
      */
-    const val DATE_FORMAT_REGEX = "yyyy-MM-dd HH:mm:ss"
+    const val YMD_SLASH_FORMAT_REGEX = "yyyy/MM/dd"
 
     /**
      * 统一目录时间格式：yyyyMMdd
      */
-    const val DIR_UNIFORM_TIME = "yyyyMMdd"
+    const val YMD_NON_SEPARATOR_TIME = "yyyyMMdd"
 
     /**
      * 连接时间格式正则表达式：yyyyMMddHHmmss
      */
-    const val CONCAT_TIME_REGEX = "yyyyMMddHHmmss"
+    const val YMD_HMS_NON_SEPARATOR_TIME_REGEX = "yyyyMMddHHmmss"
+
+    /**
+     * 常用日期时间格式正则表达式：yyyy-MM-dd HH:mm:ss
+     * 精确到年月日时分秒
+     */
+    const val SIMPLE_DATE_FORMAT_REGEX = "yyyy-MM-dd HH:mm:ss"
 
     @Volatile
-    var simpleDateFormat = SimpleDateFormat(DATE_FORMAT_REGEX)
+    var simpleDateFormat = SimpleDateFormat(SIMPLE_DATE_FORMAT_REGEX)
 
     /**
      * 获取当前时间的格式化字符串
@@ -71,7 +77,7 @@ object Time {
     fun getCurrentTimeByLong(time: Long): String = simpleDateFormat.format(Date(time))
 
     @JvmStatic
-    fun getCurrentLocalDateTime(): String = LocalDateTime.now().format(DateTimeFormatter.ofPattern(DATE_FORMAT_REGEX))
+    fun getCurrentLocalDateTime(): String = LocalDateTime.now().format(DateTimeFormatter.ofPattern(SIMPLE_DATE_FORMAT_REGEX))
 
     /**
      * @param format 格式化正则

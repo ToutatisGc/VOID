@@ -82,7 +82,7 @@ public class SystemUserLogin extends EntityBasicAttribute<SystemUserLogin> {
 
     @Transient
     public String getExpiredTimeStr() {
-        return expiredTime == null ? "" : expiredTime.format(DateTimeFormatter.ofPattern(Time.DATE_FORMAT_REGEX));
+        return expiredTime == null ? "" : expiredTime.format(DateTimeFormatter.ofPattern(Time.SIMPLE_DATE_FORMAT_REGEX));
     }
 
     @Transient

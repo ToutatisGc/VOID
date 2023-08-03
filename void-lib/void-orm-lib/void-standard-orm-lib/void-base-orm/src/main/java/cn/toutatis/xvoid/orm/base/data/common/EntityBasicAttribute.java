@@ -196,7 +196,7 @@ public abstract class EntityBasicAttribute<O extends Model<?>> extends Model<O> 
 
     @Transient
     public String getCreateTimeStr() {
-        return createTime == null ? "" : createTime.format(DateTimeFormatter.ofPattern(Time.DATE_FORMAT_REGEX));
+        return createTime == null ? "" : createTime.format(DateTimeFormatter.ofPattern(Time.SIMPLE_DATE_FORMAT_REGEX));
     }
 
     @Transient
@@ -214,7 +214,7 @@ public abstract class EntityBasicAttribute<O extends Model<?>> extends Model<O> 
 
     @Transient
     public String getLastUpdateTimeStr() {
-        return lastUpdateTime == null ? "" : lastUpdateTime.format(DateTimeFormatter.ofPattern(Time.DATE_FORMAT_REGEX));
+        return lastUpdateTime == null ? "" : lastUpdateTime.format(DateTimeFormatter.ofPattern(Time.SIMPLE_DATE_FORMAT_REGEX));
     }
 
     @Transient
