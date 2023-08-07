@@ -18,6 +18,19 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>cn.toutatis</groupId>
+                <artifactId>void-feature-support</artifactId>
+                <version>0.0.0-ALPHA</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+
     <dependencies>
         <!--Springboot 注解处理器-->
         <dependency>

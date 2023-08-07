@@ -171,7 +171,7 @@ public interface VoidService<T extends EntityBasicAttribute<T>>{
      * @param condition 条件构造器
      * @return 实体
      */
-    T getOne(Condition<T> condition);
+    T getOneObj(Object condition);
 
     /**
      * 根据条件构造器查询单个实体
@@ -179,7 +179,7 @@ public interface VoidService<T extends EntityBasicAttribute<T>>{
      * @param throwEx 是否抛出异常
      * @return 实体
      */
-    T getOne(Condition<T> condition, boolean throwEx);
+    T getOneObj(Object condition, boolean throwEx);
 
     /**
      * 不指定实体类,查询Map映射

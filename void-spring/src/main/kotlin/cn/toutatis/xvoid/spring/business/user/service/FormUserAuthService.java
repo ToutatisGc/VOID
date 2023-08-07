@@ -44,7 +44,7 @@ public class FormUserAuthService {
                     .eq("account", username).or()
                     .eq("phoneCode", username).or()
             ;
-            SystemUserLogin user = systemUserLoginService.getOne(queryWrapper);
+            SystemUserLogin user = systemUserLoginService.getOneObj(queryWrapper);
             if (user!=null){
                 FormUserDetails formUserDetails = new FormUserDetails();
                 DataStatus status = user.getStatus();

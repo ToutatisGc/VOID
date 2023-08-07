@@ -8,6 +8,7 @@ import cn.toutatis.xvoid.common.result.ProxyResult;
 import cn.toutatis.xvoid.common.result.Result;
 import cn.toutatis.xvoid.common.result.ResultCode;
 import cn.toutatis.xvoid.common.result.SimpleResultMessage;
+import cn.toutatis.xvoid.orm.support.Condition;
 import cn.toutatis.xvoid.spring.support.Meta;
 import cn.toutatis.xvoid.spring.configure.system.enums.storage.ObjectStorageMode;
 import cn.toutatis.xvoid.spring.configure.system.VoidConfiguration;
@@ -102,7 +103,7 @@ public class SystemResourceServiceImpl extends VoidMybatisServiceImpl<SystemReso
         String md5Hex = DigestUtils.md5Hex(multipartFile.getBytes());
         QueryWrapper<SystemResource> md5QueryWrapper = new QueryWrapper<>();
         md5QueryWrapper.eq("hash",md5Hex);
-        val hashFile = this.getOne(md5QueryWrapper);
+        val hashFile = this.getOneObj((Condition<SystemResource>) md5QueryWrapper);
         //md5不冲突则秒传,else合并文件
         //初始化返回信息
         Map<String,Object> returnInfo = null;

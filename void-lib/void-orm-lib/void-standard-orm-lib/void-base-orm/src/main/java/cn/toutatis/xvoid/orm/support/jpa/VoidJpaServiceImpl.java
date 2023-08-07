@@ -18,7 +18,7 @@ import java.util.List;
  * @param <T> 实体类
  * @author Toutatis_Gc
  */
-public class VoidJpaServiceImpl<R extends VoidJpaRepo<T,ID>,ID,T extends EntityBasicAttribute<T>> implements VoidService<T> {
+public class VoidJpaServiceImpl<R extends VoidJpaRepo<T,ID>,ID,T extends EntityBasicAttribute<T>>{
 
     @Autowired
     protected R repository;

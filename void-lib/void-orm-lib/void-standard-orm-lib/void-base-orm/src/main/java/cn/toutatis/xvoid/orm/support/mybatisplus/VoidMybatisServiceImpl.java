@@ -50,7 +50,7 @@ public class VoidMybatisServiceImpl<M extends BaseMapper<T>, T extends EntityBas
     }
 
     @Override
-    public T getOne(Condition<T> condition, boolean throwEx) {
+    public T getOneObj(Object condition, boolean throwEx) {
         return null;
     }
 

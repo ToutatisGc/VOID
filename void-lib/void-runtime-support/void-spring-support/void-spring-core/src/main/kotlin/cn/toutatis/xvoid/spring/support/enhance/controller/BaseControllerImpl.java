@@ -6,6 +6,7 @@ import cn.toutatis.xvoid.common.result.Actions;
 import cn.toutatis.xvoid.common.result.ProxyResult;
 import cn.toutatis.xvoid.common.result.Result;
 import cn.toutatis.xvoid.common.result.ResultCode;
+import cn.toutatis.xvoid.orm.support.Condition;
 import cn.toutatis.xvoid.spring.configure.system.VoidConfiguration;
 import cn.toutatis.xvoid.orm.support.mybatisplus.CommonWrapper;
 import cn.toutatis.xvoid.orm.support.mybatisplus.PagingQuery;
@@ -79,9 +80,9 @@ public class BaseControllerImpl<O extends EntityBasicAttribute<O>, SERVICE exten
         if (platformMode && Validator.strIsBlank(mchId)){
             return new ProxyResult(ResultCode.NOT_TENANT);
         }else if(!platformMode){
-            page = service.getList(pagingQuery,obj);
+            page = service.pageList(pagingQuery,obj);
         }else{
-            page = service.getList(pagingQuery,obj,mchId);
+            page = service.pageList(pagingQuery,obj,mchId);
         }
         Map<String,Object> objectMap = new HashMap<>(2);
         objectMap.put("list",page.getRecords());
@@ -103,7 +104,7 @@ public class BaseControllerImpl<O extends EntityBasicAttribute<O>, SERVICE exten
                 return new ProxyResult(ResultCode.NOT_TENANT);
             }
         }
-        O one = service.getOne(oQueryWrapper);
+        O one = service.getOneObj((Condition<O>) oQueryWrapper);
         result.setData(Actions.SELECT,one);
         return result;
     }

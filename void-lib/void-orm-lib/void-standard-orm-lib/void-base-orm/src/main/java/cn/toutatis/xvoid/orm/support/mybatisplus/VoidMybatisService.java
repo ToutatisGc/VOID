@@ -220,7 +220,7 @@ public interface VoidMybatisService<T extends EntityBasicAttribute<T>> extends V
      * @return 实体
      */
     @Override
-    default T getOne(Condition<T> condition){
+    default T getOneObj(Object condition){
         return IService.super.getOne((Wrapper<T>) condition);
     };
 
@@ -232,7 +232,7 @@ public interface VoidMybatisService<T extends EntityBasicAttribute<T>> extends V
      * @return 实体
      */
     @Override
-    T getOne(Condition<T> condition, boolean throwEx);
+    T getOneObj(Object condition, boolean throwEx);
 
     /**
      * 不指定实体类,查询Map映射

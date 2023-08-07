@@ -3,6 +3,7 @@ package cn.toutatis.xvoid.spring.support.core.file.service;
 import cn.toutatis.xvoid.common.enums.FileFields;
 import cn.toutatis.xvoid.orm.base.infrastructure.entity.SystemResource;
 import cn.toutatis.xvoid.common.result.Result;
+import cn.toutatis.xvoid.orm.support.mybatisplus.VoidMybatisService;
 import cn.toutatis.xvoid.spring.configure.system.enums.storage.ObjectStorageMode;
 import cn.toutatis.xvoid.orm.support.VoidService;
 import org.springframework.web.multipart.MultipartFile;
@@ -19,7 +20,7 @@ import java.util.Map;
  * @author Toutatis_Gc
  * @since 2023-06-03
 */
-public interface SystemResourceService extends VoidService<SystemResource> {
+public interface SystemResourceService extends VoidMybatisService<SystemResource> {
 
     /**
      * TODO 注释
