@@ -1,10 +1,13 @@
 package cn.toutatis.xvoid.orm.support.mybatisplus;
 
+import cn.toutatis.xvoid.common.result.DataStatus;
 import cn.toutatis.xvoid.common.result.ProxyResult;
 import cn.toutatis.xvoid.orm.base.data.common.EntityBasicAttribute;
 import cn.toutatis.xvoid.orm.support.Condition;
 import cn.toutatis.xvoid.spring.configure.system.VoidConfiguration;
 import cn.toutatis.xvoid.toolkit.data.DataExportConfig;
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -33,30 +36,27 @@ public class VoidMybatisServiceImpl<M extends BaseMapper<T>, T extends EntityBas
     @Autowired
     protected VoidConfiguration config;
 
-
     @Override
     public boolean tombstone(T entity) {
-        return false;
+        entity.setLogicDeleted(DataStatus.SYS_DELETED_0000);
+        return this.updateById(entity);
     }
 
     @Override
-    public boolean tombstone(Serializable id) {
-        return false;
-    }
-
-    @Override
-    public boolean tombstone(Condition<T> condition) {
-        return false;
+    public boolean tombstone(Object condition) {
+        UpdateWrapper<T> wrapper = (UpdateWrapper<T>) condition;
+        wrapper.set("logicDeleted", DataStatus.SYS_DELETED_0000);
+        return this.update(wrapper);
     }
 
     @Override
     public T getOneObj(Object condition, boolean throwEx) {
-        return null;
+        return this.getOne((Wrapper<T>) condition,throwEx);
     }
 
     @Override
-    public Map<String, Object> getMap(Condition<T> condition) {
-        return null;
+    public Map<String, Object> getMap(Object condition) {
+        return this.getMap((Wrapper<T>) condition);
     }
 
     @Override
@@ -78,4 +78,7 @@ public class VoidMybatisServiceImpl<M extends BaseMapper<T>, T extends EntityBas
     public ProxyResult selectExportStatus(HttpServletRequest request, HttpServletResponse response, DataExportConfig dataExportConfig) {
         return null;
     }
+
+
+
 }

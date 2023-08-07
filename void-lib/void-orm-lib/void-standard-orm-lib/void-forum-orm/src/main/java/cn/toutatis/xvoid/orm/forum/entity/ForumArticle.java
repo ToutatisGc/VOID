@@ -153,6 +153,7 @@ public class ForumArticle extends EntityBasicAttribute<ForumArticle> {
     @Transient() @TableField(exist = false)
     private Integer popularityScore = 0;
 
+    @TableField(exist = false)
     @ManyToMany(mappedBy = "articles")
     @ToString.Exclude
     private List<ForumArticleCategory> categories;

@@ -94,7 +94,7 @@ public interface VoidService<T extends EntityBasicAttribute<T>>{
      * @return 删除成功
      */
     @Transactional(rollbackFor = Exception.class)
-    boolean remove(Condition<T> condition);
+    boolean remove(Object condition);
 
     /**
      * 根据ID列表删除实体
@@ -120,22 +120,11 @@ public interface VoidService<T extends EntityBasicAttribute<T>>{
      * 本身操作是更新dataStatus为逻辑删除状态
      * @see cn.toutatis.xvoid.common.result.DataStatus 数据状态
      * @see EntityBasicAttribute 逻辑删除字段
-     * @param id 实体ID
-     * @return 逻辑删除成功
-     */
-    @Transactional(rollbackFor = Exception.class)
-    boolean tombstone(Serializable id);
-
-    /**
-     * 记录逻辑删除
-     * 本身操作是更新dataStatus为逻辑删除状态
-     * @see cn.toutatis.xvoid.common.result.DataStatus 数据状态
-     * @see EntityBasicAttribute 逻辑删除字段
      * @param condition 条件构造器
      * @return 逻辑删除成功
      */
     @Transactional(rollbackFor = Exception.class)
-    boolean tombstone(Condition<T> condition);
+    boolean tombstone(Object condition);
 
     /**
      * 根据实体更新记录
@@ -156,7 +145,7 @@ public interface VoidService<T extends EntityBasicAttribute<T>>{
      * @return 更新成功
      */
     @Transactional(rollbackFor = Exception.class)
-    boolean update(Condition<T> condition);
+    boolean update(Object condition);
 
     /**
      * 根据主键ID查询实体
@@ -186,14 +175,14 @@ public interface VoidService<T extends EntityBasicAttribute<T>>{
      * @param condition 条件构造器
      * @return MAP数据
      */
-    Map<String, Object> getMap(Condition<T> condition);
+    Map<String, Object> getMap(Object condition);
 
     /**
      * 查询List映射
      * @param condition 条件构造器
      * @return List映射
      */
-    List<Map<String,Object>> getMapList(Condition<T> condition);
+    List<Map<String,Object>> getMapList(Object condition);
 
     /**
      * 查询表记录总数
@@ -206,7 +195,7 @@ public interface VoidService<T extends EntityBasicAttribute<T>>{
      * @param condition 条件构造器
      * @return 条件限定表记录数
      */
-    long count(Condition<T> condition);
+    long count(Object condition);
 
     /**
      * 查询所有记录
@@ -219,7 +208,7 @@ public interface VoidService<T extends EntityBasicAttribute<T>>{
      * @param condition 条件构造器
      * @return 记录列表
      */
-    List<T> list(Condition<T> condition);
+    List<T> list(Object condition);
 
     /**
      * 根据ID列表查询查询实体集合

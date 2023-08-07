@@ -1,12 +1,16 @@
 package cn.toutatis.xvoid.spring.business.test;
 
+import cn.toutatis.xvoid.orm.forum.entity.ForumArticle;
 import cn.toutatis.xvoid.orm.forum.entity.ForumArticleCategory;
 import cn.toutatis.xvoid.orm.forum.entity.projection.ForumArticleCategoryProjection;
 import cn.toutatis.xvoid.orm.forum.persistence.ForumArticleCategoryRepository;
 import cn.toutatis.xvoid.orm.forum.persistence.ForumArticleMapper;
 import cn.toutatis.xvoid.orm.forum.persistence.ForumArticleRepository;
+import cn.toutatis.xvoid.orm.forum.services.ForumArticleService;
 import cn.toutatis.xvoid.spring.annotations.application.VoidController;
 import cn.toutatis.xvoid.spring.business.user.persistence.SystemAuthPathRepository;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -32,8 +36,20 @@ public class TestJController {
     @Autowired
     private ForumArticleCategoryRepository forumArticleCategoryRepository;
 
+    @Autowired
+    private ForumArticleService forumArticleService;
+
     @RequestMapping(value = "/test1",method = RequestMethod.POST)
     public Object test1(){
+        long count = forumArticleService.count();
+        System.err.println(count);
+        QueryWrapper<ForumArticle> forumArticleQueryWrapper = new QueryWrapper<>();
+        forumArticleQueryWrapper.eq("id","1");
+//        ForumArticle oneObj = forumArticleService.getOneObj(forumArticleQueryWrapper);
+        UpdateWrapper<ForumArticle> forumArticleUpdateWrapper = new UpdateWrapper<>();
+        forumArticleUpdateWrapper.eq("id",1);
+        boolean tombstone = forumArticleService.tombstone(forumArticleUpdateWrapper);
+        System.err.println(tombstone);
         return null;
     }
 

@@ -116,7 +116,7 @@ public interface VoidMybatisService<T extends EntityBasicAttribute<T>> extends V
      * @return 删除成功
      */
     @Override
-    default boolean remove(Condition<T> condition){
+    default boolean remove(Object condition){
         return IService.super.remove((Wrapper<T>) condition);
     };
 
@@ -144,30 +144,6 @@ public interface VoidMybatisService<T extends EntityBasicAttribute<T>> extends V
     boolean tombstone(T entity);
 
     /**
-     * 记录逻辑删除
-     * 本身操作是更新dataStatus为逻辑删除状态
-     *
-     * @param id 实体ID
-     * @return 逻辑删除成功
-     * @see DataStatus 数据状态
-     * @see EntityBasicAttribute 逻辑删除字段
-     */
-    @Override
-    boolean tombstone(Serializable id);
-
-    /**
-     * 记录逻辑删除
-     * 本身操作是更新dataStatus为逻辑删除状态
-     *
-     * @param condition 条件构造器
-     * @return 逻辑删除成功
-     * @see DataStatus 数据状态
-     * @see EntityBasicAttribute 逻辑删除字段
-     */
-    @Override
-    boolean tombstone(Condition<T> condition);
-
-    /**
      * 根据实体更新记录
      * 注意:更新时需要更新版本号
      *
@@ -189,7 +165,7 @@ public interface VoidMybatisService<T extends EntityBasicAttribute<T>> extends V
      * @see EntityBasicAttribute 版本号VERSION字段
      */
     @Override
-    default boolean update(Condition<T> condition){
+    default boolean update(Object condition){
         return IService.super.update((Wrapper<T>) condition);
     }
 
@@ -241,7 +217,7 @@ public interface VoidMybatisService<T extends EntityBasicAttribute<T>> extends V
      * @return MAP数据
      */
     @Override
-    Map<String, Object> getMap(Condition<T> condition);
+    Map<String, Object> getMap(Object condition);
 
     /**
      * 查询List映射
@@ -250,7 +226,7 @@ public interface VoidMybatisService<T extends EntityBasicAttribute<T>> extends V
      * @return List映射
      */
     @Override
-    default List<Map<String, Object>> getMapList(Condition<T> condition){
+    default List<Map<String, Object>> getMapList(Object condition){
         return IService.super.listMaps((Wrapper<T>) condition);
     }
 
@@ -271,7 +247,7 @@ public interface VoidMybatisService<T extends EntityBasicAttribute<T>> extends V
      * @return 条件限定表记录数
      */
     @Override
-    default long count(Condition<T> condition){
+    default long count(Object condition){
         return IService.super.count((Wrapper<T>) condition);
     }
 
@@ -308,7 +284,7 @@ public interface VoidMybatisService<T extends EntityBasicAttribute<T>> extends V
      * @return 记录列表
      */
     @Override
-    default List<T> list(Condition<T> condition){
+    default List<T> list(Object condition){
         return IService.super.list((Wrapper<T>) condition);
     }
 
