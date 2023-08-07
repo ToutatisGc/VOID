@@ -1,9 +1,12 @@
 package cn.toutatis.xvoid.orm.support.mybatisplus;
 
+import lombok.Data;
+
 /**
  * @author Toutatis_Gc
  * 分页查询对象
  */
+@Data
 public class PagingQuery {
 
     /**
@@ -16,27 +19,14 @@ public class PagingQuery {
      */
     private Integer pageSize = 15;
 
-    public Integer getCurrentPage() {
-        return currentPage;
-    }
+    /**
+     * 排序字段
+     */
+    private String orderByColumn = "createTime";
 
-    public void setCurrentPage(Integer currentPage) {
-        this.currentPage = currentPage;
-    }
+    /**
+     * 是否正序排序
+     */
+    private Boolean asc = true;
 
-    public Integer getPageSize() {
-        return pageSize;
-    }
-
-    public void setPageSize(Integer pageSize) {
-        this.pageSize = pageSize;
-    }
-
-    @Override
-    public String toString() {
-        return "PagingQuery{" +
-                "currentPage=" + currentPage +
-                ", pageSize=" + pageSize +
-                '}';
-    }
 }

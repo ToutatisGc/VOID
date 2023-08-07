@@ -336,17 +336,6 @@ public interface VoidMybatisService<T extends EntityBasicAttribute<T>> extends V
     Page<T> pageList(PagingQuery pagingQuery, T t);
 
     /**
-     * 获取分页列表
-     *
-     * @param pagingQuery 分页对象
-     * @param t           实体类
-     * @param mchId       多租户ID
-     * @return 分页结果
-     */
-    @Override
-    Page<T> pageList(PagingQuery pagingQuery, T t, String mchId);
-
-    /**
      * 导出表格数据
      *
      * @param response         响应对象

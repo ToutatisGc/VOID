@@ -152,14 +152,13 @@ open class TestController {
         forumArticle.title = "Test-${RandomStringUtils.randomAlphabetic(8)}"
         forumArticle.content = "6666"
         forumArticleMapper.insert(forumArticle)
-        System.err.println(1/0)
-        val selectList = forumArticleMapper.selectList(QueryWrapper())
-        System.err.println(selectList)
-//        val categoryAll = forumArticleCategoryMapper.selectList(null);
-//        System.err.println(categoryAll)
-
-        val findAll = forumArticleRepository.findAll()
-        System.err.println(findAll)
+//        val selectList = forumArticleMapper.selectList(QueryWrapper())
+//        System.err.println(selectList)
+////        val categoryAll = forumArticleCategoryMapper.selectList(null);
+////        System.err.println(categoryAll)
+//
+//        val findAll = forumArticleRepository.findAll()
+//        System.err.println(findAll)
     }
 
 }

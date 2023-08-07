@@ -82,7 +82,7 @@ public class BaseControllerImpl<O extends EntityBasicAttribute<O>, SERVICE exten
         }else if(!platformMode){
             page = service.pageList(pagingQuery,obj);
         }else{
-            page = service.pageList(pagingQuery,obj,mchId);
+            page = service.pageList(pagingQuery,obj);
         }
         Map<String,Object> objectMap = new HashMap<>(2);
         objectMap.put("list",page.getRecords());
