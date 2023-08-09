@@ -12,7 +12,7 @@ spring:
     name: VOID-SPRING | 春野
   profiles:
     active: dev
-    include: ["void","datasource","jpa","mybatis","third","ampq"]
+    include: ["void","datasource","jpa","mybatis","third","ampq","schedule"]
   lifecycle:
     timeout-per-shutdown-phase: 30s
   session:

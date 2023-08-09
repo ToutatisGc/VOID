@@ -46,13 +46,14 @@ public class BaseControllerImpl<O extends EntityBasicAttribute<O>, SERVICE exten
     private SERVICE service;
 
     @Autowired
-    private final VoidConfiguration voidConfiguration;
+    protected final VoidConfiguration voidConfiguration;
 
-    private final Boolean platformMode;
+    protected final Boolean platformMode;
 
-    protected final CommonWrapper<O> wrapper = new CommonWrapper<>();
-
-    private ProxyResult result;
+    /**
+     * 返回结果,可以在继承此基础的类直接操作返回结果
+     */
+    protected final ProxyResult result;
 
     public BaseControllerImpl(VoidConfiguration voidConfiguration) {
         this.voidConfiguration = voidConfiguration;
@@ -108,39 +109,4 @@ public class BaseControllerImpl<O extends EntityBasicAttribute<O>, SERVICE exten
         result.setData(Actions.SELECT,one);
         return result;
     }
-
-//    @Override
-//    public Result updateStatus(@RequestParam O entity) {
-//        return null;
-//    }
-//
-//    @Override
-//    public Result batchDeleteReal(@RequestParam List<O> entities,@RequestParam String id) {
-//        return null;
-//    }
-//
-//    @Override
-//    public Result tombstone(@RequestParam List<O> entities) {
-//        return null;
-//    }
-//
-//    @Override
-//    public Result tombstoneOne(@RequestParam O entity) {
-//        return null;
-//    }
-//
-//    @Override
-//    public Result saveRecord(@RequestParam O entity) {
-//        return null;
-//    }
-//
-//    @Override
-//    public Result search(@RequestParam JSONObject object) {
-//        return null;
-//    }
-//
-//    @Override
-//    public Result check(@RequestParam O entity,@RequestParam String remark) {
-//        return null;
-//    }
 }
