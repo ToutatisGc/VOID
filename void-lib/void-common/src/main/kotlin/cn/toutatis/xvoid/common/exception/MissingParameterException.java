@@ -6,4 +6,11 @@ package cn.toutatis.xvoid.common.exception;
  * 缺失关键参数异常
  */
 public class MissingParameterException extends RuntimeException {
+
+    public MissingParameterException() {
+    }
+
+    public MissingParameterException(String message) {
+        super(message);
+    }
 }

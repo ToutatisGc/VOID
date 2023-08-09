@@ -12,6 +12,7 @@ import cn.toutatis.xvoid.orm.support.mybatisplus.CommonWrapper;
 import cn.toutatis.xvoid.orm.support.mybatisplus.PagingQuery;
 import cn.toutatis.xvoid.orm.support.VoidService;
 import cn.toutatis.xvoid.toolkit.validator.Validator;
+import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.annotations.ApiImplicitParam;
@@ -27,6 +28,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -66,13 +68,19 @@ public class BaseControllerImpl<O extends EntityBasicAttribute<O>, SERVICE exten
     }
 
     @Override
+    public Result getList() {
+        result.setData(Actions.SELECT,service.list());
+        return result;
+    }
+
+    @Override
     @Operation(summary = "获取实体列表")
     @ApiImplicitParams({
             @ApiImplicitParam(name="pagingQuery",value="分页对象",required=false,paramType="query",dataTypeClass = PagingQuery.class),
             @ApiImplicitParam(name="obj",value="操作对象",required=false,paramType="query",dataTypeClass = Object.class)
     })
     @RequestMapping(value = "/getList",method = RequestMethod.POST)
-    public Result getList(@RequestParam(required = false) PagingQuery pagingQuery,
+    public Result page(@RequestParam(required = false) PagingQuery pagingQuery,
                           @RequestParam(required = false) O obj
     ) {
         if (pagingQuery == null){ pagingQuery = new PagingQuery(); }
@@ -108,5 +116,40 @@ public class BaseControllerImpl<O extends EntityBasicAttribute<O>, SERVICE exten
         O one = service.getOneObj((Condition<O>) oQueryWrapper);
         result.setData(Actions.SELECT,one);
         return result;
+    }
+
+    @Override
+    public Result updateStatus(O entity) {
+        return null;
+    }
+
+    @Override
+    public Result batchDeleteReal(List<O> entities, String id) {
+        return null;
+    }
+
+    @Override
+    public Result tombstone(List<O> entities) {
+        return null;
+    }
+
+    @Override
+    public Result tombstoneOne(O entity) {
+        return null;
+    }
+
+    @Override
+    public Result saveRecord(O entity) {
+        return null;
+    }
+
+    @Override
+    public Result search(JSONObject object) {
+        return null;
+    }
+
+    @Override
+    public Result check(O entity, String remark) {
+        return null;
     }
 }

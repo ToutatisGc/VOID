@@ -214,7 +214,12 @@ public class VoidConfiguration {
         /**
          * 是否启用文件压缩
          */
-        private Boolean compressFile= true;
+        private Boolean compressFile = true;
+
+        /**
+         * 简易审批流程
+         */
+        private Boolean simpleApproval = true;
 
         private ObjectStorageMode objectStorageMode = ObjectStorageMode.LOCAL;
 
@@ -248,6 +253,14 @@ public class VoidConfiguration {
 
         public void setObjectStorageMode(ObjectStorageMode objectStorageMode) {
             this.objectStorageMode = objectStorageMode;
+        }
+
+        public Boolean getSimpleApproval() {
+            return simpleApproval;
+        }
+
+        public void setSimpleApproval(Boolean simpleApproval) {
+            this.simpleApproval = simpleApproval;
         }
     }
 

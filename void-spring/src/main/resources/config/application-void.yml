@@ -23,6 +23,7 @@ void:
     region: standard
     access-key: rs6Zd7TPg7sR3kkz
     access-secret: d0hvKZor51MICa3zOZ55ThnrDLe8Ax1H
+  platform-mode: true
 springdoc:
   cache:
     disabled: true
