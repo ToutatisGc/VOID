@@ -418,7 +418,7 @@ public class ProxyResult extends AbstractResult implements Result {
 
     public void setAction(Actions action) {
         if (freeze){
-            logger.error("{}对象已锁定,请先调用obj.freeze(false)解锁.",this.hashCode());
+            logger.error("{}对象已锁定,请先调用freeze(false)解锁.",this.hashCode());
             return;
         }
         this.action = action;

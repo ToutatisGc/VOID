@@ -1,5 +1,6 @@
 package cn.toutatis.xvoid.spring.support.enhance.controller;
 
+import cn.toutatis.xvoid.common.exception.MissingParameterException;
 import cn.toutatis.xvoid.common.standard.StandardFields;
 import cn.toutatis.xvoid.orm.base.data.common.EntityBasicAttribute;
 import cn.toutatis.xvoid.common.result.Actions;
@@ -21,11 +22,13 @@ import io.swagger.v3.oas.annotations.Operation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.List;
@@ -42,23 +45,23 @@ public class BaseControllerImpl<O extends EntityBasicAttribute<O>, SERVICE exten
     protected final Logger logger = LoggerFactory.getLogger(getClass());
 
     @Autowired
-    private HttpServletRequest request;
+    protected HttpServletRequest request;
 
     @Autowired
-    private SERVICE service;
+    protected SERVICE service;
 
     @Autowired
-    protected final VoidConfiguration voidConfiguration;
+    protected VoidConfiguration voidConfiguration;
 
-    protected final Boolean platformMode;
+    protected Boolean platformMode = false;
 
     /**
      * 返回结果,可以在继承此基础的类直接操作返回结果
      */
-    protected final ProxyResult result;
+    protected ProxyResult result = null;
 
-    public BaseControllerImpl(VoidConfiguration voidConfiguration) {
-        this.voidConfiguration = voidConfiguration;
+    @PostConstruct
+    public void init() {
         platformMode = voidConfiguration.getPlatformMode();
         result = new ProxyResult(
                 voidConfiguration.getGlobalServiceConfig().getUseDetailedMode(),
@@ -68,6 +71,7 @@ public class BaseControllerImpl<O extends EntityBasicAttribute<O>, SERVICE exten
     }
 
     @Override
+    @RequestMapping(value = "/getList",method = RequestMethod.POST)
     public Result getList() {
         result.setData(Actions.SELECT,service.list());
         return result;
@@ -79,7 +83,7 @@ public class BaseControllerImpl<O extends EntityBasicAttribute<O>, SERVICE exten
             @ApiImplicitParam(name="pagingQuery",value="分页对象",required=false,paramType="query",dataTypeClass = PagingQuery.class),
             @ApiImplicitParam(name="obj",value="操作对象",required=false,paramType="query",dataTypeClass = Object.class)
     })
-    @RequestMapping(value = "/getList",method = RequestMethod.POST)
+    @RequestMapping(value = "/page",method = RequestMethod.POST)
     public Result page(@RequestParam(required = false) PagingQuery pagingQuery,
                           @RequestParam(required = false) O obj
     ) {
@@ -150,6 +154,17 @@ public class BaseControllerImpl<O extends EntityBasicAttribute<O>, SERVICE exten
 
     @Override
     public Result check(O entity, String remark) {
+        return null;
+    }
+
+    protected String checkPlatform(){
+        if (platformMode){
+            String mchId = request.getHeader(StandardFields.VOID_REQUEST_HEADER_MCH_ID);
+            if (Validator.strIsBlank(mchId)){
+                throw new MissingParameterException("缺失商户ID");
+            }
+            return mchId;
+        }
         return null;
     }
 }
