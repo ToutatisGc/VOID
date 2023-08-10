@@ -1,6 +1,6 @@
 package cn.toutatis.xvoid.spring.core.security
 
-import cn.toutatis.xvoid.spring.core.security.config.VoidHeader.*
+import cn.toutatis.xvoid.common.standard.VoidHttpHeader.*
 import com.alibaba.fastjson.JSON
 import java.io.IOException
 import java.net.URLEncoder

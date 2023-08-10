@@ -31,9 +31,7 @@ class ApplicationStartListener : ApplicationListener<ApplicationStartedEvent> {
         obj["applicationName"] = id
         obj["mainClass"] = event.springApplication.mainApplicationClass
         obj["startDate"] = Time.getCurrentTimeByLong(event.timestamp)
-        systemLog.details = obj.toJSONString()
         amqpShell.sendLog(LogType.SYSTEM,systemLog)
-        logger.infoWithModule(Meta.MODULE_NAME,"项目[$id]已启动,类加载已完成,等待")
-        System.err.println(event.timestamp)
+        logger.infoWithModule(Meta.MODULE_NAME,"项目[$id]已于[${Time.currentTime}]启动,类加载已完成,等待DispatcherServlet介入...")
     }
 }

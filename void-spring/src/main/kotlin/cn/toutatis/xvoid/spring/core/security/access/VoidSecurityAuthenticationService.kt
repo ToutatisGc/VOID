@@ -2,6 +2,7 @@ package cn.toutatis.xvoid.spring.core.security.access
 
 import cn.toutatis.xvoid.common.standard.StandardFields
 import cn.toutatis.xvoid.common.result.ResultCode
+import cn.toutatis.xvoid.common.standard.AuthFields
 import cn.toutatis.xvoid.spring.business.user.persistence.SystemUserLoginMapper
 import cn.toutatis.xvoid.spring.business.user.service.FormUserAuthService
 import cn.toutatis.xvoid.spring.configure.system.VoidConfiguration
@@ -10,8 +11,8 @@ import cn.toutatis.xvoid.toolkit.validator.Validator
 import com.alibaba.fastjson.JSON
 import com.alibaba.fastjson.JSONObject
 import com.github.xiaoymin.knife4j.annotations.ApiSupport
-import io.swagger.annotations.Api
-import io.swagger.annotations.ApiOperation
+import io.swagger.v3.oas.annotations.media.Schema
+import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.redis.core.RedisTemplate
 import org.springframework.security.core.userdetails.UserDetails
@@ -28,7 +29,7 @@ import javax.servlet.http.HttpSession
  * @author Toutatis_Gc
  */
 
-@Api(tags = ["权限API"], description = "权限部分接口", basePath = "/auth")
+@Tag(name = "权限API", description = "权限部分接口")
 @ApiSupport(order = 0, author = "Toutatis_Gc")
 @Service
 class VoidSecurityAuthenticationService : UserDetailsService {
@@ -40,14 +41,11 @@ class VoidSecurityAuthenticationService : UserDetailsService {
          */
         const val VALIDATION_SECURITY_CODE_SESSION_KEY = "VOID_VALIDATION_SECURITY_CODE_SESSION_KEY"
 
-        const val AUTH_TIMES_KEY = "VOID_RETRY_AUTH_TIMES_KEY"
+
     }
 
 
     private val logger = LoggerToolkit.getLogger(javaClass)
-
-    @Autowired
-    private lateinit var systemUserLoginMapper: SystemUserLoginMapper
 
     @Autowired
     lateinit var request: HttpServletRequest
@@ -82,7 +80,7 @@ class VoidSecurityAuthenticationService : UserDetailsService {
      * 因为按照正常调用的话只会在浏览器或内部系统中进行认证，并且格式是固定的，
      * 出现异常情况只会在开发调试阶段，所以线上服务出现违规操作说明有渗透情况，需要及时排查
      */
-    @ApiOperation("用户登录")
+    @Schema(name = "用户登录")
     @Throws(UsernameNotFoundException::class)
     override fun loadUserByUsername(identity: String): UserDetails {
         System.err.println(request.session.id)
@@ -94,14 +92,18 @@ class VoidSecurityAuthenticationService : UserDetailsService {
                 throw this.throwIllegalOperation(ValidationMessage.WRONG_IDENTIFY_FORMAT)
             }
             if (identityObj != null && identityObj.isNotEmpty()){
-                val authTypeStr = identityObj.getString("authType")
-                val session = request.session
-                val sessionHashOps = redisTemplate.boundHashOps<String, Int>(session.id)
-                sessionHashOps.put("loginTimes",1)
+                val authTypeStr = identityObj.getString(AuthFields.AUTH_TYPE)
                 if (authTypeStr != null){
                     /*TODO 认证*/
                     when(AuthType.valueOf(authTypeStr)){
                         AuthType.ACCOUNT_NORMAL ->{
+                            val username = identityObj.getString(AuthFields.USERNAME)
+                            if (Validator.strIsBlank(username)){
+                                throw this.throwIllegalOperation(ValidationMessage.USERNAME_BLANK)
+                            }
+                            val session = request.session
+                            val sessionHashOps = redisTemplate.boundHashOps<String, Int>(session.id)
+                            sessionHashOps.put("loginTimes",1)
                             return formUserAuthService.findSimpleUser(identityObj.getString("username"))
                         }
                         else ->{

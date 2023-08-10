@@ -14,6 +14,7 @@ import cn.toutatis.xvoid.spring.support.toolkits.MultiTenantManager;
 import cn.toutatis.xvoid.toolkit.validator.Validator;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -74,7 +75,9 @@ public class BaseControllerImpl<O extends EntityBasicAttribute<O>, SERVICE exten
     @Override
     @RequestMapping(value = "/getList",method = RequestMethod.POST)
     public Result getList() {
-        result.setData(Actions.SELECT,service.list());
+        QueryWrapper<O> queryWrapper = Wrappers.query();
+        multiTenantManager.setBelongTo(queryWrapper);
+        result.setData(Actions.SELECT,service.list(queryWrapper));
         return result;
     }
 

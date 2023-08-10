@@ -1,5 +1,6 @@
 package cn.toutatis.xvoid.spring.support.core.aop.exception
 
+import cn.toutatis.xvoid.common.exception.IllegalException
 import cn.toutatis.xvoid.common.standard.StandardFields
 import cn.toutatis.xvoid.common.result.ProxyResult
 import cn.toutatis.xvoid.common.result.ResultCode
@@ -38,7 +39,10 @@ class VoidExceptionAdviceDispose {
         if (e is HttpRequestMethodNotSupportedException){
             proxyResult = ProxyResult(ResultCode.ILLEGAL_OPERATION)
             proxyResult.supportMessage="URI:[${request.requestURI}]不支持[${request.method}]方法"
-        }else{
+        }else if (e is IllegalException){
+            proxyResult = ProxyResult(ResultCode.ILLEGAL_OPERATION)
+            proxyResult.supportMessage=e.message
+        } else{
             e.printStackTrace()
         }
         if (voidConfiguration.mode == RunMode.DEBUG) {

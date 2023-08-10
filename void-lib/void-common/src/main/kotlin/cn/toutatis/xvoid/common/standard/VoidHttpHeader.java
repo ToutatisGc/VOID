@@ -1,11 +1,11 @@
-package cn.toutatis.xvoid.spring.core.security.config;
+package cn.toutatis.xvoid.common.standard;
 
 /**
- * 解析所有请求头
+ * HttpHeaders
  * @author Toutatis_Gc
  * @since 0.0.0-ALPHA
  */
-public class VoidHeader {
+public class VoidHttpHeader {
 
     /*
       Void自定义头
@@ -1142,27 +1142,5 @@ public class VoidHeader {
      * 2021-05-10 14:39:41 [Simple Header] X-Requested-With
      */
     public static final String X_REQUESTED_WITH = "X-Requested-With";
-
-
-
-    public static void main(String[] args) {
-        //使用逗号分割
-        String allHeader = "";
-        printHeader(allHeader);
-    }
-
-    private static void printHeader(String allHeader){
-//        if (!"".equals(allHeader)){
-//            String[] headers = allHeader.split(",");
-//            for (String header : headers) {
-//                String trim = header.trim();
-//                String currentTime = TimeConstant.INSTANCE.getCurrentTime();
-//                System.err.println("\r\n/**");
-//                System.err.println(" * "+ currentTime +" [Simple Header] "+trim);
-//                System.err.println("*/");
-//                System.err.println("public static final String "+ trim.toUpperCase().replace("-","_") +" = \""+ trim +"\";\r\n");
-//            }
-//        }
-    }
 
 }

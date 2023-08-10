@@ -27,15 +27,18 @@ class MultiTenantManager {
     /**
      * Check platform
      * 检查是否为平台模式,并返回商户号
+     * 如果是system在权限链路上判断身份信息
      * @return 商户号
      */
     fun checkPlatform(): String? {
         if (voidConfiguration.platformMode) {
             val mchId = httpServletRequest.getHeader(StandardFields.VOID_REQUEST_HEADER_MCH_ID)
             if (strIsBlank(mchId)) throw MissingParameterException("缺失商户ID")
-            if (StandardFields.VOID_BUSINESS_DEFAULT_CREATOR == mchId) return mchId
+            if (StandardFields.VOID_BUSINESS_DEFAULT_CREATOR == mchId) return null
             if (mchId.length < 16 || mchId.length > 32){
-                throw IllegalException(logger.errorWithModule(Meta.MODULE_NAME,"Tenant","错误的商户ID [${mchId}]"))
+                val message = "错误的商户号[${mchId}]"
+                logger.errorWithModule(Meta.MODULE_NAME,"Tenant",message)
+                throw IllegalException(message)
             }
             return mchId
         }

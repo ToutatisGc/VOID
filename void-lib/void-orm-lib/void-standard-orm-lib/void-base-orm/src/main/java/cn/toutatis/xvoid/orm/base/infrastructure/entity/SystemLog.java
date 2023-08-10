@@ -26,7 +26,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
  */
 @Getter @Setter @ToString(callSuper = true)
 @TableName("vb_system_log")
-@JsonIgnoreProperties({"reservedString","reservedInt"})
+@JsonIgnoreProperties({"reservedString","reservedInt","lastUpdateTimeMs","createTimeMs"})
 @ApiModel(value="SystemLog对象",description="系统日志",parent = EntityBasicAttribute.class)
 @Entity @Table(name = "vb_system_log") @org.hibernate.annotations.Table(appliesTo = "vb_system_log", comment = "系统日志")
 public class SystemLog extends EntityBasicAttribute<SystemLog> {
