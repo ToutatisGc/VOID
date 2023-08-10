@@ -1,24 +1,22 @@
-package cn.toutatis.xvoid.common.exception;
+package cn.toutatis.xvoid.common.exception
+
+import java.lang.RuntimeException
 
 /**
  * @author Touatatis_Gc
  * 无法找到jsonobject对象key的异常
  */
-public class UnableToResolvedException extends RuntimeException {
-
+class UnableToResolvedException : RuntimeException {
     /**
-     * Constructs a {@code UnableToResolvedException} with no detail message.
+     * Constructs a `UnableToResolvedException` with no detail message.
      */
-    public UnableToResolvedException() {
-    }
+    constructor() {}
 
     /**
-     * Constructs a {@code UnableToResolvedException} with the specified
+     * Constructs a `UnableToResolvedException` with the specified
      * detail message.
      *
      * @param   message   the detail message.
      */
-    public UnableToResolvedException(String message) {
-        super(message);
-    }
+    constructor(message: String?) : super(message) {}
 }

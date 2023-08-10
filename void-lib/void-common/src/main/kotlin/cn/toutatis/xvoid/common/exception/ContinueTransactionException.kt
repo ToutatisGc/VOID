@@ -1,4 +1,6 @@
-package cn.toutatis.xvoid.common.exception;
+package cn.toutatis.xvoid.common.exception
+
+import java.lang.RuntimeException
 
 /**
  * @author Toutatis_Gc
@@ -6,21 +8,17 @@ package cn.toutatis.xvoid.common.exception;
  * 在catch后应抛出此异常以保证事务正常进行
  * 仅作一个无法throw的情况下的明确标记异常类型
  */
-public class ContinueTransactionException extends RuntimeException {
-
+class ContinueTransactionException : RuntimeException {
     /**
-     * Constructs a {@code ContinueTransactionException} with no detail message.
+     * Constructs a `ContinueTransactionException` with no detail message.
      */
-    public ContinueTransactionException() {
-    }
+    constructor() {}
 
     /**
-     * Constructs a {@code ContinueTransactionException} with the specified
+     * Constructs a `ContinueTransactionException` with the specified
      * detail message.
      *
      * @param   message   the detail message.
      */
-    public ContinueTransactionException(String message) {
-        super(message);
-    }
+    constructor(message: String?) : super(message) {}
 }

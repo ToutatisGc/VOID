@@ -18,6 +18,7 @@ public class VoidDefaultAuditAware implements AuditorAware<String> {
     @NotNull
     @Override
     public Optional<String> getCurrentAuditor() {
+        // FIXME 使用standardFields
         return Optional.of("SYSTEM");
     }
 }

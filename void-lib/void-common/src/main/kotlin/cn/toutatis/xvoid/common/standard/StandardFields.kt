@@ -34,12 +34,12 @@ class StandardFields {
         /**
          * TODO 多租户形态
          */
-        const val VOID_REQUEST_HEADER_MCH_ID = "Void-mchId"
+        const val VOID_REQUEST_HEADER_MCH_ID = "Xvoid-Tenant-Id"
 
         /**
-         * 系统默认创建者
+         * 数据库默认创建者
          */
-        const val VOID_SQL_DEFAULT_CREATOR = "SYSTEM"
+        const val VOID_BUSINESS_DEFAULT_CREATOR = "SYSTEM"
 
     }
 }

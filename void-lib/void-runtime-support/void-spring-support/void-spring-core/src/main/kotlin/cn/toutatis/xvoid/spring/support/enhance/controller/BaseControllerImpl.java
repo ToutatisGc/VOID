@@ -1,6 +1,5 @@
 package cn.toutatis.xvoid.spring.support.enhance.controller;
 
-import cn.toutatis.xvoid.common.exception.MissingParameterException;
 import cn.toutatis.xvoid.common.standard.StandardFields;
 import cn.toutatis.xvoid.orm.base.data.common.EntityBasicAttribute;
 import cn.toutatis.xvoid.common.result.Actions;
@@ -9,9 +8,9 @@ import cn.toutatis.xvoid.common.result.Result;
 import cn.toutatis.xvoid.common.result.ResultCode;
 import cn.toutatis.xvoid.orm.support.Condition;
 import cn.toutatis.xvoid.spring.configure.system.VoidConfiguration;
-import cn.toutatis.xvoid.orm.support.mybatisplus.CommonWrapper;
 import cn.toutatis.xvoid.orm.support.mybatisplus.PagingQuery;
 import cn.toutatis.xvoid.orm.support.VoidService;
+import cn.toutatis.xvoid.spring.support.toolkits.MultiTenantManager;
 import cn.toutatis.xvoid.toolkit.validator.Validator;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -22,7 +21,6 @@ import io.swagger.v3.oas.annotations.Operation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -59,6 +57,9 @@ public class BaseControllerImpl<O extends EntityBasicAttribute<O>, SERVICE exten
      * 返回结果,可以在继承此基础的类直接操作返回结果
      */
     protected ProxyResult result = null;
+
+    @Autowired
+    protected MultiTenantManager multiTenantManager;
 
     @PostConstruct
     public void init() {
@@ -157,14 +158,5 @@ public class BaseControllerImpl<O extends EntityBasicAttribute<O>, SERVICE exten
         return null;
     }
 
-    protected String checkPlatform(){
-        if (platformMode){
-            String mchId = request.getHeader(StandardFields.VOID_REQUEST_HEADER_MCH_ID);
-            if (Validator.strIsBlank(mchId)){
-                throw new MissingParameterException("缺失商户ID");
-            }
-            return mchId;
-        }
-        return null;
-    }
+
 }

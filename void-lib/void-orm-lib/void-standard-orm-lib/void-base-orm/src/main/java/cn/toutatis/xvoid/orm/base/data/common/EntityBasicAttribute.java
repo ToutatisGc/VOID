@@ -2,6 +2,7 @@ package cn.toutatis.xvoid.orm.base.data.common;
 
 import cn.toutatis.xvoid.BusinessType;
 import cn.toutatis.xvoid.common.result.DataStatus;
+import cn.toutatis.xvoid.common.standard.StandardFields;
 import cn.toutatis.xvoid.toolkit.constant.Time;
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
@@ -85,7 +86,7 @@ public abstract class EntityBasicAttribute<O extends Model<?>> extends Model<O> 
     @CreatedBy
     @TableField(value = "createBy")
     @ApiModelProperty(value="创建操作人")
-    @Column(columnDefinition = "VARCHAR(32) NOT NULL DEFAULT 'SYSTEM' COMMENT '创建操作人'")
+    @Column(columnDefinition = "VARCHAR(32) NOT NULL DEFAULT '"+ StandardFields.VOID_BUSINESS_DEFAULT_CREATOR +"' COMMENT '创建操作人'")
     protected String createBy;
 
     /**
@@ -102,7 +103,7 @@ public abstract class EntityBasicAttribute<O extends Model<?>> extends Model<O> 
     @LastModifiedBy
     @TableField(value = "updateBy")
     @ApiModelProperty(value="更新操作人")
-    @Column(columnDefinition = "VARCHAR(32) NOT NULL DEFAULT 'SYSTEM' COMMENT '更新操作人'")
+    @Column(columnDefinition = "VARCHAR(32) NOT NULL DEFAULT '"+ StandardFields.VOID_BUSINESS_DEFAULT_CREATOR +"' COMMENT '更新操作人'")
     protected String updateBy;
 
     /**
@@ -151,7 +152,7 @@ public abstract class EntityBasicAttribute<O extends Model<?>> extends Model<O> 
     @JsonIgnore
     @TableField("belongTo")
     @ApiModelProperty(value="归属")
-    @Column(columnDefinition = "VARCHAR(32) NOT NULL DEFAULT 'SYSTEM' COMMENT '归属'")
+    @Column(columnDefinition = "VARCHAR(32) NOT NULL DEFAULT '"+ StandardFields.VOID_BUSINESS_DEFAULT_CREATOR +"' COMMENT '归属'")
     protected String belongTo;
 
     public Integer getReservedInt() {
