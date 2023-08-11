@@ -35,44 +35,40 @@ public class FormUserAuthService {
     private HttpServletRequest request;
 
     public UserDetails findSimpleUser(String username) {
-        if (Validator.strIsBlank(username)){
-            throw throwInfo(VoidSecurityAuthenticationService.MessageType.STRING,ValidationMessage.USERNAME_BLANK);
-        }else{
-            QueryWrapper<SystemUserLogin> queryWrapper = new QueryWrapper<>();
-            queryWrapper
-                    .eq("email",username).or()
-                    .eq("account", username).or()
-                    .eq("phoneCode", username).or()
-            ;
-            SystemUserLogin user = systemUserLoginService.getOneObj(queryWrapper);
-            if (user!=null){
-                FormUserDetails formUserDetails = new FormUserDetails();
-                DataStatus status = user.getStatus();
-                if (status == DataStatus.SYS_OPEN_0000){
-                    LocalDateTime expiredTime = user.getExpiredTime();
-                    if (expiredTime != null){
-                        formUserDetails.setAccountNonExpired(LocalDateTime.now().isBefore(expiredTime));
-                    }else {
-                        formUserDetails.setAccountNonExpired(true);
-                    }
-                    JSONObject userInfo = new JSONObject();
-                    userInfo.put("id",user.getId());
-                    userInfo.put("account",user.getAccount());
-                    userInfo.put("username",user.getUsername());
-                    userInfo.put("email",user.getEmail());
-                    userInfo.put("phoneCode",user.getPhoneCode());
-                    formUserDetails.setSecret(user.getSecret());
-                    formUserDetails.setUserInfo(userInfo);
-                    formUserDetails.setEnabled(true);
-                    /*TODO其余异常*/
-                    formUserDetails.setAccountNonLocked(true);
-                }else{
-                    formUserDetails.setEnabled(false);
+        QueryWrapper<SystemUserLogin> queryWrapper = new QueryWrapper<>();
+        queryWrapper
+                .eq("email",username).or()
+                .eq("account", username).or()
+                .eq("phoneCode", username).or()
+        ;
+        SystemUserLogin user = systemUserLoginService.getOneObj(queryWrapper);
+        if (user!=null){
+            FormUserDetails formUserDetails = new FormUserDetails();
+            DataStatus status = user.getStatus();
+            if (status == DataStatus.SYS_OPEN_0000){
+                LocalDateTime expiredTime = user.getExpiredTime();
+                if (expiredTime != null){
+                    formUserDetails.setAccountNonExpired(LocalDateTime.now().isBefore(expiredTime));
+                }else {
+                    formUserDetails.setAccountNonExpired(true);
                 }
-                return formUserDetails;
+                JSONObject userInfo = new JSONObject();
+                userInfo.put("id",user.getId());
+                userInfo.put("account",user.getAccount());
+                userInfo.put("username",user.getUsername());
+                userInfo.put("email",user.getEmail());
+                userInfo.put("phoneCode",user.getPhoneCode());
+                formUserDetails.setSecret(user.getSecret());
+                formUserDetails.setUserInfo(userInfo);
+                formUserDetails.setEnabled(true);
+                /*TODO其余异常*/
+                formUserDetails.setAccountNonLocked(true);
             }else{
-                throw throwInfo(VoidSecurityAuthenticationService.MessageType.STRING,ValidationMessage.USER_NOT_EXIST);
+                formUserDetails.setEnabled(false);
             }
+            return formUserDetails;
+        }else{
+            throw throwInfo(VoidSecurityAuthenticationService.MessageType.STRING,ValidationMessage.USER_NOT_EXIST);
         }
     }
 

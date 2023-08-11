@@ -180,6 +180,11 @@ public class SecurityHandler implements AuthenticationSuccessHandler,
             }
         }else if (exception instanceof AuthenticationServiceException){
             proxyResult = new ProxyResult(ResultCode.AUTHENTICATION_FAILED);
+            String authStart = cn.toutatis.xvoid.common.exception.AuthenticationException.AUTH_START_MESSAGE;
+            if (exception.getMessage().startsWith(authStart)){
+                String errorMessage = exception.getMessage().replace(authStart, "");
+                proxyResult.setSupportMessage(errorMessage);
+            }
         }else {
             logger.error("[{}]认证未记录异常：{}", VoidModuleInfo.MODULE_NAME,exception.toString());
             proxyResult = new ProxyResult(ResultCode.INNER_EXCEPTION);

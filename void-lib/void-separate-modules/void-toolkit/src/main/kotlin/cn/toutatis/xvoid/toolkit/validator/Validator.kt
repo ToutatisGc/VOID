@@ -19,6 +19,11 @@ public object Validator {
 
     private val numPattern = Pattern.compile(Regex.NUMBER_REGEX)
 
+    private val CN_USERNAME_PATTERN = Pattern.compile(Regex.SIMPLE_USERNAME_REGEX)
+
+    private val EN_USERNAME_PATTERN = Pattern.compile(Regex.EN_USERNAME_REGEX)
+
+//    private
     /**
      * @param o 可转String的object
      * @return 返回自然情况下是否为空
@@ -140,6 +145,19 @@ public object Validator {
     @JvmStatic
     fun strIsNumber(str:String): Boolean {
         val m: Matcher = numPattern.matcher(str)
+        return m.matches()
+    }
+
+
+    /**
+     * Check cn username
+     * 检查用户名
+     * @param username 用户名
+     * @return 是否符合正则
+     */
+    @JvmStatic
+    fun checkCNUsername(username:String): Boolean {
+        val m: Matcher = CN_USERNAME_PATTERN.matcher(username)
         return m.matches()
     }
 

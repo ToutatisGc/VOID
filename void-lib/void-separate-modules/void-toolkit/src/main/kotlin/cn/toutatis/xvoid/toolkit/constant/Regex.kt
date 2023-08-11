@@ -24,6 +24,10 @@ object Regex {
      */
     const val PUNCTUATION_REGEX = "[\n`~!@#$%^&*()+=|{}':;',\\[\\].<>/?~！@#￥%……&*（）——+|{}【】‘；：”“’。， 、？]"
 
+    const val SIMPLE_USERNAME_REGEX = "^[a-zA-Z0-9_\u4e00-\u9fa5]{2,32}\$"
+
+    const val EN_USERNAME_REGEX = "^[a-zA-Z0-9_]{2,32}\$"
+
     /**
      * 数字正则
      */
