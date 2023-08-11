@@ -1,0 +1,8 @@
+spring:
+  rabbitmq:
+    host: "localhost"
+    port: 5672
+    template:
+      retry:
+        enabled: true
+        initial-interval: 1000ms

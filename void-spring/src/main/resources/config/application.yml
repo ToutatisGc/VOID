@@ -17,10 +17,3 @@ spring:
     timeout-per-shutdown-phase: 30s
   session:
     store-type: REDIS
-  rabbitmq:
-    host: "localhost"
-    port: 5672
-    template:
-      retry:
-        enabled: true
-        initial-interval: 1000ms

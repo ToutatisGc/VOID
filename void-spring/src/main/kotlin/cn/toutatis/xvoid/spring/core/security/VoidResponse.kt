@@ -1,6 +1,12 @@
 package cn.toutatis.xvoid.spring.core.security
 
-import cn.toutatis.xvoid.common.standard.VoidHttpHeader.*
+import cn.toutatis.xvoid.common.standard.HttpHeaders.ACCESS_CONTROL_ALLOW_CREDENTIALS
+import cn.toutatis.xvoid.common.standard.HttpHeaders.ACCESS_CONTROL_ALLOW_HEADERS
+import cn.toutatis.xvoid.common.standard.HttpHeaders.ACCESS_CONTROL_ALLOW_METHODS
+import cn.toutatis.xvoid.common.standard.HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN
+import cn.toutatis.xvoid.common.standard.HttpHeaders.ACCESS_CONTROL_MAX_AGE
+import cn.toutatis.xvoid.common.standard.HttpHeaders.VOID_MCH
+import cn.toutatis.xvoid.common.standard.HttpHeaders.VOID_TOKEN
 import com.alibaba.fastjson.JSON
 import java.io.IOException
 import java.net.URLEncoder

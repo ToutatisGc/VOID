@@ -6,6 +6,7 @@ import cn.toutatis.xvoid.common.standard.AuthFields
 import cn.toutatis.xvoid.spring.business.user.persistence.SystemUserLoginMapper
 import cn.toutatis.xvoid.spring.business.user.service.FormUserAuthService
 import cn.toutatis.xvoid.spring.configure.system.VoidConfiguration
+import cn.toutatis.xvoid.spring.core.security.access.auth.LocalUserService
 import cn.toutatis.xvoid.toolkit.log.LoggerToolkit
 import cn.toutatis.xvoid.toolkit.validator.Validator
 import com.alibaba.fastjson.JSON
@@ -57,10 +58,8 @@ class VoidSecurityAuthenticationService : UserDetailsService {
     private lateinit var voidConfiguration: VoidConfiguration
 
     @Autowired
-    private lateinit var formUserAuthService : FormUserAuthService
+    private lateinit var localUserService: LocalUserService
 
-    @Autowired
-    private lateinit var redisTemplate: RedisTemplate<String,Any>
 
     /**
      * handler中获取的消息类型
@@ -83,7 +82,6 @@ class VoidSecurityAuthenticationService : UserDetailsService {
     @Schema(name = "用户登录")
     @Throws(UsernameNotFoundException::class)
     override fun loadUserByUsername(identity: String): UserDetails {
-        System.err.println(request.session.id)
         if (Validator.strNotBlank(identity)){
             val identityObj: JSONObject
             try {
@@ -97,14 +95,7 @@ class VoidSecurityAuthenticationService : UserDetailsService {
                     /*TODO 认证*/
                     when(AuthType.valueOf(authTypeStr)){
                         AuthType.ACCOUNT_NORMAL ->{
-                            val username = identityObj.getString(AuthFields.USERNAME)
-                            if (Validator.strIsBlank(username)){
-                                throw this.throwIllegalOperation(ValidationMessage.USERNAME_BLANK)
-                            }
-                            val session = request.session
-                            val sessionHashOps = redisTemplate.boundHashOps<String, Int>(session.id)
-                            sessionHashOps.put("loginTimes",1)
-                            return formUserAuthService.findSimpleUser(identityObj.getString("username"))
+                            return localUserService.findSimpleUser(identityObj.getString("username"))
                         }
                         else ->{
                             throw this.throwIllegalOperation(ValidationMessage.NOT_OPENED_IDENTIFY_TYPE)
