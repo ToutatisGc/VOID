@@ -27,6 +27,10 @@ interface ValidationMessage {
 
         const val ACCOUNT_DISABLED = "账户不允许登录"
 
+        const val USERNAME_ILLEGAL = "用户名不合法"
+
+        const val USERNAME_NOT_PRE_CHECK = "用户名未预检"
+
         const val AUTH_NOT_FOUND = "权限未识别"
         const val PARAMETER_NOT_FOUND = "缺失参数"
         const val PARAMETER_ERROR = "参数错误"
