@@ -3,7 +3,7 @@ package cn.toutatis.xvoid.spring.core.route.portal;
 import cn.toutatis.xvoid.common.result.ProxyResult;
 import cn.toutatis.xvoid.spring.core.tools.ViewToolkit;
 import cn.toutatis.xvoid.spring.annotations.application.VoidController;
-import cn.toutatis.xvoid.spring.configure.system.VoidConfiguration;
+import cn.toutatis.xvoid.spring.configure.system.VoidGlobalConfiguration;
 import com.alibaba.fastjson.JSONObject;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,13 +24,13 @@ public class FrontRootController {
 
     private final ViewToolkit viewToolkit = new ViewToolkit(BASE_PATH);;
 
-    private final VoidConfiguration voidConfiguration;
+    private final VoidGlobalConfiguration voidGlobalConfiguration;
 
-    private final VoidConfiguration.GlobalServiceConfig globalServiceConfig;
+    private final VoidGlobalConfiguration.GlobalServiceConfig globalServiceConfig;
 
-    public FrontRootController(VoidConfiguration voidConfiguration) {
-        this.voidConfiguration = voidConfiguration;
-        globalServiceConfig = voidConfiguration.getGlobalServiceConfig();
+    public FrontRootController(VoidGlobalConfiguration voidGlobalConfiguration) {
+        this.voidGlobalConfiguration = voidGlobalConfiguration;
+        globalServiceConfig = voidGlobalConfiguration.getGlobalServiceConfig();
     }
 
     @RequestMapping(value = "/",method = RequestMethod.GET)
@@ -44,8 +44,8 @@ public class FrontRootController {
     @RequestMapping(value = "/getServiceInfo",method = RequestMethod.GET)
     public ProxyResult getServiceInfo(){
         JSONObject info = new JSONObject();
-        info.put("isPlatform",voidConfiguration.getPlatformMode());
-        info.put("version",voidConfiguration.getVersion().getVersion());
+        info.put("isPlatform", voidGlobalConfiguration.getPlatformMode());
+        info.put("version", voidGlobalConfiguration.getVersion().getVersion());
         return new ProxyResult(info);
     }
 

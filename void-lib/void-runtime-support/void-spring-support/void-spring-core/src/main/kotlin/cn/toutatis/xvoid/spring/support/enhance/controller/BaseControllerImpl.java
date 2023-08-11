@@ -7,7 +7,7 @@ import cn.toutatis.xvoid.common.result.ProxyResult;
 import cn.toutatis.xvoid.common.result.Result;
 import cn.toutatis.xvoid.common.result.ResultCode;
 import cn.toutatis.xvoid.orm.support.Condition;
-import cn.toutatis.xvoid.spring.configure.system.VoidConfiguration;
+import cn.toutatis.xvoid.spring.configure.system.VoidGlobalConfiguration;
 import cn.toutatis.xvoid.orm.support.mybatisplus.PagingQuery;
 import cn.toutatis.xvoid.orm.support.VoidService;
 import cn.toutatis.xvoid.spring.support.toolkits.MultiTenantManager;
@@ -50,7 +50,7 @@ public class BaseControllerImpl<O extends EntityBasicAttribute<O>, SERVICE exten
     protected SERVICE service;
 
     @Autowired
-    protected VoidConfiguration voidConfiguration;
+    protected VoidGlobalConfiguration voidGlobalConfiguration;
 
     protected Boolean platformMode = false;
 
@@ -64,10 +64,10 @@ public class BaseControllerImpl<O extends EntityBasicAttribute<O>, SERVICE exten
 
     @PostConstruct
     public void init() {
-        platformMode = voidConfiguration.getPlatformMode();
+        platformMode = voidGlobalConfiguration.getPlatformMode();
         result = new ProxyResult(
-                voidConfiguration.getGlobalServiceConfig().getUseDetailedMode(),
-                voidConfiguration.getGlobalServiceConfig().getAutoConfig()
+                voidGlobalConfiguration.getGlobalServiceConfig().getUseDetailedMode(),
+                voidGlobalConfiguration.getGlobalServiceConfig().getAutoConfig()
         );
         result.setRequestId((String) request.getAttribute(StandardFields.FILTER_REQUEST_ID_KEY));
     }

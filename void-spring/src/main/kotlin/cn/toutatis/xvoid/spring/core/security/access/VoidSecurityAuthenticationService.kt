@@ -3,9 +3,7 @@ package cn.toutatis.xvoid.spring.core.security.access
 import cn.toutatis.xvoid.common.standard.StandardFields
 import cn.toutatis.xvoid.common.result.ResultCode
 import cn.toutatis.xvoid.common.standard.AuthFields
-import cn.toutatis.xvoid.spring.business.user.persistence.SystemUserLoginMapper
-import cn.toutatis.xvoid.spring.business.user.service.FormUserAuthService
-import cn.toutatis.xvoid.spring.configure.system.VoidConfiguration
+import cn.toutatis.xvoid.spring.configure.system.VoidGlobalConfiguration
 import cn.toutatis.xvoid.spring.core.security.access.auth.LocalUserService
 import cn.toutatis.xvoid.toolkit.log.LoggerToolkit
 import cn.toutatis.xvoid.toolkit.validator.Validator
@@ -15,7 +13,6 @@ import com.github.xiaoymin.knife4j.annotations.ApiSupport
 import io.swagger.v3.oas.annotations.media.Schema
 import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.data.redis.core.RedisTemplate
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.core.userdetails.UsernameNotFoundException
@@ -55,7 +52,7 @@ class VoidSecurityAuthenticationService : UserDetailsService {
 //    lateinit var listener:RequestContextListener
 
     @Autowired
-    private lateinit var voidConfiguration: VoidConfiguration
+    private lateinit var voidGlobalConfiguration: VoidGlobalConfiguration
 
     @Autowired
     private lateinit var localUserService: LocalUserService

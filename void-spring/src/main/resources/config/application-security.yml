@@ -1,0 +1,5 @@
+# 应用安全配置
+void:
+  security:
+    login-config:
+      before-login-check-username: true

@@ -5,7 +5,7 @@ import cn.toutatis.xvoid.common.standard.StandardFields
 import cn.toutatis.xvoid.common.result.ProxyResult
 import cn.toutatis.xvoid.common.result.ResultCode
 import cn.toutatis.xvoid.spring.configure.system.enums.global.RunMode
-import cn.toutatis.xvoid.spring.configure.system.VoidConfiguration
+import cn.toutatis.xvoid.spring.configure.system.VoidGlobalConfiguration
 import cn.toutatis.xvoid.toolkit.constant.Time
 import cn.toutatis.xvoid.toolkit.log.LoggerToolkit
 import com.alibaba.fastjson.JSONObject
@@ -26,7 +26,7 @@ class VoidExceptionAdviceDispose {
     private val logger = LoggerToolkit.getLogger(javaClass)
 
     @Autowired
-    private lateinit var voidConfiguration: VoidConfiguration
+    private lateinit var voidGlobalConfiguration: VoidGlobalConfiguration
 
     @ResponseBody
     @ExceptionHandler(Exception::class)
@@ -45,7 +45,7 @@ class VoidExceptionAdviceDispose {
         } else{
             e.printStackTrace()
         }
-        if (voidConfiguration.mode == RunMode.DEBUG) {
+        if (voidGlobalConfiguration.mode == RunMode.DEBUG) {
             e.printStackTrace()
             val exceptionObj = JSONObject(3)
             exceptionObj["createTime"] = Time.currentTime

@@ -9,9 +9,9 @@ import cn.toutatis.xvoid.common.result.Result;
 import cn.toutatis.xvoid.common.result.ResultCode;
 import cn.toutatis.xvoid.common.result.SimpleResultMessage;
 import cn.toutatis.xvoid.orm.support.Condition;
+import cn.toutatis.xvoid.spring.configure.system.VoidGlobalConfiguration;
 import cn.toutatis.xvoid.spring.support.Meta;
 import cn.toutatis.xvoid.spring.configure.system.enums.storage.ObjectStorageMode;
-import cn.toutatis.xvoid.spring.configure.system.VoidConfiguration;
 import cn.toutatis.xvoid.spring.support.core.file.MinIOShell;
 import cn.toutatis.xvoid.spring.support.core.file.persistence.SystemResourceMapper;
 import cn.toutatis.xvoid.spring.support.core.file.service.SystemResourceService;
@@ -62,7 +62,7 @@ public class SystemResourceServiceImpl extends VoidMybatisServiceImpl<SystemReso
     /**
      * 配置注入类
      */
-    private final VoidConfiguration voidConfiguration;
+    private final VoidGlobalConfiguration voidGlobalConfiguration;
 
     /**
      * MinIO文件系统
@@ -74,8 +74,8 @@ public class SystemResourceServiceImpl extends VoidMybatisServiceImpl<SystemReso
      */
     private CompressConfig.CompressContent compressConfig;
 
-    public SystemResourceServiceImpl(VoidConfiguration voidConfiguration, MinIOShell minIOShell) {
-        this.voidConfiguration = voidConfiguration;
+    public SystemResourceServiceImpl(VoidGlobalConfiguration voidGlobalConfiguration, MinIOShell minIOShell) {
+        this.voidGlobalConfiguration = voidGlobalConfiguration;
         this.minIOShell = minIOShell;
     }
 
@@ -129,7 +129,7 @@ public class SystemResourceServiceImpl extends VoidMybatisServiceImpl<SystemReso
             contentType = (contentType != null) ? contentType.split("/")[0] : "unknown";
             File localFile;
             String threadPath = FileToolkit.getThreadPath();
-            VoidConfiguration.GlobalServiceConfig globalServiceConfig = voidConfiguration.getGlobalServiceConfig();
+            VoidGlobalConfiguration.GlobalServiceConfig globalServiceConfig = voidGlobalConfiguration.getGlobalServiceConfig();
             // 存储开始,判断本地存储还是MINIO服务存储
             if (globalServiceConfig.getObjectStorageMode() == ObjectStorageMode.LOCAL) {
                 String resourceDir = threadPath + FileToolkit.RESOURCE_FILE_DIR;

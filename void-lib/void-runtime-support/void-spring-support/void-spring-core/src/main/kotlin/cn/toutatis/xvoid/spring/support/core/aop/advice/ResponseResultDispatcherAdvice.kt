@@ -5,7 +5,7 @@ import cn.toutatis.xvoid.common.result.ProxyResult
 import cn.toutatis.xvoid.common.result.Result
 import cn.toutatis.xvoid.common.result.branch.DetailedResult
 import cn.toutatis.xvoid.common.result.branch.SimpleResult
-import cn.toutatis.xvoid.spring.configure.system.VoidConfiguration
+import cn.toutatis.xvoid.spring.configure.system.VoidGlobalConfiguration
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.core.MethodParameter
 import org.springframework.http.MediaType
@@ -28,7 +28,7 @@ class ResponseResultDispatcherAdvice : ResponseBodyAdvice<Any>{
     private lateinit var request :  HttpServletRequest
 
     @Autowired
-    private lateinit var voidConfiguration : VoidConfiguration
+    private lateinit var voidGlobalConfiguration : VoidGlobalConfiguration
 
     override fun supports(returnType: MethodParameter, converterType: Class<out HttpMessageConverter<*>>): Boolean = true
 
@@ -49,7 +49,7 @@ class ResponseResultDispatcherAdvice : ResponseBodyAdvice<Any>{
             data as ProxyResult
             var useDetailedMode :Boolean? = data.useDetailedMode
             if (useDetailedMode == null){
-                useDetailedMode = voidConfiguration.globalServiceConfig.useDetailedMode
+                useDetailedMode = voidGlobalConfiguration.globalServiceConfig.useDetailedMode
             }
             val result: Result = if(useDetailedMode!!){
                 val detailedResult = DetailedResult(data.resultCode,data.message,data.data)

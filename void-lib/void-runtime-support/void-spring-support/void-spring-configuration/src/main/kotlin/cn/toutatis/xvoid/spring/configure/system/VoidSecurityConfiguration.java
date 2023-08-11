@@ -8,8 +8,8 @@ import java.time.Duration;
  * VOID环境下安全配置
  * @author Toutatis_Gc
  */
-@ConfigurationProperties("void.auth")
-public class VoidAuthConfiguration {
+@ConfigurationProperties("void.security")
+public class VoidSecurityConfiguration {
 
     /**
      * 用户登录相关配置

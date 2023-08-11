@@ -6,7 +6,7 @@
  */
 package cn.toutatis.xvoid.orm.support.jpa;
 
-import cn.toutatis.xvoid.spring.configure.system.VoidConfiguration;
+import cn.toutatis.xvoid.spring.configure.system.VoidGlobalConfiguration;
 import org.hibernate.boot.model.naming.Identifier;
 import org.hibernate.boot.model.naming.PhysicalNamingStrategy;
 import org.hibernate.engine.jdbc.env.spi.JdbcEnvironment;
@@ -21,10 +21,10 @@ import java.io.Serializable;
 @Component
 public class VoidNamingStrategyStandardImpl implements PhysicalNamingStrategy, Serializable {
 
-	private final VoidConfiguration voidConfiguration;
+	private final VoidGlobalConfiguration voidGlobalConfiguration;
 
-	public VoidNamingStrategyStandardImpl(VoidConfiguration voidConfiguration) {
-		this.voidConfiguration = voidConfiguration;
+	public VoidNamingStrategyStandardImpl(VoidGlobalConfiguration voidGlobalConfiguration) {
+		this.voidGlobalConfiguration = voidGlobalConfiguration;
 	}
 
 
@@ -40,7 +40,7 @@ public class VoidNamingStrategyStandardImpl implements PhysicalNamingStrategy, S
 
 	@Override
 	public Identifier toPhysicalTableName(Identifier name, JdbcEnvironment context) {
-		VoidConfiguration.GlobalOrmConfig globalOrmConfig = voidConfiguration.getGlobalOrmConfig();
+		VoidGlobalConfiguration.GlobalOrmConfig globalOrmConfig = voidGlobalConfiguration.getGlobalOrmConfig();
 
 		if (globalOrmConfig.getUseTablePrefix()){
 			return new Identifier(globalOrmConfig.getTablePrefix()+name,false);

@@ -1,3 +1,4 @@
+# 消息队列配置
 spring:
   rabbitmq:
     host: "localhost"

@@ -3,7 +3,7 @@ package cn.toutatis.xvoid.spring.support.toolkits
 import cn.toutatis.xvoid.common.exception.IllegalException
 import cn.toutatis.xvoid.common.exception.MissingParameterException
 import cn.toutatis.xvoid.common.standard.StandardFields
-import cn.toutatis.xvoid.spring.configure.system.VoidConfiguration
+import cn.toutatis.xvoid.spring.configure.system.VoidGlobalConfiguration
 import cn.toutatis.xvoid.spring.support.Meta
 import cn.toutatis.xvoid.toolkit.log.LoggerToolkit
 import cn.toutatis.xvoid.toolkit.log.errorWithModule
@@ -19,7 +19,7 @@ class MultiTenantManager {
     private final val logger = LoggerToolkit.getLogger(javaClass)
 
     @Autowired
-    private lateinit var voidConfiguration: VoidConfiguration
+    private lateinit var voidGlobalConfiguration: VoidGlobalConfiguration
 
     @Autowired
     private lateinit var httpServletRequest: HttpServletRequest
@@ -31,7 +31,7 @@ class MultiTenantManager {
      * @return 商户号
      */
     fun checkPlatform(): String? {
-        if (voidConfiguration.platformMode) {
+        if (voidGlobalConfiguration.platformMode) {
             val mchId = httpServletRequest.getHeader(StandardFields.VOID_REQUEST_HEADER_MCH_ID)
             if (strIsBlank(mchId)) throw MissingParameterException("缺失商户ID")
             if (StandardFields.VOID_BUSINESS_DEFAULT_CREATOR == mchId) return null

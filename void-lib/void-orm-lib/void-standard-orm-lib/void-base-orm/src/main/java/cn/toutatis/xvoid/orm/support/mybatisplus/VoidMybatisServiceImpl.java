@@ -4,8 +4,7 @@ import cn.toutatis.xvoid.common.Meta;
 import cn.toutatis.xvoid.common.result.DataStatus;
 import cn.toutatis.xvoid.common.result.ProxyResult;
 import cn.toutatis.xvoid.orm.base.data.common.EntityBasicAttribute;
-import cn.toutatis.xvoid.orm.support.Condition;
-import cn.toutatis.xvoid.spring.configure.system.VoidConfiguration;
+import cn.toutatis.xvoid.spring.configure.system.VoidGlobalConfiguration;
 import cn.toutatis.xvoid.toolkit.data.DataExportConfig;
 import cn.toutatis.xvoid.toolkit.log.LoggerToolkit;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
@@ -34,7 +33,7 @@ public class VoidMybatisServiceImpl<M extends BaseMapper<T>, T extends EntityBas
     protected M mapper;
 
     @Autowired
-    protected VoidConfiguration config;
+    protected VoidGlobalConfiguration config;
 
     @Override
     public boolean tombstone(T entity) {

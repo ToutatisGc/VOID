@@ -3,8 +3,8 @@ package cn.toutatis.xvoid.spring.core.route.base.error;
 import cn.toutatis.xvoid.common.Version;
 import cn.toutatis.xvoid.common.standard.StandardFields;
 import cn.toutatis.xvoid.common.result.ResultCode;
+import cn.toutatis.xvoid.spring.configure.system.VoidGlobalConfiguration;
 import cn.toutatis.xvoid.spring.core.tools.ViewToolkit;
-import cn.toutatis.xvoid.spring.configure.system.VoidConfiguration;
 import cn.toutatis.xvoid.toolkit.constant.Time;
 import cn.toutatis.xvoid.toolkit.log.LoggerToolkit;
 import cn.toutatis.xvoid.toolkit.validator.Validator;
@@ -32,15 +32,15 @@ public class VoidErrorViewResolver implements ErrorViewResolver {
 
     private final Logger logger = LoggerToolkit.getLogger(this.getClass());
 
-    private final VoidConfiguration.GlobalServiceConfig globalServiceConfig;
+    private final VoidGlobalConfiguration.GlobalServiceConfig globalServiceConfig;
 
     private HttpServletResponse httpServletResponse;
 
     private final ViewToolkit viewToolkit = new ViewToolkit("pages/portal");
 
-    public VoidErrorViewResolver(HttpServletResponse httpServletResponse, VoidConfiguration voidConfiguration) {
+    public VoidErrorViewResolver(HttpServletResponse httpServletResponse, VoidGlobalConfiguration voidGlobalConfiguration) {
         this.httpServletResponse = httpServletResponse;
-        this.globalServiceConfig = voidConfiguration.getGlobalServiceConfig();
+        this.globalServiceConfig = voidGlobalConfiguration.getGlobalServiceConfig();
     }
 
 

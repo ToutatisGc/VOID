@@ -5,7 +5,7 @@ import cn.toutatis.xvoid.spring.support.Meta.MODULE_NAME
 import cn.toutatis.xvoid.spring.support.amqp.AmqpShell
 import cn.toutatis.xvoid.orm.base.infrastructure.entity.SystemLog
 import cn.toutatis.xvoid.orm.base.infrastructure.enums.LogType
-import cn.toutatis.xvoid.spring.configure.system.VoidConfiguration
+import cn.toutatis.xvoid.spring.configure.system.VoidGlobalConfiguration
 import cn.toutatis.xvoid.toolkit.constant.Time
 import cn.toutatis.xvoid.toolkit.http.RequestToolkit
 import cn.toutatis.xvoid.toolkit.locale.I18n
@@ -24,11 +24,11 @@ import javax.servlet.http.HttpServletResponse
  * 请求日志生成器
  */
 @Component
-class RequestLogInterceptor(voidConfiguration: VoidConfiguration) : HandlerInterceptor {
+class RequestLogInterceptor(voidGlobalConfiguration: VoidGlobalConfiguration) : HandlerInterceptor {
 
     private val logger = LoggerToolkit.getLogger(RequestLogInterceptor::class.java)
 
-    private var logConfig : VoidConfiguration.GlobalLogConfig = voidConfiguration.globalLogConfig
+    private var logConfig : VoidGlobalConfiguration.GlobalLogConfig = voidGlobalConfiguration.globalLogConfig
 
     @Autowired
     private lateinit var amqpShell: AmqpShell

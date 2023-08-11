@@ -2,7 +2,7 @@ package cn.toutatis.xvoid.spring.support.enhance.mapping;
 
 import cn.toutatis.xvoid.spring.support.Meta;
 import cn.toutatis.xvoid.spring.configure.system.enums.global.RunMode;
-import cn.toutatis.xvoid.spring.configure.system.VoidConfiguration;
+import cn.toutatis.xvoid.spring.configure.system.VoidGlobalConfiguration;
 import cn.toutatis.xvoid.toolkit.file.FileToolkit;
 import cn.toutatis.xvoid.toolkit.formatting.JsonToolkit;
 import cn.toutatis.xvoid.toolkit.log.LoggerToolkit;
@@ -32,9 +32,9 @@ public class XvoidMappingResolver {
 
     private final Logger logger = LoggerToolkit.getLogger(this.getClass());
 
-    private final VoidConfiguration voidConfiguration;
+    private final VoidGlobalConfiguration voidGlobalConfiguration;
 
-    public XvoidMappingResolver(VoidConfiguration voidConfiguration) {
+    public XvoidMappingResolver(VoidGlobalConfiguration voidGlobalConfiguration) {
         File file = null;
         URL resourcesFile = FileToolkit.getResourcesFile("config/xvoid-resources-mapping.json");
         if (resourcesFile != null){
@@ -58,7 +58,7 @@ public class XvoidMappingResolver {
             JSONObject fileContent = JsonToolkit.parseJsonObject(file);
             resourcesMapping.putAll(fileContent);
         }
-        this.voidConfiguration = voidConfiguration;
+        this.voidGlobalConfiguration = voidGlobalConfiguration;
     }
 
     /**
@@ -81,7 +81,7 @@ public class XvoidMappingResolver {
      * @return 获取无权限访问路径
      */
     public String[] getSecurityPermittedPaths() {
-        RunMode mode = voidConfiguration.getMode();
+        RunMode mode = voidGlobalConfiguration.getMode();
         logger.info("[{}]当前启动模式为:{}", Meta.MODULE_NAME,mode);
         String[] openMappings = new String[1];
         if (mode == RunMode.DEBUG){

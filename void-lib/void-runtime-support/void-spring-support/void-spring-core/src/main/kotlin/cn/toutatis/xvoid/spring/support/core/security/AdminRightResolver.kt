@@ -1,6 +1,6 @@
 package cn.toutatis.xvoid.spring.support.core.security
 
-import cn.toutatis.xvoid.spring.configure.system.VoidConfiguration
+import cn.toutatis.xvoid.spring.configure.system.VoidGlobalConfiguration
 import com.baomidou.mybatisplus.core.conditions.Wrapper
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
@@ -15,7 +15,7 @@ import javax.servlet.http.HttpServletRequest
 class AdminRightResolver {
 
     @Autowired
-    private lateinit var voidConfiguration : VoidConfiguration
+    private lateinit var voidGlobalConfiguration : VoidGlobalConfiguration
 
     /**
      * 是否是平台模式，平台模式下需要区分子用户

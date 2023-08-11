@@ -1,7 +1,7 @@
 package cn.toutatis.xvoid.spring.support.core.file
 
 import cn.toutatis.xvoid.spring.support.Meta
-import cn.toutatis.xvoid.spring.configure.system.VoidConfiguration
+import cn.toutatis.xvoid.spring.configure.system.VoidGlobalConfiguration
 import cn.toutatis.xvoid.toolkit.file.FileToolkit
 import cn.toutatis.xvoid.toolkit.log.LoggerToolkit
 import cn.toutatis.xvoid.toolkit.log.errorWithModule
@@ -35,7 +35,7 @@ open class MinIOShell {
     }
 
     @Autowired
-    private lateinit var voidConfiguration: VoidConfiguration
+    private lateinit var voidGlobalConfiguration: VoidGlobalConfiguration
 
     private val logger = LoggerToolkit.getLogger(this.javaClass)
 
@@ -53,7 +53,7 @@ open class MinIOShell {
     fun getClient():MinioClient{
         if (minioClient == null){
             synchronized(this) {
-                val minIoConfig = voidConfiguration.minIoConfig
+                val minIoConfig = voidGlobalConfiguration.minIoConfig
                 minioClient = MinioClient.builder()
                     .endpoint(minIoConfig.endpoint)
                     .credentials(minIoConfig.accessKey, minIoConfig.accessSecret)

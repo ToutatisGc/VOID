@@ -2,7 +2,7 @@ package cn.toutatis.xvoid.spring.core.security.config.handler;
 
 
 
-import cn.toutatis.xvoid.spring.configure.system.VoidConfiguration;
+import cn.toutatis.xvoid.spring.configure.system.VoidGlobalConfiguration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +24,7 @@ public class SecurityRegister {
     private Logger logger = LoggerFactory.getLogger(SecurityRegister.class);
 
     @Autowired
-    private VoidConfiguration voidConfiguration;
+    private VoidGlobalConfiguration voidGlobalConfiguration;
 
     //外部服务拦截器 START
 

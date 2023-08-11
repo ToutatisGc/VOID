@@ -14,7 +14,7 @@ import java.util.List;
  * VOID环境下SpringBoot环境变量
  */
 @ConfigurationProperties("void")
-public class VoidConfiguration {
+public class VoidGlobalConfiguration {
 
     /**
      * 是否开启调试模式

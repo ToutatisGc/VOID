@@ -1,3 +1,4 @@
+# VOID环境下总体配置
 void:
   mode: DEV
   global-log-config:

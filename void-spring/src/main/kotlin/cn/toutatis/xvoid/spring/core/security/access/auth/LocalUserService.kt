@@ -1,19 +1,23 @@
 package cn.toutatis.xvoid.spring.core.security.access.auth
 
 import cn.toutatis.xvoid.spring.business.user.service.FormUserAuthService
+import cn.toutatis.xvoid.spring.configure.system.VoidSecurityConfiguration
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.redis.core.RedisTemplate
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.stereotype.Service
 
 @Service
-class LocalUserService {
+class LocalUserService : VoidAuthService {
 
     @Autowired
     private lateinit var formUserAuthService : FormUserAuthService
 
     @Autowired
     private lateinit var redisTemplate: RedisTemplate<String, Any>
+
+    @Autowired
+    private lateinit var voidSecurityConfiguration: VoidSecurityConfiguration
 
     companion object{
         /**
@@ -23,7 +27,12 @@ class LocalUserService {
     }
 
     fun findSimpleUser(username: String): UserDetails {
+
         return formUserAuthService.findSimpleUser(username)
+    }
+
+    override fun preCheck(username: String): Boolean {
+        TODO("Not yet implemented")
     }
 
 }

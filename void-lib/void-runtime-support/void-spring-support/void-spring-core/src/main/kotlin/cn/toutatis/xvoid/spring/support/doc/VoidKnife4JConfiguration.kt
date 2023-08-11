@@ -2,7 +2,7 @@ package cn.toutatis.xvoid.spring.support.doc
 
 import cn.toutatis.xvoid.common.Meta
 import cn.toutatis.xvoid.orm.base.infrastructure.entity.SystemResource
-import cn.toutatis.xvoid.spring.configure.system.VoidConfiguration
+import cn.toutatis.xvoid.spring.configure.system.VoidGlobalConfiguration
 import io.swagger.v3.oas.models.Components
 import io.swagger.v3.oas.models.OpenAPI
 import io.swagger.v3.oas.models.info.Contact
@@ -26,11 +26,11 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc
 class VoidKnife4JConfiguration {
 
     @Autowired
-    private lateinit var voidConfiguration : VoidConfiguration
+    private lateinit var voidGlobalConfiguration : VoidGlobalConfiguration
 
     @Bean
     open fun openAPI(): OpenAPI {
-        val docConfig = voidConfiguration.docConfig
+        val docConfig = voidGlobalConfiguration.docConfig
         val info = OpenAPI()
             .info(Info()
                 .contact(Contact()

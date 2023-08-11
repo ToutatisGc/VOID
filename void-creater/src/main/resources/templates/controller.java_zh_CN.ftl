@@ -58,9 +58,9 @@ public class ${table.controllerName} extends BaseControllerImpl<${entity}, ${tab
 
     /**
     * 构造器注入配置
-    * @param voidConfiguration 环境配置
+    * @param voidGlobalConfiguration 环境配置
     */
-    public ${table.controllerName}(VoidConfiguration voidConfiguration) { super(voidConfiguration); }
+    public ${table.controllerName}(VoidConfiguration voidGlobalConfiguration) { super(voidGlobalConfiguration); }
 <#--    @Autowired-->
 <#--    SystemDictionaryService dictionaryService;-->
 

@@ -10,7 +10,7 @@ import cn.toutatis.xvoid.spring.business.user.service.SystemAuthPathService;
 import cn.toutatis.xvoid.spring.business.user.service.SystemAuthRoleService;
 import cn.toutatis.xvoid.spring.core.security.access.ValidationMessage;
 import cn.toutatis.xvoid.spring.core.security.access.VoidSecurityAuthenticationService;
-import cn.toutatis.xvoid.spring.configure.system.VoidConfiguration;
+import cn.toutatis.xvoid.spring.configure.system.VoidGlobalConfiguration;
 import cn.toutatis.xvoid.spring.support.core.aop.advice.ResponseResultDispatcherAdvice;
 import cn.toutatis.xvoid.toolkit.log.LoggerToolkit;
 import cn.toutatis.xvoid.toolkit.validator.Validator;
@@ -64,9 +64,9 @@ public class SecurityHandler implements AuthenticationSuccessHandler,
 
     private final ResponseResultDispatcherAdvice responseResultDispatcherAdvice;
 
-    private final VoidConfiguration voidConfiguration;
+    private final VoidGlobalConfiguration voidGlobalConfiguration;
 
-    private final VoidConfiguration.GlobalServiceConfig globalServiceConfig;
+    private final VoidGlobalConfiguration.GlobalServiceConfig globalServiceConfig;
 
     private final SystemAuthRoleService systemAuthRoleService;
 
@@ -74,11 +74,11 @@ public class SecurityHandler implements AuthenticationSuccessHandler,
 
 
 
-    public SecurityHandler(RequestMethodResolver requestMethodResolver, ResponseResultDispatcherAdvice responseResultDispatcherAdvice, VoidConfiguration voidConfiguration, SystemAuthRoleService systemAuthRoleService, SystemAuthPathService systemAuthPathService) {
+    public SecurityHandler(RequestMethodResolver requestMethodResolver, ResponseResultDispatcherAdvice responseResultDispatcherAdvice, VoidGlobalConfiguration voidGlobalConfiguration, SystemAuthRoleService systemAuthRoleService, SystemAuthPathService systemAuthPathService) {
         this.requestMethodResolver = requestMethodResolver;
         this.responseResultDispatcherAdvice = responseResultDispatcherAdvice;
-        this.voidConfiguration = voidConfiguration;
-        this.globalServiceConfig = voidConfiguration.getGlobalServiceConfig();
+        this.voidGlobalConfiguration = voidGlobalConfiguration;
+        this.globalServiceConfig = voidGlobalConfiguration.getGlobalServiceConfig();
         this.systemAuthRoleService = systemAuthRoleService;
         this.systemAuthPathService = systemAuthPathService;
     }

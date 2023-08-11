@@ -1,6 +1,6 @@
 package cn.toutatis.xvoid.spring.support.core.aop.filters
 
-import cn.toutatis.xvoid.spring.configure.system.VoidConfiguration
+import cn.toutatis.xvoid.spring.configure.system.VoidGlobalConfiguration
 import org.springframework.beans.factory.annotation.Autowired
 import javax.servlet.Filter
 import javax.servlet.FilterChain
@@ -21,7 +21,7 @@ import javax.servlet.ServletResponse
 class RequestRidInjectFilter : Filter {
 
     @Autowired
-    private lateinit var voidConfiguration: VoidConfiguration
+    private lateinit var voidGlobalConfiguration: VoidGlobalConfiguration
 
     override fun doFilter(request: ServletRequest, response: ServletResponse, filterChain: FilterChain) {
 //        val recordRequestId = voidConfiguration.globalLogConfig.recordRequestId

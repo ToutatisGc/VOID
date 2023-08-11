@@ -2,7 +2,7 @@ package cn.toutatis.xvoid.spring.support.core.aop.filters;
 
 import cn.hutool.core.util.IdUtil;
 import cn.toutatis.xvoid.common.standard.StandardFields;
-import cn.toutatis.xvoid.spring.configure.system.VoidConfiguration;
+import cn.toutatis.xvoid.spring.configure.system.VoidGlobalConfiguration;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -21,10 +21,10 @@ import java.io.IOException;
 @Order(-100)
 public class AnyPerRequestInjectRidFilter extends OncePerRequestFilter {
 
-    private final VoidConfiguration voidConfiguration;
+    private final VoidGlobalConfiguration voidGlobalConfiguration;
 
-    public AnyPerRequestInjectRidFilter(VoidConfiguration voidConfiguration) {
-        this.voidConfiguration = voidConfiguration;
+    public AnyPerRequestInjectRidFilter(VoidGlobalConfiguration voidGlobalConfiguration) {
+        this.voidGlobalConfiguration = voidGlobalConfiguration;
     }
 
     @Override
@@ -34,7 +34,7 @@ public class AnyPerRequestInjectRidFilter extends OncePerRequestFilter {
     }
 
     public void fillRequestId(HttpServletRequest request, HttpServletResponse response){
-        if (voidConfiguration.getGlobalLogConfig().getRecordRequestId()){
+        if (voidGlobalConfiguration.getGlobalLogConfig().getRecordRequestId()){
             request.setAttribute(StandardFields.FILTER_REQUEST_ID_KEY, IdUtil.fastUUID());
         }
     }

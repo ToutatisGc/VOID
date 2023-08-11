@@ -1,7 +1,7 @@
 package cn.toutatis.xvoid.spring.support.core.aop.interceptor
 
 import cn.toutatis.xvoid.common.annotations.qos.RequestQoS
-import cn.toutatis.xvoid.spring.configure.system.VoidConfiguration
+import cn.toutatis.xvoid.spring.configure.system.VoidGlobalConfiguration
 import org.springframework.stereotype.Component
 import org.springframework.web.method.HandlerMethod
 import org.springframework.web.servlet.HandlerInterceptor
@@ -14,9 +14,9 @@ import javax.servlet.http.HttpServletResponse
  * 该拦截器控制请求次数等
  */
 @Component
-class RequestQoSControlInterceptor (voidConfiguration: VoidConfiguration) : HandlerInterceptor {
+class RequestQoSControlInterceptor (voidGlobalConfiguration: VoidGlobalConfiguration) : HandlerInterceptor {
 
-    private val qualityOfServiceStrategyConfig: VoidConfiguration.QualityOfServiceStrategyConfig = voidConfiguration.qualityOfServiceStrategyConfig
+    private val qualityOfServiceStrategyConfig: VoidGlobalConfiguration.QualityOfServiceStrategyConfig = voidGlobalConfiguration.qualityOfServiceStrategyConfig
 
     override fun preHandle(request: HttpServletRequest, response: HttpServletResponse, handler: Any): Boolean {
         if (qualityOfServiceStrategyConfig.enableRequestCountLimit){
