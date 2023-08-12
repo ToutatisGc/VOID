@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.redis.core.RedisTemplate
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.stereotype.Service
+import javax.servlet.http.HttpServletRequest
 import kotlin.jvm.Throws
 
 @Service
@@ -22,6 +23,9 @@ class LocalUserService : VoidAuthService {
 
     @Autowired
     private lateinit var voidSecurityConfiguration: VoidSecurityConfiguration
+
+    @Autowired
+    private lateinit var httpServletRequest: HttpServletRequest
 
     companion object{
         /**
@@ -47,7 +51,9 @@ class LocalUserService : VoidAuthService {
             if (!checkUsername!!) throwFailed(ValidationMessage.USERNAME_NOT_PRE_CHECK)
         }
         if (loginConfig.loginRetryLimitEnabled){
-
+            val loginRetryOps = redisTemplate.boundHashOps<String, String>(username)
+            val get = loginRetryOps.get(LOGIN_RETRY_TIMES_KEY)
+            val loginRetryTimes = loginConfig.loginRetryTimes
         }
         return true
     }
