@@ -14,6 +14,7 @@ import org.springframework.web.HttpRequestMethodNotSupportedException
 import org.springframework.web.bind.annotation.ControllerAdvice
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.ResponseBody
+import org.springframework.web.servlet.NoHandlerFoundException
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
 
@@ -36,14 +37,26 @@ class VoidExceptionAdviceDispose {
         var proxyResult = ProxyResult(ResultCode.REQUEST_EXCEPTION)
         val requestId = request.getAttribute(StandardFields.FILTER_REQUEST_ID_KEY)
         if (requestId != null) proxyResult.requestId = requestId as String
-        if (e is HttpRequestMethodNotSupportedException){
-            proxyResult = ProxyResult(ResultCode.ILLEGAL_OPERATION)
-            proxyResult.supportMessage="URI:[${request.requestURI}]不支持[${request.method}]方法"
-        }else if (e is IllegalException){
-            proxyResult = ProxyResult(ResultCode.ILLEGAL_OPERATION)
-            proxyResult.supportMessage=e.message
-        } else{
-            e.printStackTrace()
+        when (e) {
+            // URL无法解析到方法
+            is NoHandlerFoundException -> {
+                proxyResult = ProxyResult(ResultCode.NOT_FOUND)
+                proxyResult.supportMessage = "[${request.requestURI}]${ResultCode.NOT_FOUND.info}"
+            }
+            // Http方法GET,POST错误
+            is HttpRequestMethodNotSupportedException -> {
+                /*一般情况下,用户按照既定路径访问,不会出现访问方法错误的问题*/
+                proxyResult = ProxyResult(ResultCode.ILLEGAL_OPERATION)
+                proxyResult.supportMessage="URI:[${request.requestURI}]不支持[${request.method}]方法"
+            }
+            // 违规访问错误
+            is IllegalException -> {
+                proxyResult = ProxyResult(ResultCode.ILLEGAL_OPERATION)
+                proxyResult.supportMessage=e.message
+            }
+            else -> {
+                e.printStackTrace()
+            }
         }
         if (voidGlobalConfiguration.mode == RunMode.DEBUG) {
             e.printStackTrace()

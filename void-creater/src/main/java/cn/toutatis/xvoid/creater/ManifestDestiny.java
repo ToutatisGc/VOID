@@ -15,8 +15,6 @@ import org.apache.log4j.Logger;
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.*;
@@ -59,7 +57,7 @@ public class ManifestDestiny {
      */
     private static final String ROOT_PATH = manifestToolkit.getRootPath();
     private static final File CONFIG_FILE = new File(ROOT_PATH+"/config.properties");
-    private static Properties configProperties = new Properties();
+    private static final Properties CONFIG_PROPERTIES = new Properties();
 
     public static String dirClassify;
     public static String initPath;
@@ -83,13 +81,16 @@ public class ManifestDestiny {
 //            BeautyEyeLNFHelper.frameBorderStyle = BeautyEyeLNFHelper.FrameBorderStyle.osLookAndFeelDecorated;
 //            BeautyEyeLNFHelper.launchBeautyEyeLNF();
             FlatIntelliJLaf.setup();
-            configProperties.load(new FileInputStream(CONFIG_FILE));
+            CONFIG_PROPERTIES.load(new FileInputStream(CONFIG_FILE));
             logger.info("[初始化]加载config.properties配置文件完成.");
         } catch (IOException e) {
             try {
                 throw new ConfigFileMissingException(ConfigFileMissingException.MISSING_MESSAGE,e.getCause());
             } catch (ConfigFileMissingException ex) {
-                int confirmDialog = JOptionPane.showConfirmDialog(manifest, ConfigurationTable.MISSING_CONFIG_FILE_HINT.getInfo(), ConfigurationTable.NOTIFY_WINDOW_TITLE.getInfo(), JOptionPane.CLOSED_OPTION);
+                int confirmDialog = JOptionPane.showConfirmDialog(manifest, ConfigurationTable.MISSING_CONFIG_FILE_HINT.getInfo(),
+                        ConfigurationTable.NOTIFY_WINDOW_TITLE.getInfo()
+                        , JOptionPane.CLOSED_OPTION
+                );
                 if (confirmDialog == 0 || confirmDialog == -1){
                     logger.error("[初始化]配置文件丢失.");
                     System.exit(confirmDialog);
@@ -100,7 +101,7 @@ public class ManifestDestiny {
             e.printStackTrace();
             logger.error("[初始化]主题加载失败.");
         }
-        initPath = configProperties.getProperty("currentChoosePath");
+        initPath = CONFIG_PROPERTIES.getProperty("currentChoosePath");
         logger.info("[初始化]ManifestDestiny初始化完成.");
     }
 
@@ -117,9 +118,9 @@ public class ManifestDestiny {
 
 //         manifest.setContentPane;
 
-        String databaseUrlConfig = configProperties.getProperty("databaseUrl");
-        String userConfig = configProperties.getProperty("user");
-        String passwordConfig = configProperties.getProperty("password");
+        String databaseUrlConfig = CONFIG_PROPERTIES.getProperty("databaseUrl");
+        String userConfig = CONFIG_PROPERTIES.getProperty("user");
+        String passwordConfig = CONFIG_PROPERTIES.getProperty("password");
 
         if (manifestToolkit.isBlank(databaseUrlConfig,userConfig,passwordConfig)){
              openDatabaseConfigurationWindow(null);
@@ -254,7 +255,7 @@ public class ManifestDestiny {
             manifestToolkit.saveConfiguration("databaseUrl",databaseSource_field.getText().equals(ConfigurationTable.DATA_SOURCE_LABEL.getInfo())? "" : databaseSource_field.getText());
             manifestToolkit.saveConfiguration("user",databaseUserName_field.getText().equals(ConfigurationTable.DATA_USERNAME_LABEL.getInfo())? "" : databaseUserName_field.getText());
             String jPasswordFieldText = jPasswordField.getText();
-            String starStr = (jPasswordFieldText.startsWith("*") && jPasswordFieldText.endsWith("*")) ? configProperties.getProperty("password") : Base64.getEncoder().encodeToString(jPasswordFieldText.getBytes());
+            String starStr = (jPasswordFieldText.startsWith("*") && jPasswordFieldText.endsWith("*")) ? CONFIG_PROPERTIES.getProperty("password") : Base64.getEncoder().encodeToString(jPasswordFieldText.getBytes());
             manifestToolkit.saveConfiguration("password",jPasswordField.getText().equals(ConfigurationTable.DATA_PASSWORD_LABEL.getInfo())? "" : starStr);
             try {
                 Map<String, Object> testMap = manifestToolkit.testConnect();

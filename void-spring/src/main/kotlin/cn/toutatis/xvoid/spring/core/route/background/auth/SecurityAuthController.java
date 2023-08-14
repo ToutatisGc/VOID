@@ -1,6 +1,7 @@
 package cn.toutatis.xvoid.spring.core.route.background.auth;
 
 import cn.toutatis.xvoid.common.result.ProxyResult;
+import cn.toutatis.xvoid.common.result.Result;
 import cn.toutatis.xvoid.common.result.ResultCode;
 import cn.toutatis.xvoid.orm.base.authentication.enums.RegistryType;
 import cn.toutatis.xvoid.spring.core.tools.ViewToolkit;
@@ -11,6 +12,7 @@ import com.github.xiaoymin.knife4j.annotations.ApiSupport;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -35,6 +37,12 @@ public class SecurityAuthController {
         ModelAndView modelAndView = new ModelAndView(viewToolkit.toView("BackgroundLoginPage"));
         modelAndView.addObject("title","登录");
         return modelAndView;
+    }
+
+    @Operation(summary = "用户名预检",description = "预先检查用户表中是否有该用户")
+    @RequestMapping(value = "/login/preCheck",method = RequestMethod.GET)
+    public Result preCheck(@Parameter(description = "用户名",required = true) String username){
+        return new ProxyResult(ResultCode.NORMAL_SUCCESS);
     }
 
     @Operation(summary="用户注册",description="新用户注册")

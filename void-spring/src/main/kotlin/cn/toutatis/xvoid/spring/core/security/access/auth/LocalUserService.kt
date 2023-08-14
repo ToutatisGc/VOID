@@ -2,7 +2,9 @@ package cn.toutatis.xvoid.spring.core.security.access.auth
 
 import cn.toutatis.xvoid.common.exception.AuthenticationException
 import cn.toutatis.xvoid.spring.business.user.service.FormUserAuthService
+import cn.toutatis.xvoid.spring.configure.system.VoidGlobalConfiguration
 import cn.toutatis.xvoid.spring.configure.system.VoidSecurityConfiguration
+import cn.toutatis.xvoid.spring.configure.system.enums.global.RunMode
 import cn.toutatis.xvoid.spring.core.security.access.ValidationMessage
 import cn.toutatis.xvoid.toolkit.validator.Validator
 import org.springframework.beans.factory.annotation.Autowired
@@ -25,6 +27,9 @@ class LocalUserService : VoidAuthService {
     private lateinit var voidSecurityConfiguration: VoidSecurityConfiguration
 
     @Autowired
+    private lateinit var voidGlobalConfiguration: VoidGlobalConfiguration
+
+    @Autowired
     private lateinit var httpServletRequest: HttpServletRequest
 
     companion object{
@@ -44,6 +49,7 @@ class LocalUserService : VoidAuthService {
     override fun preCheck(username: String): Boolean {
         if (Validator.strIsBlank(username)) throwFailed(ValidationMessage.USERNAME_BLANK)
         if (!Validator.checkCNUsername(username)) throwFailed(ValidationMessage.USERNAME_ILLEGAL)
+        if (voidGlobalConfiguration.mode == RunMode.DEBUG){ return true }
         val loginConfig = voidSecurityConfiguration.loginConfig
         if (loginConfig.beforeLoginCheckUsername){
             val loginCheckOps = redisTemplate.boundHashOps<String, Boolean>(username)
@@ -52,8 +58,10 @@ class LocalUserService : VoidAuthService {
         }
         if (loginConfig.loginRetryLimitEnabled){
             val loginRetryOps = redisTemplate.boundHashOps<String, String>(username)
-            val get = loginRetryOps.get(LOGIN_RETRY_TIMES_KEY)
-            val loginRetryTimes = loginConfig.loginRetryTimes
+            val currentRetry = loginRetryOps.get(LOGIN_RETRY_TIMES_KEY)
+            if (currentRetry != null){
+                val loginRetryTimes = loginConfig.loginRetryTimes
+            }
         }
         return true
     }

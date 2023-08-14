@@ -6,9 +6,6 @@ server:
   tomcat:
     keep-alive-timeout: 10s
 spring:
-  mvc:
-    pathmatch:
-      matching-strategy: ANT_PATH_MATCHER
   application:
     name: VOID-SPRING | 春野
   profiles:
