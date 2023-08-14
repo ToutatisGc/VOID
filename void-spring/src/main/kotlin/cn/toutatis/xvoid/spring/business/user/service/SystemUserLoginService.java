@@ -13,4 +13,11 @@ import cn.toutatis.xvoid.orm.support.VoidService;
 */
 public interface SystemUserLoginService extends VoidService<SystemUserLogin> {
 
+    /**
+     * 预检查表中是否有该用户名
+     * @param username 用户名
+     * @return 表中有此用户
+     */
+    Boolean preCheckUsername(String username);
+
 }

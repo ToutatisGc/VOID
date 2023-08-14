@@ -3,6 +3,8 @@ package cn.toutatis.xvoid.spring.business.user.persistence;
 import cn.toutatis.xvoid.orm.base.authentication.entity.SystemUserLogin;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -17,5 +19,8 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface SystemUserLoginMapper extends BaseMapper<SystemUserLogin> {
 
+    @Select("SELECT 1 AS `check` FROM " +SystemUserLogin.TABLE +
+            " WHERE account = '' OR username = '' OR email = '' OR phoneCode = '' LIMIT 1")
+    Boolean selectUsername(@Param("username") String username);
 
 }

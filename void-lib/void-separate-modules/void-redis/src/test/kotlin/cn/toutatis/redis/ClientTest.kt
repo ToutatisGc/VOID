@@ -1,6 +1,5 @@
 package cn.toutatis.redis
 
-import cn.toutatis.redis.aop.AOPTest
 import cn.toutatis.redis.config.ClientType
 import cn.toutatis.redis.config.RedisConnectInfo
 import cn.toutatis.redis.config.VoidRedisBuilder
@@ -34,12 +33,5 @@ class ClientTest {
         Assert.assertEquals("Jedis连接池测试",true,client1.isConnected())
         logger.info("Jedis连接池测试连接成功")
     }
-
-    @Test
-    fun aopTest(){
-        AOPTest().test()
-
-    }
-
 
 }

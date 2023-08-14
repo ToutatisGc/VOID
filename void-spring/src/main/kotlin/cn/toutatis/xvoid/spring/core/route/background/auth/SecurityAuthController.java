@@ -1,23 +1,33 @@
 package cn.toutatis.xvoid.spring.core.route.background.auth;
 
+import cn.toutatis.redis.RedisCommonKeys;
 import cn.toutatis.xvoid.common.result.ProxyResult;
 import cn.toutatis.xvoid.common.result.Result;
 import cn.toutatis.xvoid.common.result.ResultCode;
+import cn.toutatis.xvoid.orm.base.authentication.entity.SystemUserLogin;
 import cn.toutatis.xvoid.orm.base.authentication.enums.RegistryType;
+import cn.toutatis.xvoid.spring.business.user.service.SystemUserLoginService;
 import cn.toutatis.xvoid.spring.core.tools.ViewToolkit;
 import cn.toutatis.xvoid.spring.annotations.application.VoidController;
 import cn.toutatis.xvoid.toolkit.validator.Validator;
 import com.alibaba.fastjson.JSONObject;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.github.xiaoymin.knife4j.annotations.ApiSupport;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.BoundHashOperations;
+import org.springframework.data.redis.core.BoundValueOperations;
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * @author Toutatis_Gc
@@ -31,6 +41,12 @@ public class SecurityAuthController {
 
     private final ViewToolkit viewToolkit = new ViewToolkit("pages/background/auth");
 
+    @Autowired
+    private RedisTemplate<String,Object> redisTemplate;
+
+    @Autowired
+    private SystemUserLoginService systemUserLoginService;
+
     @Operation(summary="系统登陆页",description="管理后台登录页面访问地址")
     @RequestMapping(value = "/login/page",method = RequestMethod.GET)
     public ModelAndView backgroundLoginPage(){
@@ -41,7 +57,17 @@ public class SecurityAuthController {
 
     @Operation(summary = "用户名预检",description = "预先检查用户表中是否有该用户")
     @RequestMapping(value = "/login/preCheck",method = RequestMethod.GET)
-    public Result preCheck(@Parameter(description = "用户名",required = true) String username){
+    public Result preCheck(
+            @Parameter(description = "用户名",required = true) String username,
+            @Parameter(description = "请求代理") HttpServletRequest request
+    ){
+        String sessionId = request.getSession().getId();
+        BoundValueOperations<String, Object> sessionOps = redisTemplate.boundValueOps(
+                RedisCommonKeys.concat(RedisCommonKeys.SESSION_KEY, sessionId)+".precheck"
+        );
+        QueryWrapper<SystemUserLogin> usernameWrapper = new QueryWrapper<>();
+        systemUserLoginService.getOneObj(usernameWrapper);
+        sessionOps.set(username);
         return new ProxyResult(ResultCode.NORMAL_SUCCESS);
     }
 

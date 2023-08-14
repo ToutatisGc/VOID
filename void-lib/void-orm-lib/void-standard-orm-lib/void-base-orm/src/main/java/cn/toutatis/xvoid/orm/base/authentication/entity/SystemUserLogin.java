@@ -1,5 +1,6 @@
 package cn.toutatis.xvoid.orm.base.authentication.entity;
 
+import cn.toutatis.xvoid.BusinessType;
 import cn.toutatis.xvoid.orm.base.data.common.EntityBasicAttribute;
 import cn.toutatis.xvoid.orm.base.authentication.enums.RegistryType;
 import cn.toutatis.xvoid.toolkit.constant.Time;
@@ -16,10 +17,13 @@ import org.hibernate.Hibernate;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.io.Serial;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Objects;
+
+import static cn.toutatis.xvoid.orm.base.authentication.entity.SystemUserLogin.TABLE;
 
 /**
  * @author Toutatis_Gc
@@ -27,9 +31,17 @@ import java.util.Objects;
 @Getter @Setter @Entity @ToString(callSuper = true)
 @JsonIgnoreProperties({"reservedString","reservedInt"})
 @ApiModel(value = "SystemUserLogin 系统用户类", description = "系统用户实体类", parent = EntityBasicAttribute.class)
-@Table(name="vb_system_user_login")
-@org.hibernate.annotations.Table(appliesTo = "vb_system_user_login", comment = "系统用户类")
+@Table(name=TABLE)
+@org.hibernate.annotations.Table(appliesTo = TABLE, comment = "系统用户类")
 public class SystemUserLogin extends EntityBasicAttribute<SystemUserLogin> {
+
+    @Serial
+    private static final long serialVersionUID = 1L;
+    /**
+     * 数据库表名以及业务类型
+     */
+    public static final String TABLE = "vb_system_user_login";
+    {this.setBusinessType(BusinessType.XVOID_SYSTEM);}
 
     @Id @TableId
     @ApiModelProperty(value="主键ID",required = true, example = "0b01f8466bcf11eda9c1b827eb90cfbc")

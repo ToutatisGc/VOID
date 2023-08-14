@@ -53,6 +53,12 @@
 
         <dependency>
             <groupId>cn.toutatis</groupId>
+            <artifactId>void-common</artifactId>
+            <version>0.0.0-ALPHA</version>
+        </dependency>
+
+        <dependency>
+            <groupId>cn.toutatis</groupId>
             <artifactId>void-toolkit</artifactId>
             <version>0.0.0-ALPHA</version>
             <scope>compile</scope>

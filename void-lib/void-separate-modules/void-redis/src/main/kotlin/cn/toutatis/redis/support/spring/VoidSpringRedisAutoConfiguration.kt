@@ -1,5 +1,8 @@
 package cn.toutatis.redis.support.spring
 
+import cn.toutatis.redis.Meta
+import cn.toutatis.xvoid.toolkit.log.LoggerToolkit
+import cn.toutatis.xvoid.toolkit.log.infoWithModule
 import com.fasterxml.jackson.annotation.JsonAutoDetect
 import com.fasterxml.jackson.annotation.PropertyAccessor
 import com.fasterxml.jackson.databind.DeserializationFeature
@@ -14,12 +17,14 @@ import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer
 import org.springframework.data.redis.serializer.StringRedisSerializer
 
 /**
+ * Spring环境引入即支持Redis
  * @author Toutatis_Gc
  * @date 2022/5/6 19:25
- * Spring环境引入即支持
  */
 @Configuration
 class VoidSpringRedisAutoConfiguration {
+
+    private val logger = LoggerToolkit.getLogger(javaClass)
 
     @Lazy
     @Bean
@@ -39,6 +44,7 @@ class VoidSpringRedisAutoConfiguration {
         template.valueSerializer = jackson2JsonRedisSerializer
         template.hashValueSerializer = jackson2JsonRedisSerializer
         template.afterPropertiesSet()
+        logger.infoWithModule(Meta.MODULE_NAME,"RedisTemplate已初始化")
         return template
     }
 
