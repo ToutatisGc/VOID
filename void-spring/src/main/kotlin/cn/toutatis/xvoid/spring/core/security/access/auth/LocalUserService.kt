@@ -1,6 +1,6 @@
 package cn.toutatis.xvoid.spring.core.security.access.auth
 
-import cn.toutatis.xvoid.common.exception.AuthenticationException
+import cn.toutatis.redis.RedisCommonKeys
 import cn.toutatis.xvoid.spring.business.user.service.FormUserAuthService
 import cn.toutatis.xvoid.spring.configure.system.VoidGlobalConfiguration
 import cn.toutatis.xvoid.spring.configure.system.VoidSecurityConfiguration
@@ -9,10 +9,11 @@ import cn.toutatis.xvoid.spring.core.security.access.ValidationMessage
 import cn.toutatis.xvoid.toolkit.validator.Validator
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.redis.core.RedisTemplate
+import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.stereotype.Service
 import javax.servlet.http.HttpServletRequest
-import kotlin.jvm.Throws
+import javax.servlet.http.HttpSession
 
 @Service
 class LocalUserService : VoidAuthService {
@@ -32,32 +33,39 @@ class LocalUserService : VoidAuthService {
     @Autowired
     private lateinit var httpServletRequest: HttpServletRequest
 
+    @Autowired
+    private lateinit var httpSession: HttpSession
+
     companion object{
         /**
          * Auth Times Key 账户登录重试次数
          */
         const val LOGIN_RETRY_TIMES_KEY = "VOID_RETRY_AUTH_TIMES"
 
-        const val LOGIN_CHECK_USERNAME_KEY = "VOID_LOGIN_CHECK_USERNAME"
+        const val LOGIN_PRE_CHECK_KEY = RedisCommonKeys.SESSION_KEY+".pre-check"
     }
 
-    fun findSimpleUser(username: String): UserDetails {
-        this.preCheck(username)
-        return formUserAuthService.findSimpleUser(username)
+    fun findSimpleUser(account: String): UserDetails {
+        this.preCheck(account)
+        return formUserAuthService.findSimpleUser(account)
     }
 
-    override fun preCheck(username: String): Boolean {
-        if (Validator.strIsBlank(username)) throwFailed(ValidationMessage.USERNAME_BLANK)
-        if (!Validator.checkCNUsername(username)) throwFailed(ValidationMessage.USERNAME_ILLEGAL)
+
+    override fun preCheck(account: String): Boolean {
+        if (Validator.strIsBlank(account)) throwFailed(ValidationMessage.USERNAME_BLANK)
+        if (!Validator.checkCNUsername(account)) throwFailed(ValidationMessage.USERNAME_ILLEGAL)
         if (voidGlobalConfiguration.mode == RunMode.DEBUG){ return true }
         val loginConfig = voidSecurityConfiguration.loginConfig
         if (loginConfig.beforeLoginCheckUsername){
-            val loginCheckOps = redisTemplate.boundHashOps<String, Boolean>(username)
-            val checkUsername = if (loginCheckOps.get(LOGIN_CHECK_USERNAME_KEY) != null) loginCheckOps.get(LOGIN_CHECK_USERNAME_KEY) else false
-            if (!checkUsername!!) throwFailed(ValidationMessage.USERNAME_NOT_PRE_CHECK)
+            System.err.println(httpServletRequest.session.id)
+            val sessionOps = redisTemplate.boundValueOps(RedisCommonKeys.concat(LOGIN_PRE_CHECK_KEY,httpServletRequest.session.id))
+            val store = sessionOps.get()
+            if (store == null || store != account) {
+                throwFailed(ValidationMessage.USERNAME_NOT_PRE_CHECK)
+            }
         }
         if (loginConfig.loginRetryLimitEnabled){
-            val loginRetryOps = redisTemplate.boundHashOps<String, String>(username)
+            val loginRetryOps = redisTemplate.boundHashOps<String, String>(account)
             val currentRetry = loginRetryOps.get(LOGIN_RETRY_TIMES_KEY)
             if (currentRetry != null){
                 val loginRetryTimes = loginConfig.loginRetryTimes

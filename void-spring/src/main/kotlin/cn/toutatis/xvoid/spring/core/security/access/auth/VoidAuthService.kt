@@ -13,10 +13,10 @@ interface VoidAuthService {
     /**
      * Pre check
      * 用户名预检查
-     * @param username
+     * @param account 用户名
      * @return
      */
-    fun preCheck(username:String):Boolean
+    fun preCheck(account:String):Boolean
 
     /**
      * Throw failed

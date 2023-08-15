@@ -6,5 +6,6 @@ spring:
     wait-for-jobs-to-complete-on-shutdown: true
     jdbc:
       # FIXME 开发和测试环境下可以总是生成数据库表,但注意线上生产
-      initialize-schema: ALWAYS
+      initialize-schema: EMBEDDED
+#      initialize-schema: ALWAYS
     scheduler-name: XVOID-QUARTZ-SCHEDULER

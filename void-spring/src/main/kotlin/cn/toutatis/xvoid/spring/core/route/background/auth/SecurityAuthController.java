@@ -7,6 +7,7 @@ import cn.toutatis.xvoid.common.result.ResultCode;
 import cn.toutatis.xvoid.orm.base.authentication.entity.SystemUserLogin;
 import cn.toutatis.xvoid.orm.base.authentication.enums.RegistryType;
 import cn.toutatis.xvoid.spring.business.user.service.SystemUserLoginService;
+import cn.toutatis.xvoid.spring.core.security.access.auth.LocalUserService;
 import cn.toutatis.xvoid.spring.core.tools.ViewToolkit;
 import cn.toutatis.xvoid.spring.annotations.application.VoidController;
 import cn.toutatis.xvoid.toolkit.validator.Validator;
@@ -48,14 +49,28 @@ public class SecurityAuthController {
     @Autowired
     private SystemUserLoginService systemUserLoginService;
 
-    @Operation(summary="系统登陆页",description="管理后台登录页面访问地址")
-    @RequestMapping(value = "/login/page",method = RequestMethod.GET)
+    @Operation(summary="后台管理系统登陆页面",description="管理后台登录页面访问地址")
+    @RequestMapping(value = "/login/background/page",method = RequestMethod.GET)
     public ModelAndView backgroundLoginPage(){
         ModelAndView modelAndView = new ModelAndView(viewToolkit.toView("BackgroundLoginPage"));
         modelAndView.addObject("title","登录");
         return modelAndView;
     }
 
+    @Operation(summary="管理员登录页面",description="管理员登录页面")
+    @RequestMapping(value = "/login/xvoid/page",method = RequestMethod.GET)
+    public ModelAndView administratorLoginPage(){
+        ModelAndView modelAndView = new ModelAndView(viewToolkit.toView("AdministratorLoginPage"));
+        modelAndView.addObject("title","管理员登录");
+        return modelAndView;
+    }
+
+    /**
+     * 在redis中存入验证键验证用户名
+     * @param account 账户名
+     * @param request 请求
+     * @return 验证成功
+     */
     @Operation(summary = "用户名预检",description = "预先检查用户表中是否有该用户")
     @RequestMapping(value = "/login/pre-check",method = RequestMethod.GET)
     public Result preCheck(
@@ -63,10 +78,11 @@ public class SecurityAuthController {
             @Parameter(description = "请求代理") HttpServletRequest request
     ){
         String sessionId = request.getSession().getId();
+        System.err.println(sessionId);
         Boolean accountExist = systemUserLoginService.preCheckAccountExist(account);
         if (accountExist){
             BoundValueOperations<String, Object> sessionOps = redisTemplate.boundValueOps(
-                    RedisCommonKeys.concat(RedisCommonKeys.SESSION_KEY, sessionId)+".pre-check"
+                    RedisCommonKeys.concat(LocalUserService.LOGIN_PRE_CHECK_KEY, sessionId)
             );
             sessionOps.set(account, Duration.ofMinutes(10L));
             return new ProxyResult(ResultCode.AUTHENTICATION_PRE_CHECK_SUCCESSFUL);
