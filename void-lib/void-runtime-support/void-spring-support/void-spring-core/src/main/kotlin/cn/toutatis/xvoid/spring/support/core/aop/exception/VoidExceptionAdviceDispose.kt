@@ -4,13 +4,19 @@ import cn.toutatis.xvoid.common.exception.IllegalException
 import cn.toutatis.xvoid.common.standard.StandardFields
 import cn.toutatis.xvoid.common.result.ProxyResult
 import cn.toutatis.xvoid.common.result.ResultCode
+import cn.toutatis.xvoid.orm.base.infrastructure.entity.SystemLog
+import cn.toutatis.xvoid.orm.base.infrastructure.enums.LogType
 import cn.toutatis.xvoid.spring.configure.system.enums.global.RunMode
 import cn.toutatis.xvoid.spring.configure.system.VoidGlobalConfiguration
+import cn.toutatis.xvoid.spring.support.Meta
+import cn.toutatis.xvoid.spring.support.amqp.AmqpShell
 import cn.toutatis.xvoid.toolkit.constant.Time
 import cn.toutatis.xvoid.toolkit.log.LoggerToolkit
+import cn.toutatis.xvoid.toolkit.log.errorWithModule
 import com.alibaba.fastjson.JSONObject
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.HttpRequestMethodNotSupportedException
+import org.springframework.web.bind.MissingServletRequestParameterException
 import org.springframework.web.bind.annotation.ControllerAdvice
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.ResponseBody
@@ -29,8 +35,11 @@ class VoidExceptionAdviceDispose {
     @Autowired
     private lateinit var voidGlobalConfiguration: VoidGlobalConfiguration
 
+    @Autowired
+    private lateinit var amqpShell: AmqpShell
+
     @ResponseBody
-    @ExceptionHandler(Exception::class)
+    @ExceptionHandler(Exception::class,Throwable::class)
     fun errorMsg(request: HttpServletRequest, response: HttpServletResponse, e: Exception): ProxyResult {
         response.status = 500
         logger.error("请求错误地址:{},[Exception:{}]",request.requestURL,e.toString())
@@ -53,20 +62,51 @@ class VoidExceptionAdviceDispose {
             is IllegalException -> {
                 proxyResult = ProxyResult(ResultCode.ILLEGAL_OPERATION)
                 proxyResult.supportMessage=e.message
+                e.message?.let {
+                    logger.errorWithModule(Meta.MODULE_NAME,"EXCEPTION", it)
+                }
+            }
+            // 请求缺失参数异常
+            is MissingServletRequestParameterException ->{
+                proxyResult = ProxyResult(ResultCode.MISSING_PARAMETER)
+                val err = "请求[${request.requestURI}]缺失参数[${e.parameterType}:${e.parameterName}]"
+                if (voidGlobalConfiguration.mode == RunMode.DEBUG || voidGlobalConfiguration.mode == RunMode.DEV){
+                    proxyResult.supportMessage= err
+                }else{
+                    logger.errorWithModule(Meta.MODULE_NAME,"EXCEPTION",err)
+                }
             }
             else -> {
+                logger.errorWithModule(Meta.MODULE_NAME,"EXCEPTION","${e::class}未捕获异常,请尽快处理.")
                 e.printStackTrace()
             }
         }
+        if (voidGlobalConfiguration.globalLogConfig.recordToDb){
+            val systemLog = SystemLog()
+            systemLog.type = LogType.EXCEPTION.name
+            systemLog.intro = "异常[${e::class.simpleName}]"
+            systemLog.details = parseErrorJson(e,request).toJSONString()
+            amqpShell.sendLog(LogType.EXCEPTION,systemLog)
+        }
         if (voidGlobalConfiguration.mode == RunMode.DEBUG) {
             e.printStackTrace()
-            val exceptionObj = JSONObject(3)
-            exceptionObj["createTime"] = Time.currentTime
-            exceptionObj["position"] = e.stackTrace[0]
-            exceptionObj["reason"] = e.message
-            proxyResult.data = exceptionObj
-            /*TODO 异步存储*/
+            val parseErrorJson = parseErrorJson(e,request)
+            proxyResult.data = parseErrorJson
         }
         return proxyResult
+    }
+
+    protected fun parseErrorJson(e: Exception,request: HttpServletRequest):JSONObject{
+        val exceptionJson = JSONObject(3)
+        val stackTraceElement = e.stackTrace[0]
+        val position = if (stackTraceElement.className.startsWith(cn.toutatis.xvoid.common.Meta.BASE_PACKAGE)){
+            "${stackTraceElement.className}.${stackTraceElement.methodName}[line ${stackTraceElement.lineNumber}]"
+        }else{
+            stackTraceElement.className
+        }
+        exceptionJson["position"] = "$position[line ${stackTraceElement.lineNumber}]"
+        exceptionJson["reason"] = e.message
+        exceptionJson["uri"] = request.requestURI
+        return exceptionJson
     }
 }

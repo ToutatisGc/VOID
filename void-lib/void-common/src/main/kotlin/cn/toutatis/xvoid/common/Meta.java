@@ -7,6 +7,8 @@ package cn.toutatis.xvoid.common;
 public class Meta {
 
     public static final String MODULE_NAME = "VOID-COMMON";
+
+    public static final String BASE_PACKAGE = "cn.toutatis";
     /**
      * 管理员信息
      */

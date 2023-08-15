@@ -19,8 +19,14 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface SystemUserLoginMapper extends BaseMapper<SystemUserLogin> {
 
+    /**
+     * 查询用户表中该用户名是否存在
+     * 用于登录自检业务和用户注册业务
+     * @param account 帐户名
+     * @return 帐户名是否存在
+     */
     @Select("SELECT 1 AS `check` FROM " +SystemUserLogin.TABLE +
-            " WHERE account = '' OR username = '' OR email = '' OR phoneCode = '' LIMIT 1")
-    Boolean selectUsername(@Param("username") String username);
+            " WHERE username = #{account} OR account = #{account} OR email = #{account} OR phoneCode = #{account} LIMIT 1")
+    Boolean selectAccountExist(@Param("account") String account);
 
 }

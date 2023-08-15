@@ -28,6 +28,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import java.time.Duration;
 
 /**
  * @author Toutatis_Gc
@@ -56,19 +57,22 @@ public class SecurityAuthController {
     }
 
     @Operation(summary = "用户名预检",description = "预先检查用户表中是否有该用户")
-    @RequestMapping(value = "/login/preCheck",method = RequestMethod.GET)
+    @RequestMapping(value = "/login/pre-check",method = RequestMethod.GET)
     public Result preCheck(
-            @Parameter(description = "用户名",required = true) String username,
+            @Parameter(description = "用户名",required = true) @RequestParam String account,
             @Parameter(description = "请求代理") HttpServletRequest request
     ){
         String sessionId = request.getSession().getId();
-        BoundValueOperations<String, Object> sessionOps = redisTemplate.boundValueOps(
-                RedisCommonKeys.concat(RedisCommonKeys.SESSION_KEY, sessionId)+".precheck"
-        );
-        QueryWrapper<SystemUserLogin> usernameWrapper = new QueryWrapper<>();
-        systemUserLoginService.getOneObj(usernameWrapper);
-        sessionOps.set(username);
-        return new ProxyResult(ResultCode.NORMAL_SUCCESS);
+        Boolean accountExist = systemUserLoginService.preCheckAccountExist(account);
+        if (accountExist){
+            BoundValueOperations<String, Object> sessionOps = redisTemplate.boundValueOps(
+                    RedisCommonKeys.concat(RedisCommonKeys.SESSION_KEY, sessionId)+".pre-check"
+            );
+            sessionOps.set(account, Duration.ofMinutes(10L));
+            return new ProxyResult(ResultCode.AUTHENTICATION_PRE_CHECK_SUCCESSFUL);
+        }else {
+            return new ProxyResult(ResultCode.AUTHENTICATION_PRE_CHECK_FAILED);
+        }
     }
 
     @Operation(summary="用户注册",description="新用户注册")

@@ -18,8 +18,7 @@ import org.springframework.stereotype.Service;
 public class SystemUserLoginServiceImpl extends VoidMybatisServiceImpl<SystemUserLoginMapper, SystemUserLogin> implements SystemUserLoginService {
 
     @Override
-    public Boolean preCheckUsername(String username) {
-        mapper.
-        return null;
+    public Boolean preCheckAccountExist(String account) {
+        return mapper.selectAccountExist(account);
     }
 }
