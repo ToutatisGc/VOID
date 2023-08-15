@@ -1,6 +1,7 @@
 package cn.toutatis.xvoid.spring.core.security.access.auth
 
 import cn.toutatis.xvoid.common.exception.AuthenticationException
+import cn.toutatis.xvoid.spring.core.security.access.AuthType
 import kotlin.jvm.Throws
 
 /**
@@ -14,9 +15,10 @@ interface VoidAuthService {
      * Pre check
      * 用户名预检查
      * @param account 用户名
-     * @return
+     * @param authType 账户类型
+     * @return 账户是否存在
      */
-    fun preCheck(account:String):Boolean
+    fun preCheckAccount(account:String,authType: AuthType):Boolean
 
     /**
      * Throw failed

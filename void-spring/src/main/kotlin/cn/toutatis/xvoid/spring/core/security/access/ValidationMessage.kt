@@ -25,6 +25,8 @@ interface ValidationMessage {
 
         const val ACCOUNT_LOCKED = "账户已锁定"
 
+        const val ACCOUNT_WILL_LOCK = "密码错误,账户将于%s次输入后锁定"
+
         const val ACCOUNT_DISABLED = "账户不允许登录"
 
         const val USERNAME_ILLEGAL = "用户名不合法"

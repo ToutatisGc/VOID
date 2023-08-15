@@ -77,16 +77,15 @@ public class SecurityAuthController {
             @Parameter(description = "用户名",required = true) @RequestParam String account,
             @Parameter(description = "请求代理") HttpServletRequest request
     ){
-        String sessionId = request.getSession().getId();
-        System.err.println(sessionId);
         Boolean accountExist = systemUserLoginService.preCheckAccountExist(account);
+        BoundValueOperations<String, Object> sessionOps = redisTemplate.boundValueOps(
+                RedisCommonKeys.concat(LocalUserService.LOGIN_PRE_CHECK_KEY, account)
+        );
         if (accountExist){
-            BoundValueOperations<String, Object> sessionOps = redisTemplate.boundValueOps(
-                    RedisCommonKeys.concat(LocalUserService.LOGIN_PRE_CHECK_KEY, sessionId)
-            );
-            sessionOps.set(account, Duration.ofMinutes(10L));
+            sessionOps.set(true, Duration.ofMinutes(10L));
             return new ProxyResult(ResultCode.AUTHENTICATION_PRE_CHECK_SUCCESSFUL);
         }else {
+            sessionOps.set(false, Duration.ofMinutes(10L));
             return new ProxyResult(ResultCode.AUTHENTICATION_PRE_CHECK_FAILED);
         }
     }

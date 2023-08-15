@@ -2,4 +2,4 @@
 void:
   security:
     login-config:
-      before-login-check-username: false
+      before-login-check-username: true
