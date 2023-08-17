@@ -43,6 +43,10 @@ class LocalUserService : VoidAuthService {
          * Auth Times Key 账户登录重试次数
          */
         const val LOGIN_RETRY_TIMES_KEY = "${AUTH_KEY_PREFIX}:RETRY-TIMES:%s"
+
+        const val LOGIN_ACCOUNT_SESSION_KEY = "${AUTH_KEY_PREFIX}:LOGIN_ACCOUNT"
+
+        const val AUTH_OPERATION_TYPE_SESSION_KEY = "${AUTH_KEY_PREFIX}:OPERATION_TYPE"
     }
 
     fun findSimpleUser(account: String): UserDetails {
@@ -51,11 +55,23 @@ class LocalUserService : VoidAuthService {
     }
 
 
+    /**
+     * Pre check account 账户预检
+     * @see cn.toutatis.xvoid.spring.core.security.config.handler.SecurityHandler 登录失败和成功处理
+     * @param account 账户名称
+     * @param authType 认证类型
+     * @return 预检成功
+     */
     override fun preCheckAccount(account: String, authType: AuthType): Boolean {
+        // 用户名为空
         if (Validator.strIsBlank(account)) throwFailed(ValidationMessage.USERNAME_BLANK)
+        // 用户名不合法
         if (!Validator.checkCNUsername(account)) throwFailed(ValidationMessage.USERNAME_ILLEGAL)
+        // 调试模式跳过检查
+        httpServletRequest.session.setAttribute(LOGIN_ACCOUNT_SESSION_KEY,account)
         if (voidGlobalConfiguration.mode == RunMode.DEBUG){ return true }
         val loginConfig = voidSecurityConfiguration.loginConfig
+        // 预检用户名调用接口
         if (loginConfig.beforeLoginCheckUsername){
             val sessionOps = redisTemplate.boundValueOps(RedisCommonKeys.concat(LOGIN_PRE_CHECK_KEY,account))
             val store = sessionOps.get()
@@ -63,6 +79,7 @@ class LocalUserService : VoidAuthService {
                 throwFailed(ValidationMessage.USERNAME_NOT_PRE_CHECK)
             }
         }
+        // 允许重试
         if (loginConfig.loginRetryLimitEnabled){
             val loginRetryOps = redisTemplate.boundValueOps(RedisCommonKeys.concat(LOGIN_RETRY_TIMES_KEY,account))
             val currentRetryTimes = loginRetryOps.get() as Int?
