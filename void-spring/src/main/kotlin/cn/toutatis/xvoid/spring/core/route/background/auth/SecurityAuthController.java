@@ -4,15 +4,16 @@ import cn.toutatis.redis.RedisCommonKeys;
 import cn.toutatis.xvoid.common.result.ProxyResult;
 import cn.toutatis.xvoid.common.result.Result;
 import cn.toutatis.xvoid.common.result.ResultCode;
-import cn.toutatis.xvoid.orm.base.authentication.entity.SystemUserLogin;
+import cn.toutatis.xvoid.common.standard.AuthFields;
 import cn.toutatis.xvoid.orm.base.authentication.enums.RegistryType;
 import cn.toutatis.xvoid.spring.business.user.service.SystemUserLoginService;
 import cn.toutatis.xvoid.spring.core.security.access.auth.LocalUserService;
 import cn.toutatis.xvoid.spring.core.tools.ViewToolkit;
 import cn.toutatis.xvoid.spring.annotations.application.VoidController;
+import cn.toutatis.xvoid.spring.support.toolkits.VoidSpringToolkit;
+import cn.toutatis.xvoid.toolkit.constant.Regex;
 import cn.toutatis.xvoid.toolkit.validator.Validator;
 import com.alibaba.fastjson.JSONObject;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.github.xiaoymin.knife4j.annotations.ApiSupport;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -20,7 +21,6 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.BoundHashOperations;
 import org.springframework.data.redis.core.BoundValueOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,6 +30,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import java.time.Duration;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author Toutatis_Gc
@@ -48,6 +50,10 @@ public class SecurityAuthController {
 
     @Autowired
     private SystemUserLoginService systemUserLoginService;
+
+    @Autowired
+    private VoidSpringToolkit voidSpringToolkit;
+
 
     @Operation(summary="后台管理系统登陆页面",description="管理后台登录页面访问地址")
     @RequestMapping(value = "/login/background/page",method = RequestMethod.GET)
@@ -77,15 +83,18 @@ public class SecurityAuthController {
             @Parameter(description = "用户名",required = true) @RequestParam String account,
             @Parameter(description = "请求代理") HttpServletRequest request
     ){
+        String jSessionId = voidSpringToolkit.getJSessionId(request);
+        if (Validator.strIsBlank(jSessionId)) {
+            return new ProxyResult(ResultCode.AUTHENTICATION_PRE_CHECK_FAILED,"会话环境错误");
+        }
         Boolean accountExist = systemUserLoginService.preCheckAccountExist(account);
         BoundValueOperations<String, Object> sessionOps = redisTemplate.boundValueOps(
-                RedisCommonKeys.concat(LocalUserService.LOGIN_PRE_CHECK_KEY, account)
+                RedisCommonKeys.concat(AuthFields.LOGIN_PRE_CHECK_KEY,jSessionId, account)
         );
         if (accountExist){
-            sessionOps.set(true, Duration.ofMinutes(10L));
+            sessionOps.set(account, Duration.ofMinutes(10L));
             return new ProxyResult(ResultCode.AUTHENTICATION_PRE_CHECK_SUCCESSFUL);
         }else {
-            sessionOps.set(false, Duration.ofMinutes(10L));
             return new ProxyResult(ResultCode.AUTHENTICATION_PRE_CHECK_FAILED);
         }
     }

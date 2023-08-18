@@ -2,7 +2,6 @@ import cn.toutatis.creeper.DocumentResolver
 import cn.toutatis.xvoid.toolkit.constant.Time
 import com.alibaba.fastjson.JSONArray
 import com.alibaba.fastjson.JSONObject
-import com.alibaba.fastjson.serializer.SerializerFeature
 import org.apache.lucene.analysis.TokenStream
 import org.apache.lucene.analysis.tokenattributes.CharTermAttribute
 import org.jsoup.Jsoup
@@ -48,7 +47,7 @@ class CreeperTest {
         val searchQuery:String
         if (lookOnlyToday){
             val date = Date()
-            val regexTime = Time.regexTime(Time.YMD_NON_SEPARATOR_TIME,date)
+            val regexTime = Time.regexTime(Time.YMD_NON_SEPARATOR_FORMAT_REGEX,date)
             searchQuery="a[href*=${regexTime}]"
         }else{
             searchQuery = "a[href]"

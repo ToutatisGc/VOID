@@ -1,6 +1,8 @@
 package cn.toutatis.xvoid.common.result;
 
 import cn.toutatis.xvoid.toolkit.formatting.JsonToolkit;
+import com.alibaba.fastjson.annotation.JSONField;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.util.LinkedHashMap;
@@ -30,6 +32,8 @@ public abstract class AbstractResult implements Result {
         this.data = data;
     }
 
+    @JsonIgnore
+    @JSONField(serialize = false)
     @Override
     public Map<String, Object> getDataMap() {
         if (data == null){

@@ -57,6 +57,7 @@ public class Security extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+//        http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 //        禁止csrfFilter
         http.csrf().disable();
         http.addFilterBefore(anyRequestFilter, BasicAuthenticationFilter.class);

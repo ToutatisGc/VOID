@@ -38,6 +38,8 @@ object Regex {
      * */
     const val IMAGE_SUFFIX_REGEX = "png|jpg|jpeg"
 
+    const val REQUEST_JSESSION_ID_REGEX  = "JSESSIONID=([a-fA-F0-9]+);"
+
     /**
      * 该函数接受一个 Ant 格式的URL匹配模式作为参数，并返回对应的正则表达式
      * @param antPattern ant pattern 语法

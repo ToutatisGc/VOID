@@ -1,6 +1,10 @@
 package cn.toutatis.xvoid.spring.core.security.access.auth
 
 import cn.toutatis.redis.RedisCommonKeys
+import cn.toutatis.xvoid.common.standard.AuthFields.LOGIN_ACCOUNT_LOCKED_KEY
+import cn.toutatis.xvoid.common.standard.AuthFields.LOGIN_ACCOUNT_SESSION_KEY
+import cn.toutatis.xvoid.common.standard.AuthFields.LOGIN_PRE_CHECK_KEY
+import cn.toutatis.xvoid.common.standard.AuthFields.LOGIN_RETRY_TIMES_KEY
 import cn.toutatis.xvoid.common.standard.StandardFields
 import cn.toutatis.xvoid.spring.business.user.service.FormUserAuthService
 import cn.toutatis.xvoid.spring.configure.system.VoidGlobalConfiguration
@@ -12,7 +16,9 @@ import cn.toutatis.xvoid.toolkit.validator.Validator
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.redis.core.RedisTemplate
 import org.springframework.security.core.userdetails.UserDetails
+import org.springframework.security.web.firewall.FirewalledRequest
 import org.springframework.stereotype.Service
+import java.time.Duration
 import javax.servlet.http.HttpServletRequest
 
 @Service
@@ -33,22 +39,6 @@ class LocalUserService : VoidAuthService {
     @Autowired
     private lateinit var httpServletRequest: HttpServletRequest
 
-    companion object{
-
-        const val AUTH_KEY_PREFIX = "${StandardFields.SYSTEM_PREFIX}:AUTH:"
-
-        const val LOGIN_PRE_CHECK_KEY = "${AUTH_KEY_PREFIX}PRE-CHECK:%s"
-
-        /**
-         * Auth Times Key 账户登录重试次数
-         */
-        const val LOGIN_RETRY_TIMES_KEY = "${AUTH_KEY_PREFIX}:RETRY-TIMES:%s"
-
-        const val LOGIN_ACCOUNT_SESSION_KEY = "${AUTH_KEY_PREFIX}:LOGIN_ACCOUNT"
-
-        const val AUTH_OPERATION_TYPE_SESSION_KEY = "${AUTH_KEY_PREFIX}:OPERATION_TYPE"
-    }
-
     fun findSimpleUser(account: String): UserDetails {
         this.preCheckAccount(account,AuthType.ACCOUNT_NORMAL)
         return formUserAuthService.findSimpleUser(account)
@@ -68,26 +58,27 @@ class LocalUserService : VoidAuthService {
         // 用户名不合法
         if (!Validator.checkCNUsername(account)) throwFailed(ValidationMessage.USERNAME_ILLEGAL)
         // 调试模式跳过检查
-        httpServletRequest.session.setAttribute(LOGIN_ACCOUNT_SESSION_KEY,account)
+        val loginAccountOps = redisTemplate.boundValueOps(RedisCommonKeys.concat(LOGIN_ACCOUNT_SESSION_KEY, httpServletRequest.session.id))
+        loginAccountOps.set(account, Duration.ofMinutes(10L))
         if (voidGlobalConfiguration.mode == RunMode.DEBUG){ return true }
         val loginConfig = voidSecurityConfiguration.loginConfig
         // 预检用户名调用接口
         if (loginConfig.beforeLoginCheckUsername){
-            val sessionOps = redisTemplate.boundValueOps(RedisCommonKeys.concat(LOGIN_PRE_CHECK_KEY,account))
+            val sessionOps = redisTemplate.boundValueOps(RedisCommonKeys.concat(LOGIN_PRE_CHECK_KEY,httpServletRequest.session.id))
             val store = sessionOps.get()
-            if (store == null || store != true) {
+            if (store == null || account != store) {
                 throwFailed(ValidationMessage.USERNAME_NOT_PRE_CHECK)
             }
         }
         // 允许重试
         if (loginConfig.loginRetryLimitEnabled){
-            val loginRetryOps = redisTemplate.boundValueOps(RedisCommonKeys.concat(LOGIN_RETRY_TIMES_KEY,account))
-            val currentRetryTimes = loginRetryOps.get() as Int?
-            if (currentRetryTimes!= null){
-                val loginRetryTimes = loginConfig.loginRetryTimes
-                if (currentRetryTimes > loginRetryTimes){
-                    // TODO 添加解锁时间
-                    throwFailed(ValidationMessage.ACCOUNT_LOCKED)
+            val loginLockOps = redisTemplate.boundValueOps(RedisCommonKeys.concat(LOGIN_ACCOUNT_LOCKED_KEY,account))
+            val currentLoginLocked = loginLockOps.get() as String?
+            if (currentLoginLocked != null){
+                if (ValidationMessage.ACCOUNT_LOCKED_TODAY == currentLoginLocked){
+                    throwFailed(currentLoginLocked)
+                }else{
+                    throwFailed(ValidationMessage.ACCOUNT_WILL_UNLOCK.format(currentLoginLocked))
                 }
             }
         }

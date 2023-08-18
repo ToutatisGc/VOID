@@ -1,50 +1,50 @@
 package cn.toutatis.xvoid.spring.core.security.config.handler
 
-import cn.toutatis.xvoid.toolkit.log.LoggerToolkit.getLogger
-import cn.toutatis.redis.RedisCommonKeys.concat
-import cn.toutatis.xvoid.toolkit.validator.Validator.strNotBlank
-import cn.toutatis.xvoid.toolkit.validator.Validator.strIsBlank
-import cn.toutatis.xvoid.spring.core.security.config.handler.RequestMethodResolver
-import cn.toutatis.xvoid.spring.support.core.aop.advice.ResponseResultDispatcherAdvice
-import cn.toutatis.xvoid.spring.configure.system.VoidGlobalConfiguration
-import cn.toutatis.xvoid.spring.business.user.service.SystemAuthRoleService
-import cn.toutatis.xvoid.spring.business.user.service.SystemAuthPathService
-import cn.toutatis.xvoid.spring.configure.system.VoidSecurityConfiguration
-import org.springframework.data.redis.core.RedisTemplate
-import org.springframework.security.web.authentication.AuthenticationSuccessHandler
-import org.springframework.security.web.authentication.AuthenticationFailureHandler
-import org.springframework.security.web.AuthenticationEntryPoint
-import org.springframework.security.web.access.AccessDeniedHandler
-import cn.toutatis.xvoid.toolkit.log.LoggerToolkit
-import cn.toutatis.xvoid.spring.configure.system.VoidGlobalConfiguration.GlobalServiceConfig
-import kotlin.Throws
-import java.io.IOException
-import cn.toutatis.xvoid.orm.base.authentication.entity.SystemAuthRole
-import cn.toutatis.xvoid.common.result.ProxyResult
-import cn.toutatis.xvoid.common.result.ResultCode
-import java.lang.Runnable
-import cn.toutatis.xvoid.common.standard.StandardFields
-import org.springframework.security.core.userdetails.UsernameNotFoundException
-import cn.toutatis.xvoid.spring.core.security.access.VoidSecurityAuthenticationService
-import cn.toutatis.xvoid.spring.core.security.access.auth.LocalUserService
-import org.springframework.data.redis.core.BoundValueOperations
 import cn.toutatis.redis.RedisCommonKeys
+import cn.toutatis.redis.RedisCommonKeys.concat
+import cn.toutatis.xvoid.common.result.ProxyResult
+import cn.toutatis.xvoid.common.result.Result
+import cn.toutatis.xvoid.common.result.ResultCode
+import cn.toutatis.xvoid.common.standard.AuthFields
+import cn.toutatis.xvoid.common.standard.StandardFields
 import cn.toutatis.xvoid.spring.VoidModuleInfo
 import cn.toutatis.xvoid.spring.business.user.entity.AuthInfo
+import cn.toutatis.xvoid.spring.business.user.service.SystemAuthPathService
+import cn.toutatis.xvoid.spring.business.user.service.SystemAuthRoleService
+import cn.toutatis.xvoid.spring.configure.system.VoidGlobalConfiguration
+import cn.toutatis.xvoid.spring.configure.system.VoidGlobalConfiguration.GlobalServiceConfig
+import cn.toutatis.xvoid.spring.configure.system.VoidSecurityConfiguration
 import cn.toutatis.xvoid.spring.core.security.access.ValidationMessage
-import cn.toutatis.xvoid.spring.core.security.config.handler.SecurityHandler
+import cn.toutatis.xvoid.spring.core.security.access.VoidSecurityAuthenticationService
+import cn.toutatis.xvoid.spring.support.Meta
+import cn.toutatis.xvoid.spring.support.core.aop.advice.ResponseResultDispatcherAdvice
+import cn.toutatis.xvoid.spring.support.toolkits.VoidSpringToolkit
+import cn.toutatis.xvoid.toolkit.constant.Time
+import cn.toutatis.xvoid.toolkit.log.LoggerToolkit.getLogger
+import cn.toutatis.xvoid.toolkit.log.errorWithModule
+import cn.toutatis.xvoid.toolkit.validator.Validator.strIsBlank
+import cn.toutatis.xvoid.toolkit.validator.Validator.strNotBlank
 import com.alibaba.fastjson.JSON
 import com.alibaba.fastjson.JSONObject
+import org.springframework.data.redis.core.RedisTemplate
 import org.springframework.http.HttpStatus
 import org.springframework.security.access.AccessDeniedException
 import org.springframework.security.authentication.*
 import org.springframework.security.core.Authentication
 import org.springframework.security.core.AuthenticationException
+import org.springframework.security.core.userdetails.UsernameNotFoundException
+import org.springframework.security.web.AuthenticationEntryPoint
+import org.springframework.security.web.access.AccessDeniedHandler
+import org.springframework.security.web.authentication.AuthenticationFailureHandler
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler
 import org.springframework.stereotype.Component
-import java.lang.Boolean
+import java.io.IOException
+import java.time.ZoneId
 import javax.servlet.ServletException
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
+import kotlin.math.abs
+
 
 /**
  * @author Toutatis_Gc
@@ -57,7 +57,8 @@ class SecurityHandler(
     private val systemAuthRoleService: SystemAuthRoleService,
     private val systemAuthPathService: SystemAuthPathService,
     private val voidSecurityConfiguration: VoidSecurityConfiguration,
-    private val redisTemplate: RedisTemplate<String, Any>
+    private val voidSpringToolkit: VoidSpringToolkit,
+    private val redisTemplate: RedisTemplate<String, Any>,
 ) : AuthenticationSuccessHandler, AuthenticationFailureHandler, AuthenticationEntryPoint, AccessDeniedHandler {
 
     companion object {
@@ -84,7 +85,7 @@ class SecurityHandler(
     override fun onAuthenticationSuccess(
         request: HttpServletRequest,
         response: HttpServletResponse,
-        authentication: Authentication
+        authentication: Authentication,
     ) {
         val principal = authentication.principal
         if (principal is AuthInfo) {
@@ -110,7 +111,7 @@ class SecurityHandler(
     override fun commence(
         request: HttpServletRequest,
         response: HttpServletResponse,
-        authException: AuthenticationException
+        authException: AuthenticationException,
     ) {
         // org.springframework.security.authentication.InsufficientAuthenticationException: Full authentication is required to access this resource
         if (authException is InsufficientAuthenticationException) {
@@ -139,7 +140,7 @@ class SecurityHandler(
     override fun handle(
         request: HttpServletRequest,
         response: HttpServletResponse,
-        accessDeniedException: AccessDeniedException
+        accessDeniedException: AccessDeniedException,
     ) {
         System.err.println(666)
     }
@@ -156,9 +157,9 @@ class SecurityHandler(
     override fun onAuthenticationFailure(
         request: HttpServletRequest,
         response: HttpServletResponse,
-        exception: AuthenticationException
+        exception: AuthenticationException,
     ) {
-        val proxyResult: ProxyResult
+        val proxyResult: Result
         var message: String
         if (exception is UsernameNotFoundException) {
             val attributeCode = request.getAttribute(StandardFields.VOID_HTTP_ATTRIBUTE_STATUS_KEY)
@@ -177,21 +178,11 @@ class SecurityHandler(
             }
             /*用户名密码错误*/
         } else if (exception is BadCredentialsException) {
-            if (loginConfig.loginRetryLimitEnabled) {
-                val loginAccount = request.session.getAttribute(LocalUserService.LOGIN_ACCOUNT_SESSION_KEY)
-                if (loginAccount != null) {
-                    val retryOps = redisTemplate.boundValueOps(
-                        concat(LocalUserService.LOGIN_RETRY_TIMES_KEY, loginAccount)
-                    )
-                    //                    retryOps.get()
-                    proxyResult = ProxyResult(ResultCode.AUTHENTICATION_FAILED)
-                } else {
-                    // FIXME 预留查看什么情况会出现这种错误
-                    proxyResult = ProxyResult(ResultCode.AUTHENTICATION_PRE_CHECK_FAILED)
-                    proxyResult.data = "FIXME"
-                }
+            /*登录失败增加重试次数锁定账户*/
+            proxyResult = if (loginConfig.loginRetryLimitEnabled) {
+                tryLockAccount(request)
             } else {
-                proxyResult = ProxyResult(ResultCode.AUTHENTICATION_FAILED)
+                ProxyResult(ResultCode.AUTHENTICATION_FAILED)
             }
             /*账户状态错误*/
         } else if (exception is AccountStatusException) {
@@ -225,8 +216,7 @@ class SecurityHandler(
         if (strNotBlank(whether) && ("true".equals(whether, ignoreCase = true) || "false".equals(whether,
                 ignoreCase = true))
         ) {
-            val whetherBool = Boolean.parseBoolean(whether)
-            if (whetherBool) {
+            if (whether.toBoolean()) {
                 val pageMapping = request.getParameter(REQUEST_CUSTOM_REDIRECT_PAGE_MAPPING)
                 if (strIsBlank(pageMapping)) {
                     request.getRequestDispatcher("/error").forward(request, response)
@@ -247,8 +237,10 @@ class SecurityHandler(
         response.characterEncoding = "UTF-8"
         try {
             response.writer.write(JSON.toJSONString(o))
-        } catch (e: IOException) {
-            e.printStackTrace()
+        } catch (e: Exception) {
+            logger.errorWithModule(Meta.MODULE_NAME,"AUTH","SecurityHandler异常[${e::class}:${e.message}]")
+            val error = ProxyResult(ResultCode.INNER_EXCEPTION)
+            returnJson(response,responseResultDispatcherAdvice.proxyResult(error))
         }
     }
 
@@ -261,7 +253,69 @@ class SecurityHandler(
         } catch (e: IOException) {
             e.printStackTrace()
         }
-    } //    @Autowired
+    }
+
+    /**
+     * Try lock account 锁定账户
+     * 如果开启登录限制
+     * 则登录失败时会根据限制策略锁定账户
+     * 登录成功将移除相关redis缓存
+     * If the login restriction is enabled
+     * The account will be locked based on the restriction policy if the login fails
+     * Successful login removes the relevant redis cache
+     * @param request 请求对象
+     * @return 锁定账户结果
+     */
+    private fun tryLockAccount(request: HttpServletRequest):Result{
+        val jSessionId = voidSpringToolkit.getJSessionId(request)
+        val loginAccountOps = redisTemplate.boundValueOps(concat(AuthFields.LOGIN_ACCOUNT_SESSION_KEY, jSessionId))
+        val loginAccount = loginAccountOps.get()
+        if (strNotBlank(loginAccount)) {
+            /*没有缓存添加一条*/
+            val retryOps = redisTemplate.boundValueOps(concat(AuthFields.LOGIN_RETRY_TIMES_KEY, loginAccount))
+            var retryTimes = retryOps.get() as Int?
+            if (retryTimes == null) retryTimes = 1 else retryTimes++
+            retryOps.set(retryTimes)
+            /*截止到今日结束*/
+            if (retryOps.expire == null || retryOps.expire == -1L){
+                retryOps.expireAt(Time.getCurrentDayLastMillsTime().atZone(ZoneId.systemDefault()).toInstant())
+            }
+            val loginRetryTimes = loginConfig.loginRetryTimes
+            if (retryTimes > loginRetryTimes){
+                val loginFailedLockTime = loginConfig.loginFailedLockTime
+                val currentTimeByLong:String
+                val lockDuration:Long
+                /*计算锁定时长*/
+                if (loginConfig.loginFailedLockTimeProgressiveIncrease){
+                    val exceedance = abs(retryTimes - loginRetryTimes)
+                    lockDuration = Time.currentMillis + (exceedance * loginFailedLockTime.toMillis())
+                    currentTimeByLong = Time.getCurrentTimeByLong(lockDuration)
+                }else{
+                    lockDuration = Time.currentMillis+loginFailedLockTime.toMillis()
+                    currentTimeByLong = Time.getCurrentTimeByLong(lockDuration)
+                }
+                val lockedOps = redisTemplate.boundValueOps(concat(AuthFields.LOGIN_ACCOUNT_LOCKED_KEY, loginAccount))
+                /*如果锁定大于今日,提醒今日不可登录*/
+                if (lockDuration > Time.parseTimeToMills(Time.getCurrentDayLastMillsTime())){
+                    lockedOps.set(ValidationMessage.ACCOUNT_LOCKED_TODAY)
+                }else{
+                    lockedOps.set(Time.regexTime(Time.HMS_COLON_FORMAT_REGEX, lockDuration))
+                }
+                lockedOps.expireAt(Time.parseData(currentTimeByLong))
+                val proxyResult = ProxyResult(ResultCode.AUTHENTICATION_FAILED)
+                proxyResult.supportMessage = ValidationMessage.ACCOUNT_LOCKED
+                return proxyResult
+            }else{
+                val proxyResult = ProxyResult(ResultCode.AUTHENTICATION_FAILED)
+                proxyResult.supportMessage = ValidationMessage.ACCOUNT_WILL_LOCK.format(loginRetryTimes-retryTimes)
+                return proxyResult
+            }
+        } else {
+            return ProxyResult(ResultCode.AUTHENTICATION_PRE_CHECK_FAILED)
+        }
+    }
+
+//    @Autowired
 
     //    private SystemUserPermissionMapper systemUserPermissionMapper;
     //

@@ -1,7 +1,7 @@
 package cn.toutatis.xvoid.toolkit.constant
 
 import java.text.SimpleDateFormat
-import java.time.LocalDateTime
+import java.time.*
 import java.time.format.DateTimeFormatter
 import java.util.*
 
@@ -32,12 +32,17 @@ object Time {
     /**
      * 统一目录时间格式：yyyyMMdd
      */
-    const val YMD_NON_SEPARATOR_TIME = "yyyyMMdd"
+    const val YMD_NON_SEPARATOR_FORMAT_REGEX = "yyyyMMdd"
 
     /**
      * 连接时间格式正则表达式：yyyyMMddHHmmss
      */
     const val YMD_HMS_NON_SEPARATOR_TIME_REGEX = "yyyyMMddHHmmss"
+
+    /**
+     * Hms Colon Format Regex 时分秒正则表达式
+     */
+    const val HMS_COLON_FORMAT_REGEX = "HH:mm:ss"
 
     /**
      * 常用日期时间格式正则表达式：yyyy-MM-dd HH:mm:ss
@@ -95,6 +100,17 @@ object Time {
     @JvmStatic
     fun regexTime(format: String, time: Long): String = SimpleDateFormat(format).format(time)
 
+    /**
+     * Get current day last mills time 获取这一天的最后一秒
+     * 即当天最后时间
+     * @return 当天最后时间最后一秒
+     */
+    @JvmStatic
+    fun getCurrentDayLastMillsTime(): LocalDateTime {
+        val date = LocalDate.now() // 当前日期
+        val lastTime = LocalTime.MAX // 最大时间，即23:59:59
+        return LocalDateTime.of(date, lastTime)
+    }
 
     /**
      * @param str 字符串转Date
@@ -103,6 +119,11 @@ object Time {
     @JvmStatic
     fun parseData(str :String) : Date{
         return simpleDateFormat.parse(str)
+    }
+
+    @JvmStatic
+    fun parseTimeToMills(time: LocalDateTime):Long{
+        return time.toInstant(ZoneOffset.UTC).toEpochMilli();
     }
 
     /**

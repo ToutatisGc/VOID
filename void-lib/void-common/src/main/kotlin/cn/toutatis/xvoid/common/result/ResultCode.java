@@ -56,7 +56,7 @@ public enum ResultCode implements Cloneable {
     ANONYMITY_FAILED("900000","0P_ANO_900000_FL",false,"拒绝匿名访问","匿名无权限访问"),
     CHECKED_FAILED("900001","0P_TKN_900001_FL",false,"校验失败","验证权限失败"),
     PERMISSION_DEFINED_FAILED("900002","0P_AUTH_900002_FL",false,"权限不足","已认证权限不足"),
-    AUTHENTICATION_PRE_CHECK_FAILED("900003","0P_AUTH_900003_SC",true,"账户预检失败","账户预检失败"),
+    AUTHENTICATION_PRE_CHECK_FAILED("900003","0P_AUTH_900003_FL",false,"账户预检失败","账户预检失败"),
     AUTHENTICATION_FAILED("900010","0P_AUTH_900010_FL",false,"认证失败","用户名或密码错误"),
     AUTHENTICATION_PRE_CHECK_SUCCESSFUL("200000","0P_AUTH_999998_SC",true,"账户预检成功","账户预检成功"),
     AUTHENTICATION_SUCCESSFUL("200000","0P_AUTH_999999_SC",true,"认证成功","认证成功"),
