@@ -23,7 +23,7 @@ interface VoidAuthService {
     /**
      * Throw failed
      * 抛出异常
-     * @param message
+     * @param message 异常消息
      */
     @Throws(AuthenticationException::class)
     fun throwFailed(message:String): Unit = throw AuthenticationException(message)

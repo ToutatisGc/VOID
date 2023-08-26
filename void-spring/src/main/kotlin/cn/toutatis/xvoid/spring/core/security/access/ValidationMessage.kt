@@ -25,7 +25,7 @@ interface ValidationMessage {
 
         const val ACCOUNT_LOCKED = "账户已锁定"
 
-        const val ACCOUNT_LOCKED_TODAY = "今日不可登录"
+        const val ACCOUNT_LOCKED_TODAY = "今日登录已锁定,请次日尝试"
 
         const val ACCOUNT_WILL_LOCK = "账户将于[%s]次输入后锁定"
 

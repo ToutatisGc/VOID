@@ -44,7 +44,6 @@ class LocalUserService : VoidAuthService {
         return formUserAuthService.findSimpleUser(account)
     }
 
-
     /**
      * Pre check account 账户预检
      * @see cn.toutatis.xvoid.spring.core.security.config.handler.SecurityHandler 登录失败和成功处理
@@ -57,9 +56,9 @@ class LocalUserService : VoidAuthService {
         if (Validator.strIsBlank(account)) throwFailed(ValidationMessage.USERNAME_BLANK)
         // 用户名不合法
         if (!Validator.checkCNUsername(account)) throwFailed(ValidationMessage.USERNAME_ILLEGAL)
-        // 调试模式跳过检查
         val loginAccountOps = redisTemplate.boundValueOps(RedisCommonKeys.concat(LOGIN_ACCOUNT_SESSION_KEY, httpServletRequest.session.id))
         loginAccountOps.set(account, Duration.ofMinutes(10L))
+        // 调试模式跳过检查
         if (voidGlobalConfiguration.mode == RunMode.DEBUG){ return true }
         val loginConfig = voidSecurityConfiguration.loginConfig
         // 预检用户名调用接口

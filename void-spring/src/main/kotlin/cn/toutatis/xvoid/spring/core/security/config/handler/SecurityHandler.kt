@@ -1,6 +1,5 @@
 package cn.toutatis.xvoid.spring.core.security.config.handler
 
-import cn.toutatis.redis.RedisCommonKeys
 import cn.toutatis.redis.RedisCommonKeys.concat
 import cn.toutatis.xvoid.common.result.ProxyResult
 import cn.toutatis.xvoid.common.result.Result
@@ -14,6 +13,7 @@ import cn.toutatis.xvoid.spring.business.user.service.SystemAuthRoleService
 import cn.toutatis.xvoid.spring.configure.system.VoidGlobalConfiguration
 import cn.toutatis.xvoid.spring.configure.system.VoidGlobalConfiguration.GlobalServiceConfig
 import cn.toutatis.xvoid.spring.configure.system.VoidSecurityConfiguration
+import cn.toutatis.xvoid.spring.configure.system.enums.global.RunMode
 import cn.toutatis.xvoid.spring.core.security.access.ValidationMessage
 import cn.toutatis.xvoid.spring.core.security.access.VoidSecurityAuthenticationService
 import cn.toutatis.xvoid.spring.support.Meta
@@ -74,30 +74,45 @@ class SecurityHandler(
         private const val REQUEST_CUSTOM_REDIRECT_PAGE_MAPPING = "CUSTOM_REDIRECT_PAGE_MAPPING"
     }
 
-
     private val logger = getLogger(this.javaClass)
 
     private val globalServiceConfig: GlobalServiceConfig = voidGlobalConfiguration.globalServiceConfig
 
     private val loginConfig: VoidSecurityConfiguration.LoginConfig = voidSecurityConfiguration.loginConfig
 
+    /**
+     * On authentication success 登陆成功情况
+     * 登陆成功后处理的步骤如下:
+     * 1. 赋予用户角色
+     * 2. 赋予对应的路由权限
+     * 3. 赋予一些特殊权限(如管理员权限,运维权限等)
+     * @param request 请求对象(此时的request为servlet正常请求)
+     * @param response 响应对象
+     * @param authentication 权限对象
+     */
     @Throws(IOException::class, ServletException::class)
-    override fun onAuthenticationSuccess(
-        request: HttpServletRequest,
-        response: HttpServletResponse,
-        authentication: Authentication,
-    ) {
+    override fun onAuthenticationSuccess(request: HttpServletRequest, response: HttpServletResponse, authentication: Authentication ) {
         val principal = authentication.principal
+        val loginSuccessfulResult:ProxyResult
+        val runMode = voidGlobalConfiguration.mode
         if (principal is AuthInfo) {
+            loginSuccessfulResult = ProxyResult(ResultCode.AUTHENTICATION_SUCCESSFUL)
             val userInfo = principal.userInfo
             val roles = systemAuthRoleService.getUserRoles(userInfo.getString("id"))
             val userPermissionsStrings = systemAuthPathService.getUserPermissionsStrings(roles)
             principal.permissions = userPermissionsStrings
         } else {
-            logger.error(authentication.toString())
+            loginSuccessfulResult = ProxyResult(ResultCode.INNER_EXCEPTION)
+            if (runMode == RunMode.DEV ||runMode == RunMode.DEBUG){
+                loginSuccessfulResult.supportMessage = "意外登录情况:${authentication.toString()}"
+            }else{
+                loginSuccessfulResult.supportMessage = "意外登录情况"
+            }
+            logger.errorWithModule(Meta.MODULE_NAME,"SECURITY",loginSuccessfulResult.supportMessage)
         }
         returnJson(response,
-            responseResultDispatcherAdvice.proxyResult(ProxyResult(ResultCode.AUTHENTICATION_SUCCESSFUL)))
+            responseResultDispatcherAdvice.proxyResult(loginSuccessfulResult)
+        )
     }
 
     /**
@@ -152,6 +167,7 @@ class SecurityHandler(
      * @param exception 异常
      * @throws IOException
      * @throws ServletException
+     * @see cn.toutatis.xvoid.spring.core.security.access.auth.LocalUserService
      */
     @Throws(IOException::class, ServletException::class)
     override fun onAuthenticationFailure(
