@@ -7,18 +7,25 @@ import cn.toutatis.xvoid.spring.support.core.aop.filters.AnyPerRequestInjectRidF
 import cn.toutatis.xvoid.spring.support.enhance.mapping.XvoidMappingResolver;
 import cn.toutatis.xvoid.toolkit.log.LoggerToolkit;
 import org.slf4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.event.GenericApplicationListenerAdapter;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.context.DelegatingApplicationListener;
+import org.springframework.security.core.session.SessionRegistryImpl;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.session.*;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
+
+import java.util.Arrays;
 
 /**
  * @author Toutatis_Gc
@@ -41,6 +48,10 @@ public class Security extends WebSecurityConfigurerAdapter {
 
     public static final String AUTH_PATH = "/auth/authentication";
 
+    //sessesion失效所需要的监听器，spring security默认配置过个bean，我们只需要自动注入即可
+    @Autowired
+    DelegatingApplicationListener delegatingApplicationListener;
+
     public Security(VoidSecurityAuthenticationService voidAuthenticationService, SecurityHandler securityHandler, LogOutHandler logOutHandler, XvoidMappingResolver xvoidMappingResolver, AnyPerRequestInjectRidFilter anyRequestFilter) {
         this.voidAuthenticationService = voidAuthenticationService;
         this.securityHandler = securityHandler;
@@ -57,7 +68,6 @@ public class Security extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-//        http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 //        禁止csrfFilter
         http.csrf().disable();
         http.addFilterBefore(anyRequestFilter, BasicAuthenticationFilter.class);
@@ -89,6 +99,22 @@ public class Security extends WebSecurityConfigurerAdapter {
 //      TODO 可能需要配置注销回调
         http.logout().logoutSuccessHandler(logOutHandler);
     }
+
+//    @Bean
+//    public SessionAuthenticationStrategy sessionAuthenticationStrategy() {
+//        SessionRegistryImpl sessionRegistry = new SessionRegistryImpl();
+//        ConcurrentSessionControlAuthenticationStrategy concurrentSessionControlStrategy =
+//                new ConcurrentSessionControlAuthenticationStrategy(sessionRegistry);
+//        delegatingApplicationListener.addListener(new GenericApplicationListenerAdapter(sessionRegistry));
+//        concurrentSessionControlStrategy.setMaximumSessions(1);
+//        concurrentSessionControlStrategy.setExceptionIfMaximumExceeded(true);
+//        CompositeSessionAuthenticationStrategy delegateStrategies = new CompositeSessionAuthenticationStrategy(
+//                Arrays.asList(concurrentSessionControlStrategy,
+//                        new ChangeSessionIdAuthenticationStrategy(),
+//                        new RegisterSessionAuthenticationStrategy(sessionRegistry)
+//                ));
+//        return delegateStrategies;
+//    }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) {

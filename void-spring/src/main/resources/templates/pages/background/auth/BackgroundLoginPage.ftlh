@@ -127,6 +127,13 @@
     const { FormRules,ElNotification} = ElementPlus
 
     let app = createApp({
+        created(){
+            $http.get("/auth/login/pre-check?account=xvoid").then(
+                function (response) {
+                    console.log(response)
+                }
+            )
+        },
         data() {
             return {
                 rules: {
