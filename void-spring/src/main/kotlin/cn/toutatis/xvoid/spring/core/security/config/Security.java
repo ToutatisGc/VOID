@@ -68,6 +68,7 @@ public class Security extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+//        System.err.println(1/0);
 //        禁止csrfFilter
         http.csrf().disable();
         http.addFilterBefore(anyRequestFilter, BasicAuthenticationFilter.class);
