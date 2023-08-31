@@ -23,12 +23,15 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.BoundValueOperations;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.session.Session;
+import org.springframework.session.SessionRepository;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.time.Duration;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -71,6 +74,9 @@ public class SecurityAuthController {
         return modelAndView;
     }
 
+    @Autowired
+    private HttpSession httpSession;
+
     /**
      * 在redis中存入验证键验证用户名
      * @param account 账户名
@@ -83,6 +89,7 @@ public class SecurityAuthController {
             @Parameter(description = "用户名",required = true) @RequestParam String account,
             @Parameter(description = "请求代理") HttpServletRequest request
     ){
+        httpSession.setAttribute("ABC",666);
         String jSessionId = voidSpringToolkit.getJSessionId(request);
         if (Validator.strIsBlank(jSessionId)) {
             return new ProxyResult(ResultCode.AUTHENTICATION_PRE_CHECK_FAILED,"会话环境错误");

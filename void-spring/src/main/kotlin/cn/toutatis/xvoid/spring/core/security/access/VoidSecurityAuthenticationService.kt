@@ -13,9 +13,13 @@ import com.github.xiaoymin.knife4j.annotations.ApiSupport
 import io.swagger.v3.oas.annotations.media.Schema
 import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.core.userdetails.UsernameNotFoundException
+import org.springframework.session.FindByIndexNameSessionRepository
+import org.springframework.session.Session
+import org.springframework.session.SessionRepository
 import org.springframework.stereotype.Service
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpSession
@@ -57,6 +61,11 @@ class VoidSecurityAuthenticationService : UserDetailsService {
     @Autowired
     private lateinit var localUserService: LocalUserService
 
+    @Autowired
+    private lateinit var httpSession: HttpSession
+
+    @Autowired
+    private lateinit var findByIndexNameSessionRepository: FindByIndexNameSessionRepository<*>
 
     /**
      * handler中获取的消息类型
@@ -67,7 +76,6 @@ class VoidSecurityAuthenticationService : UserDetailsService {
          */
         STRING, JSON
     }
-
 
     /**
      * 全局认证入口
@@ -81,8 +89,10 @@ class VoidSecurityAuthenticationService : UserDetailsService {
     override fun loadUserByUsername(identity: String): UserDetails {
         if (Validator.strNotBlank(identity)){
             val identityObj: JSONObject
+            val httpSession:Session
             try {
                 identityObj = JSON.parseObject(identity)
+                httpSession = findByIndexNameSessionRepository.findById(identityObj.getString("sessionId"))
             }catch(e:Exception){
                 throw this.throwIllegalOperation(ValidationMessage.WRONG_IDENTIFY_FORMAT)
             }
@@ -92,7 +102,7 @@ class VoidSecurityAuthenticationService : UserDetailsService {
                     /*TODO 认证*/
                     when(AuthType.valueOf(authTypeStr)){
                         AuthType.ACCOUNT_NORMAL ->{
-                            return localUserService.findSimpleUser(identityObj.getString("username"))
+                            return localUserService.findSimpleUser(identityObj)
                         }
                         else ->{
                             throw this.throwIllegalOperation(ValidationMessage.NOT_OPENED_IDENTIFY_TYPE)

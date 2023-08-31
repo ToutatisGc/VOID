@@ -24,6 +24,10 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.security.web.authentication.session.*;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
+import org.springframework.session.FindByIndexNameSessionRepository;
+import org.springframework.session.Session;
+import org.springframework.session.security.SpringSessionBackedSessionRegistry;
+import org.springframework.session.security.web.authentication.SpringSessionRememberMeServices;
 
 import java.util.Arrays;
 
@@ -32,7 +36,7 @@ import java.util.Arrays;
  * spring boot security配置
  */
 @Configuration
-public class Security extends WebSecurityConfigurerAdapter {
+public class Security<S extends Session> extends WebSecurityConfigurerAdapter {
 
     private final Logger logger = LoggerToolkit.getLogger(Security.class);
 
@@ -48,9 +52,8 @@ public class Security extends WebSecurityConfigurerAdapter {
 
     public static final String AUTH_PATH = "/auth/authentication";
 
-    //sessesion失效所需要的监听器，spring security默认配置过个bean，我们只需要自动注入即可
     @Autowired
-    DelegatingApplicationListener delegatingApplicationListener;
+    private FindByIndexNameSessionRepository<S> sessionRepository;
 
     public Security(VoidSecurityAuthenticationService voidAuthenticationService, SecurityHandler securityHandler, LogOutHandler logOutHandler, XvoidMappingResolver xvoidMappingResolver, AnyPerRequestInjectRidFilter anyRequestFilter) {
         this.voidAuthenticationService = voidAuthenticationService;
@@ -60,18 +63,18 @@ public class Security extends WebSecurityConfigurerAdapter {
         this.anyRequestFilter = anyRequestFilter;
     }
 
-//    @Override
-//    public void init(WebSecurity web) throws Exception {
-////        web.securityInterceptor()
-//        super.init(web);
-//    }
-
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-//        System.err.println(1/0);
+        http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.ALWAYS);
 //        禁止csrfFilter
         http.csrf().disable();
         http.addFilterBefore(anyRequestFilter, BasicAuthenticationFilter.class);
+        http.rememberMe((rememberMe) -> rememberMe.rememberMeServices(rememberMeServices()));
+//        http.sessionManagement((sessionManagement) ->
+//                        sessionManagement
+//                                .maximumSessions(2)
+//                                .sessionRegistry(sessionRegistry())
+//        );
         http.headers()
 //                .addHeaderWriter(VoidResponse.Companion::cors)
                 .frameOptions().disable();
@@ -99,6 +102,20 @@ public class Security extends WebSecurityConfigurerAdapter {
                 .accessDeniedHandler(securityHandler);
 //      TODO 可能需要配置注销回调
         http.logout().logoutSuccessHandler(logOutHandler);
+    }
+
+    @Bean
+    public SpringSessionRememberMeServices rememberMeServices() {
+        SpringSessionRememberMeServices rememberMeServices =
+                new SpringSessionRememberMeServices();
+        // TODO 记住session操作
+        rememberMeServices.setAlwaysRemember(true);
+        return rememberMeServices;
+    }
+
+    @Bean
+    public SpringSessionBackedSessionRegistry<S> sessionRegistry() {
+        return new SpringSessionBackedSessionRegistry<>(this.sessionRepository);
     }
 
 //    @Bean

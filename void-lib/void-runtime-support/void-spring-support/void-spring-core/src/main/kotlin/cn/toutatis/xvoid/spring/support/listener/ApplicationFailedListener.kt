@@ -25,8 +25,13 @@ class ApplicationFailedListener : ApplicationListener<ApplicationFailedEvent> {
 
     override fun onApplicationEvent(event: ApplicationFailedEvent) {
         // TODO 失败处理
-        System.err.println(event)
-        exitProcess(0)
+        try {
+            System.err.println(event)
+        }catch (e:Exception){
+
+        }finally {
+            exitProcess(0)
+        }
     }
 
 }

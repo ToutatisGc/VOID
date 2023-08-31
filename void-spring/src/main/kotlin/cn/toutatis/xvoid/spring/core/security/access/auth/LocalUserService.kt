@@ -13,6 +13,7 @@ import cn.toutatis.xvoid.spring.configure.system.enums.global.RunMode
 import cn.toutatis.xvoid.spring.core.security.access.AuthType
 import cn.toutatis.xvoid.spring.core.security.access.ValidationMessage
 import cn.toutatis.xvoid.toolkit.validator.Validator
+import com.alibaba.fastjson.JSONObject
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.redis.core.RedisTemplate
 import org.springframework.security.core.userdetails.UserDetails
@@ -39,9 +40,10 @@ class LocalUserService : VoidAuthService {
     @Autowired
     private lateinit var httpServletRequest: HttpServletRequest
 
-    fun findSimpleUser(account: String): UserDetails {
-        this.preCheckAccount(account,AuthType.ACCOUNT_NORMAL)
-        return formUserAuthService.findSimpleUser(account)
+    fun findSimpleUser(identity:JSONObject): UserDetails {
+        val username = identity.getString("username")
+        this.preCheckAccount(username,AuthType.ACCOUNT_NORMAL)
+        return formUserAuthService.findSimpleUser(username)
     }
 
     /**

@@ -4,6 +4,7 @@ import cn.toutatis.xvoid.common.standard.HttpHeaders;
 import cn.toutatis.xvoid.spring.support.core.aop.filters.AnyPerRequestInjectRidFilter;
 import cn.toutatis.xvoid.spring.support.core.aop.interceptor.RequestLogInterceptor;
 import cn.toutatis.xvoid.toolkit.validator.Validator;
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,7 +65,9 @@ public class UsernamePasswordAuthenticationJsonFilter extends UsernamePasswordAu
             Map<String,Object> userInfo;
             try {
                 userInfo = jacksonObjectMapper.readValue(request.getInputStream(), Map.class);
-                Object username = userInfo.get(getUsernameParameter());
+                Map<String,Object> o = (Map<String, Object>) userInfo.get(getUsernameParameter());
+                o.put("sessionId", request.getSession().getId());
+                Object username = JSON.toJSONString(o);
                 Object password = userInfo.get(getPasswordParameter());
                 UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(username,password);
                 setDetails(request,authenticationToken);
