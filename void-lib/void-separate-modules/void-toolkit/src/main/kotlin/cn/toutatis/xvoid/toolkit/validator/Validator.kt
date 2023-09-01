@@ -1,7 +1,9 @@
 package cn.toutatis.xvoid.toolkit.validator
 
+import cn.toutatis.xvoid.toolkit.Meta
 import cn.toutatis.xvoid.toolkit.constant.Regex
 import cn.toutatis.xvoid.toolkit.log.LoggerToolkit
+import cn.toutatis.xvoid.toolkit.log.errorWithModule
 import java.lang.reflect.InvocationTargetException
 import java.lang.reflect.Method
 import java.util.regex.Matcher
@@ -22,6 +24,8 @@ public object Validator {
     private val CN_USERNAME_PATTERN = Pattern.compile(Regex.SIMPLE_USERNAME_REGEX)
 
     private val EN_USERNAME_PATTERN = Pattern.compile(Regex.EN_USERNAME_REGEX)
+
+    const val SUB_MODULE_NAME = "VALIDATOR"
 
 //    private
     /**
@@ -159,6 +163,40 @@ public object Validator {
     fun checkCNUsername(username:String): Boolean {
         val m: Matcher = CN_USERNAME_PATTERN.matcher(username)
         return m.matches()
+    }
+
+    /**
+     * Check map contains key
+     * 检查Map中是否存在该键,不存在则返回缺失字段的列表
+     * Check whether the key exists in the Map. If no, return a list of missing fields.
+     * @param map 列表
+     * @param keys 键名
+     * @return 缺失字段列表
+     */
+    @JvmStatic
+    fun checkMapContainsKey(map:Map<String,Any>,vararg keys:String):List<String>{
+        val keyList = mutableListOf<String>()
+        for (key in keys) {
+            if (!map.containsKey(key)) keyList.add(key)
+        }
+        return keyList
+    }
+
+    @JvmStatic
+    fun checkMapContainsKeyBoolean(map:Map<String,Any>,vararg keys:String):Boolean{
+        val checkMapContainsKey = this.checkMapContainsKey(map, *keys);
+        if (checkMapContainsKey.isNotEmpty()) return false
+        return true
+    }
+
+    @JvmStatic
+    fun checkMapContainsKeyThrowEx(map:Map<String,Any>,vararg keys:String){
+        val checkMapContainsKey = this.checkMapContainsKey(map, *keys);
+        if (checkMapContainsKey.isNotEmpty()){
+            val key = checkMapContainsKey[0]
+            val errorLog = logger.errorWithModule(Meta.MODULE_NAME, SUB_MODULE_NAME, "缺失属性${key}")
+            throw IllegalArgumentException(errorLog)
+        }
     }
 
 }

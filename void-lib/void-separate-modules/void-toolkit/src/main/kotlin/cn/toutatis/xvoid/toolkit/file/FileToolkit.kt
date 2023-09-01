@@ -1,7 +1,7 @@
 package cn.toutatis.xvoid.toolkit.file
 
 //import sun.security.util.Resources
-import cn.toutatis.xvoid.toolkit.VoidModuleInfo
+import cn.toutatis.xvoid.toolkit.Meta
 import cn.toutatis.xvoid.toolkit.constant.Regex
 import cn.toutatis.xvoid.toolkit.log.warnWithModule
 import org.apache.commons.io.IOUtils
@@ -80,7 +80,7 @@ object FileToolkit {
             }
         }
         if (!mkdirSuccess){
-            logger.warnWithModule(VoidModuleInfo.MODULE_NAME,"${dirPath} 创建文件夹失败")
+            logger.warnWithModule(Meta.MODULE_NAME,"${dirPath} 创建文件夹失败")
         }
         return mkdirSuccess
     }

@@ -2,7 +2,6 @@ package cn.toutatis.xvoid.common.result;
 
 import cn.toutatis.xvoid.common.Meta;
 import cn.toutatis.xvoid.common.exception.MissingParameterException;
-import cn.toutatis.xvoid.toolkit.VoidModuleInfo;
 import cn.toutatis.xvoid.toolkit.log.LoggerToolkit;
 import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.annotation.JsonIgnore;

@@ -4,7 +4,7 @@ package cn.toutatis.xvoid.toolkit;
  * @author Toutatis_Gc
  * 包信息
  */
-public class VoidModuleInfo {
+public class Meta {
 
     public static final String PACKAGE_NAME = "cn.toutatis.xvoid.toolkit";
 

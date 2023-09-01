@@ -34,8 +34,10 @@ public class FormUserAuthService {
     @Autowired
     private HttpServletRequest request;
 
-    public UserDetails findSimpleUser(String username) {
+    public UserDetails findSimpleUser(JSONObject identity) {
         QueryWrapper<SystemUserLogin> queryWrapper = new QueryWrapper<>();
+        String username = identity.getString("username");
+
         queryWrapper
                 .eq("email",username).or()
                 .eq("account", username).or()

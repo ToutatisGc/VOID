@@ -15,7 +15,9 @@ object AuthFields {
     /**
      * Username 用户名
      */
-    const val USERNAME = "username"
+    const val ACCOUNT = "account"
+
+    const val AUTH_SESSION_KEY = "authLoginSession"
 
     /**
      * Auth Key Prefix Redis Key前缀

@@ -40,10 +40,9 @@ class LocalUserService : VoidAuthService {
     @Autowired
     private lateinit var httpServletRequest: HttpServletRequest
 
-    fun findSimpleUser(identity:JSONObject): UserDetails {
-        val username = identity.getString("username")
-        this.preCheckAccount(username,AuthType.ACCOUNT_NORMAL)
-        return formUserAuthService.findSimpleUser(username)
+    fun findSimpleUser(requestAuthEntity: RequestAuthEntity): UserDetails {
+        this.preCheckAccount(requestAuthEntity)
+        return formUserAuthService.findSimpleUser(requestAuthEntity)
     }
 
     /**
@@ -53,7 +52,7 @@ class LocalUserService : VoidAuthService {
      * @param authType 认证类型
      * @return 预检成功
      */
-    override fun preCheckAccount(account: String, authType: AuthType): Boolean {
+    override fun preCheckAccount(identity:JSONObject): Boolean {
         // 用户名为空
         if (Validator.strIsBlank(account)) throwFailed(ValidationMessage.USERNAME_BLANK)
         // 用户名不合法

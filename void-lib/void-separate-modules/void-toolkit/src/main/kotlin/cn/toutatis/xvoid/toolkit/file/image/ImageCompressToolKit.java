@@ -1,18 +1,10 @@
 package cn.toutatis.xvoid.toolkit.file.image;
 
-import cn.toutatis.xvoid.toolkit.VoidModuleInfo;
+import cn.toutatis.xvoid.toolkit.Meta;
 import cn.toutatis.xvoid.toolkit.file.FileToolkit;
 import cn.toutatis.xvoid.toolkit.log.LoggerToolkit;
 import cn.toutatis.xvoid.toolkit.validator.Validator;
 import net.coobird.thumbnailator.Thumbnails;
-import org.apache.commons.imaging.ImageWriteException;
-import org.apache.commons.imaging.Imaging;
-import org.apache.commons.imaging.ImagingConstants;
-import org.apache.commons.imaging.common.bytesource.ByteSourceFile;
-import org.apache.commons.imaging.formats.png.PhysicalScale;
-import org.apache.commons.imaging.formats.png.PngConstants;
-import org.apache.commons.imaging.formats.png.PngImageParser;
-import org.apache.commons.imaging.formats.png.PngImagingParameters;
 import org.slf4j.Logger;
 
 import javax.imageio.*;
@@ -103,7 +95,7 @@ public class ImageCompressToolKit {
             Iterator<ImageWriter> iter = ImageIO.getImageWriters(type,"jpg");
             if (iter.hasNext()) { writer = iter.next(); }
             if (writer == null) {
-                logger.error("[%s-IMAGE]未找到合适的输入器[%s]".formatted(VoidModuleInfo.MODULE_NAME, fileSuffix));
+                logger.error("[%s-IMAGE]未找到合适的输入器[%s]".formatted(Meta.MODULE_NAME, fileSuffix));
                 return;
             }
             IIOImage iioImage = new IIOImage(bufferedImage, null, null);
@@ -129,7 +121,7 @@ public class ImageCompressToolKit {
                         .collect(Collectors.toList());
         ArrayList<String> filenameList = new ArrayList<>(distinctFileList.size());
         if (distinctFileList.size() > 0){
-            logger.info("[%s]待生成 ".formatted(VoidModuleInfo.MODULE_NAME)+distinctFileList.size()+ " 个图像资源.");
+            logger.info("[%s]待生成 ".formatted(Meta.MODULE_NAME)+distinctFileList.size()+ " 个图像资源.");
             Integer zipTimes = config.getZipTimes();
             String lastSaveDir = config.getLastSaveDir();
             if (Validator.strNotBlank(lastSaveDir)){
@@ -138,14 +130,14 @@ public class ImageCompressToolKit {
                     file.mkdir();
                 }
                 if (file.exists() && file.isDirectory()){
-                    logger.info("[%s]目标地址校验成功.[√]".formatted(VoidModuleInfo.MODULE_NAME));
+                    logger.info("[%s]目标地址校验成功.[√]".formatted(Meta.MODULE_NAME));
                 }else {
-                    String error = "[%s]保存目录错误.[目标地址不是目录×]".formatted(VoidModuleInfo.MODULE_NAME);
+                    String error = "[%s]保存目录错误.[目标地址不是目录×]".formatted(Meta.MODULE_NAME);
                     logger.error(error);
                     throw new FileNotFoundException(error);
                 }
             }else {
-                logger.info("[%s]保存目录错误.[空文件夹×]".formatted(VoidModuleInfo.MODULE_NAME));
+                logger.info("[%s]保存目录错误.[空文件夹×]".formatted(Meta.MODULE_NAME));
                 throw new FileNotFoundException("");
             }
             AtomicInteger count = new AtomicInteger();

@@ -1,6 +1,7 @@
 package cn.toutatis.toolkit.validator
 
 import cn.toutatis.xvoid.toolkit.validator.Validator
+import com.alibaba.fastjson.JSONObject
 import org.junit.Assert
 import org.junit.Test
 
@@ -34,6 +35,11 @@ class ValidatorTest {
         Assert.assertEquals("数字测试",true,Validator.strIsNumber("123.55"))
         Assert.assertEquals("数字测试",true,Validator.strIsNumber("0"))
         Assert.assertEquals("数字测试",false,Validator.strIsNumber("-"))
+    }
+
+    @Test
+    fun mapContainsTest(){
+        Validator.checkMapContainsKey(JSONObject(),"")
     }
 
 

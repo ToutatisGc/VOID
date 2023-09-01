@@ -1,7 +1,7 @@
 package cn.toutatis.xvoid.toolkit.http.base
 
 import cn.hutool.http.ContentType
-import cn.toutatis.xvoid.toolkit.VoidModuleInfo
+import cn.toutatis.xvoid.toolkit.Meta
 import cn.toutatis.xvoid.toolkit.log.LoggerToolkit
 import cn.toutatis.xvoid.toolkit.log.errorWithModule
 
@@ -89,7 +89,7 @@ abstract class AbstractArgumentsSchema:ArgumentsSchema {
                 val paramName = list[i]
                 if (!map.containsKey(paramName)){
                     check = false
-                    logger.errorWithModule(VoidModuleInfo.MODULE_NAME,"HTTP","缺失请求参数[${paramName}]")
+                    logger.errorWithModule(Meta.MODULE_NAME,"HTTP","缺失请求参数[${paramName}]")
                     break
                 }
             }

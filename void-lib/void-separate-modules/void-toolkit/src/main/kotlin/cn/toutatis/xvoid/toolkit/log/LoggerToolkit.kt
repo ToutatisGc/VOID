@@ -30,7 +30,7 @@ object LoggerToolkit {
      * 一般模块目录下都有一个VoidModuleInfo类,其中包含了MODULE_NAME字段模块名称
      * @param module 模块名称
      * @param message 日志消息
-     * @see cn.toutatis.xvoid.toolkit.VoidModuleInfo
+     * @see cn.toutatis.xvoid.toolkit.Meta
      */
     @JvmStatic
     fun infoWithModule(module:String, message:String): String{
@@ -43,7 +43,7 @@ object LoggerToolkit {
      * @param module 模块名称
      * @param subModule 子模块(由各个文件夹下的功能简称作为子模块名称,不强制定义)
      * @param message 日志消息
-     * @see cn.toutatis.xvoid.toolkit.VoidModuleInfo 模块信息
+     * @see cn.toutatis.xvoid.toolkit.Meta 模块信息
      */
     @JvmStatic
     fun infoWithModule(module:String, subModule:String, message:String): String{

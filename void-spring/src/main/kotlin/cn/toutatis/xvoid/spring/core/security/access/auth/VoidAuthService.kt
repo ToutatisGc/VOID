@@ -2,6 +2,7 @@ package cn.toutatis.xvoid.spring.core.security.access.auth
 
 import cn.toutatis.xvoid.common.exception.AuthenticationException
 import cn.toutatis.xvoid.spring.core.security.access.AuthType
+import com.alibaba.fastjson.JSONObject
 import kotlin.jvm.Throws
 
 /**
@@ -18,7 +19,7 @@ interface VoidAuthService {
      * @param authType 账户类型
      * @return 账户是否存在
      */
-    fun preCheckAccount(account:String,authType: AuthType):Boolean
+    fun preCheckAccount(identity:JSONObject):Boolean
 
     /**
      * Throw failed

@@ -4,7 +4,9 @@ import cn.toutatis.xvoid.common.standard.StandardFields
 import cn.toutatis.xvoid.common.result.ResultCode
 import cn.toutatis.xvoid.common.standard.AuthFields
 import cn.toutatis.xvoid.spring.configure.system.VoidGlobalConfiguration
+import cn.toutatis.xvoid.spring.configure.system.enums.global.RunMode
 import cn.toutatis.xvoid.spring.core.security.access.auth.LocalUserService
+import cn.toutatis.xvoid.spring.core.security.access.auth.RequestAuthEntity
 import cn.toutatis.xvoid.toolkit.log.LoggerToolkit
 import cn.toutatis.xvoid.toolkit.validator.Validator
 import com.alibaba.fastjson.JSON
@@ -64,9 +66,6 @@ class VoidSecurityAuthenticationService : UserDetailsService {
     @Autowired
     private lateinit var httpSession: HttpSession
 
-    @Autowired
-    private lateinit var findByIndexNameSessionRepository: FindByIndexNameSessionRepository<*>
-
     /**
      * handler中获取的消息类型
      */
@@ -90,29 +89,35 @@ class VoidSecurityAuthenticationService : UserDetailsService {
         if (Validator.strNotBlank(identity)){
             val identityObj: JSONObject
             val httpSession:Session
+            val requestAuthEntity:RequestAuthEntity
             try {
                 identityObj = JSON.parseObject(identity)
-                httpSession = findByIndexNameSessionRepository.findById(identityObj.getString("sessionId"))
+                if (voidGlobalConfiguration.mode == RunMode.DEBUG || voidGlobalConfiguration.mode == RunMode.DEV){
+                    Validator.checkMapContainsKeyThrowEx(identityObj, AuthFields.ACCOUNT,AuthFields.AUTH_TYPE)
+                }else{
+                    if (!Validator.checkMapContainsKeyBoolean(identityObj, AuthFields.ACCOUNT,AuthFields.AUTH_TYPE)){
+                        throw this.throwIllegalOperation(ValidationMessage.PARAMETER_ERROR)
+                    }
+                }
+                requestAuthEntity = RequestAuthEntity(identityObj)
             }catch(e:Exception){
+                if (voidGlobalConfiguration.mode == RunMode.DEBUG || voidGlobalConfiguration.mode == RunMode.DEV){
+                    throw this.throwIllegalOperation(e.message.toString())
+                }
                 throw this.throwIllegalOperation(ValidationMessage.WRONG_IDENTIFY_FORMAT)
             }
-            if (identityObj != null && identityObj.isNotEmpty()){
-                val authTypeStr = identityObj.getString(AuthFields.AUTH_TYPE)
-                if (authTypeStr != null){
-                    /*TODO 认证*/
-                    when(AuthType.valueOf(authTypeStr)){
-                        AuthType.ACCOUNT_NORMAL ->{
-                            return localUserService.findSimpleUser(identityObj)
-                        }
-                        else ->{
-                            throw this.throwIllegalOperation(ValidationMessage.NOT_OPENED_IDENTIFY_TYPE)
-                        }
+            val authType = requestAuthEntity.authType
+            if (authType != null){
+                when(authType){
+                    AuthType.ACCOUNT_NORMAL ->{
+                        return localUserService.findSimpleUser(requestAuthEntity)
                     }
-                }else{
-                    throw this.throwIllegalOperation(ValidationMessage.WRONG_IDENTIFY_TYPE)
+                    else ->{
+                        throw this.throwIllegalOperation(ValidationMessage.NOT_OPENED_IDENTIFY_TYPE)
+                    }
                 }
             }else{
-                throw this.throwIllegalOperation(ValidationMessage.REQUIRED_IDENTIFY_PAYLOAD)
+                throw this.throwIllegalOperation(ValidationMessage.WRONG_IDENTIFY_TYPE)
             }
         }else{
             throw this.throwIllegalOperation(ValidationMessage.REQUIRED_IDENTIFY_INFO)

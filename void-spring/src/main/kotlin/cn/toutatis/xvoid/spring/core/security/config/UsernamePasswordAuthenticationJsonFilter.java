@@ -50,15 +50,9 @@ public class UsernamePasswordAuthenticationJsonFilter extends UsernamePasswordAu
             throw new NullPointerException("Content-Type is required.");
         }else{
             String contentType = request.getContentType();
-            switch (contentType){
-                case "application/json":
-                case "application/x-www-form-urlencoded":
-                    break;
-                default:
-                    if (contentType.startsWith("multipart/form-data")){
-                        break;
-                    }
-                    throw new AuthenticationServiceException("Content-Type not supported: " + contentType);
+            // 只允许application/json格式
+            if (!MediaType.APPLICATION_JSON_VALUE.equals(contentType)) {
+                throw new AuthenticationServiceException("Content-Type not supported: " + contentType);
             }
         }
         if(request.getContentType().equalsIgnoreCase(MediaType.APPLICATION_JSON_VALUE)){

@@ -1,6 +1,6 @@
 package cn.toutatis.xvoid.toolkit.locale
 
-import cn.toutatis.xvoid.toolkit.VoidModuleInfo
+import cn.toutatis.xvoid.toolkit.Meta
 import cn.toutatis.xvoid.toolkit.file.FileToolkit
 import cn.toutatis.xvoid.toolkit.formatting.JsonToolkit
 import cn.toutatis.xvoid.toolkit.log.LoggerToolkit
@@ -81,7 +81,7 @@ object I18n {
         val filename = "i18n/locale_${locale.language}_${country}.json"
         val path = FileToolkit.getResourcesFile(filename)?.path
         if (Validator.strIsBlank(path)) {
-            logger.warnWithModule(VoidModuleInfo.MODULE_NAME,
+            logger.warnWithModule(Meta.MODULE_NAME,
                 "Locale translation file not found [${filename}]." +
                         "[SIMPLIFIED_CHINESE] will be used by default locale.")
             this.locale = Locale.SIMPLIFIED_CHINESE
