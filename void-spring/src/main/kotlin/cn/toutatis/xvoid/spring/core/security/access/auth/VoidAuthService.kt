@@ -19,7 +19,7 @@ interface VoidAuthService {
      * @param authType 账户类型
      * @return 账户是否存在
      */
-    fun preCheckAccount(identity:JSONObject):Boolean
+    fun preCheckAccount(requestAuthEntity: RequestAuthEntity):Boolean
 
     /**
      * Throw failed

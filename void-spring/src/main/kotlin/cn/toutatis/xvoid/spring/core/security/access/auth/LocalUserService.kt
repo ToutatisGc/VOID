@@ -52,19 +52,20 @@ class LocalUserService : VoidAuthService {
      * @param authType 认证类型
      * @return 预检成功
      */
-    override fun preCheckAccount(identity:JSONObject): Boolean {
+    override fun preCheckAccount(requestAuthEntity: RequestAuthEntity): Boolean {
+        val account = requestAuthEntity.account
         // 用户名为空
         if (Validator.strIsBlank(account)) throwFailed(ValidationMessage.USERNAME_BLANK)
         // 用户名不合法
         if (!Validator.checkCNUsername(account)) throwFailed(ValidationMessage.USERNAME_ILLEGAL)
-        val loginAccountOps = redisTemplate.boundValueOps(RedisCommonKeys.concat(LOGIN_ACCOUNT_SESSION_KEY, httpServletRequest.session.id))
+        val loginAccountOps = redisTemplate.boundValueOps(RedisCommonKeys.concat(LOGIN_ACCOUNT_SESSION_KEY, requestAuthEntity.sessionId))
         loginAccountOps.set(account, Duration.ofMinutes(10L))
         // 调试模式跳过检查
         if (voidGlobalConfiguration.mode == RunMode.DEBUG){ return true }
         val loginConfig = voidSecurityConfiguration.loginConfig
         // 预检用户名调用接口
         if (loginConfig.beforeLoginCheckUsername){
-            val sessionOps = redisTemplate.boundValueOps(RedisCommonKeys.concat(LOGIN_PRE_CHECK_KEY,httpServletRequest.session.id))
+            val sessionOps = redisTemplate.boundValueOps(RedisCommonKeys.concat(LOGIN_PRE_CHECK_KEY,requestAuthEntity.sessionId))
             val store = sessionOps.get()
             if (store == null || account != store) {
                 throwFailed(ValidationMessage.USERNAME_NOT_PRE_CHECK)

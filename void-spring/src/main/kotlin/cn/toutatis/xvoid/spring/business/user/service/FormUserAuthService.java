@@ -7,6 +7,7 @@ import cn.toutatis.xvoid.orm.base.authentication.entity.SystemUserLogin;
 import cn.toutatis.xvoid.spring.core.security.access.ValidationMessage;
 import cn.toutatis.xvoid.spring.core.security.access.VoidSecurityAuthenticationService;
 import cn.toutatis.xvoid.spring.business.user.entity.FormUserDetails;
+import cn.toutatis.xvoid.spring.core.security.access.auth.RequestAuthEntity;
 import cn.toutatis.xvoid.toolkit.validator.Validator;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -34,14 +35,14 @@ public class FormUserAuthService {
     @Autowired
     private HttpServletRequest request;
 
-    public UserDetails findSimpleUser(JSONObject identity) {
+    public UserDetails findSimpleUser(RequestAuthEntity authEntity) {
         QueryWrapper<SystemUserLogin> queryWrapper = new QueryWrapper<>();
-        String username = identity.getString("username");
+        String account = authEntity.getAccount();
 
         queryWrapper
-                .eq("email",username).or()
-                .eq("account", username).or()
-                .eq("phoneCode", username).or()
+                .eq("email",account).or()
+                .eq("account", account).or()
+                .eq("phoneCode", account).or()
         ;
         SystemUserLogin user = systemUserLoginService.getOneObj(queryWrapper);
         if (user!=null){
