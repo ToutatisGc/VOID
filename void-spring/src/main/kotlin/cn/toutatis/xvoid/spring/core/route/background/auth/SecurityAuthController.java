@@ -74,9 +74,6 @@ public class SecurityAuthController {
         return modelAndView;
     }
 
-    @Autowired
-    private HttpSession httpSession;
-
     /**
      * 在redis中存入验证键验证用户名
      * @param account 账户名
@@ -87,18 +84,19 @@ public class SecurityAuthController {
     @RequestMapping(value = "/login/pre-check",method = RequestMethod.GET)
     public Result preCheck(
             @Parameter(description = "用户名",required = true) @RequestParam String account,
-            @Parameter(description = "请求代理") HttpServletRequest request
+            @Parameter(description = "请求实体") HttpServletRequest request
     ){
-        httpSession.setAttribute("ABC",666);
-        String jSessionId = voidSpringToolkit.getJSessionId(request);
-        if (Validator.strIsBlank(jSessionId)) {
-            return new ProxyResult(ResultCode.AUTHENTICATION_PRE_CHECK_FAILED,"会话环境错误");
+        // 检查用户名合法
+        if (!Validator.checkCNUsername(account)) {
+            return new ProxyResult(ResultCode.AUTHENTICATION_PRE_CHECK_FAILED,"用户名不合法");
         }
+        // 检查用户在数据库存在
         Boolean accountExist = systemUserLoginService.preCheckAccountExist(account);
-        BoundValueOperations<String, Object> sessionOps = redisTemplate.boundValueOps(
-                RedisCommonKeys.concat(AuthFields.LOGIN_PRE_CHECK_KEY,jSessionId, account)
-        );
         if (accountExist){
+            // 设置当前session下所预检的账户并设置10分钟有效期
+            BoundValueOperations<String, Object> sessionOps = redisTemplate.boundValueOps(
+                    RedisCommonKeys.concat(AuthFields.LOGIN_PRE_CHECK_KEY,request.getSession().getId(), account)
+            );
             sessionOps.set(account, Duration.ofMinutes(10L));
             return new ProxyResult(ResultCode.AUTHENTICATION_PRE_CHECK_SUCCESSFUL);
         }else {

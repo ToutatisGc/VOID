@@ -38,7 +38,6 @@ public class FormUserAuthService {
     public UserDetails findSimpleUser(RequestAuthEntity authEntity) {
         QueryWrapper<SystemUserLogin> queryWrapper = new QueryWrapper<>();
         String account = authEntity.getAccount();
-
         queryWrapper
                 .eq("email",account).or()
                 .eq("account", account).or()

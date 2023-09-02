@@ -6,6 +6,7 @@ package cn.toutatis.xvoid.spring.configure.system.enums.global
  */
 enum class RunMode {
     /**
+     * 忽略权限控制
      * 允许所有方法/权限访问
      */
     DEBUG,

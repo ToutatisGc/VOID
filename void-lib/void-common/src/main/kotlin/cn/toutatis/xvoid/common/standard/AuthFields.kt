@@ -17,7 +17,21 @@ object AuthFields {
      */
     const val ACCOUNT = "account"
 
-    const val AUTH_SESSION_KEY = "authLoginSession"
+    /**
+     * Identity 认证对象
+     */
+    const val IDENTITY = "identity"
+
+    /**
+     * Secret 认证密钥
+     */
+    const val SECRET = "secret"
+
+    /**
+     * Xvoid Internal Activity Auth Session Key
+     * 内部活动流转sessionId
+     */
+    const val XVOID_INTERNAL_ACTIVITY_AUTH_SESSION_KEY = "XVOID_INTERNAL_ACTIVITY_AUTH_SESSION"
 
     /**
      * Auth Key Prefix Redis Key前缀

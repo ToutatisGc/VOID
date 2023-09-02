@@ -1,6 +1,7 @@
 package cn.toutatis.xvoid.spring.configure.system;
 
 import cn.toutatis.xvoid.common.Version;
+import cn.toutatis.xvoid.common.exception.IllegalException;
 import cn.toutatis.xvoid.spring.configure.system.enums.global.RunMode;
 import cn.toutatis.xvoid.spring.configure.system.enums.qos.AntiLeechStrategy;
 import cn.toutatis.xvoid.spring.configure.system.enums.storage.ObjectStorageMode;
@@ -474,5 +475,14 @@ public class VoidGlobalConfiguration {
 
     public void setQualityOfServiceStrategyConfig(QualityOfServiceStrategyConfig qualityOfServiceStrategyConfig) {
         this.qualityOfServiceStrategyConfig = qualityOfServiceStrategyConfig;
+    }
+
+    /**
+     * 判断是否为调试模式
+     * @return 判断是否为调试模式
+     */
+    public Boolean isDebugging(){
+        if (mode == null){ throw new IllegalException("必须填写运行模式"); }
+        return mode == RunMode.DEV || mode == RunMode.DEBUG;
     }
 }

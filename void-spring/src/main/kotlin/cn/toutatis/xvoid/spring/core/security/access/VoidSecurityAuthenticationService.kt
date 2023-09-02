@@ -87,12 +87,10 @@ class VoidSecurityAuthenticationService : UserDetailsService {
     @Throws(UsernameNotFoundException::class)
     override fun loadUserByUsername(identity: String): UserDetails {
         if (Validator.strNotBlank(identity)){
-            val identityObj: JSONObject
-            val httpSession:Session
             val requestAuthEntity:RequestAuthEntity
             try {
-                identityObj = JSON.parseObject(identity)
-                if (voidGlobalConfiguration.mode == RunMode.DEBUG || voidGlobalConfiguration.mode == RunMode.DEV){
+                val identityObj = JSON.parseObject(identity)
+                if (voidGlobalConfiguration.isDebugging){
                     Validator.checkMapContainsKeyThrowEx(identityObj, AuthFields.ACCOUNT,AuthFields.AUTH_TYPE)
                 }else{
                     if (!Validator.checkMapContainsKeyBoolean(identityObj, AuthFields.ACCOUNT,AuthFields.AUTH_TYPE)){
@@ -101,7 +99,7 @@ class VoidSecurityAuthenticationService : UserDetailsService {
                 }
                 requestAuthEntity = RequestAuthEntity(identityObj)
             }catch(e:Exception){
-                if (voidGlobalConfiguration.mode == RunMode.DEBUG || voidGlobalConfiguration.mode == RunMode.DEV){
+                if (voidGlobalConfiguration.isDebugging){
                     throw this.throwIllegalOperation(e.message.toString())
                 }
                 throw this.throwIllegalOperation(ValidationMessage.WRONG_IDENTIFY_FORMAT)

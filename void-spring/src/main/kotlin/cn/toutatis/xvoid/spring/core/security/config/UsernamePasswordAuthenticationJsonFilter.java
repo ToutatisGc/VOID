@@ -1,5 +1,6 @@
 package cn.toutatis.xvoid.spring.core.security.config;
 
+import cn.toutatis.xvoid.common.standard.AuthFields;
 import cn.toutatis.xvoid.common.standard.HttpHeaders;
 import cn.toutatis.xvoid.spring.support.core.aop.filters.AnyPerRequestInjectRidFilter;
 import cn.toutatis.xvoid.spring.support.core.aop.interceptor.RequestLogInterceptor;
@@ -50,7 +51,7 @@ public class UsernamePasswordAuthenticationJsonFilter extends UsernamePasswordAu
             throw new NullPointerException("Content-Type is required.");
         }else{
             String contentType = request.getContentType();
-            // 只允许application/json格式
+            // 现在只允许application/json格式
             if (!MediaType.APPLICATION_JSON_VALUE.equals(contentType)) {
                 throw new AuthenticationServiceException("Content-Type not supported: " + contentType);
             }
@@ -58,13 +59,15 @@ public class UsernamePasswordAuthenticationJsonFilter extends UsernamePasswordAu
         if(request.getContentType().equalsIgnoreCase(MediaType.APPLICATION_JSON_VALUE)){
             Map<String,Object> userInfo;
             try {
+                // 在此处注入属性sessionId
                 userInfo = jacksonObjectMapper.readValue(request.getInputStream(), Map.class);
                 Map<String,Object> o = (Map<String, Object>) userInfo.get(getUsernameParameter());
-                o.put("sessionId", request.getSession().getId());
-                Object username = JSON.toJSONString(o);
-                Object password = userInfo.get(getPasswordParameter());
-                UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(username,password);
+                o.put(AuthFields.XVOID_INTERNAL_ACTIVITY_AUTH_SESSION_KEY, request.getSession().getId());
+                Object identity = JSON.toJSONString(o);
+                Object secret = userInfo.get(getPasswordParameter());
+                UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(identity,secret);
                 setDetails(request,authenticationToken);
+                // 此处会调用JSessionId修改session
                 return this.getAuthenticationManager().authenticate(authenticationToken);
             } catch (IOException e) {
                 e.printStackTrace();

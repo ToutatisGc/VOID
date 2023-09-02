@@ -9,7 +9,10 @@ import org.springframework.session.data.redis.RedisFlushMode
 import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisHttpSession
 
 @VoidApplication
-@EnableRedisHttpSession(redisNamespace = StandardFields.SYSTEM_PREFIX+":SESSION",flushMode = FlushMode.IMMEDIATE)
+@EnableRedisHttpSession(
+    redisNamespace = StandardFields.SYSTEM_PREFIX+":SESSION",
+    flushMode = FlushMode.IMMEDIATE
+)
 class VoidSpringApplication
 
 fun main(args: Array<String>) {
