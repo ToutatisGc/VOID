@@ -2,24 +2,18 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>void-spring-expand</artifactId>
+        <groupId>cn.toutatis</groupId>
+        <version>0.0.0-ALPHA</version>
+    </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>cn.toutatis</groupId>
-    <artifactId>void-spring-branch</artifactId>
-    <version>0.0.0-ALPHA</version>
-    <packaging>pom</packaging>
+    <artifactId>void-spring-admin-server</artifactId>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
     </properties>
-
-    <modules>
-        <!--单体Spring Boot应用 -->
-        <module>void-spring-singleton</module>
-        <!--分布式微服务环境架构-->
-        <module>void-spring-microservice</module>
-        <module>void-spring-expand</module>
-    </modules>
 
 </project>
