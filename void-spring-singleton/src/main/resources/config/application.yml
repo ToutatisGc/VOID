@@ -1,0 +1,17 @@
+# SpringBoot服务总体配置
+server:
+  port: ${PORT:20080}
+# SpringBoot 优雅停机 http://events.jianshu.io/p/199e419c025e
+  shutdown: GRACEFUL
+  tomcat:
+    keep-alive-timeout: 10s
+spring:
+  application:
+    name: VOID-SPRING | 春野
+  profiles:
+    active: dev
+    include: ["void","datasource","orm","third","ampq","schedule","security"]
+  lifecycle:
+    timeout-per-shutdown-phase: 30s
+  session:
+    store-type: REDIS

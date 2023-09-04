@@ -1,0 +1,196 @@
+$class-prefix: "xv";
+
+$theme-color: #1f59a0;
+//字体基础色
+$base-font-color: #101010;
+$base-font-color-dark: #e8e8e8;
+
+//背景基础色
+$base-background-color: #FFFF;
+$base-background-color-dark: #081b34;
+
+*{
+  margin: 0;
+  padding: 0;
+  font-family: “Arial”,“Microsoft YaHei”,“黑体”,“宋体”,sans-serif;
+  //color: lighten($base-font-color,15%);
+}
+
+body {
+  min-height: 100vh;
+  width:100%;
+}
+
+[v-cloak]{
+  display: none !important;
+}
+
+@mixin base-background{
+  width: 100%;
+  height: 100vh;
+}
+
+@mixin primary_title{
+  font-weight: bolder;
+  font-size: 2.5vw;
+  margin-bottom: 10px;
+}
+
+@mixin main_text{
+  color: lighten($base-font-color,15%);
+  line-height: 3vh;
+}
+
+@mixin primary_title_phone{
+  font-weight: bolder;
+  word-wrap: break-word;
+  //word-break: break-word;
+  word-break: normal;
+  font-size: 6vw;
+  margin: 10px;
+}
+
+.#{$class-prefix} {
+
+  &-background_theme{
+    background-color: $theme-color;
+  }
+
+  &-flex-box{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  &-flex-box_vertical{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+  }
+
+  &-horizontal-center{
+    margin: 0 auto;
+    text-align: center;
+  }
+
+  &-screen-center{
+    position: absolute;
+    top: 50vh;
+    left: 50vh;
+  }
+
+  &-box{
+    padding: 10px;
+    border-radius: 4px;
+    background-color: transparentize($base-background-color,0.6)
+  }
+
+  &-disable-select{
+    user-select: none;
+  }
+
+  &-box_shadow{
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    box-shadow: 0 8px 10px rgba(0, 0, 0, 0.3);
+  }
+
+  &-link{
+    color: darken($theme-color,15%);
+    background-color: rgba(0, 0, 0, 0.15);
+    border-radius: 4px;
+    padding: 0 6px 0 6px;
+  }
+
+  ///*页面背景色*/
+  &-base-background{
+    @include base-background;
+    background-color: darken($base-background-color,5%);
+  }
+
+  &-base-background__dark{
+    @include base-background;
+    background-color: $base-background-color-dark;
+  }
+
+  &-light-text{
+    color: rgba(205, 205, 205, 0.5);
+  }
+
+  &-vertical-line{
+    width:2px;
+    height: 100%;
+    background-color: rgba(180, 180, 180, 0.8);
+    margin: 20px;
+  }
+
+  @media only screen and (min-width: 768px) {
+    /*主标题*/
+    &-primary-title{
+      @include primary_title_phone;
+      color: lighten($base-font-color,15%);
+    }
+
+    &-main-text{
+      @include main-text;
+      font-size: 2.5vh;
+      line-height: 3.5vh;
+    }
+
+    &-subhead{
+      color: lighten($base-font-color,40%);
+      font-size: 2.5vh
+    }
+
+
+    /*夜间主标题*/
+    &-primary-title__dark{
+      @include primary_title_phone;
+      color: darken($base-font-color-dark,0%);
+    }
+
+    /*主题色主标题*/
+    &-primary-title_clr{
+      @include primary_title_phone;
+      color: $theme-color;
+    }
+  }
+
+  @media only screen and (min-width: 1200px) {
+
+    &-primary-title{
+      @include primary_title;
+      color: lighten($base-font-color,15%);
+    }
+
+    &-main-text{
+      @include main-text;
+      font-size: 2vh;
+    }
+
+    &-subhead{
+      color: lighten($base-font-color,40%);
+      font-size: 2vh
+    }
+
+
+    &-primary-title__dark{
+      @include primary_title;
+      color: darken($base-font-color-dark,0%);
+    }
+
+    &-primary-title_clr{
+      @include primary_title;
+      color: $theme-color;
+    }
+  }
+
+}
+
+button.el-button.el-button--primary{
+  background-color: $theme-color;
+  border-color: $theme-color;
+}
+
+
