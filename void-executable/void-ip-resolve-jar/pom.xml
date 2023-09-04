@@ -4,12 +4,6 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <parent>
-        <artifactId>void-kotlin-runtime-support</artifactId>
-        <groupId>cn.toutatis</groupId>
-        <version>1.7.21</version>
-    </parent>
-
     <groupId>cn.toutatis</groupId>
     <artifactId>void-ip-resolve-jar</artifactId>
     <version>0.0.0-ALPHA</version>
@@ -23,9 +17,30 @@
         <main.class>cn.toutatis.xvoid.resolve.ip.IPResolverKt</main.class>
         <kotlin.compiler.incremental>true</kotlin.compiler.incremental>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <kotlin.version>1.7.21</kotlin.version>
     </properties>
 
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>cn.toutatis</groupId>
+                <artifactId>void-feature-support</artifactId>
+                <version>0.0.0-ALPHA</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
     <dependencies>
+
+        <!--Kotlin支持-->
+        <dependency>
+            <groupId>cn.toutatis</groupId>
+            <artifactId>void-kotlin-runtime-support</artifactId>
+            <version>${kotlin.version}</version>
+            <type>pom</type>
+        </dependency>
 
         <dependency>
             <groupId>cn.toutatis</groupId>
