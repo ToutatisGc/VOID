@@ -4,7 +4,6 @@ import cn.toutatis.xvoid.common.standard.StandardFields
 import cn.toutatis.xvoid.common.result.ResultCode
 import cn.toutatis.xvoid.common.standard.AuthFields
 import cn.toutatis.xvoid.spring.configure.system.VoidGlobalConfiguration
-import cn.toutatis.xvoid.spring.configure.system.enums.global.RunMode
 import cn.toutatis.xvoid.spring.core.security.access.auth.LocalUserService
 import cn.toutatis.xvoid.spring.core.security.access.auth.RequestAuthEntity
 import cn.toutatis.xvoid.toolkit.log.LoggerToolkit
@@ -15,13 +14,9 @@ import com.github.xiaoymin.knife4j.annotations.ApiSupport
 import io.swagger.v3.oas.annotations.media.Schema
 import io.swagger.v3.oas.annotations.tags.Tag
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.beans.factory.annotation.Value
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.core.userdetails.UserDetailsService
 import org.springframework.security.core.userdetails.UsernameNotFoundException
-import org.springframework.session.FindByIndexNameSessionRepository
-import org.springframework.session.Session
-import org.springframework.session.SessionRepository
 import org.springframework.stereotype.Service
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpSession

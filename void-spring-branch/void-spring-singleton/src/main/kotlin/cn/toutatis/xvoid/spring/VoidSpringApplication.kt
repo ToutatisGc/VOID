@@ -5,7 +5,6 @@ import cn.toutatis.xvoid.spring.annotations.application.VoidApplication
 import org.springframework.boot.runApplication
 import org.springframework.context.ConfigurableApplicationContext
 import org.springframework.session.FlushMode
-import org.springframework.session.data.redis.RedisFlushMode
 import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisHttpSession
 
 @VoidApplication
