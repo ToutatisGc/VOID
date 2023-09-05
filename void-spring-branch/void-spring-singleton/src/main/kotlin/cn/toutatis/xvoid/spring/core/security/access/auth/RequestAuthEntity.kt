@@ -17,6 +17,6 @@ data class RequestAuthEntity(val rawInformation:JSONObject) {
 
     val authType: AuthType? = rawInformation.getObject(AuthFields.AUTH_TYPE,AuthType::class.java)
 
-    val sessionId: String = rawInformation.getString("sessionId")
+    val sessionId: String = rawInformation.getString(AuthFields.XVOID_INTERNAL_ACTIVITY_AUTH_SESSION_KEY)
 
 }

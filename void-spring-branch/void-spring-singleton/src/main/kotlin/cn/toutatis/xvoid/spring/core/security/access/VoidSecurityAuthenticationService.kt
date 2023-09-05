@@ -73,18 +73,24 @@ class VoidSecurityAuthenticationService : UserDetailsService {
 
     /**
      * 全局认证入口
-     * @param identity 认证信息,认证信息为JSON对象
+     * 该入口校验认证信息序列化是否有误
+     * 并由此入口分发到各个认证服务进行身份认证
+     *
      * 为什么有的返回信息为 ILLEGAL_OPERATION 违规操作？
      * 因为按照正常调用的话只会在浏览器或内部系统中进行认证，并且格式是固定的，
      * 出现异常情况只会在开发调试阶段，所以线上服务出现违规操作说明有渗透情况，需要及时排查
+     * @param identity 认证信息,认证信息为JSON对象
      */
     @Schema(name = "用户登录")
     @Throws(UsernameNotFoundException::class)
     override fun loadUserByUsername(identity: String): UserDetails {
+        // 校验是否为空
         if (Validator.strNotBlank(identity)){
             val requestAuthEntity:RequestAuthEntity
             try {
+                // 尝试序列化对象
                 val identityObj = JSON.parseObject(identity)
+                // 校验是否存在必填参数
                 if (voidGlobalConfiguration.isDebugging){
                     Validator.checkMapContainsKeyThrowEx(identityObj, AuthFields.ACCOUNT,AuthFields.AUTH_TYPE)
                 }else{
@@ -101,6 +107,7 @@ class VoidSecurityAuthenticationService : UserDetailsService {
             }
             val authType = requestAuthEntity.authType
             if (authType != null){
+                // 核心认证,分发到各个业务类型认证
                 when(authType){
                     AuthType.ACCOUNT_NORMAL ->{
                         return localUserService.findSimpleUser(requestAuthEntity)
@@ -116,42 +123,6 @@ class VoidSecurityAuthenticationService : UserDetailsService {
             throw this.throwIllegalOperation(ValidationMessage.REQUIRED_IDENTIFY_INFO)
         }
     }
-
-    /**
-     * 账号密码认证
-     * @param identityObj 认证信息
-     *        account 账号
-     *        password 密码
-     *        securityCode 验证码
-     * @return 认证结果
-     */
-//    @Throws(UsernameNotFoundException::class)
-//    private fun findAccountCheckUser(identityObj:JSONObject):UserDetails{
-//        val check = checkCodeEquals(identityObj.getString("securityCode"))
-//        if (check) {
-//            val username = identityObj.getString("username")
-//            if (Validator.strIsBlank(username)){
-//                throw this.throwInfo(MessageType.STRING, ValidationMessage.USERNAME_BLANK)
-//            }
-//            /*用户可以使用邮箱/手机号/账号登录*/
-//            val queryWrapper = QueryWrapper<SystemUserLogin>()
-//            queryWrapper
-//                .eq("username", username)
-//                .or().eq("email", username)
-//                .or().eq("phone", username)
-//            val user = systemUserLoginMapper.selectOne(queryWrapper)
-//            if (user != null){
-//                val accountCheckUserDetails = user as AccountCheckUserDetails
-//                accountCheckUserDetails.isEnabled = user.status == DataStatus.SYS_OPEN_0000
-////                accountCheckUserDetails.
-//                return accountCheckUserDetails
-//            }else{
-//                throw this.throwInfo(MessageType.STRING, ValidationMessage.USER_NOT_EXIST)
-//            }
-//        }else{
-//            throw this.throwInfo(MessageType.STRING, ValidationMessage.CHECK_CODE_ERROR)
-//        }
-//    }
 
     /**
      * @param securityCode 验证码

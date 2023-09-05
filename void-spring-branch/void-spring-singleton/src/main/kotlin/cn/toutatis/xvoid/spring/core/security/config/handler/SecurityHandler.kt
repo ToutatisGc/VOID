@@ -94,7 +94,6 @@ class SecurityHandler(
     override fun onAuthenticationSuccess(request: HttpServletRequest, response: HttpServletResponse, authentication: Authentication ) {
         val principal = authentication.principal
         val loginSuccessfulResult:ProxyResult
-        val runMode = voidGlobalConfiguration.mode
         if (principal is AuthInfo) {
             loginSuccessfulResult = ProxyResult(ResultCode.AUTHENTICATION_SUCCESSFUL)
             val userInfo = principal.userInfo
@@ -103,16 +102,14 @@ class SecurityHandler(
             principal.permissions = userPermissionsStrings
         } else {
             loginSuccessfulResult = ProxyResult(ResultCode.INNER_EXCEPTION)
-            if (runMode == RunMode.DEV ||runMode == RunMode.DEBUG){
+            if (voidGlobalConfiguration.isDebugging){
                 loginSuccessfulResult.supportMessage = "意外登录情况:${authentication.toString()}"
             }else{
                 loginSuccessfulResult.supportMessage = "意外登录情况"
             }
             logger.errorWithModule(Meta.MODULE_NAME,"SECURITY",loginSuccessfulResult.supportMessage)
         }
-        returnJson(response,
-            responseResultDispatcherAdvice.proxyResult(loginSuccessfulResult)
-        )
+        returnJson(response, responseResultDispatcherAdvice.proxyResult(loginSuccessfulResult))
     }
 
     /**

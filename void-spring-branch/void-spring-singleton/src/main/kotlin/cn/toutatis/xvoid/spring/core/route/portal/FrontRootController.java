@@ -1,6 +1,7 @@
 package cn.toutatis.xvoid.spring.core.route.portal;
 
 import cn.toutatis.xvoid.common.result.ProxyResult;
+import cn.toutatis.xvoid.common.result.Result;
 import cn.toutatis.xvoid.spring.core.tools.ViewToolkit;
 import cn.toutatis.xvoid.spring.annotations.application.VoidController;
 import cn.toutatis.xvoid.spring.configure.system.VoidGlobalConfiguration;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
+ * 根路径控制器
  * @author Toutatis_Gc
  * @date 2022/10/26 10:10
  */
@@ -41,8 +43,8 @@ public class FrontRootController {
         return modelAndView;
     }
 
-    @RequestMapping(value = "/getServiceInfo",method = RequestMethod.GET)
-    public ProxyResult getServiceInfo(){
+    @RequestMapping(value = "/handleServiceConfiguration",method = RequestMethod.GET)
+    public Result handleServiceConfiguration(){
         JSONObject info = new JSONObject();
         info.put("isPlatform", voidGlobalConfiguration.getPlatformMode());
         info.put("version", voidGlobalConfiguration.getVersion().getVersion());

@@ -7,6 +7,8 @@ import org.apache.commons.codec.digest.DigestUtils
 import org.apache.commons.lang3.RandomStringUtils
 import java.security.*
 import java.util.*
+import javax.crypto.Cipher
+import javax.crypto.spec.SecretKeySpec
 
 
 /**
@@ -52,6 +54,20 @@ object DigestToolkit {
         SHA256withRSASignature.initVerify(publicKey)
         SHA256withRSASignature.update(data.toByteArray())
         return SHA256withRSASignature.verify(signature)
+    }
+
+    /**
+     * AES with base64 AES加密后使用Base64编码
+     * @param key aes secret
+     * @param data 数据字节组
+     */
+    @JvmStatic
+    fun AESWithBase64(key:String,data: ByteArray): String {
+        val secretKeySpec = SecretKeySpec(key.toByteArray(), "AES")
+        val cipher: Cipher = Cipher.getInstance("AES/ECB/PKCS5PADDING")
+        cipher.init(Cipher.ENCRYPT_MODE, secretKeySpec)
+        val encryptedData: ByteArray = cipher.doFinal(data)
+        return encodeBase64ToString(encryptedData)
     }
 
     /**
