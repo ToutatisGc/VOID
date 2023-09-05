@@ -3,10 +3,6 @@ package cn.toutatis.toolkit.digest
 import cn.toutatis.xvoid.toolkit.digest.DigestToolkit
 import org.apache.commons.lang3.RandomStringUtils
 import org.junit.Test
-import javax.crypto.Cipher
-import javax.crypto.spec.SecretKeySpec
-
-
 
 
 class DigestTest {
@@ -22,7 +18,13 @@ class DigestTest {
     @Test
     fun `test AES encoding`(){
         val dataToEncrypt = "hello world"
-        val aesWithBase64 = DigestToolkit.AESWithBase64(secretKey, dataToEncrypt.toByteArray())
+        val aesWithBase64 = DigestToolkit.aesUseECBWithBase64(secretKey, dataToEncrypt.toByteArray())
         System.err.println(aesWithBase64)
+        val randomAlphanumeric = RandomStringUtils.randomAlphanumeric(16)
+        val aesUseCBCWithBase64 = DigestToolkit.aesUseCBCWithBase64(secretKey, randomAlphanumeric, dataToEncrypt.toByteArray())
+
+        val decryptAESUseCBCWithBase64 =
+            DigestToolkit.decryptAESUseCBCWithBase64(secretKey, randomAlphanumeric, aesUseCBCWithBase64)
+        System.err.println(decryptAESUseCBCWithBase64)
     }
 }

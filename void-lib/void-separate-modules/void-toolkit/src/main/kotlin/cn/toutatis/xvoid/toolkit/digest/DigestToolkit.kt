@@ -5,9 +5,11 @@ import cn.toutatis.xvoid.toolkit.validator.Validator
 import org.apache.commons.codec.binary.Hex
 import org.apache.commons.codec.digest.DigestUtils
 import org.apache.commons.lang3.RandomStringUtils
+import java.nio.charset.Charset
 import java.security.*
 import java.util.*
 import javax.crypto.Cipher
+import javax.crypto.spec.IvParameterSpec
 import javax.crypto.spec.SecretKeySpec
 
 
@@ -58,16 +60,40 @@ object DigestToolkit {
 
     /**
      * AES with base64 AES加密后使用Base64编码
-     * @param key aes secret
+     * @param key aes secret key
      * @param data 数据字节组
      */
     @JvmStatic
-    fun AESWithBase64(key:String,data: ByteArray): String {
+    fun aesUseECBWithBase64(key:String, data: ByteArray): String {
         val secretKeySpec = SecretKeySpec(key.toByteArray(), "AES")
         val cipher: Cipher = Cipher.getInstance("AES/ECB/PKCS5PADDING")
         cipher.init(Cipher.ENCRYPT_MODE, secretKeySpec)
-        val encryptedData: ByteArray = cipher.doFinal(data)
-        return encodeBase64ToString(encryptedData)
+        return encodeBase64ToString(cipher.doFinal(data))
+    }
+
+    /**
+     * AES use CBC with base64 AES带有CBC的IV加密后使用Base64编码
+     * @param key aes secret key
+     * @param iv 初始化向量
+     * @param data 需要加密的数据
+     */
+    @JvmStatic
+    fun aesUseCBCWithBase64(key:String,iv:String, data: ByteArray):String{
+        val secretKeySpec = SecretKeySpec(key.toByteArray(), "AES")
+        val ivSpec = IvParameterSpec(iv.toByteArray())
+        val cipher = Cipher.getInstance("AES/CBC/PKCS5PADDING")
+        cipher.init(Cipher.ENCRYPT_MODE, secretKeySpec, ivSpec)
+        return encodeBase64ToString(cipher.doFinal(data))
+    }
+
+    @JvmStatic
+    fun decryptAESUseCBCWithBase64(key:String,iv:String,encryptedData:String): String {
+        val secretKeySpec = SecretKeySpec(key.toByteArray(), "AES")
+        val ivSpec = IvParameterSpec(iv.toByteArray())
+        val cipher = Cipher.getInstance("AES/CBC/PKCS5PADDING")
+        cipher.init(Cipher.DECRYPT_MODE, secretKeySpec, ivSpec)
+        val decryptedBytes = cipher.doFinal(decodeBase64ToString(encryptedData))
+        return String(decryptedBytes, Charset.defaultCharset())
     }
 
     /**
