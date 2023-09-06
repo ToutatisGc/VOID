@@ -200,14 +200,19 @@ class SecurityHandler(
             /*账户状态错误*/
         } else if (exception is AccountStatusException) {
             proxyResult = ProxyResult(ResultCode.CHECKED_FAILED)
-            if (exception.javaClass == LockedException::class.java) {
-                proxyResult.message = ValidationMessage.ACCOUNT_LOCKED
-            } else if (exception.javaClass == AccountExpiredException::class.java) {
-                proxyResult.message = ValidationMessage.CONNECT_EXPIRED
-            } else if (exception.javaClass == DisabledException::class.java) {
-                proxyResult.message = ValidationMessage.ACCOUNT_DISABLED
-            } else {
-                logger.error("[{}]认证未记录异常：{}", VoidModuleInfo.MODULE_NAME, exception.toString())
+            when (exception.javaClass) {
+                LockedException::class.java -> {
+                    proxyResult.message = ValidationMessage.ACCOUNT_LOCKED
+                }
+                AccountExpiredException::class.java -> {
+                    proxyResult.message = ValidationMessage.CONNECT_EXPIRED
+                }
+                DisabledException::class.java -> {
+                    proxyResult.message = ValidationMessage.ACCOUNT_DISABLED
+                }
+                else -> {
+                    logger.error("[{}]认证未记录异常：{}", VoidModuleInfo.MODULE_NAME, exception.toString())
+                }
             }
         } else if (exception is AuthenticationServiceException) {
             proxyResult = ProxyResult(ResultCode.AUTHENTICATION_FAILED)

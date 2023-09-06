@@ -16,6 +16,8 @@ public class VoidSecurityConfiguration {
      */
     private LoginConfig loginConfig = new LoginConfig();
 
+    private DataConfig dataConfig = new DataConfig();
+
     public static class LoginConfig{
 
         /**
@@ -45,6 +47,7 @@ public class VoidSecurityConfiguration {
 
         /**
          * 多次登录失败增加登录难度
+         * 普通登录 -> 带验证码 -> 验证码&code&手机号验证码三重校验 -> 禁止登录
          */
         private Boolean loginFailedIncreaseDifficulty = true;
 
@@ -98,11 +101,51 @@ public class VoidSecurityConfiguration {
         }
     }
 
+    /**
+     * 数据安全配置
+     */
+    public static class DataConfig{
+
+        /**
+         * 响应数据加密
+         */
+        private Boolean responseDataEncrypt = false;
+
+        /**
+         * 请求质量控制
+         */
+        private Boolean requestQos = true;
+
+        public Boolean getResponseDataEncrypt() {
+            return responseDataEncrypt;
+        }
+
+        public void setResponseDataEncrypt(Boolean responseDataEncrypt) {
+            this.responseDataEncrypt = responseDataEncrypt;
+        }
+
+        public Boolean getRequestQos() {
+            return requestQos;
+        }
+
+        public void setRequestQos(Boolean requestQos) {
+            this.requestQos = requestQos;
+        }
+    }
+
     public LoginConfig getLoginConfig() {
         return loginConfig;
     }
 
     public void setLoginConfig(LoginConfig loginConfig) {
         this.loginConfig = loginConfig;
+    }
+
+    public DataConfig getDataConfig() {
+        return dataConfig;
+    }
+
+    public void setDataConfig(DataConfig dataConfig) {
+        this.dataConfig = dataConfig;
     }
 }
