@@ -8,6 +8,7 @@ import cn.toutatis.xvoid.common.result.branch.SimpleResult
 import cn.toutatis.xvoid.spring.configure.system.VoidGlobalConfiguration
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.core.MethodParameter
+import org.springframework.core.annotation.Order
 import org.springframework.http.MediaType
 import org.springframework.http.converter.HttpMessageConverter
 import org.springframework.http.server.ServerHttpRequest
@@ -21,6 +22,7 @@ import javax.servlet.http.HttpServletRequest
  * @date 2022/6/8 21:22
  * 返回代理类分发处理
  */
+@Order(1)
 @RestControllerAdvice
 class ResponseResultDispatcherAdvice : ResponseBodyAdvice<Any>{
 
