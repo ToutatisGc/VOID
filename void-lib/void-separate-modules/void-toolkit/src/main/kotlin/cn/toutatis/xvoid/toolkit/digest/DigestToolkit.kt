@@ -8,6 +8,7 @@ import org.apache.commons.lang3.RandomStringUtils
 import java.nio.charset.Charset
 import java.security.*
 import java.util.*
+import javax.crypto.BadPaddingException
 import javax.crypto.Cipher
 import javax.crypto.spec.IvParameterSpec
 import javax.crypto.spec.SecretKeySpec
@@ -88,12 +89,17 @@ object DigestToolkit {
 
     @JvmStatic
     fun decryptAESUseCBCWithBase64(key:String,iv:String,encryptedData:String): String {
+        if (iv.length != 16) return I18n.translate("security.decrypt.failed")
         val secretKeySpec = SecretKeySpec(key.toByteArray(), "AES")
         val ivSpec = IvParameterSpec(iv.toByteArray())
         val cipher = Cipher.getInstance("AES/CBC/PKCS5PADDING")
         cipher.init(Cipher.DECRYPT_MODE, secretKeySpec, ivSpec)
-        val decryptedBytes = cipher.doFinal(decodeBase64ToString(encryptedData))
-        return String(decryptedBytes, Charset.defaultCharset())
+        return try {
+            val decryptedBytes = cipher.doFinal(decodeBase64ToString(encryptedData))
+            String(decryptedBytes, Charset.defaultCharset())
+        }catch (e: BadPaddingException){
+            I18n.translate("security.decrypt.failed")
+        }
     }
 
     /**
@@ -141,7 +147,7 @@ object DigestToolkit {
     @JvmStatic
     fun sha256(str: String, salt: String?, roll: Int): String? {
         if (Validator.strIsBlank(str)) return null
-        if (roll < 0 || roll > 11) throw DigestException(I18n.translate("commons.digest.failArgs","加密次数错误"))
+        if (roll < 0 || roll > 11) throw DigestException(I18n.translate("security.digest.failArgs","加密次数错误"))
         var saltStr = str + salt
         var bytes = saltStr.toByteArray()
         for (i in 0 until roll + 1) {

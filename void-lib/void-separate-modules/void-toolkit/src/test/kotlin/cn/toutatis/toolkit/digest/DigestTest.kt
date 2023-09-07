@@ -25,6 +25,10 @@ class DigestTest {
 
         val decryptAESUseCBCWithBase64 =
             DigestToolkit.decryptAESUseCBCWithBase64(secretKey, randomAlphanumeric, aesUseCBCWithBase64)
+
         System.err.println(decryptAESUseCBCWithBase64)
+        val decryptAESUseCBCWithBase641 =
+            DigestToolkit.decryptAESUseCBCWithBase64(secretKey, "random1111111111", aesUseCBCWithBase64)
+        System.err.println(decryptAESUseCBCWithBase641)
     }
 }

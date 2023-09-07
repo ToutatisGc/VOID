@@ -1,14 +1,19 @@
 {
   "commons": {
-    "unknown": "Unknown",
+    "unknown": "未知",
     "error": {
-      "stringNull": "String is null"
-    },
+      "stringNull": "字符串为空"
+    }
+  },
+  "security": {
     "digest": {
-      "success":"Digest success",
-      "fail": "Digest failure",
-      "successArgs":"%s digest success",
-      "failArgs":"%s digest failure"
+      "success":"加密成功",
+      "failed": "加密失败",
+      "successArgs":"%s加密成功",
+      "failArgs":"%s加密失败"
+    },
+    "decrypt": {
+      "failed": "解密失败"
     }
   },
   "xvoid": {
