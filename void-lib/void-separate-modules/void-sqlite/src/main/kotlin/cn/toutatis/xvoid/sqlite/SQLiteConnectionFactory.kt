@@ -5,7 +5,6 @@ import cn.toutatis.xvoid.toolkit.log.errorWithModule
 import org.sqlite.SQLiteConnection
 import java.io.File
 import java.io.FileNotFoundException
-import java.lang.IllegalArgumentException
 import java.sql.DriverManager
 
 class SQLiteConnectionFactory {
@@ -33,7 +32,7 @@ class SQLiteConnectionFactory {
         if (db.exists() && db.isFile ) {
             return DriverManager.getConnection("jdbc:sqlite:${db.path}") as SQLiteConnection;
         }else{
-            val log = logger.errorWithModule(VoidModuleInfo.MODULE_NAME, "数据库[${db.name}]不存在")
+            val log = logger.errorWithModule(Meta.MODULE_NAME, "数据库[${db.name}]不存在")
             throw FileNotFoundException(log)
         }
     }

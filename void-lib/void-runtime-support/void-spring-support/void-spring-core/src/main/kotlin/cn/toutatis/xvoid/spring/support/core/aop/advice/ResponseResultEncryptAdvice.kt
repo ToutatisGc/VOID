@@ -1,11 +1,12 @@
 package cn.toutatis.xvoid.spring.support.core.aop.advice
 
-import cn.toutatis.xvoid.common.standard.StandardFields
-import cn.toutatis.xvoid.common.result.ProxyResult
+import cn.toutatis.xvoid.common.result.AbstractResult
 import cn.toutatis.xvoid.common.result.Result
-import cn.toutatis.xvoid.common.result.branch.DetailedResult
-import cn.toutatis.xvoid.common.result.branch.SimpleResult
+import cn.toutatis.xvoid.common.result.ResultCode
 import cn.toutatis.xvoid.spring.configure.system.VoidGlobalConfiguration
+import cn.toutatis.xvoid.spring.configure.system.VoidSecurityConfiguration
+import cn.toutatis.xvoid.toolkit.digest.DigestToolkit
+import com.alibaba.fastjson.JSON
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.core.MethodParameter
 import org.springframework.core.annotation.Order
@@ -22,7 +23,7 @@ import javax.servlet.http.HttpServletRequest
  * @date 2022/6/8 21:22
  * 返回代理类分发处理
  */
-@Order(2)
+@Order(100)
 @RestControllerAdvice
 class ResponseResultEncryptAdvice : ResponseBodyAdvice<Any>{
 
@@ -32,6 +33,9 @@ class ResponseResultEncryptAdvice : ResponseBodyAdvice<Any>{
     @Autowired
     private lateinit var voidGlobalConfiguration : VoidGlobalConfiguration
 
+    @Autowired
+    private lateinit var voidSecurityConfiguration: VoidSecurityConfiguration
+
     override fun supports(returnType: MethodParameter, converterType: Class<out HttpMessageConverter<*>>): Boolean = true
 
     override fun beforeBodyWrite(
@@ -39,7 +43,27 @@ class ResponseResultEncryptAdvice : ResponseBodyAdvice<Any>{
         selectedConverterType: Class<out HttpMessageConverter<*>>,
         request: ServerHttpRequest, response: ServerHttpResponse
     ): Any? {
-        System.err.println("加密")
+        return body
+    }
+
+    fun encryptData(body: Any?,ignore:Boolean):Any?{
+        if (body == null || ignore || body !is AbstractResult){ return body }
+        if (!voidGlobalConfiguration.isDebugging){
+            if (voidSecurityConfiguration.dataConfig.responseDataEncrypt){
+                if (body.data != null){
+                    try {
+                        val data = JSON.toJSONString(body.data)
+//                        DigestToolkit.aesUseCBCWithBase64()
+                        body.data = data
+                    }catch (e:Exception){
+                        e.printStackTrace()
+                        body.setResultCode(ResultCode.INNER_EXCEPTION)
+                        body.data = null
+                    }
+
+                }
+            }
+        }
         return body
     }
 

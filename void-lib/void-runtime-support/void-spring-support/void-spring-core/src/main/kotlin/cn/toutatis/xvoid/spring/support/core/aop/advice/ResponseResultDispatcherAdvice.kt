@@ -22,7 +22,7 @@ import javax.servlet.http.HttpServletRequest
  * @date 2022/6/8 21:22
  * 返回代理类分发处理
  */
-@Order(1)
+@Order(10)
 @RestControllerAdvice
 class ResponseResultDispatcherAdvice : ResponseBodyAdvice<Any>{
 

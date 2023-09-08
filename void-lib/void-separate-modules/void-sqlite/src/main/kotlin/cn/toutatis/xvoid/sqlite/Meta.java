@@ -3,7 +3,7 @@ package cn.toutatis.xvoid.sqlite;
 /**
  * @author Toutatis_Gc
  */
-public class VoidModuleInfo {
+public class Meta {
 
     public static final String PACKAGE_NAME = "cn.toutatis.xvoid.sqlite";
 
