@@ -5,7 +5,9 @@ import cn.toutatis.xvoid.common.result.Result;
 import cn.toutatis.xvoid.spring.core.tools.ViewToolkit;
 import cn.toutatis.xvoid.spring.annotations.application.VoidController;
 import cn.toutatis.xvoid.spring.configure.system.VoidGlobalConfiguration;
+import cn.toutatis.xvoid.sqlite.SQLiteShell;
 import com.alibaba.fastjson.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -43,9 +45,13 @@ public class FrontRootController {
         return modelAndView;
     }
 
+    @Autowired
+    private SQLiteShell sqLiteShell;
+
     @RequestMapping(value = "/handleServiceConfiguration",method = RequestMethod.GET)
     public Result handleServiceConfiguration(){
         JSONObject info = new JSONObject();
+        sqLiteShell.select("");
         info.put("isPlatform", voidGlobalConfiguration.getPlatformMode());
         info.put("version", voidGlobalConfiguration.getVersion().getVersion());
         return new ProxyResult(info);

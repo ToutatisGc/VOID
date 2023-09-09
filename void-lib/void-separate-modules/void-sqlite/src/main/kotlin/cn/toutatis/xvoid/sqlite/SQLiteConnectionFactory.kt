@@ -30,9 +30,20 @@ class SQLiteConnectionFactory {
 
     fun createConnection(db: File): SQLiteConnection {
         if (db.exists() && db.isFile ) {
-            return DriverManager.getConnection("jdbc:sqlite:${db.path}") as SQLiteConnection;
+            try {
+                val sqLiteConnection = DriverManager.getConnection("jdbc:sqlite:${db.path}") as SQLiteConnection
+                val t = Thread {
+                    System.err.println(666)
+                }
+                Runtime.getRuntime().addShutdownHook(t);
+                return sqLiteConnection;
+            }catch (e:Exception){
+                val log = logger.errorWithModule(Meta.MODULE_NAME, "SQLite数据库[${db.name}]连接异常")
+                e.printStackTrace()
+                throw RuntimeException(log)
+            }
         }else{
-            val log = logger.errorWithModule(Meta.MODULE_NAME, "数据库[${db.name}]不存在")
+            val log = logger.errorWithModule(Meta.MODULE_NAME, "SQLite数据库[${db.name}]不存在")
             throw FileNotFoundException(log)
         }
     }
