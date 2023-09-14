@@ -11,5 +11,6 @@ public class Meta {
 
     public static final String MODULE_NAME = "XVOID-SQLITE";
 
+    public static final String SUB_MODULE = "SQLite";
 
 }

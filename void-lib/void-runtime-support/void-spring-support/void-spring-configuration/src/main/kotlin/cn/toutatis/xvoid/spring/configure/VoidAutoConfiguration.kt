@@ -1,5 +1,6 @@
 package cn.toutatis.xvoid.spring.configure
 
+import cn.toutatis.xvoid.spring.configure.system.VoidDeliveryConfiguration
 import cn.toutatis.xvoid.spring.configure.system.VoidSecurityConfiguration
 import cn.toutatis.xvoid.spring.configure.system.VoidGlobalConfiguration
 import org.springframework.boot.context.properties.EnableConfigurationProperties
@@ -12,6 +13,7 @@ import org.springframework.context.annotation.Configuration
 @Configuration
 @EnableConfigurationProperties(
     VoidGlobalConfiguration::class,
-    VoidSecurityConfiguration::class
+    VoidSecurityConfiguration::class,
+    VoidDeliveryConfiguration::class
 )
 open class VoidAutoConfiguration

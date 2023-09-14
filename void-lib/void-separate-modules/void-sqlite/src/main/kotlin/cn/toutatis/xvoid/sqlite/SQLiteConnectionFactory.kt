@@ -2,6 +2,7 @@ package cn.toutatis.xvoid.sqlite
 
 import cn.toutatis.xvoid.toolkit.log.LoggerToolkit
 import cn.toutatis.xvoid.toolkit.log.errorWithModule
+import cn.toutatis.xvoid.toolkit.log.infoWithModule
 import org.sqlite.SQLiteConnection
 import java.io.File
 import java.io.FileNotFoundException
@@ -27,15 +28,15 @@ class SQLiteConnectionFactory {
 
     }
 
-
     fun createConnection(db: File): SQLiteConnection {
         if (db.exists() && db.isFile ) {
             try {
                 val sqLiteConnection = DriverManager.getConnection("jdbc:sqlite:${db.path}") as SQLiteConnection
-                val t = Thread {
-                    System.err.println(666)
+                val closeHook = Thread {
+                    sqLiteConnection.close()
+                    logger.infoWithModule(Meta.MODULE_NAME, "SQLite", "关闭SQLite连接")
                 }
-                Runtime.getRuntime().addShutdownHook(t);
+                Runtime.getRuntime().addShutdownHook(closeHook);
                 return sqLiteConnection;
             }catch (e:Exception){
                 val log = logger.errorWithModule(Meta.MODULE_NAME, "SQLite数据库[${db.name}]连接异常")

@@ -1,26 +1,58 @@
 package cn.toutatis.xvoid.sqlite
 
+import cn.toutatis.xvoid.toolkit.log.LoggerToolkit
+import cn.toutatis.xvoid.toolkit.log.errorWithModule
 import org.sqlite.SQLiteConnection
 import java.sql.ResultSet
+import java.sql.SQLException
 import java.sql.Statement
 
+
+/**
+ * SQLite shell
+ * sqlite包装工具
+ * @property connection 数据库连接
+ */
 class SQLiteShell(val connection: SQLiteConnection) {
 
-    fun select(sql:String){
-        val statement: Statement = connection.createStatement()
-        statement.setQueryTimeout(30) // set timeout to 30 sec.
+    private val logger = LoggerToolkit.getLogger(this.javaClass)
 
-        statement.executeUpdate("drop table if exists person")
-        statement.executeUpdate("create table person (id integer, name string)")
-        statement.executeUpdate("insert into person values(1, 'leo')")
-        statement.executeUpdate("insert into person values(2, 'yui')")
-        val rs: ResultSet = statement.executeQuery("select * from person")
-        while (rs.next()) {
-            // read the result set
-            System.out.println("name = " + rs.getString("name"))
-            System.out.println("id = " + rs.getInt("id"))
+    /**
+     * Select list map
+     * 查询Map列表
+     * @param sql SQL语句
+     * @return 查询Map列表
+     */
+    fun selectListMap(sql:String):List<Map<String,Any>>{
+        val statement: Statement = connection.createStatement()
+        val resultSet: ResultSet = statement.executeQuery(sql)
+        val list = ArrayList<Map<String, Any>>()
+        while (resultSet.next()) {
+            val rowMap: MutableMap<String, Any> = HashMap()
+            for (i in 1..resultSet.metaData.columnCount) {
+                val columnName: String = resultSet.metaData.getColumnName(i)
+                val columnValue: Any = resultSet.getObject(i)
+                rowMap[columnName] = columnValue
+            }
+            list.add(rowMap)
         }
-        connection.close()
+        statement.close()
+        return list
+    }
+
+    /**
+     * Select one map
+     * 查询单个Map
+     * @param sql SQL语句
+     * @return 查询Map
+     */
+    fun selectOneMap(sql:String): Map<String,Any>? {
+        val list = selectListMap(sql)
+        if (list.size > 1){
+            val error = logger.errorWithModule(Meta.MODULE_NAME, Meta.SUB_MODULE, "查询记录条数大于1")
+            throw SQLException(error)
+        }
+        return if (list.isEmpty()) null else list[0]
     }
 
 }
