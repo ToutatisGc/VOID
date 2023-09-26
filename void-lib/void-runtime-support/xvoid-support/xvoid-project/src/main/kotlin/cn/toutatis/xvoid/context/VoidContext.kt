@@ -7,8 +7,6 @@ package cn.toutatis.xvoid.context
  */
 interface VoidContext {
 
-    fun intervene()
-
-    fun recordStartLog():Any
+    fun intervene(context:Any)
 
 }

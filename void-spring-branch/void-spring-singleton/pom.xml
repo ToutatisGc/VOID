@@ -136,6 +136,12 @@
             <version>0.0.0-ALPHA</version>
         </dependency>
 
+        <dependency>
+            <groupId>cn.toutatis</groupId>
+            <artifactId>xvoid-spring-support</artifactId>
+            <version>0.0.0-ALPHA</version>
+        </dependency>
+
     </dependencies>
 
     <build>

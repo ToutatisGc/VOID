@@ -11,6 +11,8 @@
     <packaging>pom</packaging>
     <modules>
         <module>xvoid-project</module>
+
+        <module>xvoid-spring-support</module>
     </modules>
 
     <artifactId>xvoid-support</artifactId>

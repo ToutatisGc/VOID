@@ -43,6 +43,7 @@ class ResponseResultEncryptAdvice : ResponseBodyAdvice<Any>{
         selectedConverterType: Class<out HttpMessageConverter<*>>,
         request: ServerHttpRequest, response: ServerHttpResponse
     ): Any? {
+//        returnType.getMethodAnnotation()
         return body
     }
 
@@ -60,11 +61,14 @@ class ResponseResultEncryptAdvice : ResponseBodyAdvice<Any>{
                         body.setResultCode(ResultCode.INNER_EXCEPTION)
                         body.data = null
                     }
-
                 }
             }
         }
         return body
+    }
+
+    private fun encryptData():Any?{
+        return null;
     }
 
 
