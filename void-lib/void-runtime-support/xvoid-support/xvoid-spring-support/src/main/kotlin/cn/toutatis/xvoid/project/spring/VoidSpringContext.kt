@@ -9,6 +9,10 @@ class VoidSpringContext : VoidContext {
         this.context = context
     }
 
+    companion object{
+        public var properties: VoidSpringProperties = VoidSpringProperties()
+    }
+
     private var context:ConfigurableApplicationContext? = null
 
     fun intervene(){

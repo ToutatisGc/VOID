@@ -1,4 +1,4 @@
-package cn.toutatis.xvoid.sql.dsl.annotations;
+package cn.toutatis.xvoid.common.annotations.database;
 
 /**
  * 表名
