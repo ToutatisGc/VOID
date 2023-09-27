@@ -49,7 +49,7 @@ class SQLiteShell(val connection: SQLiteConnection) {
     fun selectOneMap(sql:String): Map<String,Any>? {
         val list = selectListMap(sql)
         if (list.size > 1){
-            val error = logger.errorWithModule(Meta.MODULE_NAME, Meta.SUB_MODULE, "查询记录条数大于1")
+            val error = logger.errorWithModule(Meta.MODULE_NAME, Meta.SUB_MODULE_NAME, "查询记录条数大于1")
             throw SQLException(error)
         }
         return if (list.isEmpty()) null else list[0]

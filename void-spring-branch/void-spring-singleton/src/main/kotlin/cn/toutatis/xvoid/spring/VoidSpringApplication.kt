@@ -3,7 +3,6 @@ package cn.toutatis.xvoid.spring
 import cn.toutatis.xvoid.common.standard.StandardFields
 import cn.toutatis.xvoid.project.spring.VoidSpringContext
 import cn.toutatis.xvoid.spring.annotations.application.VoidApplication
-import org.aspectj.weaver.loadtime.Agent
 import org.springframework.boot.runApplication
 import org.springframework.context.ConfigurableApplicationContext
 import org.springframework.session.FlushMode

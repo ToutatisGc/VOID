@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>void-lib</artifactId>
+        <groupId>cn.toutatis</groupId>
+        <version>0.0.0-ALPHA</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+    <packaging>pom</packaging>
+
+    <artifactId>void-commons</artifactId>
+
+    <properties>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <kotlin.version>1.7.21</kotlin.version>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>cn.toutatis</groupId>
+                <artifactId>void-feature-support</artifactId>
+                <version>0.0.0-ALPHA</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+    <dependencies>
+        <dependency>
+            <groupId>cn.toutatis</groupId>
+            <artifactId>void-kotlin-runtime-support</artifactId>
+            <version>${kotlin.version}</version>
+            <type>pom</type>
+        </dependency>
+    </dependencies>
+
+
+    <modules>
+        <module>void-common-annotations</module>
+
+        <module>void-common</module>
+    </modules>
+
+</project>

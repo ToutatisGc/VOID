@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.RestController;
 import java.lang.annotation.*;
 
 /**
- * @author Toutatis_Gc
  * controller层聚合注解
+ * @author Toutatis_Gc
  */
 @Retention(RetentionPolicy.RUNTIME)
 @Target({ElementType.TYPE})

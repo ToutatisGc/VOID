@@ -8,4 +8,6 @@ public class Meta {
 
     public static final String MODULE_NAME = "VOID-Spring-Support";
 
+    public static final String SUB_MODULE_NAME = "SPRING-CORE";
+
 }

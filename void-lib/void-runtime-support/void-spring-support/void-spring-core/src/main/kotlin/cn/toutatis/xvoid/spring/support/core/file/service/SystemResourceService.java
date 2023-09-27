@@ -5,7 +5,6 @@ import cn.toutatis.xvoid.orm.base.infrastructure.entity.SystemResource;
 import cn.toutatis.xvoid.common.result.Result;
 import cn.toutatis.xvoid.orm.support.mybatisplus.VoidMybatisService;
 import cn.toutatis.xvoid.spring.configure.system.enums.storage.ObjectStorageMode;
-import cn.toutatis.xvoid.orm.support.VoidService;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;

@@ -1,6 +1,10 @@
 package cn.toutatis.xvoid.spring.annotations;
 
-public class VoidModuleInfo {
+/**
+ *
+ * @author Toutatis_Gc
+ */
+public class Meta {
 
     public static final String PKG_NAME = "cn.toutatis.xvoid.spring.annotations";
 

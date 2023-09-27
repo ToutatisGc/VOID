@@ -1,7 +1,7 @@
 package cn.toutatis.xvoid.spring.annotations.application
 
 
-import cn.toutatis.xvoid.spring.annotations.VoidModuleInfo.BASE_PACKAGE
+import cn.toutatis.xvoid.spring.annotations.Meta.BASE_PACKAGE
 import org.mybatis.spring.annotation.MapperScan
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.autoconfigure.domain.EntityScan

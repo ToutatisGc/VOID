@@ -13,7 +13,6 @@ import cn.toutatis.xvoid.spring.business.user.service.SystemAuthRoleService
 import cn.toutatis.xvoid.spring.configure.system.VoidGlobalConfiguration
 import cn.toutatis.xvoid.spring.configure.system.VoidGlobalConfiguration.GlobalServiceConfig
 import cn.toutatis.xvoid.spring.configure.system.VoidSecurityConfiguration
-import cn.toutatis.xvoid.spring.configure.system.enums.global.RunMode
 import cn.toutatis.xvoid.spring.core.security.access.ValidationMessage
 import cn.toutatis.xvoid.spring.core.security.access.VoidSecurityAuthenticationService
 import cn.toutatis.xvoid.spring.support.Meta

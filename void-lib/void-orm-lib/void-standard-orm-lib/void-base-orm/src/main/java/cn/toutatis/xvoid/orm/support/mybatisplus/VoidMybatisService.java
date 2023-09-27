@@ -3,7 +3,6 @@ package cn.toutatis.xvoid.orm.support.mybatisplus;
 import cn.toutatis.xvoid.common.result.ProxyResult;
 import cn.toutatis.xvoid.orm.base.data.common.EntityBasicAttribute;
 import cn.toutatis.xvoid.common.result.DataStatus;
-import cn.toutatis.xvoid.orm.support.Condition;
 import cn.toutatis.xvoid.orm.support.VoidService;
 import cn.toutatis.xvoid.toolkit.data.DataExportConfig;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
