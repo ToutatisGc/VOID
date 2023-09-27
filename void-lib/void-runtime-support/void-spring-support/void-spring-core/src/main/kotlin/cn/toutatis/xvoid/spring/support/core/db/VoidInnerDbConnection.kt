@@ -1,12 +1,13 @@
-package cn.toutatis.xvoid.spring.core.db
+package cn.toutatis.xvoid.spring.support.core.db
 
+import cn.toutatis.xvoid.common.standard.StandardComponentPool
 import cn.toutatis.xvoid.sqlite.Meta
 import cn.toutatis.xvoid.sqlite.SQLiteConnectionFactory
 import cn.toutatis.xvoid.sqlite.SQLiteShell
 import cn.toutatis.xvoid.toolkit.file.FileToolkit
 import cn.toutatis.xvoid.toolkit.log.LoggerToolkit
 import cn.toutatis.xvoid.toolkit.log.errorWithModule
-import org.springframework.beans.factory.annotation.Autowired
+import cn.toutatis.xvoid.toolkit.log.infoWithModule
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import org.sqlite.SQLiteConnection
@@ -19,12 +20,13 @@ class VoidInnerDbConnection {
 
     private val logger = LoggerToolkit.getLogger(this.javaClass)
 
-    @Bean
+    @Bean(StandardComponentPool.VOID_CONTEXT_SQLITE_DB_BEAN)
     fun sqliteShell(): SQLiteShell {
         val sqLiteConnectionFactory = SQLiteConnectionFactory()
         val resourcesFile: URL? = FileToolkit.getResourcesFile("sql/VOID.db")
         if (resourcesFile != null) {
             val dbFile = Paths.get(resourcesFile.toURI()).toFile()
+            logger.infoWithModule(Meta.MODULE_NAME,"SPRING","已找到数据库${dbFile.name}")
             val createConnection: SQLiteConnection = sqLiteConnectionFactory.createConnection(dbFile)
             return SQLiteShell(createConnection)
         }else{

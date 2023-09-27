@@ -55,6 +55,7 @@ public class FrontRootController {
     public Result handleServiceConfiguration(){
         JSONObject info = new JSONObject();
         Map<String, Object> map = sqLiteShell.selectOneMap("SELECT * FROM VOID_CONTEXT WHERE KEY = 'AES_SECRET' AND MCH_ID = '%s'".formatted(StandardFields.VOID_BUSINESS_DEFAULT_CREATOR));
+        System.err.println(map);
         info.put("isPlatform", voidGlobalConfiguration.getPlatformMode());
         info.put("version", voidGlobalConfiguration.getVersion().getVersion());
         return new ProxyResult(info);

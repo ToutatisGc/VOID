@@ -111,6 +111,13 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-quartz</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>cn.toutatis</groupId>
+            <artifactId>void-sqlite</artifactId>
+            <version>0.0.0-ALPHA</version>
+        </dependency>
+
     </dependencies>
 
     <properties>

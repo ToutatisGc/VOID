@@ -132,12 +132,6 @@
 
         <dependency>
             <groupId>cn.toutatis</groupId>
-            <artifactId>void-sqlite</artifactId>
-            <version>0.0.0-ALPHA</version>
-        </dependency>
-
-        <dependency>
-            <groupId>cn.toutatis</groupId>
             <artifactId>xvoid-spring-support</artifactId>
             <version>0.0.0-ALPHA</version>
         </dependency>
