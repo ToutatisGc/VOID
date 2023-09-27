@@ -57,7 +57,8 @@
         <module>void-third-party</module>
         <!--SQLite数据库支持-->
         <module>void-sqlite</module>
-
+        <!--SQL DSL生成器-->
+        <module>void-dsl-builder</module>
     </modules>
 
 
