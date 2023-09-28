@@ -7,6 +7,7 @@ class DSLTest {
     @Test
     fun `test getInfo`(){
         val dslBuilder = DSLBuilder<TestTable>()
+        dslBuilder.eq()
     }
 
 }

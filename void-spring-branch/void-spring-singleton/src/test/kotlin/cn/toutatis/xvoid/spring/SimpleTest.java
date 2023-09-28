@@ -2,6 +2,7 @@ package cn.toutatis.xvoid.spring;
 
 import cn.toutatis.xvoid.orm.base.infrastructure.entity.SystemLog;
 import cn.toutatis.xvoid.orm.base.infrastructure.enums.LogType;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.apache.commons.lang3.time.StopWatch;
 import org.junit.Test;
 
@@ -12,6 +13,7 @@ public class SimpleTest {
         SystemLog systemLog = new SystemLog();
         systemLog.setType(LogType.ADMIN.name());
         System.out.println("testSimple");
+        QueryWrapper<SystemLog> systemLogQueryWrapper = new QueryWrapper<>();
     }
 
     @Test
