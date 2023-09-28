@@ -14,7 +14,7 @@ public class DQLBuilder<T> {
 
     public DQLBuilder<T> eq(String column, Object value){
         // TODO 看用哪种形式存储数据
-        metaInfo.putColumn(new SqlColumn(column));
+//        metaInfo.putColumn(new SqlColumn(column,value, SqlColumn.ColumnType.CONDITION));
         return this;
     }
 
