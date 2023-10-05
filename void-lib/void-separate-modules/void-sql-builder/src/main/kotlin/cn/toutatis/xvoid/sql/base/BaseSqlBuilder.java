@@ -3,12 +3,13 @@ package cn.toutatis.xvoid.sql.base;
 /**
  * @author Toutatis_Gc
  */
-public interface BaseSqlBuilder {
+public interface BaseSqlBuilder<T> {
 
     /**
      * SELECT / INSERT / UPDATE
      * @param initial 初始语句
      */
-    void setSqlTypeInitial(SQLType initial);
+    void setInitial(SQLType initial, Class<T> entityClass);
 
+//    String build();
 }

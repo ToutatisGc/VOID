@@ -28,6 +28,20 @@
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
         </dependency>
+        <!--一些注解依赖-->
+        <dependency>
+            <groupId>com.baomidou</groupId>
+            <artifactId>mybatis-plus-annotation</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>jakarta.persistence</groupId>
+            <artifactId>jakarta.persistence-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>cn.toutatis</groupId>
+            <artifactId>void-common</artifactId>
+            <version>0.0.0-ALPHA</version>
+        </dependency>
     </dependencies>
 
     <build>
