@@ -3,6 +3,7 @@ package cn.toutatis.xvoid.sql.dql;
 import cn.toutatis.xvoid.sql.base.SQLType;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.function.Executable;
 
 public class TestJava {
 
@@ -52,5 +53,19 @@ public class TestJava {
         dqlBuilder.select("name","username");
         dqlBuilder.distinct();
         System.err.println(dqlBuilder.build());
+    }
+
+    @Test
+    public void testChild(){
+        Assertions.assertThrows(IllegalArgumentException.class, () -> {
+            DQLBuilder<TestTableJava> dqlBuilderChild = new DQLBuilder<>(TestTableJava.class);
+            DQLBuilder<TestTableJava> dqlBuilder1 = new DQLBuilder<>(TestTableJava.class);
+            dqlBuilder1.selectChild(dqlBuilderChild,"child");
+        });
+        DQLBuilder<TestTableJava> dqlBuilderChild = new DQLBuilder<>(TestTableJava.class);
+        dqlBuilderChild.select("name");
+        DQLBuilder<TestTableJava> dqlBuilder1 = new DQLBuilder<>(TestTableJava.class);
+        dqlBuilder1.selectChild(dqlBuilderChild,"child");
+        System.err.println(dqlBuilder1);
     }
 }

@@ -1,5 +1,6 @@
 package cn.toutatis.xvoid.sql.dql;
 
+import cn.toutatis.xvoid.common.standard.StringPool;
 import cn.toutatis.xvoid.sql.base.*;
 import cn.toutatis.xvoid.toolkit.validator.Validator;
 
@@ -15,7 +16,7 @@ public class DQLMetaBuilder<T> extends AbstractBaseSqlBuilder<T> {
      */
     private Map<String,SQLColumn> columns = new LinkedHashMap<>();
 
-    public DQLMetaBuilder(SQLType sqlType, Class<T> entityClass){
+    protected DQLMetaBuilder(SQLType sqlType, Class<T> entityClass){
         this.setInitial(sqlType,entityClass);
     }
 
@@ -23,7 +24,7 @@ public class DQLMetaBuilder<T> extends AbstractBaseSqlBuilder<T> {
         Optional<SQLColumn> optionalSqlColumn = Optional.ofNullable(column);
         optionalSqlColumn.ifPresent(sqlColumn -> {
             String columnName = column.getField();
-            if (Validator.strIsBlank(columnName)){
+            if (Validator.strIsBlank(columnName) && column.getPartType() != SQLColumn.PartType.CHILD){
                 throw new NullPointerException("字段名不得为NULL");
             }
             String alias = sqlColumn.getAlias();
@@ -33,7 +34,9 @@ public class DQLMetaBuilder<T> extends AbstractBaseSqlBuilder<T> {
             if (sqlColumn.getColumnType() == SQLColumn.PartType.SIMPLE){
                 this.columns.putIfAbsent(columnName,column);
             }else if (sqlColumn.getColumnType() == SQLColumn.PartType.CHILD){
-                // TODO 子查询
+                String build = sqlColumn.getChildQuery().build();
+                sqlColumn.setField(StringPool.LEFT_BRACKET+build+StringPool.RIGHT_BRACKET);
+                this.columns.putIfAbsent(alias,column);
             }
         });
     }

@@ -7,6 +7,7 @@ import cn.toutatis.xvoid.toolkit.clazz.XFunc;
 import cn.toutatis.xvoid.toolkit.validator.Validator;
 
 import java.util.Map;
+import java.util.Objects;
 
 /**
  * @author Toutatis_Gc
@@ -23,6 +24,11 @@ public class DQLBuilder<T> {
 
     public void distinct() {
         isDistinct = true;
+    }
+
+    public DQLBuilder<T> selectChild(DQLBuilder<?> field,String alias){
+        metaInfo.putColumn(new SQLColumn(field,alias));
+        return this;
     }
 
     public DQLBuilder<T> select(String field){
@@ -119,6 +125,28 @@ public class DQLBuilder<T> {
 
     public boolean isDistinct() {
         return isDistinct;
+    }
+
+    public DQLMetaBuilder<T> getMetaInfo() {
+        return metaInfo;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        DQLBuilder<?> that = (DQLBuilder<?>) o;
+        return isDistinct == that.isDistinct && metaInfo.equals(that.metaInfo);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(metaInfo, isDistinct);
+    }
+
+    @Override
+    public String toString() {
+        return this.build();
     }
 
 }
