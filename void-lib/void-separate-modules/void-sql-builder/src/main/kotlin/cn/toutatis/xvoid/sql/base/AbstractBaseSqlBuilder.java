@@ -5,6 +5,8 @@ import cn.toutatis.xvoid.common.annotations.database.DDLTable;
 import com.baomidou.mybatisplus.annotation.TableName;
 
 import javax.persistence.Table;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * SQL 必要信息
@@ -12,11 +14,25 @@ import javax.persistence.Table;
  */
 public abstract class AbstractBaseSqlBuilder<T> implements BaseSqlBuilder<T> {
 
+    /**
+     * SQL类型
+     */
     private SQLType sqlType;
 
+    /**
+     * 实体类
+     */
     private Class<T> entityClass;
 
+    /**
+     * 表名
+     */
+
     private String table;
+    /**
+     * 查询条件
+     */
+    private List<SQLCondition> conditions = new ArrayList<>();
 
     @Override
     public void setInitial(SQLType initial,Class<T> entityClass) {
@@ -56,11 +72,23 @@ public abstract class AbstractBaseSqlBuilder<T> implements BaseSqlBuilder<T> {
         this.table = name.replaceAll("([a-z])([A-Z])", "$1_$2").toLowerCase();
     }
 
+    public void putCondition(SQLCondition condition){
+        this.conditions.add(condition);
+    }
+
     public Class<T> getEntityClass() {
         return entityClass;
     }
 
     public void setEntityClass(Class<T> entityClass) {
         this.entityClass = entityClass;
+    }
+
+    public List<SQLCondition> getConditions() {
+        return conditions;
+    }
+
+    public void setConditions(List<SQLCondition> conditions) {
+        this.conditions = conditions;
     }
 }

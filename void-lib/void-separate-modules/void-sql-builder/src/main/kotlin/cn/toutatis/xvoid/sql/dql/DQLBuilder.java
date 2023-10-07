@@ -2,9 +2,11 @@ package cn.toutatis.xvoid.sql.dql;
 
 import cn.toutatis.xvoid.common.standard.StringPool;
 import cn.toutatis.xvoid.sql.base.*;
+import cn.toutatis.xvoid.toolkit.clazz.LambdaToolkit;
+import cn.toutatis.xvoid.toolkit.clazz.XFunc;
 import cn.toutatis.xvoid.toolkit.validator.Validator;
 
-import java.util.List;
+import java.util.Map;
 
 /**
  * @author Toutatis_Gc
@@ -17,33 +19,49 @@ public class DQLBuilder<T> {
         metaInfo = new DQLMetaBuilder<>(SQLType.SELECT, entityClass);
     }
 
-    public DQLBuilder<T> select(String column,String alias){
-        metaInfo.putColumn(new SQLColumn(column,alias));
+    public DQLBuilder<T> select(String field){
+        metaInfo.putColumn(new SQLColumn(field));
         return this;
     }
 
-    public DQLBuilder<T> eq(String column, Object value){
-        // TODO 看用哪种形式存储数据
-        metaInfo.putColumn(new SQLColumn(column,value, SQLPart.PartType.CONDITION));
+    public DQLBuilder<T> select(String field,String alias){
+        metaInfo.putColumn(new SQLColumn(field,alias));
+        return this;
+    }
+
+    public DQLBuilder<T> select(XFunc<T,?> field) throws Exception {
+        this.select(LambdaToolkit.getFieldName(field));
+        return this;
+    }
+
+    public DQLBuilder<T> select(XFunc<T,?> field, String alias) throws Exception {
+        this.select(LambdaToolkit.getFieldName(field),alias);
+        return this;
+    }
+
+    public DQLBuilder<T> eq(String field, Object value){
+        metaInfo.putCondition(new SQLCondition(field, value));
         return this;
     }
 
     public DQLBuilder<T> eq(XFunc<T,?> column, Object value) throws Exception {
-        this.eq(LambdaHandler.getFieldName(LambdaHandler.serialize(column)), value);
+        this.eq(LambdaToolkit.getFieldName(column), value);
         return this;
     }
 
     public String build(){
         // 初始化SQL
-        StringBuilder sql = new StringBuilder(metaInfo.getSqlType().toString());
-        appendSpacing(sql);
+        StringBuilder sql = SQLHelper.initSql(metaInfo.getSqlType());
         // 处理查询字段
-        this.processingColumns(sql);
+        String columnsPlaceholder = SQLPlaceHolder.SELECT_COLUMNS.value();
+        int start = metaInfo.getSqlType().name().length() + 1;
+        sql.replace(start,start+columnsPlaceholder.length(),this.processingColumns());
         sql.append("FROM");
         appendSpacing(sql);
         sql.append(metaInfo.getTable());
-        appendSpacing(sql);
-        this.processingConditions(sql);
+        // TODO 处理条件
+        String conditions = SQLHelper.processingConditions(metaInfo.getConditions());
+        sql.append(conditions);
         return sql.toString();
     }
 
@@ -51,39 +69,43 @@ public class DQLBuilder<T> {
         sql.append(StringPool.SPACE);
     }
 
-    private void processingColumns(StringBuilder sql){
-        List<SQLColumn> columns = metaInfo.getColumns();
+    /**
+     * 处理查询字段
+     */
+    private String processingColumns(){
+        StringBuilder selectFields = new StringBuilder();
+        Map<String, SQLColumn> columns = metaInfo.getColumns();
         int columnsSize = columns.size();
-        if (columnsSize > 0) {
-            for (int i = 0; i < columnsSize; i++) {
-                SQLColumn sqlColumn = columns.get(i);
-                sql.append(sqlColumn.getColumnName());
-                appendSpacing(sql);
+        if (!columns.isEmpty()) {
+            int idx = 0;
+            for (Map.Entry<String, SQLColumn> sqlColumnEntry : columns.entrySet()) {
+                SQLColumn sqlColumn = sqlColumnEntry.getValue();
                 String alias = sqlColumn.getAlias();
                 if (Validator.strNotBlank(alias)){
-                    sql.append("AS");
-                    appendSpacing(sql);
-                    // TODO 关键字添加反引号
-                    sql.append(alias);
-                }
-                if (i == columnsSize - 1){
-                    appendSpacing(sql);
+                    selectFields.append(sqlColumn.getField());
+                    appendSpacing(selectFields);
+                    selectFields.append("AS");
+                    appendSpacing(selectFields);
+                    boolean match = SQLKeyword.match(alias);
+                    if (match){
+                        selectFields.append(StringPool.BACKTICK);
+                        selectFields.append(alias);
+                        selectFields.append(StringPool.BACKTICK);
+                    }else {
+                        selectFields.append(alias);
+                    }
                 }else {
-                    sql.append(StringPool.COMMA);
+                    selectFields.append(sqlColumn.getField());
                 }
+                if (idx != columnsSize - 1) {
+                    selectFields.append(StringPool.COMMA);
+                }
+                idx++;
             }
         }else {
-            sql.append(StringPool.ASTERISK);
-            appendSpacing(sql);
+            selectFields.append(StringPool.ASTERISK);
         }
-    }
-
-    private void processingConditions(StringBuilder sql){
-        List<SQLColumn> conditions = metaInfo.getConditions();
-        if (!conditions.isEmpty()){
-            sql.append("WHERE");
-            appendSpacing(sql);
-        }
+        return selectFields.toString();
     }
 
 }

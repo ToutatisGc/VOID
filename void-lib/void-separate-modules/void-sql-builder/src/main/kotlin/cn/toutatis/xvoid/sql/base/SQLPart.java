@@ -2,34 +2,33 @@ package cn.toutatis.xvoid.sql.base;
 
 public class SQLPart {
 
-    private String key;
+    private String field;
 
-    private String value;
+    private Object value;
 
-    private String order;
+    private int order;
 
-    public enum PartType {
+    public String getField() {
+        return field;
+    }
 
-        /**
-         * 对于查询则为
-         * SELECT [COLUMN]
-         */
-        SIMPLE,
+    public void setField(String field) {
+        this.field = field;
+    }
 
-        /**
-         * 子查询
-         */
-        CHILD,
+    public Object getValue() {
+        return value;
+    }
 
-        /**
-         * 逻辑符
-         */
-        LOGICAL,
+    public void setValue(Object value) {
+        this.value = value;
+    }
 
-        /**
-         * 条件则后置
-         */
-        CONDITION;
+    public int getOrder() {
+        return order;
+    }
 
+    public void setOrder(int order) {
+        this.order = order;
     }
 }

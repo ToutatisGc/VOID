@@ -10,6 +10,4 @@ public interface BaseSqlBuilder<T> {
      * @param initial 初始语句
      */
     void setInitial(SQLType initial, Class<T> entityClass);
-
-//    String build();
 }
