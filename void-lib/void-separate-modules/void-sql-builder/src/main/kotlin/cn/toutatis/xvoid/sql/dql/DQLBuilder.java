@@ -15,8 +15,14 @@ public class DQLBuilder<T> {
 
     private final DQLMetaBuilder<T> metaInfo;
 
+    private boolean isDistinct = false;
+
     public DQLBuilder(Class<T> entityClass) {
         metaInfo = new DQLMetaBuilder<>(SQLType.SELECT, entityClass);
+    }
+
+    public void distinct() {
+        isDistinct = true;
     }
 
     public DQLBuilder<T> select(String field){
@@ -56,6 +62,9 @@ public class DQLBuilder<T> {
         String columnsPlaceholder = SQLPlaceHolder.SELECT_COLUMNS.value();
         int start = metaInfo.getSqlType().name().length() + 1;
         sql.replace(start,start+columnsPlaceholder.length(),this.processingColumns());
+        if (isDistinct()){
+            sql.insert(start, SQLPlaceHolder.DISTINCT+StringPool.SPACE);
+        }
         sql.append("FROM");
         appendSpacing(sql);
         sql.append(metaInfo.getTable());
@@ -106,6 +115,10 @@ public class DQLBuilder<T> {
             selectFields.append(StringPool.ASTERISK);
         }
         return selectFields.toString();
+    }
+
+    public boolean isDistinct() {
+        return isDistinct;
     }
 
 }

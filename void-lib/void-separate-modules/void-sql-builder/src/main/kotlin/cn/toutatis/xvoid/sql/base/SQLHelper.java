@@ -29,7 +29,6 @@ public class SQLHelper {
 //    protected static Pattern pattern = Pattern.compile(Regex.NUMBER_REGEX);
 
     public static String processingConditions(List<SQLCondition> conditions){
-
         StringBuilder conditionsSQL = new StringBuilder();
         if (!conditions.isEmpty()){
             conditionsSQL.append(StringPool.SPACE);

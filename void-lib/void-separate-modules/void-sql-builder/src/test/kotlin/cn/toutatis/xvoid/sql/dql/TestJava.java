@@ -1,7 +1,6 @@
 package cn.toutatis.xvoid.sql.dql;
 
 import cn.toutatis.xvoid.sql.base.SQLType;
-import org.junit.Assert;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -18,11 +17,40 @@ public class TestJava {
     }
 
     @Test
-    public void testBuilder() throws Exception {
+    public void testConditionsBuilder() throws Exception {
+        DQLBuilder<TestTableJava> dqlBuilder1 = new DQLBuilder<>(TestTableJava.class);
+        dqlBuilder1.select(TestTableJava::getAge);
+        dqlBuilder1.eq(TestTableJava::getName,"foo");
+        System.err.println(dqlBuilder1.build());
+
         DQLBuilder<TestTableJava> dqlBuilder = new DQLBuilder<>(TestTableJava.class);
         dqlBuilder.select(TestTableJava::getAge);
         dqlBuilder.eq(TestTableJava::getAge,18);
         dqlBuilder.eq(TestTableJava::getName,"foo");
+        System.err.println(dqlBuilder.build());
+    }
+
+    @Test
+    public void testSelectBuilder() throws Exception {
+        DQLBuilder<TestTableJava> dqlBuilder1 = new DQLBuilder<>(TestTableJava.class);
+        System.err.println(dqlBuilder1.build());
+
+        DQLBuilder<TestTableJava> dqlBuilder = new DQLBuilder<>(TestTableJava.class);
+        dqlBuilder.select(TestTableJava::getAge);
+        dqlBuilder.select("name","username");
+        System.err.println(dqlBuilder.build());
+    }
+
+    @Test
+    public void testDistinct() throws Exception {
+        DQLBuilder<TestTableJava> dqlBuilder1 = new DQLBuilder<>(TestTableJava.class);
+        dqlBuilder1.distinct();
+        System.err.println(dqlBuilder1.build());
+
+        DQLBuilder<TestTableJava> dqlBuilder = new DQLBuilder<>(TestTableJava.class);
+        dqlBuilder.select(TestTableJava::getAge);
+        dqlBuilder.select("name","username");
+        dqlBuilder.distinct();
         System.err.println(dqlBuilder.build());
     }
 }

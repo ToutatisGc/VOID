@@ -5,7 +5,12 @@ public enum SQLPlaceHolder {
     /**
      * SELECT 语句查询字段
      */
-    SELECT_COLUMNS("<COLUMNS>");
+    SELECT_COLUMNS("<COLUMNS>"),
+
+    /**
+     * 去重关键字
+     */
+    DISTINCT("DISTINCT");
 
     private final String value;
 
