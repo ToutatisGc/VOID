@@ -10,6 +10,7 @@ class VoidSpringContext : VoidContext {
     }
 
     companion object{
+        @JvmStatic
         public var properties: VoidSpringProperties = VoidSpringProperties()
     }
 

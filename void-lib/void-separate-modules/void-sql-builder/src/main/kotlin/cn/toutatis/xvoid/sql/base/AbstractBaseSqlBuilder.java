@@ -44,6 +44,11 @@ public abstract class AbstractBaseSqlBuilder<T> implements BaseSqlBuilder<T> {
         this.setTable(entityClass);
     }
 
+    public void setInitial(SQLType initial,String table) {
+        this.sqlType = initial;
+        this.setTable(table);
+    }
+
     public SQLType getSqlType() {
         return sqlType;
     }
@@ -52,6 +57,10 @@ public abstract class AbstractBaseSqlBuilder<T> implements BaseSqlBuilder<T> {
         return table;
     }
 
+    /**
+     * 设置表名
+     * @param tableClass 查询表实体
+     */
     protected void setTable(Class<T> tableClass) {
         DDLTable ddlTable = tableClass.getDeclaredAnnotation(DDLTable.class);
         if (ddlTable != null) {
@@ -70,6 +79,10 @@ public abstract class AbstractBaseSqlBuilder<T> implements BaseSqlBuilder<T> {
         }
         String name = tableClass.getSimpleName();
         this.table = name.replaceAll("([a-z])([A-Z])", "$1_$2").toLowerCase();
+    }
+
+    protected void setTable(String tableName){
+        this.table = tableName;
     }
 
     public void putCondition(SQLCondition condition){

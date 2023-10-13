@@ -22,6 +22,10 @@ public class DQLBuilder<T> {
         metaInfo = new DQLMetaBuilder<>(SQLType.SELECT, entityClass);
     }
 
+    public DQLBuilder(String table) {
+        metaInfo = new DQLMetaBuilder<>(SQLType.SELECT, table);
+    }
+
     public void distinct() {
         isDistinct = true;
     }
@@ -74,7 +78,6 @@ public class DQLBuilder<T> {
         sql.append("FROM");
         appendSpacing(sql);
         sql.append(metaInfo.getTable());
-        // TODO 处理条件
         String conditions = SQLHelper.processingConditions(metaInfo.getConditions());
         sql.append(conditions);
         return sql.toString();

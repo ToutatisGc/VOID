@@ -20,6 +20,10 @@ public class DQLMetaBuilder<T> extends AbstractBaseSqlBuilder<T> {
         this.setInitial(sqlType,entityClass);
     }
 
+    protected DQLMetaBuilder(SQLType sqlType, String table){
+        this.setInitial(sqlType,table);
+    }
+
     public void putColumn(SQLColumn column){
         Optional<SQLColumn> optionalSqlColumn = Optional.ofNullable(column);
         optionalSqlColumn.ifPresent(sqlColumn -> {

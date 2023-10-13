@@ -1,5 +1,6 @@
 package cn.toutatis.xvoid.sqlite
 
+import cn.toutatis.xvoid.sql.dql.DQLBuilder
 import cn.toutatis.xvoid.toolkit.log.LoggerToolkit
 import cn.toutatis.xvoid.toolkit.log.errorWithModule
 import org.sqlite.SQLiteConnection
@@ -40,6 +41,10 @@ class SQLiteShell(val connection: SQLiteConnection) {
         return list
     }
 
+    fun selectListMap(sqlBuilder:DQLBuilder<*>):List<Map<String,Any>>{
+        return this.selectListMap(sqlBuilder.build())
+    }
+
     /**
      * Select one map
      * 查询单个Map
@@ -53,6 +58,10 @@ class SQLiteShell(val connection: SQLiteConnection) {
             throw SQLException(error)
         }
         return if (list.isEmpty()) null else list[0]
+    }
+
+    fun selectOneMap(sqlBuilder:DQLBuilder<*>): Map<String,Any>? {
+        return this.selectOneMap(sqlBuilder.build())
     }
 
 }

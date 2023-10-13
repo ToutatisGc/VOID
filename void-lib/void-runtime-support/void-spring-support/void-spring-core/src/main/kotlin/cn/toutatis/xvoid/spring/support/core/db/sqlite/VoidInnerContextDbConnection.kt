@@ -1,4 +1,4 @@
-package cn.toutatis.xvoid.spring.support.core.db
+package cn.toutatis.xvoid.spring.support.core.db.sqlite
 
 import cn.toutatis.xvoid.common.standard.StandardComponentPool
 import cn.toutatis.xvoid.sqlite.SQLiteConnectionFactory

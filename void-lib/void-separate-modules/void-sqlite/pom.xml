@@ -28,6 +28,13 @@
             <groupId>org.xerial</groupId>
             <artifactId>sqlite-jdbc</artifactId>
         </dependency>
+
+        <dependency>
+            <groupId>cn.toutatis</groupId>
+            <artifactId>void-sql-builder</artifactId>
+            <version>0.0.0-ALPHA</version>
+        </dependency>
+
     </dependencies>
 
     <build>

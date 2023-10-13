@@ -40,10 +40,21 @@ object LambdaToolkit {
     @JvmStatic
     fun getFieldName(serializedLambda: SerializedLambda): String {
         val implMethodName = serializedLambda.implMethodName
+        val capturingClass = Class.forName(serializedLambda.capturingClass.replace("/","."))
         require(serializedLambda.implMethodName.startsWith(GET_FIELD_LAMBDA)) { "非GET参数" }
         val uppercaseName = implMethodName.substring(3)
         val firstChar = Character.toLowerCase(uppercaseName[0])
-        return firstChar.toString() + uppercaseName.substring(1)
+        val lowercaseFieldName = firstChar.toString() + uppercaseName.substring(1)
+        var fieldName:String
+        try {
+            // TODO 解析字段
+            val field = capturingClass.getField(lowercaseFieldName)
+//            field.getAnnotation()
+            fieldName = lowercaseFieldName;
+        }catch (exception:NoSuchMethodException){
+            fieldName = lowercaseFieldName;
+        }
+        return fieldName
     }
 
     /**

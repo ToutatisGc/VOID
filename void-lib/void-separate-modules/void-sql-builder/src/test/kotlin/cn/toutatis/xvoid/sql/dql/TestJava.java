@@ -19,6 +19,9 @@ public class TestJava {
 
     @Test
     public void testConditionsBuilder() throws Exception {
+        DQLBuilder<Object> objectDQLBuilder = new DQLBuilder<>("test_table_java_name");
+        Assertions.assertEquals("SELECT * FROM test_table_java_name", objectDQLBuilder.build());
+        System.err.println(objectDQLBuilder.build());
         DQLBuilder<TestTableJava> dqlBuilder1 = new DQLBuilder<>(TestTableJava.class);
         dqlBuilder1.select(TestTableJava::getAge);
         dqlBuilder1.eq(TestTableJava::getName,"foo");
