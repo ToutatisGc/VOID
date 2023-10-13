@@ -34,6 +34,8 @@ public abstract class AbstractBaseSqlBuilder<T> implements BaseSqlBuilder<T> {
      */
     private List<SQLCondition> conditions = new ArrayList<>();
 
+    private boolean showSql = false;
+
     @Override
     public void setInitial(SQLType initial,Class<T> entityClass) {
         if (entityClass == null) {
@@ -103,5 +105,13 @@ public abstract class AbstractBaseSqlBuilder<T> implements BaseSqlBuilder<T> {
 
     public void setConditions(List<SQLCondition> conditions) {
         this.conditions = conditions;
+    }
+
+    public boolean isShowSql() {
+        return showSql;
+    }
+
+    public void setShowSql(boolean showSql) {
+        this.showSql = showSql;
     }
 }

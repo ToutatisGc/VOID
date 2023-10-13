@@ -14,6 +14,8 @@ public class SqliteVoidDict {
 
     public static final String TABLE = "VOID_DICT";
 
+    public static final String AES_SECRET_KEY = "AES_SECRET";
+
     @DDLField(name = "KEY")
     private String key;
 

@@ -7,4 +7,4 @@ spring:
 #    p6spy SQL分析所需地址
     url: ${datasource.protocol}localhost:3306/VOID?serverTimezone=UTC&useUnicode=true&characterEncoding=UTF-8
     username: root
-    password: 123456
+    password: 12345678

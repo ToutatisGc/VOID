@@ -4,7 +4,9 @@ import cn.toutatis.xvoid.common.standard.StringPool;
 import cn.toutatis.xvoid.sql.base.*;
 import cn.toutatis.xvoid.toolkit.clazz.LambdaToolkit;
 import cn.toutatis.xvoid.toolkit.clazz.XFunc;
+import cn.toutatis.xvoid.toolkit.log.LoggerToolkit;
 import cn.toutatis.xvoid.toolkit.validator.Validator;
+import org.slf4j.Logger;
 
 import java.util.Map;
 import java.util.Objects;
@@ -14,12 +16,19 @@ import java.util.Objects;
  */
 public class DQLBuilder<T> {
 
+    private final Logger logger = LoggerToolkit.getLogger(this.getClass());
+
     private final DQLMetaBuilder<T> metaInfo;
 
     private boolean isDistinct = false;
 
     public DQLBuilder(Class<T> entityClass) {
         metaInfo = new DQLMetaBuilder<>(SQLType.SELECT, entityClass);
+    }
+
+    public DQLBuilder(Class<T> entityClass,boolean showSql) {
+        this(entityClass);
+        metaInfo.setShowSql(showSql);
     }
 
     public DQLBuilder(String table) {
@@ -80,7 +89,11 @@ public class DQLBuilder<T> {
         sql.append(metaInfo.getTable());
         String conditions = SQLHelper.processingConditions(metaInfo.getConditions());
         sql.append(conditions);
-        return sql.toString();
+        String sqlString = sql.toString();
+        if (metaInfo.isShowSql()){
+            logger.info(sqlString);
+        }
+        return sqlString;
     }
 
     private void appendSpacing(StringBuilder sql){

@@ -51,9 +51,7 @@ object LambdaToolkit {
             val ddlField = declaredField.getDeclaredAnnotation(DDLField::class.java)
             if (ddlField != null){
                 return if (Validator.strIsBlank(ddlField.name)) lowercaseFieldName else ddlField.name
-            }else{
-                lowercaseFieldName;
-            }
+            }else{ lowercaseFieldName }
         }catch (exception:NoSuchMethodException){
             lowercaseFieldName;
         }
