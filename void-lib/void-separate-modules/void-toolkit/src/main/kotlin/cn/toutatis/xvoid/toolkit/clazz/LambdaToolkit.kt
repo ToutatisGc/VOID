@@ -1,8 +1,9 @@
 package cn.toutatis.xvoid.toolkit.clazz
 
+import cn.toutatis.xvoid.common.annotations.database.DDLField
+import cn.toutatis.xvoid.toolkit.formatting.StringToolkit
+import cn.toutatis.xvoid.toolkit.validator.Validator
 import kotlin.Throws
-import cn.toutatis.xvoid.toolkit.clazz.XFunc
-import cn.toutatis.xvoid.toolkit.clazz.LambdaToolkit
 import java.lang.Exception
 import java.lang.IllegalArgumentException
 import java.lang.invoke.SerializedLambda
@@ -40,19 +41,21 @@ object LambdaToolkit {
     @JvmStatic
     fun getFieldName(serializedLambda: SerializedLambda): String {
         val implMethodName = serializedLambda.implMethodName
-        val capturingClass = Class.forName(serializedLambda.capturingClass.replace("/","."))
-        require(serializedLambda.implMethodName.startsWith(GET_FIELD_LAMBDA)) { "非GET参数" }
+        require(implMethodName.startsWith(GET_FIELD_LAMBDA)) { "非GET参数" }
+        val implClass = Class.forName(serializedLambda.implClass.replace("/","."))
         val uppercaseName = implMethodName.substring(3)
         val firstChar = Character.toLowerCase(uppercaseName[0])
         val lowercaseFieldName = firstChar.toString() + uppercaseName.substring(1)
-        var fieldName:String
-        try {
-            // TODO 解析字段
-            val field = capturingClass.getField(lowercaseFieldName)
-//            field.getAnnotation()
-            fieldName = lowercaseFieldName;
+        val fieldName:String = try {
+            val declaredField = implClass.getDeclaredField(lowercaseFieldName)
+            val ddlField = declaredField.getDeclaredAnnotation(DDLField::class.java)
+            if (ddlField != null){
+                return if (Validator.strIsBlank(ddlField.name)) lowercaseFieldName else ddlField.name
+            }else{
+                lowercaseFieldName;
+            }
         }catch (exception:NoSuchMethodException){
-            fieldName = lowercaseFieldName;
+            lowercaseFieldName;
         }
         return fieldName
     }

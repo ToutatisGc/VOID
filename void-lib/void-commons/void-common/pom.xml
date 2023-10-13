@@ -21,7 +21,7 @@
 
         <dependency>
             <groupId>cn.toutatis</groupId>
-            <artifactId>void-common-annotations</artifactId>
+            <artifactId>void-common-constants</artifactId>
             <version>0.0.0-ALPHA</version>
         </dependency>
 

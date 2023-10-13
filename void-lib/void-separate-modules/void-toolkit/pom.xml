@@ -17,6 +17,12 @@
     <dependencies>
 
         <dependency>
+            <groupId>cn.toutatis</groupId>
+            <artifactId>void-common-constants</artifactId>
+            <version>0.0.0-ALPHA</version>
+        </dependency>
+
+        <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
         </dependency>

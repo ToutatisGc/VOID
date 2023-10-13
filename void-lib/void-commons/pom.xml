@@ -42,7 +42,7 @@
 
 
     <modules>
-        <module>void-common-annotations</module>
+        <module>void-common-constants</module>
 
         <module>void-common</module>
     </modules>
