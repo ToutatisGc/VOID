@@ -2,6 +2,7 @@ package cn.toutatis.xvoid.sql.dql;
 
 import cn.toutatis.xvoid.common.standard.StringPool;
 import cn.toutatis.xvoid.sql.base.*;
+import cn.toutatis.xvoid.sql.convert.ResultObjectMapperConverter;
 import cn.toutatis.xvoid.toolkit.clazz.LambdaToolkit;
 import cn.toutatis.xvoid.toolkit.clazz.XFunc;
 import cn.toutatis.xvoid.toolkit.log.LoggerToolkit;
@@ -19,6 +20,8 @@ public class DQLBuilder<T> {
     private final Logger logger = LoggerToolkit.getLogger(this.getClass());
 
     private final DQLMetaBuilder<T> metaInfo;
+
+    private final ResultObjectMapperConverter converter = ResultObjectMapperConverter.instance();
 
     private boolean isDistinct = false;
 
@@ -137,6 +140,14 @@ public class DQLBuilder<T> {
             selectFields.append(StringPool.ASTERISK);
         }
         return selectFields.toString();
+    }
+
+    public T convert(Map<String,Object> map){
+        Class<T> entityClass = metaInfo.getEntityClass();
+        if (entityClass == null){
+            throw new NullPointerException("实体类为空,构造器请传Class");
+        }
+        return converter.convert(map,entityClass);
     }
 
     public boolean isDistinct() {

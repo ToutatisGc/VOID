@@ -1,28 +1,35 @@
 package cn.toutatis.xvoid.sql.convert;
 
-import com.fasterxml.jackson.core.JsonGenerator;
-import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializerProvider;
-import com.fasterxml.jackson.databind.module.SimpleModule;
 
-import java.io.IOException;
 import java.util.Map;
 
 /**
  * 结果转换器
  * @author Toutatis_Gc
  */
-public class ResultObjectMapperConverter<T> {
+public class ResultObjectMapperConverter {
 
-    private final ObjectMapper objectMapper = new ObjectMapper();
+    private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
-    public ResultObjectMapperConverter() {
-        objectMapper.registerModule(new FieldMapModule());
+    private static volatile ResultObjectMapperConverter INSTANCE;
+
+    private ResultObjectMapperConverter(){}
+
+    public static ResultObjectMapperConverter instance(){
+        if (INSTANCE == null){
+            synchronized (ResultObjectMapperConverter.class){
+                if (INSTANCE == null){
+                    INSTANCE = new ResultObjectMapperConverter();
+                    OBJECT_MAPPER.registerModule(new FieldMapModule());
+                }
+            }
+        }
+        return INSTANCE;
     }
 
-    public T convert(Map<String,Object> map,Class<T> entityClass){
-        return objectMapper.convertValue(map,entityClass);
+    public <T> T convert(Map<String,Object> map,Class<T> entityClass){
+        return OBJECT_MAPPER.convertValue(map,entityClass);
     }
 
 }

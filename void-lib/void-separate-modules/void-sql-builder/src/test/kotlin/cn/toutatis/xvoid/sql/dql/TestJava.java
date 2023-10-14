@@ -1,9 +1,13 @@
 package cn.toutatis.xvoid.sql.dql;
 
 import cn.toutatis.xvoid.sql.base.SQLType;
+import cn.toutatis.xvoid.sql.convert.ResultObjectMapperConverter;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class TestJava {
 
@@ -70,5 +74,13 @@ public class TestJava {
         DQLBuilder<TestTableJava> dqlBuilder1 = new DQLBuilder<>(TestTableJava.class);
         dqlBuilder1.selectChild(dqlBuilderChild,"child");
         System.err.println(dqlBuilder1);
+    }
+
+    @Test
+    public void testConvert(){
+        ResultObjectMapperConverter con = ResultObjectMapperConverter.instance();
+        Map<String, Object> info = Map.of("NAME", "foo");
+        TestTableJava convert = con.convert(info, TestTableJava.class);
+        System.err.println(convert);
     }
 }
