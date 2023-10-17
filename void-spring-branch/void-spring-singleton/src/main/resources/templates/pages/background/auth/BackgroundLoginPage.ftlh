@@ -55,8 +55,8 @@
                      ref="ruleFormRef" :rules="rules" status-icon  <#--element-loading-background="rgba(122, 122, 122, 0.8)"-->
                      element-loading-text="登录中..."
                      style="background-color:rgba(255,255,255,1);padding: 20px;border-radius: 4px;margin-top: 20px">
-                <el-form-item label="用户名" prop="username">
-                    <el-input v-model="loginForm.username" :suffix-icon="apple" placeholder="请输入用户名/手机号/邮箱" clearable>
+                <el-form-item label="用户名" prop="account">
+                    <el-input v-model="loginForm.account" :suffix-icon="apple" placeholder="请输入用户名/手机号/邮箱" clearable>
                         <template #prepend><@HTML.ICON name="User"/></template>
                     </el-input>
                 </el-form-item>
@@ -137,7 +137,7 @@
         data() {
             return {
                 rules: {
-                    username: [
+                    account: [
                         { required: true, message: '请输入用户名', trigger: 'blur' },
                         { min: 4, max: 32, message: '用户名不小于4位', trigger: 'blur' },
                     ],
@@ -147,7 +147,7 @@
                     ]
                 },
                 loginForm:{
-                    username:'',
+                    account:'',
                     password:'',
                     type:'GUEST'
                 },
@@ -162,7 +162,7 @@
                         this.loading = true;
                         let param ={
                             identity:JSON.stringify({
-                                username:this.loginForm.username,
+                                account:this.loginForm.account,
                                 authType:'ACCOUNT_NORMAL'
                             }),
                             secret:this.loginForm.password

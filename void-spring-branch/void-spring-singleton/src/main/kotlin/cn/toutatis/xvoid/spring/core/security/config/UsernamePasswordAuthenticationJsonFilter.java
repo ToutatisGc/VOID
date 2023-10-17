@@ -59,9 +59,8 @@ public class UsernamePasswordAuthenticationJsonFilter extends UsernamePasswordAu
         if(request.getContentType().equalsIgnoreCase(MediaType.APPLICATION_JSON_VALUE)){
             Map<String,Object> userInfo;
             try {
-                // 在此处注入属性sessionId
                 userInfo = jacksonObjectMapper.readValue(request.getInputStream(), Map.class);
-                Map<String,Object> o = (Map<String, Object>) userInfo.get(getUsernameParameter());
+                Map<String,Object> o = JSON.parseObject((String) userInfo.get(getUsernameParameter()));
                 o.put(AuthFields.XVOID_INTERNAL_ACTIVITY_AUTH_SESSION_KEY, request.getSession().getId());
                 Object identity = JSON.toJSONString(o);
                 Object secret = userInfo.get(getPasswordParameter());

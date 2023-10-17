@@ -34,9 +34,9 @@ public class VoidPropertiesConfiguration {
         dictDQLBuilder.eq(SqliteVoidDict::getKey, SqliteVoidDict.AES_SECRET_KEY);
         Map<String, Object> aesMap = sqLiteShell.selectOneMap(dictDQLBuilder);
         System.err.println(aesMap);
-        SqliteVoidDict convert = dictDQLBuilder.convert(aesMap);
-        System.err.println(convert);
-        VoidSpringProperties properties = VoidSpringContext.getProperties();
-        properties.aesSecret = "";
+//        SqliteVoidDict convert = dictDQLBuilder.convert(aesMap);
+//        System.err.println(convert);
+//        VoidSpringProperties properties = VoidSpringContext.getProperties();
+//        properties.aesSecret = "";
     }
 }

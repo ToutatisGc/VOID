@@ -43,7 +43,7 @@ public class DataExporter {
         font.setColor(IndexedColors.WHITE.getIndex());
         cellStyle.setFont(font);
         SXSSFSheet sheet = (SXSSFSheet) workbook.createSheet(sheetName);
-        sheet.trackAllColumnsForAutoSizing();
+//        sheet.trackAllColumnsForAutoSizing();
         Row row = sheet.createRow(0);
         LinkedHashMap<String, String> headers = model.getHeaders();
         Object[] headersSet = headers.keySet().toArray();
