@@ -18,6 +18,7 @@ mvnw.cmd
 *.css.map
 **/node_modules/
 **/package-lock.json
+VOID_LOG
 
 # Ignore Gradle project-specific cache directory
 .gradle
