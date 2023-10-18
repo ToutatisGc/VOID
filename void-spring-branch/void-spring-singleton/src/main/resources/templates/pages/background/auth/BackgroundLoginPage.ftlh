@@ -190,9 +190,15 @@
                                 }
                             }
                         )
+                    }else {
+                        ElNotification({
+                            type:'error',
+                            title: "验证失败",
+                            message: "请填写正确的用户名密码",
+                            duration:3000
+                        })
                     }
                 })
-
 
             }
         }
