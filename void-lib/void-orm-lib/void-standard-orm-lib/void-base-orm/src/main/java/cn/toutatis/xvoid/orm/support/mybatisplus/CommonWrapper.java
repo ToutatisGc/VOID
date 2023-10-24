@@ -12,7 +12,7 @@ public class CommonWrapper<T extends EntityBasicAttribute<T>> {
 
     public QueryWrapper<T> getOpenByIdWrapper(String userId){
         QueryWrapper<T> openStatus = getOpenStatus();
-        openStatus.eq("createBy", userId);
+        openStatus.eq(EntityBasicAttribute.CREATE_BY_COLUMN_NAME, userId);
         return openStatus;
     }
 
@@ -28,7 +28,7 @@ public class CommonWrapper<T extends EntityBasicAttribute<T>> {
      * @return 根据status的Wrapper
      */
     public QueryWrapper<T> getWrapperByDataStatus(String status){
-        return singletonEqWrapper("status", status);
+        return singletonEqWrapper(EntityBasicAttribute.STATUS_COLUMN_NAME, status);
     }
 
     /**

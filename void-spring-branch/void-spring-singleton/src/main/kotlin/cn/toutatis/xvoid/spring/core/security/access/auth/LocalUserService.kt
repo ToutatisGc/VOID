@@ -4,11 +4,12 @@ import cn.toutatis.redis.RedisCommonKeys
 import cn.toutatis.xvoid.common.standard.AuthFields.LOGIN_ACCOUNT_LOCKED_KEY
 import cn.toutatis.xvoid.common.standard.AuthFields.LOGIN_ACCOUNT_SESSION_KEY
 import cn.toutatis.xvoid.common.standard.AuthFields.LOGIN_PRE_CHECK_KEY
-import cn.toutatis.xvoid.spring.business.user.service.FormUserAuthService
+import cn.toutatis.xvoid.orm.base.authentication.entity.RequestAuthEntity
 import cn.toutatis.xvoid.spring.configure.system.VoidGlobalConfiguration
 import cn.toutatis.xvoid.spring.configure.system.VoidSecurityConfiguration
 import cn.toutatis.xvoid.spring.configure.system.enums.global.RunMode
 import cn.toutatis.xvoid.spring.core.security.access.ValidationMessage
+import cn.toutatis.xvoid.orm.base.authentication.service.VoidAuthService
 import cn.toutatis.xvoid.toolkit.validator.Validator
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.data.redis.core.RedisTemplate

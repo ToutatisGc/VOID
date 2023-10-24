@@ -1,13 +1,14 @@
-package cn.toutatis.xvoid.spring.business.user.service;
+package cn.toutatis.xvoid.spring.core.security.access.auth;
 
 import cn.toutatis.xvoid.common.standard.StandardFields;
 import cn.toutatis.xvoid.common.result.DataStatus;
 import cn.toutatis.xvoid.common.result.ResultCode;
+import cn.toutatis.xvoid.orm.base.authentication.entity.RequestAuthEntity;
 import cn.toutatis.xvoid.orm.base.authentication.entity.SystemUserLogin;
+import cn.toutatis.xvoid.orm.base.authentication.service.SystemUserLoginService;
 import cn.toutatis.xvoid.spring.core.security.access.ValidationMessage;
 import cn.toutatis.xvoid.spring.core.security.access.VoidSecurityAuthenticationService;
-import cn.toutatis.xvoid.spring.business.user.entity.FormUserDetails;
-import cn.toutatis.xvoid.spring.core.security.access.auth.RequestAuthEntity;
+import cn.toutatis.xvoid.orm.base.authentication.entity.FormUserDetails;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.springframework.beans.factory.annotation.Autowired;

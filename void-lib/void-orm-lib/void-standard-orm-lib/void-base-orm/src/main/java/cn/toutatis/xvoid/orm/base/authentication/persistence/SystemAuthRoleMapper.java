@@ -1,4 +1,4 @@
-package cn.toutatis.xvoid.spring.business.user.persistence;
+package cn.toutatis.xvoid.orm.base.authentication.persistence;
 
 import cn.toutatis.xvoid.orm.base.authentication.entity.SystemAuthRole;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;

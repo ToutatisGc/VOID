@@ -1,10 +1,10 @@
-package cn.toutatis.xvoid.spring.business.user.service.impl;
+package cn.toutatis.xvoid.orm.base.authentication.service.impl;
 
 import cn.toutatis.xvoid.orm.base.authentication.entity.SystemAuthRole;
 import cn.toutatis.xvoid.orm.base.authentication.entity.SystemUserRoleRelation;
-import cn.toutatis.xvoid.spring.business.user.persistence.SystemAuthRoleMapper;
-import cn.toutatis.xvoid.spring.business.user.persistence.SystemUserRoleRelationMapper;
-import cn.toutatis.xvoid.spring.business.user.service.SystemAuthRoleService;
+import cn.toutatis.xvoid.orm.base.authentication.persistence.SystemAuthRoleMapper;
+import cn.toutatis.xvoid.orm.base.authentication.persistence.SystemUserRoleRelationMapper;
+import cn.toutatis.xvoid.orm.base.authentication.service.SystemAuthRoleService;
 import cn.toutatis.xvoid.orm.support.mybatisplus.VoidMybatisServiceImpl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.springframework.stereotype.Service;

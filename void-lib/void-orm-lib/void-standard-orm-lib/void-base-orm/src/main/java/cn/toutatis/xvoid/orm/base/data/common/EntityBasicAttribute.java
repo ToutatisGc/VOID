@@ -41,6 +41,21 @@ import java.time.format.DateTimeFormatter;
 @ApiModel(value = "EntityBasicAttribute", description = "基础实体类")
 public abstract class EntityBasicAttribute<O extends Model<?>> extends Model<O> {
 
+    /**
+     * 实体状态字段名称
+     */
+    public static final String STATUS_COLUMN_NAME = "status";
+
+    /**
+     * 创建人字段名称
+     */
+    public static final String CREATE_BY_COLUMN_NAME = "createBy";
+
+    /**
+     *
+     */
+    public static final String CREATE_TIME_COLUMN_NAME = "createTime";
+
     protected EntityBasicAttribute(){}
 
     /**
@@ -74,7 +89,7 @@ public abstract class EntityBasicAttribute<O extends Model<?>> extends Model<O> 
      */
     @JsonIgnore
     @CreatedDate
-    @TableField(value = "createTime",fill = FieldFill.INSERT)
+    @TableField(value = CREATE_TIME_COLUMN_NAME,fill = FieldFill.INSERT)
     @ApiModelProperty(value="创建日期", required=true)
     @Column(columnDefinition = "DATETIME NOT NULL DEFAULT current_timestamp() COMMENT '创建日期'")
     protected LocalDateTime createTime;
@@ -84,7 +99,7 @@ public abstract class EntityBasicAttribute<O extends Model<?>> extends Model<O> 
      */
     @JsonIgnore
     @CreatedBy
-    @TableField(value = "createBy")
+    @TableField(value = CREATE_BY_COLUMN_NAME)
     @ApiModelProperty(value="创建操作人")
     @Column(columnDefinition = "VARCHAR(32) NOT NULL DEFAULT '"+ StandardFields.VOID_BUSINESS_DEFAULT_CREATOR +"' COMMENT '创建操作人'")
     protected String createBy;
@@ -120,7 +135,7 @@ public abstract class EntityBasicAttribute<O extends Model<?>> extends Model<O> 
      * 数据状态
      */
     @Enumerated(EnumType.ORDINAL)
-    @TableField(value = "`status`",fill = FieldFill.INSERT)
+    @TableField(value = "`"+STATUS_COLUMN_NAME+"`",fill = FieldFill.INSERT)
     @ApiModelProperty(value="数据状态标志", required=true)
     @Column(nullable = false,columnDefinition = "TINYINT NOT NULL DEFAULT 0 COMMENT '数据状态'")
     protected DataStatus status = DataStatus.SYS_OPEN_0000;

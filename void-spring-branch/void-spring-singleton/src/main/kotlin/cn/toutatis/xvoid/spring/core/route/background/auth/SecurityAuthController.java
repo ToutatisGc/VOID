@@ -6,7 +6,7 @@ import cn.toutatis.xvoid.common.result.Result;
 import cn.toutatis.xvoid.common.result.ResultCode;
 import cn.toutatis.xvoid.common.standard.AuthFields;
 import cn.toutatis.xvoid.orm.base.authentication.enums.RegistryType;
-import cn.toutatis.xvoid.spring.business.user.service.SystemUserLoginService;
+import cn.toutatis.xvoid.orm.base.authentication.service.SystemUserLoginService;
 import cn.toutatis.xvoid.spring.core.tools.ViewToolkit;
 import cn.toutatis.xvoid.spring.annotations.application.VoidController;
 import cn.toutatis.xvoid.spring.support.toolkits.VoidSpringToolkit;

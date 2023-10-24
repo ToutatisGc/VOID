@@ -1,4 +1,4 @@
-package cn.toutatis.xvoid.spring.business.user.service;
+package cn.toutatis.xvoid.orm.base.authentication.service;
 
 import cn.toutatis.xvoid.orm.base.authentication.entity.SystemUserRoleRelation;
 import cn.toutatis.xvoid.orm.support.VoidService;

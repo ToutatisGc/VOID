@@ -34,6 +34,11 @@ object AuthFields {
     const val XVOID_INTERNAL_ACTIVITY_AUTH_SESSION_KEY = "XVOID_INTERNAL_ACTIVITY_AUTH_SESSION"
 
     /**
+     * 验证码session key
+     */
+    const val VALIDATION_SECURITY_CODE_SESSION_KEY = "VOID_VALIDATION_SECURITY_CODE_SESSION_KEY"
+
+    /**
      * Auth Key Prefix Redis Key前缀
      */
     const val AUTH_KEY_PREFIX = "${StandardFields.SYSTEM_PREFIX}:AUTH"

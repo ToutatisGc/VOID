@@ -1,5 +1,6 @@
 package cn.toutatis.xvoid.orm.support.mybatisplus;
 
+import cn.toutatis.xvoid.orm.base.data.common.EntityBasicAttribute;
 import lombok.Data;
 
 /**
@@ -22,7 +23,7 @@ public class PagingQuery {
     /**
      * 排序字段
      */
-    private String orderByColumn = "createTime";
+    private String defaultOrderColumn = EntityBasicAttribute.CREATE_TIME_COLUMN_NAME;
 
     /**
      * 是否正序排序

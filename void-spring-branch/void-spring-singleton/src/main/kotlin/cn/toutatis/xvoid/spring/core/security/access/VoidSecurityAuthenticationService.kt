@@ -3,9 +3,10 @@ package cn.toutatis.xvoid.spring.core.security.access
 import cn.toutatis.xvoid.common.standard.StandardFields
 import cn.toutatis.xvoid.common.result.ResultCode
 import cn.toutatis.xvoid.common.standard.AuthFields
+import cn.toutatis.xvoid.orm.base.authentication.entity.RequestAuthEntity
 import cn.toutatis.xvoid.spring.configure.system.VoidGlobalConfiguration
 import cn.toutatis.xvoid.spring.core.security.access.auth.LocalUserService
-import cn.toutatis.xvoid.spring.core.security.access.auth.RequestAuthEntity
+import cn.toutatis.xvoid.orm.base.authentication.enums.AuthType
 import cn.toutatis.xvoid.toolkit.log.LoggerToolkit
 import cn.toutatis.xvoid.toolkit.validator.Validator
 import com.alibaba.fastjson.JSON
@@ -33,15 +34,6 @@ import javax.servlet.http.HttpSession
 @Service
 class VoidSecurityAuthenticationService : UserDetailsService {
 
-    companion object{
-
-        /**
-         * 验证码session key
-         */
-        const val VALIDATION_SECURITY_CODE_SESSION_KEY = "VOID_VALIDATION_SECURITY_CODE_SESSION_KEY"
-
-
-    }
 
 
     private val logger = LoggerToolkit.getLogger(javaClass)
@@ -86,7 +78,7 @@ class VoidSecurityAuthenticationService : UserDetailsService {
     override fun loadUserByUsername(identity: String): UserDetails {
         // 校验是否为空
         if (Validator.strNotBlank(identity)){
-            val requestAuthEntity:RequestAuthEntity
+            val requestAuthEntity: RequestAuthEntity
             try {
                 // 尝试序列化对象
                 val identityObj = JSON.parseObject(identity)
@@ -135,8 +127,8 @@ class VoidSecurityAuthenticationService : UserDetailsService {
             return false
         }
         val session: HttpSession = request.session
-        val sessionSecurityCode = session.getAttribute(VALIDATION_SECURITY_CODE_SESSION_KEY) as String?
-        session.removeAttribute(VALIDATION_SECURITY_CODE_SESSION_KEY)
+        val sessionSecurityCode = session.getAttribute(AuthFields.VALIDATION_SECURITY_CODE_SESSION_KEY) as String?
+        session.removeAttribute(AuthFields.VALIDATION_SECURITY_CODE_SESSION_KEY)
         if (Validator.strIsBlank(sessionSecurityCode)) {
             return false
         }

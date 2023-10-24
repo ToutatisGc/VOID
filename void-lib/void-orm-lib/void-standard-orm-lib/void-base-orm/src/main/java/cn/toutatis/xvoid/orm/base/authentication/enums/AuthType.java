@@ -1,4 +1,4 @@
-package cn.toutatis.xvoid.spring.core.security.access;
+package cn.toutatis.xvoid.orm.base.authentication.enums;
 
 
 /**

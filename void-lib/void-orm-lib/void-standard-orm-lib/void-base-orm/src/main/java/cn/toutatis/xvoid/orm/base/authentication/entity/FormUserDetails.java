@@ -1,4 +1,4 @@
-package cn.toutatis.xvoid.spring.business.user.entity;
+package cn.toutatis.xvoid.orm.base.authentication.entity;
 
 import com.alibaba.fastjson.JSONObject;
 import org.springframework.security.core.GrantedAuthority;

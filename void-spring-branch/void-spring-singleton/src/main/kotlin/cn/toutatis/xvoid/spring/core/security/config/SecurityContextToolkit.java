@@ -1,6 +1,6 @@
 package cn.toutatis.xvoid.spring.core.security.config;
 
-import cn.toutatis.xvoid.spring.business.user.entity.AuthInfo;
+import cn.toutatis.xvoid.orm.base.authentication.entity.AuthInfo;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;

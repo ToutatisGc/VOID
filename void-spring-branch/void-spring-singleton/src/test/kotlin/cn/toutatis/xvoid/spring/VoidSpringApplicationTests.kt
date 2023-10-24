@@ -1,6 +1,6 @@
 package cn.toutatis.xvoid.spring
 
-import cn.toutatis.xvoid.spring.business.user.persistence.SystemUserLoginRepository
+import cn.toutatis.xvoid.orm.base.authentication.persistence.SystemUserLoginRepository
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.springframework.beans.factory.annotation.Autowired

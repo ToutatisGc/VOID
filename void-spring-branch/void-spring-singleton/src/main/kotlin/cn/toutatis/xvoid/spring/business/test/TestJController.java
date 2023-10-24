@@ -6,7 +6,7 @@ import cn.toutatis.xvoid.orm.forum.persistence.ForumArticleMapper;
 import cn.toutatis.xvoid.orm.forum.persistence.ForumArticleRepository;
 import cn.toutatis.xvoid.orm.forum.services.ForumArticleService;
 import cn.toutatis.xvoid.spring.annotations.application.VoidController;
-import cn.toutatis.xvoid.spring.business.user.persistence.SystemAuthPathRepository;
+import cn.toutatis.xvoid.orm.base.authentication.persistence.SystemAuthPathRepository;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import org.springframework.beans.factory.annotation.Autowired;

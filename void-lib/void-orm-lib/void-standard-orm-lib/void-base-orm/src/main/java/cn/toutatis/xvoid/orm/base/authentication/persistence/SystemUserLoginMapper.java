@@ -1,4 +1,4 @@
-package cn.toutatis.xvoid.spring.business.user.persistence;
+package cn.toutatis.xvoid.orm.base.authentication.persistence;
 
 import cn.toutatis.xvoid.orm.base.authentication.entity.SystemUserLogin;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
@@ -26,7 +26,9 @@ public interface SystemUserLoginMapper extends BaseMapper<SystemUserLogin> {
      * @return 帐户名是否存在
      */
     @Select("SELECT 1 AS `check` FROM " +SystemUserLogin.TABLE +
-            " WHERE username = #{account} OR account = #{account} OR email = #{account} OR phoneCode = #{account} LIMIT 1")
+            " WHERE username = #{account} OR account = #{account} " +
+            " OR email = #{account} OR phoneCode = #{account} LIMIT 1"
+    )
     Boolean selectAccountExist(@Param("account") String account);
 
 }

@@ -64,7 +64,7 @@ public class VoidMybatisServiceImpl<M extends BaseMapper<T>, T extends EntityBas
     @Override
     public Page<T> pageList(PagingQuery pagingQuery, T t) {
         QueryWrapper<T> queryWrapper = new QueryWrapper<>(t);
-        queryWrapper.orderBy(true, pagingQuery.getAsc(), pagingQuery.getOrderByColumn());
+        queryWrapper.orderBy(true, pagingQuery.getAsc(), pagingQuery.getDefaultOrderColumn());
         Page<T> page  = new Page<>(pagingQuery.getCurrentPage(),pagingQuery.getPageSize());
         page = baseMapper.selectPage(page, queryWrapper);
         return page;
