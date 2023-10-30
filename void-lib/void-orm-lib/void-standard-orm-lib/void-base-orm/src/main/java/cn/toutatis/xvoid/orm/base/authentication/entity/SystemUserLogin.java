@@ -71,10 +71,11 @@ public class SystemUserLogin extends EntityBasicAttribute<SystemUserLogin> {
     @Column(name="phoneCode",columnDefinition = "VARCHAR(11) COMMENT '电话号码'")
     private String phoneCode;
 
-    @TableField("openId")
-    @ApiModelProperty(value="微信公众平台ID",required = false, example = "微信公众平台ID")
-    @Column(name="openId",columnDefinition = "VARCHAR(64) COMMENT '微信公众平台openID'")
-    private String openId;
+    // TODO 移动到第三方微信模块的实体类
+//    @TableField("openId")
+//    @ApiModelProperty(value="微信公众平台ID",required = false, example = "微信公众平台ID")
+//    @Column(name="openId",columnDefinition = "VARCHAR(64) COMMENT '微信公众平台openID'")
+//    private String openId;
 
     @TableField("email")
     @ApiModelProperty(value="邮箱",required = false, example = "gc@toutatis.cn")
@@ -91,6 +92,12 @@ public class SystemUserLogin extends EntityBasicAttribute<SystemUserLogin> {
     @ApiModelProperty(value="过期时间", required=false)
     @Column(nullable = true,columnDefinition = "DATETIME COMMENT '过期时间'")
     private LocalDateTime expiredTime;
+
+    @JsonIgnore
+    @TableField(value = "allowLoginDevicesCount")
+    @ApiModelProperty(value="允许登录设备数量", required=false)
+    @Column(nullable = false,columnDefinition = "INT DEFAULT 3 COMMENT '允许登录设备数量'")
+    private Integer allowLoginDevicesCount;
 
     @Transient
     public String getExpiredTimeStr() {

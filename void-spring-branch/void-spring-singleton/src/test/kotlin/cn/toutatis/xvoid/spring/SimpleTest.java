@@ -1,9 +1,13 @@
 package cn.toutatis.xvoid.spring;
 
+import cn.toutatis.xvoid.orm.base.authentication.entity.SystemUserLogin;
 import cn.toutatis.xvoid.orm.base.infrastructure.entity.SystemLog;
 import cn.toutatis.xvoid.orm.base.infrastructure.enums.LogType;
+import cn.toutatis.xvoid.toolkit.clazz.LambdaToolkit;
+import cn.toutatis.xvoid.toolkit.clazz.XFunc;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.google.common.base.Function;
 import org.apache.commons.lang3.time.StopWatch;
 import org.junit.Test;
 

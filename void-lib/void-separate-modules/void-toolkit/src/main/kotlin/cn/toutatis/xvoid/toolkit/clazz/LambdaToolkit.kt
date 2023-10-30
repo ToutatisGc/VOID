@@ -3,6 +3,7 @@ package cn.toutatis.xvoid.toolkit.clazz
 import cn.toutatis.xvoid.common.annotations.database.DDLField
 import cn.toutatis.xvoid.toolkit.formatting.StringToolkit
 import cn.toutatis.xvoid.toolkit.validator.Validator
+import org.apache.poi.ss.formula.functions.T
 import kotlin.Throws
 import java.lang.Exception
 import java.lang.IllegalArgumentException
@@ -14,6 +15,8 @@ import java.lang.invoke.SerializedLambda
 object LambdaToolkit {
 
     private const val GET_FIELD_LAMBDA = "get"
+
+    private val CACHE:HashMap<String,String> = HashMap(128)
 
     /**
      * 将指定的函数对象转换为 SerializedLambda 对象，以便在序列化或其他操作中使用。
@@ -42,7 +45,12 @@ object LambdaToolkit {
     fun getFieldName(serializedLambda: SerializedLambda): String {
         val implMethodName = serializedLambda.implMethodName
         require(implMethodName.startsWith(GET_FIELD_LAMBDA)) { "非GET参数" }
-        val implClass = Class.forName(serializedLambda.implClass.replace("/","."))
+        val implClassName = serializedLambda.implClass
+        val keyName = "${implClassName}:${implMethodName}"
+        if (CACHE.containsKey(keyName)){
+            return CACHE[keyName]!!
+        }
+        val implClass = Class.forName(implClassName.replace("/","."))
         val uppercaseName = implMethodName.substring(3)
         val firstChar = Character.toLowerCase(uppercaseName[0])
         val lowercaseFieldName = firstChar.toString() + uppercaseName.substring(1)
@@ -55,6 +63,7 @@ object LambdaToolkit {
         }catch (exception:NoSuchMethodException){
             lowercaseFieldName;
         }
+        CACHE[keyName] = fieldName
         return fieldName
     }
 
@@ -65,7 +74,7 @@ object LambdaToolkit {
      */
     @JvmStatic
     @Throws(Exception::class)
-    fun getFieldName(func: XFunc<*, *>): String {
-        return getFieldName(serialize<Any, Any>(func))
+    fun <T,R> getFieldName(func: XFunc<T, R>): String {
+        return getFieldName(serialize<T, R>(func))
     }
 }

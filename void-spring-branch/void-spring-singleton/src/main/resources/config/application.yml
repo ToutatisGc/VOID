@@ -5,6 +5,8 @@ server:
   shutdown: GRACEFUL
   tomcat:
     keep-alive-timeout: 10s
+  servlet:
+    context-path: "/xvoid"
 spring:
   application:
     name: VOID-SPRING | 春野

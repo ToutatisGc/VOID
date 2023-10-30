@@ -5,11 +5,31 @@ import cn.toutatis.xvoid.orm.base.authentication.enums.AuthType;
 import com.alibaba.fastjson.JSONObject;
 
 
+/**
+ * 请求登录JSON转换实体
+ * @author Toutatis_Gc
+ */
 public class RequestAuthEntity {
-    private JSONObject rawInformation;
-    private String account;
-    private AuthType authType;
-    private String sessionId;
+
+    /**
+     * 登录载荷
+     */
+    private final JSONObject rawInformation;
+
+    /**
+     * 登录账户
+     */
+    private final String account;
+
+    /**
+     * 登录类型
+     */
+    private final AuthType authType;
+
+    /**
+     * 请求sessionId
+     */
+    private final String sessionId;
 
     public RequestAuthEntity(JSONObject rawInformation) {
         this.rawInformation = rawInformation;

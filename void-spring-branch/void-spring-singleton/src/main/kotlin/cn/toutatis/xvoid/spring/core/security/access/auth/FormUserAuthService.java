@@ -1,5 +1,6 @@
 package cn.toutatis.xvoid.spring.core.security.access.auth;
 
+import cn.hutool.core.lang.func.Func1;
 import cn.toutatis.xvoid.common.standard.StandardFields;
 import cn.toutatis.xvoid.common.result.DataStatus;
 import cn.toutatis.xvoid.common.result.ResultCode;
@@ -9,6 +10,8 @@ import cn.toutatis.xvoid.orm.base.authentication.service.SystemUserLoginService;
 import cn.toutatis.xvoid.spring.core.security.access.ValidationMessage;
 import cn.toutatis.xvoid.spring.core.security.access.VoidSecurityAuthenticationService;
 import cn.toutatis.xvoid.orm.base.authentication.entity.FormUserDetails;
+import cn.toutatis.xvoid.toolkit.clazz.LambdaToolkit;
+import cn.toutatis.xvoid.toolkit.clazz.XFunc;
 import com.alibaba.fastjson.JSONObject;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,11 +38,12 @@ public class FormUserAuthService {
     @Autowired
     private HttpServletRequest request;
 
-    public UserDetails findSimpleUser(RequestAuthEntity authEntity) {
+    public UserDetails findSimpleUser(RequestAuthEntity authEntity) throws Exception{
         QueryWrapper<SystemUserLogin> queryWrapper = new QueryWrapper<>();
         String account = authEntity.getAccount();
+        XFunc<SystemUserLogin, String> getEmail = SystemUserLogin::getEmail;
         queryWrapper
-                .eq("email",account).or()
+                .eq(LambdaToolkit.getFieldName(getEmail),account).or()
                 .eq("account", account).or()
                 .eq("phoneCode", account).or()
         ;

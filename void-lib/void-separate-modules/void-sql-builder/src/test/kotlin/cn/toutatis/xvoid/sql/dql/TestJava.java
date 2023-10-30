@@ -1,7 +1,10 @@
 package cn.toutatis.xvoid.sql.dql;
 
+import cn.hutool.core.lang.func.Func1;
 import cn.toutatis.xvoid.sql.base.SQLType;
 import cn.toutatis.xvoid.sql.convert.ResultObjectMapperConverter;
+import cn.toutatis.xvoid.toolkit.clazz.LambdaToolkit;
+import cn.toutatis.xvoid.toolkit.clazz.XFunc;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
@@ -47,6 +50,12 @@ public class TestJava {
         dqlBuilder.select(TestTableJava::getAge);
         dqlBuilder.select("name","username");
         System.err.println(dqlBuilder.build());
+        XFunc<TestTableOwn, String> name = TestTableOwn::getName;
+        LambdaToolkit.getFieldName(name);
+
+        String fieldName = LambdaToolkit.getFieldName((XFunc<TestTableOwn, String>)TestTableOwn::getName);
+        String fieldName1 = LambdaToolkit.getFieldName(TestTableOwn::getName);
+        System.err.println(fieldName1);
     }
 
     @Test

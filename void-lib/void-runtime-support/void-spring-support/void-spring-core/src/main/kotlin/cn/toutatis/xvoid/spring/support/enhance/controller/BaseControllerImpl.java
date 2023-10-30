@@ -69,7 +69,7 @@ public class BaseControllerImpl<O extends EntityBasicAttribute<O>, SERVICE exten
                 voidGlobalConfiguration.getGlobalServiceConfig().getUseDetailedMode(),
                 voidGlobalConfiguration.getGlobalServiceConfig().getAutoConfig()
         );
-        result.setRequestId((String) request.getAttribute(StandardFields.FILTER_REQUEST_ID_KEY));
+//        result.setRequestId((String) request.getAttribute(StandardFields.FILTER_REQUEST_ID_KEY));
     }
 
     @Override

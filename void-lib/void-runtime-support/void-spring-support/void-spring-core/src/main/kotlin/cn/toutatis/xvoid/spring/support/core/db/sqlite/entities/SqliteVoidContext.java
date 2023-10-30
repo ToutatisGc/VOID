@@ -9,10 +9,10 @@ import lombok.Data;
  * @author Toutatis_Gc
  */
 @Data
-@DDLTable(SqliteVoidDict.TABLE)
-public class SqliteVoidDict {
+@DDLTable(SqliteVoidContext.TABLE)
+public class SqliteVoidContext {
 
-    public static final String TABLE = "VOID_DICT";
+    public static final String TABLE = "VOID_CONTEXT";
 
     public static final String AES_SECRET_KEY = "AES_SECRET";
 

@@ -7,6 +7,5 @@ import java.lang.RuntimeException
  * @author Toutatis_Gc
  * @date 2022/11/19 9:36
  */
-class IllegalException : RuntimeException {
-    constructor(message: String?) : super(message) {}
+class IllegalException(message: String?) : RuntimeException(message) {
 }
