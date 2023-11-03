@@ -11,15 +11,17 @@ import com.baomidou.mybatisplus.annotation.EnumValue;
 public enum DataStatus {
 
     /**
-     * SYS_OPEN_0000和SYS_DELETED_0000不可操作
-     * 两种状态为顶级数据标志,影响整个系统使用,并且受命名/index字段/顺序等影响
-     * 如果一定需要改变,请仔细查看调用和业务数据库为空或者系统未使用
+     * <p>SYS_OPEN_0000和SYS_DELETED_0000不可操作<p/>
+     * <p>两种状态为顶级数据标志,影响整个系统使用,并且受命名/index字段/顺序等影响<p/>
+     * <p>如果一定需要改变,请仔细查看调用和业务数据库为空或者系统未使用<p/>
      */
     SYS_OPEN_0000(0,"SYS_OPEN_0000","数据正常","数据一切正常"),
     SYS_DELETED_0000(1,"SYS_DELETED_0000","逻辑删除","数据删除[用户不可见]"),
+
     // WARNING END WARNING
+
     /**
-     * 系统状态
+     * 数据可见状态
      */
     SYS_VISIBILITY_0000(2,"SYS_VISIBILITY_0000","数据可浏览","数据对所有人可见"),
     SYS_VISIBILITY_0001(3,"SYS_VISIBILITY_0001","数据可浏览","数据对部分人可见"),
@@ -79,10 +81,10 @@ public enum DataStatus {
     /**
      * 支付状态
      */
-    SYS_PENDING_PAYMENT_0000(36, "SYS_PENDING_PAYMENT_0000", "待付款", "数据处于待付款状态"),
+    SYS_PENDING_PAYMENT_0000(36, "SYS_PENDING_PAYMENT_0000", "待支付", "数据处于待支付状态"),
     SYS_PAYMENT_SUBMITTED_0000(37, "SYS_PAYMENT_SUBMITTED_0000", "支付已提交", "支付已提交支付渠道,待回调"),
-    SYS_PAYMENT_FAILURE_0000(38, "SYS_PAYMENT_FAILURE_0000", "支付失败", "付款失败"),
-    SYS_PAID_0000(39, "SYS_PAID_0000", "已付款", "数据已付款"),
+    SYS_PAYMENT_FAILURE_0000(38, "SYS_PAYMENT_FAILURE_0000", "支付失败", "支付失败"),
+    SYS_PAID_0000(39, "SYS_PAID_0000", "已支付", "数据已支付"),
     ;
 
     @EnumValue

@@ -4,8 +4,11 @@ import cn.toutatis.xvoid.spring.core.tools.ViewToolkit;
 import cn.toutatis.xvoid.spring.annotations.application.VoidController;
 import cn.toutatis.xvoid.spring.configure.system.VoidGlobalConfiguration;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Scope;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
@@ -13,7 +16,8 @@ import org.springframework.web.servlet.ModelAndView;
  * @author Toutatis_Gc
  * @date 2022/10/26 10:10
  */
-@VoidController
+@RestController
+@Transactional(rollbackFor = Exception.class)
 public class FrontRootController {
 
     @Value("${spring.application.name}")

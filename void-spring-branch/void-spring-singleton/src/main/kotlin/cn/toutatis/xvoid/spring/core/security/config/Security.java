@@ -1,6 +1,7 @@
 package cn.toutatis.xvoid.spring.core.security.config;
 
 import cn.toutatis.core.root.security.handler.LogOutHandler;
+import cn.toutatis.xvoid.common.standard.AuthFields;
 import cn.toutatis.xvoid.spring.core.security.access.VoidSecurityAuthenticationService;
 import cn.toutatis.xvoid.spring.core.security.config.handler.SecurityHandler;
 import cn.toutatis.xvoid.spring.support.core.aop.filters.AnyPerRequestInjectRidFilter;
@@ -111,6 +112,11 @@ public class Security<S extends Session> extends WebSecurityConfigurerAdapter {
         return new SpringSessionBackedSessionRegistry<>(this.sessionRepository);
     }
 
+    @Bean
+    public BCryptPasswordEncoder bCryptPasswordEncoder(){
+        return new BCryptPasswordEncoder();
+    }
+
 //    @Bean
 //    public SessionAuthenticationStrategy sessionAuthenticationStrategy() {
 //        SessionRegistryImpl sessionRegistry = new SessionRegistryImpl();
@@ -137,7 +143,7 @@ public class Security<S extends Session> extends WebSecurityConfigurerAdapter {
         DaoAuthenticationProvider daoAuthenticationProvider = new DaoAuthenticationProvider();
         daoAuthenticationProvider.setHideUserNotFoundExceptions(false);
         daoAuthenticationProvider.setUserDetailsService(voidAuthenticationService);
-        daoAuthenticationProvider.setPasswordEncoder(new BCryptPasswordEncoder());
+        daoAuthenticationProvider.setPasswordEncoder(bCryptPasswordEncoder());
         return daoAuthenticationProvider;
     }
 
@@ -153,8 +159,8 @@ public class Security<S extends Session> extends WebSecurityConfigurerAdapter {
         try {
             jsonInterceptor.setAuthenticationManager(authenticationManager());
             jsonInterceptor.setFilterProcessesUrl(AUTH_PATH);
-            jsonInterceptor.setUsernameParameter("identity");
-            jsonInterceptor.setPasswordParameter("secret");
+            jsonInterceptor.setUsernameParameter(AuthFields.IDENTITY);
+            jsonInterceptor.setPasswordParameter(AuthFields.SECRET);
             jsonInterceptor.setAuthenticationSuccessHandler(securityHandler);
             jsonInterceptor.setAuthenticationFailureHandler(securityHandler);
         } catch (Exception e) {

@@ -1,6 +1,9 @@
 package cn.toutatis.xvoid.spring.core.security.config;
 
 import cn.toutatis.xvoid.orm.base.authentication.entity.AuthInfo;
+import cn.toutatis.xvoid.toolkit.log.LoggerToolkit;
+import cn.toutatis.xvoid.toolkit.log.LoggerToolkitKt;
+import org.slf4j.Logger;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -15,6 +18,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class SecurityContextToolkit {
 
+    private final Logger logger = LoggerToolkit.getLogger(this.getClass());
+
     /**
      * 获取当前登录用户
      * @param c 具体的用户类型
@@ -24,7 +29,7 @@ public class SecurityContextToolkit {
     public <T extends AuthInfo> T getCurrentLoginUser(Class<T> c){
         Object principal = getPrincipal();
         if (principal instanceof String){return null;}
-        return  c.cast(principal);
+        return c.cast(principal);
     }
 
     /**
@@ -33,7 +38,7 @@ public class SecurityContextToolkit {
     public AuthInfo getCurrentLoginUser(){
         Object principal = getPrincipal();
         if (principal instanceof String){return null;}
-        return  (AuthInfo)principal;
+        return (AuthInfo) principal;
     }
 
     /**
@@ -44,7 +49,8 @@ public class SecurityContextToolkit {
         if (context != null){
             return context.getAuthentication();
         }else {
-            throw new NullPointerException("安全上下文缺失.");
+            String error = LoggerToolkitKt.errorWithModule(logger, "SECURITY", "安全上下文缺失");
+            throw new NullPointerException(error);
         }
     }
 

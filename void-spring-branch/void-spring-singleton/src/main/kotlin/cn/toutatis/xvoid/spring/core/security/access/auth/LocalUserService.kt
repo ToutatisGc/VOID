@@ -8,7 +8,7 @@ import cn.toutatis.xvoid.orm.base.authentication.entity.RequestAuthEntity
 import cn.toutatis.xvoid.spring.configure.system.VoidGlobalConfiguration
 import cn.toutatis.xvoid.spring.configure.system.VoidSecurityConfiguration
 import cn.toutatis.xvoid.spring.configure.system.enums.global.RunMode
-import cn.toutatis.xvoid.spring.core.security.access.ValidationMessage
+import cn.toutatis.xvoid.spring.core.security.access.AuthValidationMessage
 import cn.toutatis.xvoid.orm.base.authentication.service.VoidAuthService
 import cn.toutatis.xvoid.toolkit.validator.Validator
 import org.springframework.beans.factory.annotation.Autowired
@@ -51,9 +51,9 @@ class LocalUserService : VoidAuthService {
     override fun preCheckAccount(requestAuthEntity: RequestAuthEntity): Boolean {
         val account = requestAuthEntity.account
         // 用户名为空
-        if (Validator.strIsBlank(account)) throwFailed(ValidationMessage.USERNAME_BLANK)
+        if (Validator.strIsBlank(account)) throwFailed(AuthValidationMessage.USERNAME_BLANK)
         // 用户名不合法
-        if (!Validator.checkCNUsername(account)) throwFailed(ValidationMessage.USERNAME_ILLEGAL)
+        if (!Validator.checkCNUsername(account)) throwFailed(AuthValidationMessage.USERNAME_ILLEGAL)
         val loginAccountOps = redisTemplate.boundValueOps(RedisCommonKeys.concat(LOGIN_ACCOUNT_SESSION_KEY, requestAuthEntity.sessionId))
         loginAccountOps.set(account, Duration.ofMinutes(10L))
         // 调试模式跳过检查
@@ -64,7 +64,7 @@ class LocalUserService : VoidAuthService {
             val sessionOps = redisTemplate.boundValueOps(RedisCommonKeys.concat(LOGIN_PRE_CHECK_KEY,requestAuthEntity.sessionId))
             val store = sessionOps.get()
             if (store == null || account != store) {
-                throwFailed(ValidationMessage.USERNAME_NOT_PRE_CHECK)
+                throwFailed(AuthValidationMessage.USERNAME_NOT_PRE_CHECK)
             }
         }
         // 允许重试
@@ -72,10 +72,10 @@ class LocalUserService : VoidAuthService {
             val loginLockOps = redisTemplate.boundValueOps(RedisCommonKeys.concat(LOGIN_ACCOUNT_LOCKED_KEY,account))
             val currentLoginLocked = loginLockOps.get() as String?
             if (currentLoginLocked != null){
-                if (ValidationMessage.ACCOUNT_LOCKED_TODAY == currentLoginLocked){
+                if (AuthValidationMessage.ACCOUNT_LOCKED_TODAY == currentLoginLocked){
                     throwFailed(currentLoginLocked)
                 }else{
-                    throwFailed(ValidationMessage.ACCOUNT_WILL_UNLOCK.format(currentLoginLocked))
+                    throwFailed(AuthValidationMessage.ACCOUNT_WILL_UNLOCK.format(currentLoginLocked))
                 }
             }
         }

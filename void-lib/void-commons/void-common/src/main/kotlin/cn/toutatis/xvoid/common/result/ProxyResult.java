@@ -32,6 +32,8 @@ public class ProxyResult extends AbstractResult implements Result {
      */
     public static final String PLACEHOLDER_HEADER = "&PH&:";
 
+    public static final String FORMAT_HEADER = "[{}]";
+
     private final Logger logger = LoggerToolkit.getLogger(this.getClass());
 
     /**

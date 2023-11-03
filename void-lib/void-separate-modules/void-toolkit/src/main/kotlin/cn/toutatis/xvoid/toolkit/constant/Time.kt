@@ -135,4 +135,13 @@ object Time {
     @JvmStatic
     fun isSameDay(pattern: String, time: Long): Boolean = regexTime(pattern, Date()) == regexTime(pattern, time)
 
+    /**
+     * Is before now
+     * 参数时间是否在当前时间之前
+     * @param time 时间
+     * @return 参数时间是否在当前时间之前
+     */
+    @JvmStatic
+    fun isBeforeNow(time:LocalDateTime):Boolean = LocalDateTime.now().isBefore(time)
+
 }

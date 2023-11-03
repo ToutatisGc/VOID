@@ -1,6 +1,6 @@
 package cn.toutatis.xvoid.spring.core.security.access
 
-interface ValidationMessage {
+interface AuthValidationMessage {
     companion object {
 
         /**
@@ -10,6 +10,8 @@ interface ValidationMessage {
         const val CHECK_CODE_ERROR = "验证码错误"
 
         const val USER_NOT_EXIST = "用户不存在"
+
+        const val USER_ALREADY_EXIST = "用户已存在"
 
         const val USERNAME_BLANK = "用户名不能为空"
 
@@ -38,12 +40,23 @@ interface ValidationMessage {
         const val USERNAME_NOT_PRE_CHECK = "用户名未预检"
 
         const val AUTH_NOT_FOUND = "权限未识别"
+
         const val PARAMETER_NOT_FOUND = "缺失参数"
+
         const val PARAMETER_ERROR = "参数错误"
+
         const val USER_BANNED = "用户已被封禁"
+
         const val CONNECT_EXPIRED = "认证已过期"
+
         const val WRONG_ISSUER = "签发人错误"
+
         const val DEV_MODE_LOGIN = "仅开发模式使用"
+
         const val AUTH_EXCEPTION_LOGIN = "认证异常"
+
+        const val SECRET_NOT_MATCH = "密码不一致"
+
+        const val SECRET_NOT_FILLED = "请填写密码"
     }
 }

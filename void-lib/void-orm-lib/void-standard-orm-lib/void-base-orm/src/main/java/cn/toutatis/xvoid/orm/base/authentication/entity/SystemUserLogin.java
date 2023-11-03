@@ -90,7 +90,7 @@ public class SystemUserLogin extends EntityBasicAttribute<SystemUserLogin> {
     @JsonIgnore
     @TableField(value = "expiredTime")
     @ApiModelProperty(value="过期时间", required=false)
-    @Column(nullable = true,columnDefinition = "DATETIME COMMENT '过期时间'")
+    @Column(columnDefinition = "DATETIME COMMENT '过期时间'")
     private LocalDateTime expiredTime;
 
     @JsonIgnore

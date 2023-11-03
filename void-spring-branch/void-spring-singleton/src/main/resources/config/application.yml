@@ -6,7 +6,7 @@ server:
   tomcat:
     keep-alive-timeout: 10s
   servlet:
-    context-path: "/xvoid"
+    context-path: ""
 spring:
   application:
     name: VOID-SPRING | 春野

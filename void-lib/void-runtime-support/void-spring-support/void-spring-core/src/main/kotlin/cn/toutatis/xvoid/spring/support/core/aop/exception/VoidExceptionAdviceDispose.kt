@@ -19,6 +19,7 @@ import org.springframework.web.bind.MissingServletRequestParameterException
 import org.springframework.web.bind.annotation.ControllerAdvice
 import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.ResponseBody
+import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException
 import org.springframework.web.servlet.NoHandlerFoundException
 import javax.servlet.http.HttpServletRequest
 import javax.servlet.http.HttpServletResponse
@@ -37,6 +38,14 @@ class VoidExceptionAdviceDispose {
     @Autowired
     private lateinit var amqpShell: AmqpShell
 
+    /**
+     * 异常处理器
+     * MethodArgumentTypeMismatchException 该异常在接收参数时未转换至所需枚举类,通常发生在重放和爬取接口
+     * @param request 请求
+     * @param response 响应
+     * @param e 异常信息
+     * @return 异常返回信息
+     */
     @ResponseBody
     @ExceptionHandler(Exception::class,Throwable::class)
     fun errorMsg(request: HttpServletRequest, response: HttpServletResponse, e: Exception): ProxyResult {
@@ -57,13 +66,11 @@ class VoidExceptionAdviceDispose {
                 proxyResult = ProxyResult(ResultCode.ILLEGAL_OPERATION)
                 proxyResult.supportMessage="URI:[${request.requestURI}]不支持[${request.method}]方法"
             }
-            // 违规访问错误
-            is IllegalException -> {
+            // 违规访问错误和枚举类转换错误
+            is IllegalException, is MethodArgumentTypeMismatchException -> {
                 proxyResult = ProxyResult(ResultCode.ILLEGAL_OPERATION)
-                proxyResult.supportMessage=e.message
-                e.message?.let {
-                    logger.errorWithModule(Meta.MODULE_NAME,"EXCEPTION", it)
-                }
+                if (voidGlobalConfiguration.isDebugging){ proxyResult.supportMessage=e.message }
+                e.message?.let { logger.errorWithModule(Meta.MODULE_NAME,"EXCEPTION", it) }
             }
             // 请求缺失参数异常
             is MissingServletRequestParameterException ->{

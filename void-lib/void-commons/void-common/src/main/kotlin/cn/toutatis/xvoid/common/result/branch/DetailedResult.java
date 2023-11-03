@@ -63,11 +63,11 @@ public class DetailedResult extends AbstractResult implements Result {
     /**
      * 时间戳
      */
-    private final long timestamp = System.currentTimeMillis();
+    private final long timestamp = Time.getCurrentSeconds();
     /**
      * 本地时间
      */
-    private final String localDateTime = Time.getCurrentTimeByLong(timestamp);
+    private final String localDateTime = Time.getCurrentTimeByLong(timestamp*1000);
 
     public DetailedResult() { }
 

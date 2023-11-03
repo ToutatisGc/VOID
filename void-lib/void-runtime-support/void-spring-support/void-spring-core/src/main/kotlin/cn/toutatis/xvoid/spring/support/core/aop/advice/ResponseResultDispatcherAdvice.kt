@@ -6,6 +6,7 @@ import cn.toutatis.xvoid.common.result.Result
 import cn.toutatis.xvoid.common.result.branch.DetailedResult
 import cn.toutatis.xvoid.common.result.branch.SimpleResult
 import cn.toutatis.xvoid.spring.configure.system.VoidGlobalConfiguration
+import cn.toutatis.xvoid.toolkit.validator.Validator
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.core.MethodParameter
 import org.springframework.core.annotation.Order
@@ -46,30 +47,38 @@ class ResponseResultDispatcherAdvice : ResponseBodyAdvice<Any>{
      * 代理Result派生类
      */
     fun proxyResult(data:Any?): Any? {
+        // data为空则返回空
         if (data == null) return null
+        // 判断是否为ProxyResult,如果是则处理返回结果
         return if (data::class == ProxyResult::class){
             data as ProxyResult
+            // 判断是否为详细模式
             var useDetailedMode :Boolean? = data.useDetailedMode
             if (useDetailedMode == null){
                 useDetailedMode = voidGlobalConfiguration.globalServiceConfig.useDetailedMode
             }
+            // 对返回信息做处理
             val result: Result = if(useDetailedMode!!){
                 val detailedResult = DetailedResult(data.resultCode,data.message,data.data)
+                detailedResult.redirectUrl = data.redirectUrl
                 detailedResult.rid = request.getAttribute(StandardFields.FILTER_REQUEST_ID_KEY) as String?
-                if(data.supportMessage != null){
+                // 如果辅助信息存在则处理
+                if(Validator.strNotBlank(data.supportMessage)){
                     if(data.supportMessage.startsWith(ProxyResult.PLACEHOLDER_HEADER)){
+                        // detailedResult.supportMessage 的默认值为响应码的extraInfo
                         detailedResult.supportMessage =  detailedResult.supportMessage.replace("{}",data.supportMessage.replace(ProxyResult.PLACEHOLDER_HEADER,""))
                     }else{
                         detailedResult.supportMessage = data.supportMessage
                     }
+                // 辅助信息不存则返回响应码的extraInfo并替换模板量
                 }else{
-                    detailedResult.supportMessage = data.resultCode.extraInfo.replace("[{}]","")
+                    detailedResult.supportMessage = data.resultCode.extraInfo.replace(ProxyResult.FORMAT_HEADER,"")
                 }
                 detailedResult
             }else{
                 val simpleResult = SimpleResult(data.resultCode,data.message,data.data)
-                simpleResult.rid = request.getAttribute(StandardFields.FILTER_REQUEST_ID_KEY) as String
-                simpleResult.supportMessage = if( data.supportMessage != null) data.supportMessage else null
+                simpleResult.redirectUrl = data.redirectUrl
+                simpleResult.supportMessage = if( data.supportMessage != null) data.supportMessage else data.resultCode.extraInfo.replace(ProxyResult.FORMAT_HEADER,"")
                 simpleResult
             }
             result.serialize()

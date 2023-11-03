@@ -7,6 +7,7 @@ import cn.toutatis.xvoid.orm.base.authentication.entity.RequestAuthEntity
 import cn.toutatis.xvoid.spring.configure.system.VoidGlobalConfiguration
 import cn.toutatis.xvoid.spring.core.security.access.auth.LocalUserService
 import cn.toutatis.xvoid.orm.base.authentication.enums.AuthType
+import cn.toutatis.xvoid.orm.base.authentication.enums.MessageType
 import cn.toutatis.xvoid.toolkit.log.LoggerToolkit
 import cn.toutatis.xvoid.toolkit.validator.Validator
 import com.alibaba.fastjson.JSON
@@ -54,16 +55,6 @@ class VoidSecurityAuthenticationService : UserDetailsService {
     private lateinit var httpSession: HttpSession
 
     /**
-     * handler中获取的消息类型
-     */
-    enum class MessageType {
-        /**
-         * 字符串和JSON类型
-         */
-        STRING, JSON
-    }
-
-    /**
      * 全局认证入口
      * 该入口校验认证信息序列化是否有误
      * 并由此入口分发到各个认证服务进行身份认证
@@ -87,7 +78,7 @@ class VoidSecurityAuthenticationService : UserDetailsService {
                     Validator.checkMapContainsKeyThrowEx(identityObj, AuthFields.ACCOUNT,AuthFields.AUTH_TYPE)
                 }else{
                     if (!Validator.checkMapContainsKeyBoolean(identityObj, AuthFields.ACCOUNT,AuthFields.AUTH_TYPE)){
-                        throw this.throwIllegalOperation(ValidationMessage.PARAMETER_ERROR)
+                        throw this.throwIllegalOperation(AuthValidationMessage.PARAMETER_ERROR)
                     }
                 }
                 requestAuthEntity = RequestAuthEntity(identityObj)
@@ -95,7 +86,7 @@ class VoidSecurityAuthenticationService : UserDetailsService {
                 if (voidGlobalConfiguration.isDebugging){
                     throw this.throwIllegalOperation(e.message.toString())
                 }
-                throw this.throwIllegalOperation(ValidationMessage.WRONG_IDENTIFY_FORMAT)
+                throw this.throwIllegalOperation(AuthValidationMessage.WRONG_IDENTIFY_FORMAT)
             }
             val authType = requestAuthEntity.authType
             if (authType != null){
@@ -105,14 +96,14 @@ class VoidSecurityAuthenticationService : UserDetailsService {
                         return localUserService.findSimpleUser(requestAuthEntity)
                     }
                     else ->{
-                        throw this.throwIllegalOperation(ValidationMessage.NOT_OPENED_IDENTIFY_TYPE)
+                        throw this.throwIllegalOperation(AuthValidationMessage.NOT_OPENED_IDENTIFY_TYPE)
                     }
                 }
             }else{
-                throw this.throwIllegalOperation(ValidationMessage.WRONG_IDENTIFY_TYPE)
+                throw this.throwIllegalOperation(AuthValidationMessage.WRONG_IDENTIFY_TYPE)
             }
         }else{
-            throw this.throwIllegalOperation(ValidationMessage.REQUIRED_IDENTIFY_INFO)
+            throw this.throwIllegalOperation(AuthValidationMessage.REQUIRED_IDENTIFY_INFO)
         }
     }
 

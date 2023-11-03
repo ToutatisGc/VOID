@@ -8,13 +8,13 @@ import cn.toutatis.xvoid.common.standard.AuthFields
 import cn.toutatis.xvoid.common.standard.StandardFields
 import cn.toutatis.xvoid.spring.VoidModuleInfo
 import cn.toutatis.xvoid.orm.base.authentication.entity.AuthInfo
+import cn.toutatis.xvoid.orm.base.authentication.enums.MessageType
 import cn.toutatis.xvoid.orm.base.authentication.service.SystemAuthPathService
 import cn.toutatis.xvoid.orm.base.authentication.service.SystemAuthRoleService
 import cn.toutatis.xvoid.spring.configure.system.VoidGlobalConfiguration
 import cn.toutatis.xvoid.spring.configure.system.VoidGlobalConfiguration.GlobalServiceConfig
 import cn.toutatis.xvoid.spring.configure.system.VoidSecurityConfiguration
-import cn.toutatis.xvoid.spring.core.security.access.ValidationMessage
-import cn.toutatis.xvoid.spring.core.security.access.VoidSecurityAuthenticationService
+import cn.toutatis.xvoid.spring.core.security.access.AuthValidationMessage
 import cn.toutatis.xvoid.spring.support.Meta
 import cn.toutatis.xvoid.spring.support.core.aop.advice.ResponseResultDispatcherAdvice
 import cn.toutatis.xvoid.spring.support.toolkits.VoidSpringToolkit
@@ -95,7 +95,7 @@ class SecurityHandler(
         val loginSuccessfulResult:ProxyResult
         if (principal is AuthInfo) {
             loginSuccessfulResult = ProxyResult(ResultCode.AUTHENTICATION_SUCCESSFUL)
-            val userInfo = principal.userInfo
+            val userInfo = principal.userMetaInfo
             val roles = systemAuthRoleService.getUserRoles(userInfo.getString("id"))
             val userPermissionsStrings = systemAuthPathService.getUserPermissionsStrings(roles)
             principal.permissions = userPermissionsStrings
@@ -182,7 +182,7 @@ class SecurityHandler(
             }
             val type = exception.message
             val requestInfo = request.getAttribute(StandardFields.VOID_HTTP_ATTRIBUTE_MESSAGE_KEY)
-            if (VoidSecurityAuthenticationService.MessageType.STRING == VoidSecurityAuthenticationService.MessageType.valueOf(type!!)) {
+            if (MessageType.STRING == MessageType.valueOf(type!!)) {
                 proxyResult.message = requestInfo as String
             } else {
                 val requestInfoJson = requestInfo as JSONObject
@@ -201,13 +201,13 @@ class SecurityHandler(
             proxyResult = ProxyResult(ResultCode.CHECKED_FAILED)
             when (exception.javaClass) {
                 LockedException::class.java -> {
-                    proxyResult.message = ValidationMessage.ACCOUNT_LOCKED
+                    proxyResult.message = AuthValidationMessage.ACCOUNT_LOCKED
                 }
                 AccountExpiredException::class.java -> {
-                    proxyResult.message = ValidationMessage.CONNECT_EXPIRED
+                    proxyResult.message = AuthValidationMessage.CONNECT_EXPIRED
                 }
                 DisabledException::class.java -> {
-                    proxyResult.message = ValidationMessage.ACCOUNT_DISABLED
+                    proxyResult.message = AuthValidationMessage.ACCOUNT_DISABLED
                 }
                 else -> {
                     logger.error("[{}]认证未记录异常：{}", VoidModuleInfo.MODULE_NAME, exception.toString())
@@ -314,17 +314,17 @@ class SecurityHandler(
                 val lockedOps = redisTemplate.boundValueOps(concat(AuthFields.LOGIN_ACCOUNT_LOCKED_KEY, loginAccount))
                 /*如果锁定大于今日,提醒今日不可登录*/
                 if (lockDuration > Time.parseTimeToMills(Time.getCurrentDayLastMillsTime())){
-                    lockedOps.set(ValidationMessage.ACCOUNT_LOCKED_TODAY)
+                    lockedOps.set(AuthValidationMessage.ACCOUNT_LOCKED_TODAY)
                 }else{
                     lockedOps.set(Time.regexTime(Time.HMS_COLON_FORMAT_REGEX, lockDuration))
                 }
                 lockedOps.expireAt(Time.parseData(currentTimeByLong))
                 val proxyResult = ProxyResult(ResultCode.AUTHENTICATION_FAILED)
-                proxyResult.supportMessage = ValidationMessage.ACCOUNT_LOCKED
+                proxyResult.supportMessage = AuthValidationMessage.ACCOUNT_LOCKED
                 return proxyResult
             }else{
                 val proxyResult = ProxyResult(ResultCode.AUTHENTICATION_FAILED)
-                proxyResult.supportMessage = ValidationMessage.ACCOUNT_WILL_LOCK.format(loginRetryTimes-retryTimes)
+                proxyResult.supportMessage = AuthValidationMessage.ACCOUNT_WILL_LOCK.format(loginRetryTimes-retryTimes)
                 return proxyResult
             }
         } else {

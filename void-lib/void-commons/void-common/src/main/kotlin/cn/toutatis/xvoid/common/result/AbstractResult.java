@@ -1,8 +1,12 @@
 package cn.toutatis.xvoid.common.result;
 
 import cn.toutatis.xvoid.toolkit.formatting.JsonToolkit;
+import cn.toutatis.xvoid.toolkit.formatting.StringNullSerializer;
 import com.alibaba.fastjson.annotation.JSONField;
+import com.alibaba.fastjson.serializer.SerializerFeature;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import io.swagger.v3.oas.annotations.media.Schema;
 
 import java.util.LinkedHashMap;
@@ -22,6 +26,14 @@ public abstract class AbstractResult implements Result {
      */
     @Schema(name="请求响应数据",requiredMode = Schema.RequiredMode.REQUIRED,example = "{'name':'Toutatis_Gc'}")
     protected Object data;
+
+    /**
+     * [具体分发到派生类]
+     * 当ResultCode为OP_REDIRECT时将此字段赋予派生类进行二次操作
+     */
+    @Schema(name="业务在页面中跳转地址",requiredMode = Schema.RequiredMode.NOT_REQUIRED,example = "/verify/email")
+    @JsonInclude(value = JsonInclude.Include.NON_EMPTY)
+    protected String redirectUrl;
 
     public Object getData() {
         return data;
@@ -52,5 +64,13 @@ public abstract class AbstractResult implements Result {
                 return JsonToolkit.parseJsonObject(data);
             }
         }
+    }
+
+    public String getRedirectUrl() {
+        return redirectUrl;
+    }
+
+    public void setRedirectUrl(String redirectUrl) {
+        this.redirectUrl = redirectUrl;
     }
 }

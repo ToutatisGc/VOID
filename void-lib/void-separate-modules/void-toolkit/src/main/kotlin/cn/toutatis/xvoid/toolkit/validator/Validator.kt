@@ -25,7 +25,7 @@ public object Validator {
 
     private val EN_USERNAME_PATTERN = Pattern.compile(Regex.EN_USERNAME_REGEX)
 
-    const val SUB_MODULE_NAME = "VALIDATOR"
+    private const val SUB_MODULE_NAME = "VALIDATOR"
 
 //    private
     /**

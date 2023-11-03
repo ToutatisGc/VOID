@@ -11,10 +11,22 @@ import java.util.List;
  */
 public interface AuthInfo extends UserDetails {
 
+    /**
+     * 用认证过程填充用户可使用的认证路径
+     * @return 用户可使用的AntPath
+     */
     List<String> getPermissions();
 
-    JSONObject getUserInfo();
+    /**
+     * 用户认证时使用的数据,可自定义填充
+     * @return 元数据
+     */
+    JSONObject getUserMetaInfo();
 
+    /**
+     * 设置用户可认证的路径
+     * @param permissions 路径Path集合
+     */
     void setPermissions(List<String> permissions);
 
 }

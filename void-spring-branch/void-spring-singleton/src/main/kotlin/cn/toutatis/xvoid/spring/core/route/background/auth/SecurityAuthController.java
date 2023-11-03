@@ -5,13 +5,17 @@ import cn.toutatis.xvoid.common.result.ProxyResult;
 import cn.toutatis.xvoid.common.result.Result;
 import cn.toutatis.xvoid.common.result.ResultCode;
 import cn.toutatis.xvoid.common.standard.AuthFields;
+import cn.toutatis.xvoid.orm.base.authentication.entity.AccountRegistryEntity;
+import cn.toutatis.xvoid.orm.base.authentication.entity.SystemUserLogin;
 import cn.toutatis.xvoid.orm.base.authentication.enums.RegistryType;
 import cn.toutatis.xvoid.orm.base.authentication.service.SystemUserLoginService;
+import cn.toutatis.xvoid.spring.core.security.access.AuthValidationMessage;
 import cn.toutatis.xvoid.spring.core.tools.ViewToolkit;
 import cn.toutatis.xvoid.spring.annotations.application.VoidController;
 import cn.toutatis.xvoid.spring.support.toolkits.VoidSpringToolkit;
 import cn.toutatis.xvoid.toolkit.validator.Validator;
-import com.alibaba.fastjson.JSONObject;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.github.xiaoymin.knife4j.annotations.ApiSupport;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -21,6 +25,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.BoundValueOperations;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -49,6 +54,9 @@ public class SecurityAuthController {
 
     @Autowired
     private VoidSpringToolkit voidSpringToolkit;
+
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
 
 
     @Operation(summary="后台管理系统登陆页面",description="管理后台登录页面访问地址")
@@ -99,25 +107,48 @@ public class SecurityAuthController {
 
     @Operation(summary="用户注册",description="新用户注册")
     @RequestMapping(value = "/user/registry",method = RequestMethod.POST)
-    public ProxyResult registry(@RequestParam @ApiParam("用户名") String username,
-                                @ApiParam("信息载体") JSONObject extra,
+    public ProxyResult registry(@ApiParam("用户名") String account,
+                                @ApiParam("信息载体") AccountRegistryEntity registryEntity,
                                 @ApiParam("注册类型") RegistryType registryType){
-        boolean checkedNull = Validator.stringsNotNull(username);
-        if(checkedNull){
-            switch (registryType) {
-                case ACCOUNT -> {
-                    /*TODO 检查账号*/
-                }
-                case EMAIL -> {
-                    /*发送邮件*/
-                }
-                case PHONE -> {
-                    /*发送短信验证码*/
-                }
-                default -> throw new IllegalStateException("Unexpected value: " + registryType);
+        ProxyResult proxyResult = new ProxyResult(ResultCode.NORMAL_FAILED);
+        proxyResult.setUseDetailedMode(true);
+        // 确认填写用户名
+        if(Validator.stringsNotNull(account)){
+            // 确认填写密码
+            if (!registryEntity.secretFilled()){
+                proxyResult.setSupportMessage(AuthValidationMessage.SECRET_NOT_FILLED);
+                return proxyResult;
             }
+            // 确认密码匹配
+            if (registryEntity.secretIsMatch()){
+                // 进入不同认证类型
+                Boolean accountExist = systemUserLoginService.preCheckAccountExist(account);
+                if (accountExist){
+                    proxyResult.setSupportMessage(AuthValidationMessage.USER_ALREADY_EXIST);
+                    return proxyResult;
+                }else {
+                    SystemUserLogin newUser = new SystemUserLogin();
+                    switch (registryType) {
+                        case ACCOUNT -> {
+                            newUser.setAccount(account);
+                            newUser.setSecret(passwordEncoder.encode(registryEntity.getSecret()));
+                        }
+                        case EMAIL -> {
+                            /*发送邮件*/
+                        }
+                        case PHONE -> {
+                            /*发送短信验证码*/
+                        }
+                    }
+                    systemUserLoginService.save(newUser);
+                }
+            }else {
+                proxyResult.setSupportMessage(AuthValidationMessage.SECRET_NOT_MATCH);
+            }
+        }else {
+            proxyResult.setSupportMessage(AuthValidationMessage.USERNAME_BLANK);
         }
-        return new ProxyResult(ResultCode.NORMAL_SUCCESS);
+        return proxyResult;
     }
 
     @ApiOperation(value="忘记密码",notes="忘记密码,重置用户密码")

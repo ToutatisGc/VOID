@@ -20,15 +20,20 @@ import cn.toutatis.xvoid.common.result.AbstractResult;
 import cn.toutatis.xvoid.common.result.Result;
 import cn.toutatis.xvoid.common.result.ResultCode;
 import cn.toutatis.xvoid.toolkit.constant.Time;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
 
+/**
+ * 简单响应
+ * 忽略所有非必要信息
+ * 可根据需求放开
+ */
 @Getter
 @EqualsAndHashCode(callSuper = false)
 public class SimpleResult extends AbstractResult implements Result {
-
 
     /**
      * 请求分配ID
@@ -39,6 +44,7 @@ public class SimpleResult extends AbstractResult implements Result {
     /**
      * 响应码枚举
      */
+    @JsonIgnore
     private String resultCode;
 
     /**
@@ -48,6 +54,7 @@ public class SimpleResult extends AbstractResult implements Result {
     /**
      * 响应消息
      */
+    @JsonIgnore
     private String message;
     /**
      * 一般来源于resultCode的extraInfo字段
@@ -55,14 +62,17 @@ public class SimpleResult extends AbstractResult implements Result {
      */
     @JsonInclude(JsonInclude.Include.NON_NULL)
     private String supportMessage;
+
+    @JsonInclude(JsonInclude.Include.NON_NULL)
+    private Object data;
     /**
      * 时间戳
      */
-    private final long timestamp = System.currentTimeMillis();
+    private final long timestamp = Time.getCurrentSeconds();
     /**
      * 本地时间
      */
-    private final String localDateTime = Time.getCurrentTimeByLong(timestamp);
+//    private final String localDateTime = Time.getCurrentTimeByLong(timestamp);
 
     public SimpleResult(ResultCode resultCode){
         this.setResultCode(resultCode);
@@ -75,7 +85,9 @@ public class SimpleResult extends AbstractResult implements Result {
 
     public SimpleResult(ResultCode resultCode,String message,Object data){
         this.setResultCode(resultCode);
-        this.setMessage(message);
+        if (message != null){
+            this.setMessage(message);
+        }
         this.data = data;
     }
 

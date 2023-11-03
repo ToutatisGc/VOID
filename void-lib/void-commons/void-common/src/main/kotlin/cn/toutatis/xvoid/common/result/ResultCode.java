@@ -17,12 +17,14 @@
 
 package cn.toutatis.xvoid.common.result;
 
+import static cn.toutatis.xvoid.common.result.ProxyResult.FORMAT_HEADER;
+
 /**
  * @author Toutatis_Gc
  * 请求统一响应结果
  */
 public enum ResultCode implements Cloneable {
-
+    
     /**
      * 操作部分[SUCCESS]
      * 2****** 正操操作
@@ -30,24 +32,24 @@ public enum ResultCode implements Cloneable {
      */
     NORMAL_SUCCESS("200000","OP_REQ_000000_SC",true,"请求成功","HTTP请求成功"),
     NORMAL_SUCCESS_BUT_NULL("200000","OP_REQ_000000_FL",true,"请求成功[空数据]","请求成功但为空数据"),
-    UPDATE_SUCCESS("200001","OP_UPD_000001_SC",true,"更新成功","更新[{}]操作成功"),
-    INSERT_SUCCESS("200002","OP_ADD_000002_SC",true,"添加成功","添加[{}]操作成功"),
-    DELETE_SUCCESS("200003","OP_DEL_000003_SC",true,"删除成功","删除[{}]操作成功"),
-    APPLY_SUCCESS("200004","OP_APL_000004_SC",true,"审核成功","审核[{}]操作成功"),
-    UPLOAD_SUCCESS("200005","UP_ADD_000005_SC",true,"上传成功","上传[{}]文件成功"),
-    REQUEST_SUCCESS("320001","REQ_THIRD_320001_SC",true,"发送请求成功","向第三方接口[{}]发送请求成功"),
+    UPDATE_SUCCESS("200001","OP_UPD_000001_SC",true,"更新成功","更新"+FORMAT_HEADER+"操作成功"),
+    INSERT_SUCCESS("200002","OP_ADD_000002_SC",true,"添加成功","添加"+FORMAT_HEADER+"操作成功"),
+    DELETE_SUCCESS("200003","OP_DEL_000003_SC",true,"删除成功","删除"+FORMAT_HEADER+"操作成功"),
+    APPLY_SUCCESS("200004","OP_APL_000004_SC",true,"审核成功","审核"+FORMAT_HEADER+"操作成功"),
+    UPLOAD_SUCCESS("200005","UP_ADD_000005_SC",true,"上传成功","上传"+FORMAT_HEADER+"文件成功"),
+    REQUEST_SUCCESS("320001","REQ_THIRD_320001_SC",true,"发送请求成功","向第三方接口"+FORMAT_HEADER+"发送请求成功"),
     /**
      * 操作部分[FAILED]
      * 5****** 失败操作
      */
     NORMAL_FAILED("500000","OP_REQ_500000_FL",false,"操作失败","HTTP请求失败"),
-    UPDATE_FAILED("500001","OP_UPD_500001_FL",false,"更新失败","操作[{}]失败"),
-    INSERT_FAILED("500002","OP_ADD_500002_FL",false,"添加失败","操作[{}]失败"),
-    DELETE_FAILED("500003","OP_DEL_500003_FL",false,"删除失败","操作[{}]失败"),
-    APPLY_FAILED("500004","OP_APL_500004_FL",false,"审核失败","操作[{}]失败"),
-    UPLOAD_FAILED("500005","UP_ADD_500005_FL",false,"上传失败","上传[{}]文件失败"),
+    UPDATE_FAILED("500001","OP_UPD_500001_FL",false,"更新失败","操作"+FORMAT_HEADER+"失败"),
+    INSERT_FAILED("500002","OP_ADD_500002_FL",false,"添加失败","操作"+FORMAT_HEADER+"失败"),
+    DELETE_FAILED("500003","OP_DEL_500003_FL",false,"删除失败","操作"+FORMAT_HEADER+"失败"),
+    APPLY_FAILED("500004","OP_APL_500004_FL",false,"审核失败","操作"+FORMAT_HEADER+"失败"),
+    UPLOAD_FAILED("500005","UP_ADD_500005_FL",false,"上传失败","上传"+FORMAT_HEADER+"文件失败"),
     NOT_HAVE_SELECT_DATA("500404","OP_FOM_500404_FL",false,"数据为空","必要表单数据为空"),
-    REQUEST_FAILED("350001","REQ_THIRD_350001_SC",false,"发送请求失败","向第三方[{}]发送请求失败"),
+    REQUEST_FAILED("350001","REQ_THIRD_350001_SC",false,"发送请求失败","向第三方"+FORMAT_HEADER+"发送请求失败"),
     WRONG_DATA("500500","OP_ERR_500500_FL",false,"错误数据","查找不到对应数据"),
     /**
      * 权限部分 9******
@@ -77,9 +79,10 @@ public enum ResultCode implements Cloneable {
     NOT_ALLOW_REQUEST_METHOD("405000","OP_LAW_405000_FL",false,"不允许此方法访问","仅允许[POST,GET]"),
     DATA_EXPIRED("404003","OP_DAT_404003_FL",false,"数据已失效","数据过期"),
     JUST_SHOW("971111","OP_DAT_971111_FL",false,"展示模式不可操作","展示模式不可操作"),
-    REMOTE_SERVICE_CANT_ACCESS("500002","REQ_THIRD_500002_FL",false,"服务链错误","远程接口出现问题."),
-    REMOTE_ACCESS_TIME_OUT("500003","REQ_THIRD_500003_FL",false,"当前访问人数过多,请稍候再试.","远程接口连接超时."),
-    API_UNREALIZED("UNREALIZED","0P_UNREALIZED_FAILED",false,"接口未实现","服务接口未实现."),
+    REMOTE_SERVICE_CANT_ACCESS("500002","REQ_THIRD_500002_FL",false,"服务链错误","远程接口出现错误"),
+    REMOTE_ACCESS_TIME_OUT("500003","REQ_THIRD_500003_FL",false,"当前访问人数过多,请稍候再试.","远程接口连接超时"),
+    API_UNREALIZED("UNREALIZED","0P_UNREALIZED_FAILED",false,"接口未实现","服务接口未实现"),
+    OPERATING_REDIRECT("307000","0P_REDIRECT",true,"服务二次跳转","服务请求成功,需要二次跳转继续后续操作[请在响应返回中指定redirectUrl]"),
     ;
 
     /**
