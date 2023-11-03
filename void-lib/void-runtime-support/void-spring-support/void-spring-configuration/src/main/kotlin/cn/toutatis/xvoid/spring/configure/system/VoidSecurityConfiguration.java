@@ -3,6 +3,7 @@ package cn.toutatis.xvoid.spring.configure.system;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 import java.time.Duration;
+import java.util.List;
 
 /**
  * VOID环境下安全配置
@@ -17,6 +18,8 @@ public class VoidSecurityConfiguration {
     private LoginConfig loginConfig = new LoginConfig();
 
     private DataConfig dataConfig = new DataConfig();
+
+    private RegistryConfig registryConfig = new RegistryConfig();
 
     public static class LoginConfig{
 
@@ -131,6 +134,35 @@ public class VoidSecurityConfiguration {
         public void setRequestQos(Boolean requestQos) {
             this.requestQos = requestQos;
         }
+    }
+
+    /**
+     * 用户注册相关配置
+     */
+    public static class RegistryConfig{
+
+        /**
+         * 禁止新用户注册
+         */
+        private Boolean disableRegistry = false;
+
+
+
+        public Boolean getDisableRegistry() {
+            return disableRegistry;
+        }
+
+        public void setDisableRegistry(Boolean disableRegistry) {
+            this.disableRegistry = disableRegistry;
+        }
+    }
+
+    public RegistryConfig getRegistryConfig() {
+        return registryConfig;
+    }
+
+    public void setRegistryConfig(RegistryConfig registryConfig) {
+        this.registryConfig = registryConfig;
     }
 
     public LoginConfig getLoginConfig() {

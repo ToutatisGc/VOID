@@ -25,6 +25,8 @@ public object Validator {
 
     private val EN_USERNAME_PATTERN = Pattern.compile(Regex.EN_USERNAME_REGEX)
 
+    private val USEFUL_PASSWORD_PATTERN = Pattern.compile(Regex.PASSWORD_REGEX_04)
+
     private const val SUB_MODULE_NAME = "VALIDATOR"
 
 //    private
@@ -160,8 +162,20 @@ public object Validator {
      * @return 是否符合正则
      */
     @JvmStatic
-    fun checkCNUsername(username:String): Boolean {
+    fun checkCNUsernameFormat(username:String): Boolean {
         val m: Matcher = CN_USERNAME_PATTERN.matcher(username)
+        return m.matches()
+    }
+
+    /**
+     * Check useful password format
+     * 检查密码是否匹配要求格式
+     * @param password 输入密码
+     * @return 是否匹配
+     */
+    @JvmStatic
+    fun checkUsefulPasswordFormat(password:String): Boolean {
+        val m: Matcher = USEFUL_PASSWORD_PATTERN.matcher(password)
         return m.matches()
     }
 

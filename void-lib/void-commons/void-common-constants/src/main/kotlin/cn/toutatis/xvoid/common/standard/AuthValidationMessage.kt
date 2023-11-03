@@ -1,17 +1,23 @@
-package cn.toutatis.xvoid.spring.core.security.access
+package cn.toutatis.xvoid.common.standard
 
+/**
+ * 认证消息常量
+ * @author Toutatis_Gc
+ */
 interface AuthValidationMessage {
     companion object {
 
-        /**
-         * 认证消息枚举
-         * 手机验证码或者随机验证码错误
-         */
         const val CHECK_CODE_ERROR = "验证码错误"
 
-        const val USER_NOT_EXIST = "用户不存在"
+        const val ACCOUNT_NOT_EXIST = "用户不存在"
 
-        const val USER_ALREADY_EXIST = "用户已存在"
+        const val ACCOUNT_ALREADY_EXIST = "用户已存在"
+
+        const val ACCOUNT_REGISTRY_SUCCESS = "用户注册成功"
+
+        const val ACCOUNT_REGISTRY_FAILED = "用户注册失败,请重试"
+
+        const val ACCOUNT_DISABLE_REGISTRY = "禁止新用户注册"
 
         const val USERNAME_BLANK = "用户名不能为空"
 
@@ -55,7 +61,11 @@ interface AuthValidationMessage {
 
         const val AUTH_EXCEPTION_LOGIN = "认证异常"
 
-        const val SECRET_NOT_MATCH = "密码不一致"
+        const val SECRET_NOT_EQUALS = "密码不一致"
+
+        const val SECRET_NOT_MATCH = "密码格式错误,密码长度为[8-32]位支持英文及常见字符"
+
+        const val ACCOUNT_NOT_MATCH = "账户名格式错误,密码长度为[2-32]位支持中文,下划线,英文及数字"
 
         const val SECRET_NOT_FILLED = "请填写密码"
     }

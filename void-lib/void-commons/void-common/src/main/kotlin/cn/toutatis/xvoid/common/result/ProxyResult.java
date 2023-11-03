@@ -150,7 +150,7 @@ public class ProxyResult extends AbstractResult implements Result {
     public ProxyResult(Actions action,String message, Object data ) {
         this.action = action;
         this.setData(data);
-        this.message = message;
+        this.supportMessage = message;
     }
 
     /**
@@ -160,7 +160,7 @@ public class ProxyResult extends AbstractResult implements Result {
      * @param successfulSign 动作状态
      */
     public ProxyResult(Actions action, String message , Boolean successfulSign) {
-        this.message = message;
+        this.supportMessage = message;
         this.action = action;
         this.successfulSign = successfulSign;
     }
@@ -172,7 +172,7 @@ public class ProxyResult extends AbstractResult implements Result {
      */
     public ProxyResult(ResultCode resultCode, String message) {
         this.resultCode = resultCode;
-        this.message = message;
+        this.supportMessage = message;
     }
 
 

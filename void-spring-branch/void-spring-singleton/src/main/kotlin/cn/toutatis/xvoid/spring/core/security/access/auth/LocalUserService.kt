@@ -8,7 +8,7 @@ import cn.toutatis.xvoid.orm.base.authentication.entity.RequestAuthEntity
 import cn.toutatis.xvoid.spring.configure.system.VoidGlobalConfiguration
 import cn.toutatis.xvoid.spring.configure.system.VoidSecurityConfiguration
 import cn.toutatis.xvoid.spring.configure.system.enums.global.RunMode
-import cn.toutatis.xvoid.spring.core.security.access.AuthValidationMessage
+import cn.toutatis.xvoid.common.standard.AuthValidationMessage
 import cn.toutatis.xvoid.orm.base.authentication.service.VoidAuthService
 import cn.toutatis.xvoid.toolkit.validator.Validator
 import org.springframework.beans.factory.annotation.Autowired
@@ -53,7 +53,7 @@ class LocalUserService : VoidAuthService {
         // 用户名为空
         if (Validator.strIsBlank(account)) throwFailed(AuthValidationMessage.USERNAME_BLANK)
         // 用户名不合法
-        if (!Validator.checkCNUsername(account)) throwFailed(AuthValidationMessage.USERNAME_ILLEGAL)
+        if (!Validator.checkCNUsernameFormat(account)) throwFailed(AuthValidationMessage.USERNAME_ILLEGAL)
         val loginAccountOps = redisTemplate.boundValueOps(RedisCommonKeys.concat(LOGIN_ACCOUNT_SESSION_KEY, requestAuthEntity.sessionId))
         loginAccountOps.set(account, Duration.ofMinutes(10L))
         // 调试模式跳过检查

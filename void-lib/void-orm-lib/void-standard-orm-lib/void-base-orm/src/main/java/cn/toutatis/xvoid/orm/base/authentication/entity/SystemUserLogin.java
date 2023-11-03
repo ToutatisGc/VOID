@@ -55,6 +55,13 @@ public class SystemUserLogin extends EntityBasicAttribute<SystemUserLogin> {
     @Column(name="account",columnDefinition = "VARCHAR(32) COMMENT '账号'")
     private String account;
 
+
+
+    @TableField("uid")
+    @ApiModelProperty(value="用户短标识[由规则生成]",required = true, example = "V10000")
+    @Column(name="uid",unique = true,columnDefinition = "VARCHAR(32) COMMENT '用户短标识'")
+    private String uid;
+
     @Enumerated(EnumType.STRING)
     @TableField("registryType")
     @ApiModelProperty(value="注册类型",required = true, example = "ACCOUNT")

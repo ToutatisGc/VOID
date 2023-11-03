@@ -73,7 +73,6 @@ object LambdaToolkit {
      * @return 表达式字段
      */
     @JvmStatic
-    @Throws(Exception::class)
     fun <T,R> getFieldName(func: XFunc<T, R>): String {
         return getFieldName(serialize<T, R>(func))
     }

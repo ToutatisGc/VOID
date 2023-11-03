@@ -29,4 +29,14 @@ public interface SystemUserLoginService extends VoidService<SystemUserLogin> {
      */
     Boolean userInputRegistryExist(String account, RegistryType registryType);
 
+    /**
+     * 用户UID生成器
+     * 现使用策略为注册类型枚举值按照规则转换为数字
+     * 再将数字相加合并序号
+     * @param userLogin 用户
+     * @throws Exception 异常
+     * @return 生成用户短标志
+     */
+    String userUidGenerate(SystemUserLogin userLogin) throws Exception;
+
 }

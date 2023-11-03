@@ -1,5 +1,7 @@
 package cn.toutatis.xvoid.toolkit.constant
 
+import java.util.regex.Pattern
+
 /**
  * Regex 类是一个 Kotlin 对象（object），用于存储常用的正则表达式模式。
  * 它包含了一些静态的常量和一些私有函数，提供了方便的正则表达式操作。
@@ -48,7 +50,34 @@ object Regex {
      * */
     const val IMAGE_SUFFIX_REGEX = "png|jpg|jpeg"
 
+    /**
+     * Request JSession Id Regex
+     */
     const val REQUEST_JSESSION_ID_REGEX  = "JSESSIONID=([a-fA-F0-9]+);"
+
+    /**
+     * Password Regex 01
+     * 密码至少包含 8 个字符，包括至少一个大写字母、一个小写字母和一个数字
+     */
+    const val PASSWORD_REGEX_01 = "^(?=.*[A-Z])(?=.*[a-z])(?=.*\\d).{8,32}\$"
+
+    /**
+     * Password Regex 02
+     * 密码至少包含 8 个字符，可以是字母、数字或特殊字符，但不允许有空格
+     */
+    const val PASSWORD_REGEX_02 = "^(?!.*\\s)[A-Za-z\\d@#\$%^&+=]{8,32}\$"
+
+    /**
+     * Password Regex 03
+     * 密码的长度在8到32位之间，只包含英文字母、数字以及常见的符号
+     */
+    const val PASSWORD_REGEX_03 = "^[A-Za-z0-9!@#\\\\\$%\\\\^&*()-_+=<>?]{8,32}\$"
+
+    /**
+     * Password Regex 04
+     * 密码的长度在8到32位之间，包含至少一位英文字母，以及只包含英文字母、数字和常见的符号
+     */
+    const val PASSWORD_REGEX_04 = "^(?=.*[A-Za-z])[A-Za-z0-9!@#\\\\\$%\\\\^&*()-_+=<>?]{8,32}\$"
 
     /**
      * 该函数接受一个 Ant 格式的URL匹配模式作为参数，并返回对应的正则表达式
@@ -67,5 +96,6 @@ object Regex {
         regex = regex.replace("!", "^")
         return regex
     }
+
 
 }

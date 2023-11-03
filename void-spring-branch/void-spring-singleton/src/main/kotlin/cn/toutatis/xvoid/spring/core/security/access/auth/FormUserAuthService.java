@@ -7,7 +7,7 @@ import cn.toutatis.xvoid.orm.base.authentication.entity.SystemUserLogin;
 import cn.toutatis.xvoid.orm.base.authentication.enums.MessageType;
 import cn.toutatis.xvoid.orm.base.authentication.service.DefaultAuthAction;
 import cn.toutatis.xvoid.orm.base.authentication.service.SystemUserLoginService;
-import cn.toutatis.xvoid.spring.core.security.access.AuthValidationMessage;
+import cn.toutatis.xvoid.common.standard.AuthValidationMessage;
 import cn.toutatis.xvoid.toolkit.clazz.LambdaToolkit;
 import cn.toutatis.xvoid.toolkit.constant.Time;
 import com.alibaba.fastjson.JSONObject;
@@ -76,7 +76,7 @@ public class FormUserAuthService implements DefaultAuthAction {
             }
             return formUserDetails;
         }else{
-            throw throwInfo(request,MessageType.STRING, AuthValidationMessage.USER_NOT_EXIST);
+            throw throwInfo(request,MessageType.STRING, AuthValidationMessage.ACCOUNT_NOT_EXIST);
         }
     }
 

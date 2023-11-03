@@ -14,7 +14,7 @@ import cn.toutatis.xvoid.orm.base.authentication.service.SystemAuthRoleService
 import cn.toutatis.xvoid.spring.configure.system.VoidGlobalConfiguration
 import cn.toutatis.xvoid.spring.configure.system.VoidGlobalConfiguration.GlobalServiceConfig
 import cn.toutatis.xvoid.spring.configure.system.VoidSecurityConfiguration
-import cn.toutatis.xvoid.spring.core.security.access.AuthValidationMessage
+import cn.toutatis.xvoid.common.standard.AuthValidationMessage
 import cn.toutatis.xvoid.spring.support.Meta
 import cn.toutatis.xvoid.spring.support.core.aop.advice.ResponseResultDispatcherAdvice
 import cn.toutatis.xvoid.spring.support.toolkits.VoidSpringToolkit

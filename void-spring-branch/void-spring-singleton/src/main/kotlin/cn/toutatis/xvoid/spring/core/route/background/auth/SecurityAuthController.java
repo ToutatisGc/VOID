@@ -9,13 +9,11 @@ import cn.toutatis.xvoid.orm.base.authentication.entity.AccountRegistryEntity;
 import cn.toutatis.xvoid.orm.base.authentication.entity.SystemUserLogin;
 import cn.toutatis.xvoid.orm.base.authentication.enums.RegistryType;
 import cn.toutatis.xvoid.orm.base.authentication.service.SystemUserLoginService;
-import cn.toutatis.xvoid.spring.core.security.access.AuthValidationMessage;
+import cn.toutatis.xvoid.common.standard.AuthValidationMessage;
+import cn.toutatis.xvoid.spring.configure.system.VoidSecurityConfiguration;
 import cn.toutatis.xvoid.spring.core.tools.ViewToolkit;
 import cn.toutatis.xvoid.spring.annotations.application.VoidController;
-import cn.toutatis.xvoid.spring.support.toolkits.VoidSpringToolkit;
 import cn.toutatis.xvoid.toolkit.validator.Validator;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.github.xiaoymin.knife4j.annotations.ApiSupport;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
@@ -53,10 +51,11 @@ public class SecurityAuthController {
     private SystemUserLoginService systemUserLoginService;
 
     @Autowired
-    private VoidSpringToolkit voidSpringToolkit;
+    private VoidSecurityConfiguration voidSecurityConfiguration;
 
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
+
 
 
     @Operation(summary="后台管理系统登陆页面",description="管理后台登录页面访问地址")
@@ -88,7 +87,7 @@ public class SecurityAuthController {
             @Parameter(description = "请求实体") HttpServletRequest request
     ){
         // 检查用户名合法
-        if (!Validator.checkCNUsername(account)) {
+        if (!Validator.checkCNUsernameFormat(account)) {
             return new ProxyResult(ResultCode.AUTHENTICATION_PRE_CHECK_FAILED,"用户名不合法");
         }
         // 检查用户在数据库存在
@@ -109,46 +108,68 @@ public class SecurityAuthController {
     @RequestMapping(value = "/user/registry",method = RequestMethod.POST)
     public ProxyResult registry(@ApiParam("用户名") String account,
                                 @ApiParam("信息载体") AccountRegistryEntity registryEntity,
-                                @ApiParam("注册类型") RegistryType registryType){
-        ProxyResult proxyResult = new ProxyResult(ResultCode.NORMAL_FAILED);
-        proxyResult.setUseDetailedMode(true);
+                                @ApiParam("注册类型") RegistryType registryType) throws Exception {
+        ProxyResult registryResult = new ProxyResult(ResultCode.NORMAL_FAILED);
+        // 判断配置用户是否可以注册
+        Boolean disableRegistry = voidSecurityConfiguration.getRegistryConfig().getDisableRegistry();
+        if (disableRegistry){
+            registryResult.setSupportMessage(AuthValidationMessage.ACCOUNT_DISABLE_REGISTRY);
+            return registryResult;
+        }
         // 确认填写用户名
         if(Validator.stringsNotNull(account)){
+            account = account.toLowerCase();
             // 确认填写密码
             if (!registryEntity.secretFilled()){
-                proxyResult.setSupportMessage(AuthValidationMessage.SECRET_NOT_FILLED);
-                return proxyResult;
+                registryResult.setSupportMessage(AuthValidationMessage.SECRET_NOT_FILLED);
+                return registryResult;
             }
             // 确认密码匹配
-            if (registryEntity.secretIsMatch()){
-                // 进入不同认证类型
-                Boolean accountExist = systemUserLoginService.preCheckAccountExist(account);
-                if (accountExist){
-                    proxyResult.setSupportMessage(AuthValidationMessage.USER_ALREADY_EXIST);
-                    return proxyResult;
-                }else {
-                    SystemUserLogin newUser = new SystemUserLogin();
-                    switch (registryType) {
-                        case ACCOUNT -> {
-                            newUser.setAccount(account);
-                            newUser.setSecret(passwordEncoder.encode(registryEntity.getSecret()));
+            if (registryEntity.secretIsEquals()){
+                if (registryEntity.secretMatchFormat()){
+                    Boolean accountExist = systemUserLoginService.preCheckAccountExist(account);
+                    if (accountExist){
+                        registryResult.setSupportMessage(AuthValidationMessage.ACCOUNT_ALREADY_EXIST);
+                        return registryResult;
+                    }else {
+                        SystemUserLogin newUser = new SystemUserLogin();
+                        newUser.setRegistryType(registryType);
+                        // 进入不同认证类型
+                        switch (registryType) {
+                            case ACCOUNT -> {
+                                if (Validator.checkCNUsernameFormat(account)){
+                                    newUser.setAccount(account);
+                                    newUser.setUid(systemUserLoginService.userUidGenerate(newUser));
+                                    newUser.setSecret(passwordEncoder.encode(registryEntity.getSecret()));
+                                }else {
+                                    registryResult.setSupportMessage(AuthValidationMessage.ACCOUNT_NOT_MATCH);
+                                    return registryResult;
+                                }
+                            }
+                            case EMAIL -> {
+                                /*发送邮件*/
+                            }
+                            case PHONE -> {
+                                /*发送短信验证码*/
+                            }
                         }
-                        case EMAIL -> {
-                            /*发送邮件*/
-                        }
-                        case PHONE -> {
-                            /*发送短信验证码*/
+                        boolean save = systemUserLoginService.save(newUser);
+                        if (save){
+                            return new ProxyResult(ResultCode.NORMAL_SUCCESS,AuthValidationMessage.ACCOUNT_REGISTRY_SUCCESS);
+                        }else {
+                            registryResult.setSupportMessage(AuthValidationMessage.ACCOUNT_REGISTRY_FAILED);
                         }
                     }
-                    systemUserLoginService.save(newUser);
+                }else {
+                    registryResult.setSupportMessage(AuthValidationMessage.SECRET_NOT_MATCH);
                 }
             }else {
-                proxyResult.setSupportMessage(AuthValidationMessage.SECRET_NOT_MATCH);
+                registryResult.setSupportMessage(AuthValidationMessage.SECRET_NOT_EQUALS);
             }
         }else {
-            proxyResult.setSupportMessage(AuthValidationMessage.USERNAME_BLANK);
+            registryResult.setSupportMessage(AuthValidationMessage.USERNAME_BLANK);
         }
-        return proxyResult;
+        return registryResult;
     }
 
     @ApiOperation(value="忘记密码",notes="忘记密码,重置用户密码")

@@ -3,6 +3,7 @@ package cn.toutatis.xvoid.spring.core.security.access
 import cn.toutatis.xvoid.common.standard.StandardFields
 import cn.toutatis.xvoid.common.result.ResultCode
 import cn.toutatis.xvoid.common.standard.AuthFields
+import cn.toutatis.xvoid.common.standard.AuthValidationMessage
 import cn.toutatis.xvoid.orm.base.authentication.entity.RequestAuthEntity
 import cn.toutatis.xvoid.spring.configure.system.VoidGlobalConfiguration
 import cn.toutatis.xvoid.spring.core.security.access.auth.LocalUserService
