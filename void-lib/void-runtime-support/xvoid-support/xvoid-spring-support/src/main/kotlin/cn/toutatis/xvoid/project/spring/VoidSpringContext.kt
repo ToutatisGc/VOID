@@ -11,8 +11,13 @@ class VoidSpringContext : VoidContext {
     private val logger = LoggerToolkit.getLogger(javaClass)
 
     constructor()
+
     constructor(context: ConfigurableApplicationContext){
-        this.context = context
+        try {
+            this.context = context
+        }catch (e:Exception){
+            e.printStackTrace()
+        }
     }
 
     companion object{

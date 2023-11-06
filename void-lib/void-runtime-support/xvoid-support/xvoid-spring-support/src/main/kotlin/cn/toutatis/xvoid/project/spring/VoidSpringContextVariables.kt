@@ -1,54 +1,36 @@
-package cn.toutatis.xvoid.project.spring;
+package cn.toutatis.xvoid.project.spring
 
-import cn.toutatis.xvoid.common.annotations.database.AssignField;
+import cn.toutatis.xvoid.common.annotations.database.AssignField
+import cn.toutatis.xvoid.project.spring.VoidSpringContextVariables
 
-public class VoidSpringContextVariables {
+class VoidSpringContextVariables {
 
-    /**
-     * AES加密密钥
-     */
-    public static final String AES_SECRET_KEY = "AES_SECRET";
+    companion object {
+        /**
+         * AES加密密钥
+         */
+        const val AES_SECRET_KEY = "AES_SECRET"
 
-    /**
-     * 系统过期时间
-     */
-    public static final String SYSTEM_EXPIRED_KEY = "VOID_EXPIRED";
+        /**
+         * 系统过期时间
+         */
+        const val SYSTEM_EXPIRED_KEY = "VOID_EXPIRED"
 
-    /**
-     * Db Already Exec Init
-     */
-    public static final String DB_ALREADY_EXEC_INIT_KEY = "DB_ALREADY_EXEC_INIT";
-    
+        /**
+         * Db Already Exec Init
+         * 数据库已初始化
+         */
+        const val DB_ALREADY_EXEC_INIT_KEY = "DB_ALREADY_EXEC_INIT"
+    }
+
     @AssignField(name = AES_SECRET_KEY)
-    private String aesSecret;
+    var aesSecret: String? = null
 
     @AssignField(name = SYSTEM_EXPIRED_KEY)
-    private String systemExpired;
+    var systemExpired: String? = null
 
     @AssignField(name = DB_ALREADY_EXEC_INIT_KEY)
-    private String dbAlreadyInit;
+    var dbAlreadyInit: String? = null
 
-    public String getAesSecret() {
-        return aesSecret;
-    }
 
-    public void setAesSecret(String aesSecret) {
-        this.aesSecret = aesSecret;
-    }
-
-    public String getSystemExpired() {
-        return systemExpired;
-    }
-
-    public void setSystemExpired(String systemExpired) {
-        this.systemExpired = systemExpired;
-    }
-
-    public String getDbAlreadyInit() {
-        return dbAlreadyInit;
-    }
-
-    public void setDbAlreadyInit(String dbAlreadyInit) {
-        this.dbAlreadyInit = dbAlreadyInit;
-    }
 }

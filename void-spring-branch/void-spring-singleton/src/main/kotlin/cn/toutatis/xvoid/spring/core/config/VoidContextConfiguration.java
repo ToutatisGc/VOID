@@ -29,9 +29,10 @@ public class VoidContextConfiguration {
     private final SQLiteShell sqLiteShell;
 
     public VoidContextConfiguration(
-            @Qualifier(StandardComponentPool.VOID_CONTEXT_SQLITE_DB_SHELL_BEAN) SQLiteShell sqLiteShell){
+            @Qualifier(StandardComponentPool.VOID_CONTEXT_SQLITE_DB_SHELL_BEAN) SQLiteShell sqLiteShell) throws Exception {
         logger.info("通过[SQLite-VOID]数据库,加载环境数据");
         this.sqLiteShell = sqLiteShell;
+        VoidSpringContextVariables voidSpringContextVariables = exposeContextVariables();
     }
 
     @Bean(StandardComponentPool.VOID_CONTEXT_VARIABLES)
@@ -39,7 +40,7 @@ public class VoidContextConfiguration {
         DQLBuilder<SqliteVoidContext> dictDQLBuilder = new DQLBuilder<>(SqliteVoidContext.class,true);
         dictDQLBuilder.eq(SqliteVoidContext::getMchId, StandardFields.VOID_BUSINESS_DEFAULT_CREATOR);
         List<Map<String, Object>> listMap = sqLiteShell.selectListMap(dictDQLBuilder);
-        VoidSpringContextVariables voidSpringContextVariables = ReflectToolkit.convertMapToEntity(listMap.stream()
+        return ReflectToolkit.convertMapToEntity(listMap.stream()
                 .collect(Collectors.toMap(
                         map -> (String) map.get(SqliteVoidContext.KEY_FIELD),
                         map -> map.get(SqliteVoidContext.VALUE_FIELD),
@@ -47,7 +48,5 @@ public class VoidContextConfiguration {
                             return existingValue;
                         }
                 )), VoidSpringContextVariables.class);
-        return voidSpringContextVariables;
-
     }
 }

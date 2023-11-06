@@ -13,6 +13,5 @@ import org.springframework.session.data.redis.config.annotation.web.http.EnableR
 class VoidSpringApplication
 
 fun main(args: Array<String>) {
-    val applicationContext: ConfigurableApplicationContext = runApplication<VoidSpringApplication>(*args)
-    VoidSpringContext(applicationContext).intervene()
+    VoidSpringContext(runApplication<VoidSpringApplication>(*args)).intervene()
 }
