@@ -19,7 +19,7 @@ class VoidInnerContextDbConnection {
 
     private val logger = LoggerToolkit.getLogger(this.javaClass)
 
-    @Bean(StandardComponentPool.VOID_CONTEXT_SQLITE_DB_BEAN)
+    @Bean(StandardComponentPool.VOID_CONTEXT_SQLITE_DB_SHELL_BEAN)
     fun sqliteShell(): SQLiteShell {
         val sqLiteConnectionFactory = SQLiteConnectionFactory()
         val resourcesFile: URL? = FileToolkit.getResourcesFile("sql/VOID.db")

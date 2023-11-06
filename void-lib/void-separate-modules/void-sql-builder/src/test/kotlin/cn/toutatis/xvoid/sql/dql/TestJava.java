@@ -1,13 +1,11 @@
 package cn.toutatis.xvoid.sql.dql;
 
-import cn.hutool.core.lang.func.Func1;
 import cn.toutatis.xvoid.sql.base.SQLType;
 import cn.toutatis.xvoid.sql.convert.ResultObjectMapperConverter;
 import cn.toutatis.xvoid.toolkit.clazz.LambdaToolkit;
 import cn.toutatis.xvoid.toolkit.clazz.XFunc;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.function.Executable;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -86,10 +84,19 @@ public class TestJava {
     }
 
     @Test
-    public void testConvert(){
+    public void testConvert() throws Exception {
         ResultObjectMapperConverter con = ResultObjectMapperConverter.instance();
-        Map<String, Object> info = Map.of("NAME", "foo");
-        TestTableJava convert = con.convert(info, TestTableJava.class);
+        Map<String, Object> info = Map.of("NAME", "foo","age",6);
+        TestTableJava convert3 = con.convert(info, TestTableJava.class);
+        System.err.println(convert3);
+        HashMap<String,Object> nInfo = new HashMap<>();
+        nInfo.put("NAME","foo");
+        nInfo.put("age",77);
+        TestTableJava testTableJava = new TestTableJava();
+        testTableJava.setAge(666);
+        testTableJava.setName("AAA");
+        nInfo.put("inner",Map.of("NAME", "bar","age",7777));
+        TestTableOwn convert = con.convert(nInfo, TestTableOwn.class);
         System.err.println(convert);
     }
 }

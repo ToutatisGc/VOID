@@ -13,13 +13,17 @@ import cn.toutatis.xvoid.common.standard.AuthValidationMessage;
 import cn.toutatis.xvoid.spring.configure.system.VoidSecurityConfiguration;
 import cn.toutatis.xvoid.spring.core.tools.ViewToolkit;
 import cn.toutatis.xvoid.spring.annotations.application.VoidController;
+import cn.toutatis.xvoid.toolkit.clazz.LambdaToolkit;
 import cn.toutatis.xvoid.toolkit.validator.Validator;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.github.xiaoymin.knife4j.annotations.ApiSupport;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.BoundValueOperations;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -139,6 +143,11 @@ public class SecurityAuthController {
                             case ACCOUNT -> {
                                 if (Validator.checkCNUsernameFormat(account)){
                                     newUser.setAccount(account);
+                                    QueryWrapper<Object> usernameRepeatQuery = Wrappers.query();
+                                    usernameRepeatQuery.select(LambdaToolkit.getFieldName(SystemUserLogin::getUsername));
+                                    usernameRepeatQuery.eq(LambdaToolkit.getFieldName(SystemUserLogin::getUsername),account);
+                                    SystemUserLogin usernameEntity = systemUserLoginService.getOneObj(usernameRepeatQuery);
+                                    newUser.setUsername(usernameEntity !=null ? account+"_"+ RandomStringUtils.randomAlphabetic(6) : account);
                                     newUser.setUid(systemUserLoginService.userUidGenerate(newUser));
                                     newUser.setSecret(passwordEncoder.encode(registryEntity.getSecret()));
                                 }else {

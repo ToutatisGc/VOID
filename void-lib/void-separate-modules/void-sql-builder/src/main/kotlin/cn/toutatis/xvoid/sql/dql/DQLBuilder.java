@@ -142,7 +142,7 @@ public class DQLBuilder<T> {
         return selectFields.toString();
     }
 
-    public T convert(Map<String,Object> map){
+    public T convert(Map<String,Object> map) throws Exception {
         Class<T> entityClass = metaInfo.getEntityClass();
         if (entityClass == null){
             throw new NullPointerException("实体类为空,构造器请传Class");

@@ -1,9 +1,15 @@
 package cn.toutatis.xvoid.project.spring
 
+import cn.toutatis.xvoid.common.standard.StandardComponentPool
 import cn.toutatis.xvoid.context.VoidContext
+import cn.toutatis.xvoid.toolkit.log.LoggerToolkit
+import cn.toutatis.xvoid.toolkit.log.infoWithModule
 import org.springframework.context.ConfigurableApplicationContext
 
 class VoidSpringContext : VoidContext {
+
+    private val logger = LoggerToolkit.getLogger(javaClass)
+
     constructor()
     constructor(context: ConfigurableApplicationContext){
         this.context = context
@@ -11,7 +17,7 @@ class VoidSpringContext : VoidContext {
 
     companion object{
         @JvmStatic
-        public var properties: VoidSpringProperties = VoidSpringProperties()
+        public var contextVariables: VoidSpringContextVariables = VoidSpringContextVariables()
     }
 
     private var context:ConfigurableApplicationContext? = null
@@ -31,7 +37,8 @@ class VoidSpringContext : VoidContext {
     }
 
     private fun intervene(context: ConfigurableApplicationContext) {
-        val displayName = context.displayName
-        System.err.println(displayName)
+        logger.infoWithModule(Meta.MODULE_NAME,Meta.SUB_MODULE_NAME,"已介入[${context.id}]应用环境...")
+        val info = context.getBean(StandardComponentPool.VOID_CONTEXT_VARIABLES)
+        System.err.println(info)
     }
 }

@@ -1,7 +1,9 @@
 package cn.toutatis.xvoid.sql.convert;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import cn.toutatis.xvoid.common.annotations.database.AssignField;
+import cn.toutatis.xvoid.toolkit.clazz.ReflectToolkit;
 
+import java.lang.reflect.Field;
 import java.util.Map;
 
 /**
@@ -9,8 +11,6 @@ import java.util.Map;
  * @author Toutatis_Gc
  */
 public class ResultObjectMapperConverter {
-
-    private static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
 
     private static volatile ResultObjectMapperConverter INSTANCE;
 
@@ -21,15 +21,14 @@ public class ResultObjectMapperConverter {
             synchronized (ResultObjectMapperConverter.class){
                 if (INSTANCE == null){
                     INSTANCE = new ResultObjectMapperConverter();
-                    OBJECT_MAPPER.registerModule(new FieldMapModule());
                 }
             }
         }
         return INSTANCE;
     }
 
-    public <T> T convert(Map<String,Object> map,Class<T> entityClass){
-        return OBJECT_MAPPER.convertValue(map,entityClass);
+    public <T> T convert(Map<String,Object> map,Class<T> entityClass) throws Exception {
+        return ReflectToolkit.convertMapToEntity(map,entityClass);
     }
 
 }

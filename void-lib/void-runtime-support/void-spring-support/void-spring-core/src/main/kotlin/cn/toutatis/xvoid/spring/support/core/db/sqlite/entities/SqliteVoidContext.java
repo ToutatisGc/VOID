@@ -1,6 +1,6 @@
 package cn.toutatis.xvoid.spring.support.core.db.sqlite.entities;
 
-import cn.toutatis.xvoid.common.annotations.database.DDLField;
+import cn.toutatis.xvoid.common.annotations.database.AssignField;
 import cn.toutatis.xvoid.common.annotations.database.DDLTable;
 import lombok.Data;
 
@@ -12,20 +12,30 @@ import lombok.Data;
 @DDLTable(SqliteVoidContext.TABLE)
 public class SqliteVoidContext {
 
+    /**
+     * 环境上下文表名
+     */
     public static final String TABLE = "VOID_CONTEXT";
 
-    public static final String AES_SECRET_KEY = "AES_SECRET";
+    /**
+     * 数据库初始化
+     */
+    public static final String DB_ALREADY_EXEC_INIT = "DB_ALREADY_EXEC_INIT";
 
-    @DDLField(name = "KEY")
+    public static final String KEY_FIELD = "KEY";
+
+    public static final String VALUE_FIELD = "VALUE";
+
+    @AssignField(name = KEY_FIELD)
     private String key;
 
-    @DDLField(name = "VALUE")
+    @AssignField(name = VALUE_FIELD)
     private String value;
 
-    @DDLField(name = "REMARK")
+    @AssignField(name = "REMARK")
     private String remark;
 
-    @DDLField(name = "MCH_ID")
+    @AssignField(name = "MCH_ID")
     private String mchId;
 
 }

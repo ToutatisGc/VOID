@@ -1,9 +1,7 @@
 package cn.toutatis.xvoid.toolkit.clazz
 
-import cn.toutatis.xvoid.common.annotations.database.DDLField
-import cn.toutatis.xvoid.toolkit.formatting.StringToolkit
+import cn.toutatis.xvoid.common.annotations.database.AssignField
 import cn.toutatis.xvoid.toolkit.validator.Validator
-import org.apache.poi.ss.formula.functions.T
 import kotlin.Throws
 import java.lang.Exception
 import java.lang.IllegalArgumentException
@@ -56,7 +54,7 @@ object LambdaToolkit {
         val lowercaseFieldName = firstChar.toString() + uppercaseName.substring(1)
         val fieldName:String = try {
             val declaredField = implClass.getDeclaredField(lowercaseFieldName)
-            val ddlField = declaredField.getDeclaredAnnotation(DDLField::class.java)
+            val ddlField = declaredField.getDeclaredAnnotation(AssignField::class.java)
             if (ddlField != null){
                 return if (Validator.strIsBlank(ddlField.name)) lowercaseFieldName else ddlField.name
             }else{ lowercaseFieldName }

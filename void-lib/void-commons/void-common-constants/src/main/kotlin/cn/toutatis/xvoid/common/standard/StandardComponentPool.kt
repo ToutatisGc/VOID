@@ -19,7 +19,9 @@ class StandardComponentPool {
        /**
         * VOID SQLite Context 上下文数据库
         */
-       const val VOID_CONTEXT_SQLITE_DB_BEAN = "VOID_SQLITE_CONTEXT"
+       const val VOID_CONTEXT_SQLITE_DB_SHELL_BEAN = "VOID_SQLITE_CONTEXT_SHELL"
+
+       const val VOID_CONTEXT_VARIABLES = "VOID_CONTEXT_VARIABLES"
    }
 
 }

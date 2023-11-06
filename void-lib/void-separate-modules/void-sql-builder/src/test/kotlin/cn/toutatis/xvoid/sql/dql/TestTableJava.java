@@ -1,7 +1,10 @@
 package cn.toutatis.xvoid.sql.dql;
 
+import cn.toutatis.xvoid.common.annotations.database.AssignField;
+
 public class TestTableJava {
 
+    @AssignField(name = "NAME")
     private String name;
 
     private Integer age;
