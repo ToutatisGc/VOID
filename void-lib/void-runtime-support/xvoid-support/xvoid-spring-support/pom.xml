@@ -17,22 +17,35 @@
     </properties>
 
     <dependencies>
+        <!--项目依赖-->
         <dependency>
             <groupId>cn.toutatis</groupId>
             <artifactId>xvoid-project</artifactId>
             <version>0.0.0-ALPHA</version>
         </dependency>
+        <!--Spring上下文依赖-->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
             <version>5.3.21</version>
             <scope>compile</scope>
         </dependency>
+        <!--工具类依赖-->
         <dependency>
             <groupId>cn.toutatis</groupId>
             <artifactId>void-toolkit</artifactId>
             <version>0.0.0-ALPHA</version>
             <scope>compile</scope>
+        </dependency>
+        <!--SQLite依赖-->
+        <dependency>
+            <groupId>cn.toutatis</groupId>
+            <artifactId>void-sqlite</artifactId>
+            <version>0.0.0-ALPHA</version>
+        </dependency>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
         </dependency>
     </dependencies>
 

@@ -3,7 +3,7 @@ package cn.toutatis.xvoid.spring.core.config;
 import cn.toutatis.xvoid.common.standard.StandardComponentPool;
 import cn.toutatis.xvoid.common.standard.StandardFields;
 import cn.toutatis.xvoid.project.spring.VoidSpringContextVariables;
-import cn.toutatis.xvoid.spring.support.core.db.sqlite.entities.SqliteVoidContext;
+import cn.toutatis.xvoid.project.spring.entities.SqliteVoidContext;
 import cn.toutatis.xvoid.sql.dql.DQLBuilder;
 import cn.toutatis.xvoid.sqlite.SQLiteShell;
 import cn.toutatis.xvoid.toolkit.clazz.ReflectToolkit;
@@ -32,7 +32,6 @@ public class VoidContextConfiguration {
             @Qualifier(StandardComponentPool.VOID_CONTEXT_SQLITE_DB_SHELL_BEAN) SQLiteShell sqLiteShell) throws Exception {
         logger.info("通过[SQLite-VOID]数据库,加载环境数据");
         this.sqLiteShell = sqLiteShell;
-        VoidSpringContextVariables voidSpringContextVariables = exposeContextVariables();
     }
 
     @Bean(StandardComponentPool.VOID_CONTEXT_VARIABLES)
@@ -40,13 +39,14 @@ public class VoidContextConfiguration {
         DQLBuilder<SqliteVoidContext> dictDQLBuilder = new DQLBuilder<>(SqliteVoidContext.class,true);
         dictDQLBuilder.eq(SqliteVoidContext::getMchId, StandardFields.VOID_BUSINESS_DEFAULT_CREATOR);
         List<Map<String, Object>> listMap = sqLiteShell.selectListMap(dictDQLBuilder);
-        return ReflectToolkit.convertMapToEntity(listMap.stream()
-                .collect(Collectors.toMap(
+        return ReflectToolkit.convertMapToEntity(
+                listMap.stream().collect(Collectors.toMap(
                         map -> (String) map.get(SqliteVoidContext.KEY_FIELD),
                         map -> map.get(SqliteVoidContext.VALUE_FIELD),
                         (existingValue, newValue) -> {
                             return existingValue;
                         }
-                )), VoidSpringContextVariables.class);
+                )), VoidSpringContextVariables.class
+        );
     }
 }

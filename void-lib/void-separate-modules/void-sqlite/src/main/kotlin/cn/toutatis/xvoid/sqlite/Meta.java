@@ -13,4 +13,6 @@ public class Meta {
 
     public static final String SUB_MODULE_NAME = "SQLite";
 
+    public static final String BUILDER_MODULE = "BUILDER";
+
 }

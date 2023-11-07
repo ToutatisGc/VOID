@@ -1,4 +1,4 @@
-package cn.toutatis.xvoid.spring.support.core.db.sqlite.entities;
+package cn.toutatis.xvoid.project.spring.entities;
 
 import cn.toutatis.xvoid.common.annotations.database.AssignField;
 import cn.toutatis.xvoid.common.annotations.database.DDLTable;
