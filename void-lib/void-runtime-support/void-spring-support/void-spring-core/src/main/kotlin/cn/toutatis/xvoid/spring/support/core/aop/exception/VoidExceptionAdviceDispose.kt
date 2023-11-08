@@ -92,7 +92,12 @@ class VoidExceptionAdviceDispose {
             systemLog.type = LogType.EXCEPTION.name
             systemLog.intro = "异常[${e::class.simpleName}]"
             systemLog.details = parseErrorJson(e,request).toJSONString()
-            amqpShell.sendLog(LogType.EXCEPTION,systemLog)
+            if (e.javaClass == IllegalException::class.java){
+                amqpShell.sendLog(LogType.ILLEGAL,systemLog)
+            }else{
+                amqpShell.sendLog(LogType.EXCEPTION,systemLog)
+            }
+
         }
         if (voidGlobalConfiguration.mode == RunMode.DEBUG) {
             e.printStackTrace()

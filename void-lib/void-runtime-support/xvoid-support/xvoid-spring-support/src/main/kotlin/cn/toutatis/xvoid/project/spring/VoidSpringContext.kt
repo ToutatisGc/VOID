@@ -2,6 +2,7 @@ package cn.toutatis.xvoid.project.spring
 
 import cn.toutatis.xvoid.common.standard.StandardComponentPool
 import cn.toutatis.xvoid.context.VoidContext
+import cn.toutatis.xvoid.sqlite.SQLiteShell
 import cn.toutatis.xvoid.sqlite.common.VoidSQLiteShellBuilder
 import cn.toutatis.xvoid.toolkit.log.LoggerToolkit
 import cn.toutatis.xvoid.toolkit.log.infoWithModule
@@ -10,8 +11,6 @@ import org.springframework.context.ConfigurableApplicationContext
 class VoidSpringContext : VoidContext {
 
     private val logger = LoggerToolkit.getLogger(javaClass)
-
-
 
     constructor()
 
@@ -28,7 +27,9 @@ class VoidSpringContext : VoidContext {
         var contextVariables: VoidSpringContextVariables = VoidSpringContextVariables()
 
         @JvmStatic
-        val systemSqliteShell = VoidSQLiteShellBuilder.buildSystemVoidContextShell()
+        val systemSqliteShell :SQLiteShell by lazy {
+            VoidSQLiteShellBuilder.buildSystemVoidContextShell()
+        }
     }
 
     private var context:ConfigurableApplicationContext? = null

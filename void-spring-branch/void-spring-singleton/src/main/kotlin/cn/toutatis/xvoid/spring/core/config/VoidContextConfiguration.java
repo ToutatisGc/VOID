@@ -9,9 +9,11 @@ import cn.toutatis.xvoid.sqlite.SQLiteShell;
 import cn.toutatis.xvoid.toolkit.clazz.ReflectToolkit;
 import cn.toutatis.xvoid.toolkit.log.LoggerToolkit;
 import org.slf4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.jdbc.core.JdbcTemplate;
 
 import java.util.List;
 import java.util.Map;
@@ -28,10 +30,13 @@ public class VoidContextConfiguration {
 
     private final SQLiteShell sqLiteShell;
 
+    private final JdbcTemplate template;
+
     public VoidContextConfiguration(
-            @Qualifier(StandardComponentPool.VOID_CONTEXT_SQLITE_DB_SHELL_BEAN) SQLiteShell sqLiteShell) throws Exception {
+            @Qualifier(StandardComponentPool.VOID_CONTEXT_SQLITE_DB_SHELL_BEAN) SQLiteShell sqLiteShell, JdbcTemplate template) throws Exception {
         logger.info("通过[SQLite-VOID]数据库,加载环境数据");
         this.sqLiteShell = sqLiteShell;
+        this.template = template;
     }
 
     @Bean(StandardComponentPool.VOID_CONTEXT_VARIABLES)
@@ -43,9 +48,7 @@ public class VoidContextConfiguration {
                 listMap.stream().collect(Collectors.toMap(
                         map -> (String) map.get(SqliteVoidContext.KEY_FIELD),
                         map -> map.get(SqliteVoidContext.VALUE_FIELD),
-                        (existingValue, newValue) -> {
-                            return existingValue;
-                        }
+                        (existingValue, newValue) -> { return existingValue; }
                 )), VoidSpringContextVariables.class
         );
     }
