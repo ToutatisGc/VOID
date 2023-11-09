@@ -9,7 +9,7 @@ spring:
     hibernate:
       ddl-auto: update
       naming:
-        physical-strategy: cn.toutatis.xvoid.orm.support.jpa.VoidNamingStrategyStandardImpl
+        physical-strategy: cn.toutatis.xvoid.orm.support.jpa.VoidStandardNamingStrategyImpl
     open-in-view: true
 #   hibernate的dialect指定可能并不准确，可以使用手动指定选择方言
 #    database-platform: org.hibernate.dialect.MariaDB10Dialect

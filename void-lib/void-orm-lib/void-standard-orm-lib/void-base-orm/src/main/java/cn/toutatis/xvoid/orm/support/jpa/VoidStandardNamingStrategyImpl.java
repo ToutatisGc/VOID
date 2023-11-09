@@ -19,11 +19,11 @@ import java.io.Serializable;
  * @author Toutatis_Gc
  */
 @Component
-public class VoidNamingStrategyStandardImpl implements PhysicalNamingStrategy, Serializable {
+public class VoidStandardNamingStrategyImpl implements PhysicalNamingStrategy, Serializable {
 
 	private final VoidGlobalConfiguration voidGlobalConfiguration;
 
-	public VoidNamingStrategyStandardImpl(VoidGlobalConfiguration voidGlobalConfiguration) {
+	public VoidStandardNamingStrategyImpl(VoidGlobalConfiguration voidGlobalConfiguration) {
 		this.voidGlobalConfiguration = voidGlobalConfiguration;
 	}
 
