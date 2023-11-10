@@ -1,4 +1,4 @@
-package cn.toutatis.xvoid.orm.base.authentication.entity;
+package cn.toutatis.xvoid.orm.base.authentication.entity.derive;
 
 import com.alibaba.fastjson.JSONObject;
 import org.springframework.security.core.userdetails.UserDetails;

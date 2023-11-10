@@ -1,4 +1,4 @@
-package cn.toutatis.xvoid.orm.base.authentication.entity;
+package cn.toutatis.xvoid.orm.base.authentication.entity.derive;
 
 import cn.toutatis.xvoid.orm.base.authentication.enums.AuthType;
 import com.alibaba.fastjson.JSONObject;

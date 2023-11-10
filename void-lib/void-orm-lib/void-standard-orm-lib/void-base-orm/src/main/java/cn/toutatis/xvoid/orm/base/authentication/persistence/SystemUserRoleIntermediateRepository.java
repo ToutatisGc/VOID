@@ -1,6 +1,6 @@
 package cn.toutatis.xvoid.orm.base.authentication.persistence;
 
-import cn.toutatis.xvoid.orm.base.authentication.entity.SystemUserRoleRelation;
+import cn.toutatis.xvoid.orm.base.authentication.entity.intermediate.SystemUserRoleIntermediate;
 import cn.toutatis.xvoid.orm.support.jpa.VoidJpaRepo;
 
 /**
@@ -11,6 +11,6 @@ import cn.toutatis.xvoid.orm.support.jpa.VoidJpaRepo;
  * @author Toutatis_Gc
  * @since 2022-11-26
 */
-public interface SystemUserRoleRelationRepository extends VoidJpaRepo<SystemUserRoleRelation,Integer> {
+public interface SystemUserRoleIntermediateRepository extends VoidJpaRepo<SystemUserRoleIntermediate,Integer> {
 
 }

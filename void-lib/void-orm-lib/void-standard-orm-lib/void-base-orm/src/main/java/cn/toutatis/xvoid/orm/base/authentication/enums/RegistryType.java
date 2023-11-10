@@ -24,8 +24,15 @@ public enum RegistryType {
     /**
      * 手机号注册类型
      */
-    PHONE
-
+    PHONE,
+    /**
+     * 开发人员
+     */
+    DEVELOPER,
+    /**
+     * 管理员
+     */
+    ADMINISTRATOR
 
 
 }

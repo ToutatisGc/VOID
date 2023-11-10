@@ -10,6 +10,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.google.common.base.Function;
 import org.apache.commons.lang3.time.StopWatch;
 import org.junit.Test;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 public class SimpleTest {
 
@@ -30,6 +31,13 @@ public class SimpleTest {
         }
         started.stop();
         System.err.println(started.formatTime());
+    }
+
+    @Test
+    public void generatePassword(){
+        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
+        String encode = bCryptPasswordEncoder.encode("a12345678");
+        System.err.println(encode);
     }
 
 }

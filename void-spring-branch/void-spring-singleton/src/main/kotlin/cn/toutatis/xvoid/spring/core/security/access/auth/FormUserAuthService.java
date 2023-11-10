@@ -1,7 +1,7 @@
 package cn.toutatis.xvoid.spring.core.security.access.auth;
 
 import cn.toutatis.xvoid.common.result.DataStatus;
-import cn.toutatis.xvoid.orm.base.authentication.entity.FormUserDetails;
+import cn.toutatis.xvoid.orm.base.authentication.entity.derive.FormUserDetails;
 import cn.toutatis.xvoid.orm.base.authentication.entity.RequestAuthEntity;
 import cn.toutatis.xvoid.orm.base.authentication.entity.SystemUserLogin;
 import cn.toutatis.xvoid.orm.base.authentication.enums.MessageType;

@@ -1,9 +1,9 @@
 package cn.toutatis.xvoid.orm.base.authentication.service.impl;
 
 import cn.toutatis.xvoid.orm.base.authentication.entity.SystemAuthRole;
-import cn.toutatis.xvoid.orm.base.authentication.entity.SystemUserRoleRelation;
+import cn.toutatis.xvoid.orm.base.authentication.entity.intermediate.SystemUserRoleIntermediate;
 import cn.toutatis.xvoid.orm.base.authentication.persistence.SystemAuthRoleMapper;
-import cn.toutatis.xvoid.orm.base.authentication.persistence.SystemUserRoleRelationMapper;
+import cn.toutatis.xvoid.orm.base.authentication.persistence.SystemUserRoleIntermediateMapper;
 import cn.toutatis.xvoid.orm.base.authentication.service.SystemAuthRoleService;
 import cn.toutatis.xvoid.orm.support.mybatisplus.VoidMybatisServiceImpl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -23,25 +23,25 @@ import java.util.List;
 @Service
 public class SystemAuthRoleServiceImpl extends VoidMybatisServiceImpl<SystemAuthRoleMapper, SystemAuthRole> implements SystemAuthRoleService {
 
-    private final SystemUserRoleRelationMapper systemUserRoleRelationMapper;
+    private final SystemUserRoleIntermediateMapper SystemUserRoleIntermediateMapper;
 
-    public SystemAuthRoleServiceImpl(SystemUserRoleRelationMapper systemUserRoleRelationMapper) {
-        this.systemUserRoleRelationMapper = systemUserRoleRelationMapper;
+    public SystemAuthRoleServiceImpl(SystemUserRoleIntermediateMapper SystemUserRoleIntermediateMapper) {
+        this.SystemUserRoleIntermediateMapper = SystemUserRoleIntermediateMapper;
     }
 
     @Override
     public List<SystemAuthRole> getUserRoles(String userId) {
-        QueryWrapper<SystemUserRoleRelation> userRoleRelationQueryWrapper = new QueryWrapper<>();
+        QueryWrapper<SystemUserRoleIntermediate> userRoleRelationQueryWrapper = new QueryWrapper<>();
         userRoleRelationQueryWrapper.select("roleId").eq("userId",userId);
 //        if (config.getPlatformMode()){
 //            userRoleRelationQueryWrapper.eq("belongTo", StandardFields.VOID_SQL_DEFAULT_CREATOR);
 //        }
-        List<SystemUserRoleRelation> relations = systemUserRoleRelationMapper.selectList(userRoleRelationQueryWrapper);
+        List<SystemUserRoleIntermediate> relations = SystemUserRoleIntermediateMapper.selectList(userRoleRelationQueryWrapper);
         if (relations.size() == 0){
             return null;
         }else{
             List<String> roleIds = new ArrayList<>(relations.size());
-            for (SystemUserRoleRelation relation : relations) {
+            for (SystemUserRoleIntermediate relation : relations) {
                 roleIds.add(relation.getRoleId());
             }
             QueryWrapper<SystemAuthRole> systemAuthRoleQueryWrapper = new QueryWrapper<>();

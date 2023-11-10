@@ -2,9 +2,9 @@ package cn.toutatis.xvoid.orm.base.authentication.service.impl;
 
 import cn.toutatis.xvoid.orm.base.authentication.entity.SystemAuthPath;
 import cn.toutatis.xvoid.orm.base.authentication.entity.SystemAuthRole;
-import cn.toutatis.xvoid.orm.base.authentication.entity.SystemRolePathRelation;
+import cn.toutatis.xvoid.orm.base.authentication.entity.intermediate.SystemRolePathIntermediate;
 import cn.toutatis.xvoid.orm.base.authentication.persistence.SystemAuthPathMapper;
-import cn.toutatis.xvoid.orm.base.authentication.persistence.SystemRolePathRelationMapper;
+import cn.toutatis.xvoid.orm.base.authentication.persistence.SystemRolePathIntermediateMapper;
 import cn.toutatis.xvoid.orm.base.authentication.service.SystemAuthPathService;
 import cn.toutatis.xvoid.orm.support.mybatisplus.VoidMybatisServiceImpl;
 import cn.toutatis.xvoid.toolkit.validator.Validator;
@@ -26,10 +26,10 @@ import java.util.List;
 @Service
 public class SystemAuthPathServiceImpl extends VoidMybatisServiceImpl<SystemAuthPathMapper, SystemAuthPath> implements SystemAuthPathService {
 
-    private final SystemRolePathRelationMapper systemRolePathRelationMapper;
+    private final SystemRolePathIntermediateMapper SystemRolePathIntermediateMapper;
 
-    public SystemAuthPathServiceImpl(SystemRolePathRelationMapper systemRolePathRelationMapper) {
-        this.systemRolePathRelationMapper = systemRolePathRelationMapper;
+    public SystemAuthPathServiceImpl(SystemRolePathIntermediateMapper SystemRolePathIntermediateMapper) {
+        this.SystemRolePathIntermediateMapper = SystemRolePathIntermediateMapper;
     }
 
     @Override
@@ -39,12 +39,12 @@ public class SystemAuthPathServiceImpl extends VoidMybatisServiceImpl<SystemAuth
             for (SystemAuthRole role : roles) {
                 roleIds.add(role.getId());
             }
-            QueryWrapper<SystemRolePathRelation> systemRolePathRelationQueryWrapper = new QueryWrapper<>();
-            systemRolePathRelationQueryWrapper.select("authId").in("roleId",roleIds);
-            List<SystemRolePathRelation> rolePathsRelation = systemRolePathRelationMapper.selectList(systemRolePathRelationQueryWrapper);
+            QueryWrapper<SystemRolePathIntermediate> SystemRolePathIntermediateQueryWrapper = new QueryWrapper<>();
+            SystemRolePathIntermediateQueryWrapper.select("authId").in("roleId",roleIds);
+            List<SystemRolePathIntermediate> rolePathsRelation = SystemRolePathIntermediateMapper.selectList(SystemRolePathIntermediateQueryWrapper);
             if (Validator.objNotNull(rolePathsRelation)){
                 HashSet<String> pathIds = new HashSet<>(rolePathsRelation.size());
-                for (SystemRolePathRelation paths : rolePathsRelation) {
+                for (SystemRolePathIntermediate paths : rolePathsRelation) {
                     pathIds.add(paths.getAuthId());
                 }
                 QueryWrapper<SystemAuthPath> authPathQueryWrapper = new QueryWrapper<>();

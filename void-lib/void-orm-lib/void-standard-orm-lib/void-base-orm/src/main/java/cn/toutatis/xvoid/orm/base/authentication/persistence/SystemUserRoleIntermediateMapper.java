@@ -1,6 +1,6 @@
 package cn.toutatis.xvoid.orm.base.authentication.persistence;
 
-import cn.toutatis.xvoid.orm.base.authentication.entity.SystemUserRoleRelation;
+import cn.toutatis.xvoid.orm.base.authentication.entity.intermediate.SystemUserRoleIntermediate;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
@@ -15,7 +15,7 @@ import org.springframework.stereotype.Repository;
 */
 @Mapper
 @Repository
-public interface SystemUserRoleRelationMapper extends BaseMapper<SystemUserRoleRelation> {
+public interface SystemUserRoleIntermediateMapper extends BaseMapper<SystemUserRoleIntermediate> {
 
 
 }

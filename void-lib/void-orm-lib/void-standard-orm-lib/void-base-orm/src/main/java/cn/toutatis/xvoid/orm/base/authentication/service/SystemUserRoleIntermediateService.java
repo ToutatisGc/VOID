@@ -1,6 +1,7 @@
 package cn.toutatis.xvoid.orm.base.authentication.service;
 
-import cn.toutatis.xvoid.orm.base.authentication.entity.SystemUserRoleRelation;
+
+import cn.toutatis.xvoid.orm.base.authentication.entity.intermediate.SystemUserRoleIntermediate;
 import cn.toutatis.xvoid.orm.support.VoidService;
 
 /**
@@ -11,6 +12,6 @@ import cn.toutatis.xvoid.orm.support.VoidService;
  * @author Toutatis_Gc
  * @since 2022-11-26
 */
-public interface SystemUserRoleRelationService extends VoidService<SystemUserRoleRelation> {
+public interface SystemUserRoleIntermediateService extends VoidService<SystemUserRoleIntermediate> {
 
 }

@@ -31,7 +31,14 @@ import static cn.toutatis.xvoid.orm.base.authentication.entity.SystemUserLogin.T
 @Getter @Setter @Entity @ToString(callSuper = true)
 @JsonIgnoreProperties({"reservedString","reservedInt"})
 @ApiModel(value = "SystemUserLogin 系统用户类", description = "系统用户实体类", parent = EntityBasicAttribute.class)
-@Table(name=TABLE)
+@Table(name=TABLE,
+        indexes = {
+                @Index(name = "ACCOUNT_INDEX",columnList = "account",unique = true),
+                @Index(name = "USERNAME_INDEX",columnList = "username",unique = true),
+                @Index(name = "PHONE_INDEX",columnList = "phoneCode",unique = true),
+                @Index(name = "EMAIL_INDEX",columnList = "email",unique = true)
+        }
+)
 @org.hibernate.annotations.Table(appliesTo = TABLE, comment = "系统用户类")
 public class SystemUserLogin extends EntityBasicAttribute<SystemUserLogin> {
 
@@ -73,7 +80,7 @@ public class SystemUserLogin extends EntityBasicAttribute<SystemUserLogin> {
 
     @TableField("phoneCode")
     @ApiModelProperty(value="电话号码",required = false, example = "19902351234")
-    @Column(name="phoneCode",columnDefinition = "VARCHAR(11) COMMENT '电话号码'")
+    @Column(name="phoneCode",unique = true,columnDefinition = "VARCHAR(11) COMMENT '电话号码'")
     private String phoneCode;
 
     @TableField("email")

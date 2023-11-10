@@ -1,7 +1,7 @@
 package cn.toutatis.xvoid.spring.core.security.config;
 
 
-import cn.toutatis.xvoid.orm.base.authentication.entity.AuthInfo;
+import cn.toutatis.xvoid.orm.base.authentication.entity.derive.AuthInfo;
 import cn.toutatis.xvoid.toolkit.log.LoggerToolkit;
 import org.slf4j.Logger;
 import org.springframework.security.core.Authentication;

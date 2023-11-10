@@ -1,5 +1,6 @@
-package cn.toutatis.xvoid.orm.base.authentication.entity;
+package cn.toutatis.xvoid.orm.base.authentication.entity.intermediate;
 
+import cn.toutatis.xvoid.BusinessType;
 import cn.toutatis.xvoid.orm.base.data.common.EntityBasicAttribute;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -11,6 +12,9 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
+import java.io.Serial;
+
+import static cn.toutatis.xvoid.orm.base.authentication.entity.intermediate.SystemRolePathIntermediate.TABLE;
 
 /**
  * @author Toutatis_Gc
@@ -20,17 +24,25 @@ import javax.persistence.*;
  */
 @Getter @Setter @Entity @ToString(callSuper = true)
 @JsonIgnoreProperties({"reservedString","reservedInt"})
-@ApiModel(value = "SystemRolePathRelation 系统角色&权限关系类", description = "系统角色&权限关系类", parent = EntityBasicAttribute.class)
+@ApiModel(value = "SystemRolePathIntermediate 系统角色&权限关系类", description = "系统角色&权限关系类", parent = EntityBasicAttribute.class)
 @Table(
-        name = "vb_system_role_path_relation"
+        name = TABLE
         ,indexes = {
                 @Index(name = "ROLE_INDEX",columnList = "roleId"),
                 @Index(name = "AUTH_INDEX",columnList = "authId")
         }
 )
-@org.hibernate.annotations.Table(appliesTo = "vb_system_role_path_relation", comment = "系统角色&权限关系类")
-public class SystemRolePathRelation extends EntityBasicAttribute<SystemRolePathRelation>{
-    
+@org.hibernate.annotations.Table(appliesTo = TABLE, comment = "系统角色&权限关系类")
+public class SystemRolePathIntermediate extends EntityBasicAttribute<SystemRolePathIntermediate>{
+
+    @Serial
+    private static final long serialVersionUID = 1L;
+    /**
+     * 数据库表名以及业务类型
+     */
+    public static final String TABLE = "vb_system_role_path_intermediate";
+    {this.setBusinessType(BusinessType.XVOID_SYSTEM);}
+
     @Id
     @TableId
     @ApiModelProperty(value="主键ID",required = true, example = "0")
