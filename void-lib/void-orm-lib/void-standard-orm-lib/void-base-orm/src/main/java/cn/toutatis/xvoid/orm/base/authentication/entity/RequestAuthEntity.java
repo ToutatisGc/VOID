@@ -1,7 +1,7 @@
 package cn.toutatis.xvoid.orm.base.authentication.entity;
 
 import cn.toutatis.xvoid.common.standard.AuthFields;
-import cn.toutatis.xvoid.orm.base.authentication.enums.AuthType;
+import cn.toutatis.xvoid.common.enums.AuthType;
 import com.alibaba.fastjson.JSONObject;
 
 

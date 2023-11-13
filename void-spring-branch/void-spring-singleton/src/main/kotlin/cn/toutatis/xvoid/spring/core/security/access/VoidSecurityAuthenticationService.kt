@@ -7,8 +7,8 @@ import cn.toutatis.xvoid.common.standard.AuthValidationMessage
 import cn.toutatis.xvoid.orm.base.authentication.entity.RequestAuthEntity
 import cn.toutatis.xvoid.spring.configure.system.VoidGlobalConfiguration
 import cn.toutatis.xvoid.spring.core.security.access.auth.LocalUserService
-import cn.toutatis.xvoid.orm.base.authentication.enums.AuthType
-import cn.toutatis.xvoid.orm.base.authentication.enums.MessageType
+import cn.toutatis.xvoid.common.enums.AuthType
+import cn.toutatis.xvoid.common.enums.MessageType
 import cn.toutatis.xvoid.toolkit.log.LoggerToolkit
 import cn.toutatis.xvoid.toolkit.validator.Validator
 import com.alibaba.fastjson.JSON

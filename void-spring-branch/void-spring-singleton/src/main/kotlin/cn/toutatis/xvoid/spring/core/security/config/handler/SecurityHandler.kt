@@ -8,7 +8,7 @@ import cn.toutatis.xvoid.common.standard.AuthFields
 import cn.toutatis.xvoid.common.standard.StandardFields
 import cn.toutatis.xvoid.spring.VoidModuleInfo
 import cn.toutatis.xvoid.orm.base.authentication.entity.derive.AuthInfo
-import cn.toutatis.xvoid.orm.base.authentication.enums.MessageType
+import cn.toutatis.xvoid.common.enums.MessageType
 import cn.toutatis.xvoid.orm.base.authentication.service.SystemAuthPathService
 import cn.toutatis.xvoid.orm.base.authentication.service.SystemAuthRoleService
 import cn.toutatis.xvoid.spring.configure.system.VoidGlobalConfiguration

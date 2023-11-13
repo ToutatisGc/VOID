@@ -1,11 +1,8 @@
 package cn.toutatis.xvoid.orm;
 
 
-import cn.toutatis.xvoid.orm.base.authentication.enums.RegistryType;
-import org.apache.commons.lang3.RandomStringUtils;
+import cn.toutatis.xvoid.common.enums.RegistryType;
 import org.junit.Test;
-
-import java.util.Locale;
 
 public class UserLoginTest {
 

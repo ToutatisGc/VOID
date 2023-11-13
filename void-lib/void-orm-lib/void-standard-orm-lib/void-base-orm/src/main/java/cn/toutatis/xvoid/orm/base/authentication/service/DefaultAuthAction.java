@@ -2,7 +2,7 @@ package cn.toutatis.xvoid.orm.base.authentication.service;
 
 import cn.toutatis.xvoid.common.result.ResultCode;
 import cn.toutatis.xvoid.common.standard.StandardFields;
-import cn.toutatis.xvoid.orm.base.authentication.enums.MessageType;
+import cn.toutatis.xvoid.common.enums.MessageType;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import javax.servlet.http.HttpServletRequest;

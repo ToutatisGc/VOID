@@ -1,7 +1,7 @@
 package cn.toutatis.xvoid.orm.base.authentication.service;
 
 import cn.toutatis.xvoid.orm.base.authentication.entity.SystemUserLogin;
-import cn.toutatis.xvoid.orm.base.authentication.enums.RegistryType;
+import cn.toutatis.xvoid.common.enums.RegistryType;
 import cn.toutatis.xvoid.orm.support.VoidService;
 
 /**

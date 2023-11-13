@@ -4,7 +4,7 @@ import cn.toutatis.xvoid.common.result.DataStatus;
 import cn.toutatis.xvoid.orm.base.authentication.entity.derive.FormUserDetails;
 import cn.toutatis.xvoid.orm.base.authentication.entity.RequestAuthEntity;
 import cn.toutatis.xvoid.orm.base.authentication.entity.SystemUserLogin;
-import cn.toutatis.xvoid.orm.base.authentication.enums.MessageType;
+import cn.toutatis.xvoid.common.enums.MessageType;
 import cn.toutatis.xvoid.orm.base.authentication.service.DefaultAuthAction;
 import cn.toutatis.xvoid.orm.base.authentication.service.SystemUserLoginService;
 import cn.toutatis.xvoid.common.standard.AuthValidationMessage;

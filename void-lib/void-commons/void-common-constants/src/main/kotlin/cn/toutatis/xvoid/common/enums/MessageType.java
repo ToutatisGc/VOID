@@ -1,4 +1,4 @@
-package cn.toutatis.xvoid.orm.base.authentication.enums;
+package cn.toutatis.xvoid.common.enums;
 
 /**
  * handler中获取的消息类型

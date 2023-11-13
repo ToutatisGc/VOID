@@ -1,9 +1,8 @@
 package cn.toutatis.xvoid.orm.base.authentication.entity;
 
 import cn.toutatis.xvoid.BusinessType;
-import cn.toutatis.xvoid.orm.base.authentication.entity.intermediate.SystemUserRoleIntermediate;
 import cn.toutatis.xvoid.orm.base.data.common.EntityBasicAttribute;
-import cn.toutatis.xvoid.orm.base.authentication.enums.RegistryType;
+import cn.toutatis.xvoid.common.enums.RegistryType;
 import cn.toutatis.xvoid.toolkit.constant.Time;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -22,7 +21,6 @@ import java.io.Serial;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.List;
 import java.util.Objects;
 
 import static cn.toutatis.xvoid.orm.base.authentication.entity.SystemUserLogin.TABLE;

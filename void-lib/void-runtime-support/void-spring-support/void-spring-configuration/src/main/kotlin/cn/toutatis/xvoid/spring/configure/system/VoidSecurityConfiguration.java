@@ -1,5 +1,6 @@
 package cn.toutatis.xvoid.spring.configure.system;
 
+import cn.toutatis.xvoid.common.enums.RegistryType;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 import java.time.Duration;
@@ -146,7 +147,11 @@ public class VoidSecurityConfiguration {
          */
         private Boolean disableRegistry = false;
 
-
+        /**
+         * 多重绑定认证
+         * 必须将指定所有认证方式全部绑定才视为正常用户
+         */
+        private RegistryType[] registrableType = {RegistryType.ACCOUNT};
 
         public Boolean getDisableRegistry() {
             return disableRegistry;
@@ -154,6 +159,14 @@ public class VoidSecurityConfiguration {
 
         public void setDisableRegistry(Boolean disableRegistry) {
             this.disableRegistry = disableRegistry;
+        }
+
+        public RegistryType[] getRegistrableType() {
+            return registrableType;
+        }
+
+        public void setRegistrableType(RegistryType[] registrableType) {
+            this.registrableType = registrableType;
         }
     }
 

@@ -1,6 +1,6 @@
 package cn.toutatis.xvoid.orm.base.authentication.entity.derive;
 
-import cn.toutatis.xvoid.orm.base.authentication.enums.AuthType;
+import cn.toutatis.xvoid.common.enums.AuthType;
 import com.alibaba.fastjson.JSONObject;
 import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
