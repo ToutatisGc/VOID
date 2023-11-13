@@ -1,6 +1,7 @@
 package cn.toutatis.xvoid.orm.base.authentication.entity;
 
 import cn.toutatis.xvoid.BusinessType;
+import cn.toutatis.xvoid.orm.base.authentication.entity.intermediate.SystemUserRoleIntermediate;
 import cn.toutatis.xvoid.orm.base.data.common.EntityBasicAttribute;
 import cn.toutatis.xvoid.orm.base.authentication.enums.RegistryType;
 import cn.toutatis.xvoid.toolkit.constant.Time;
@@ -21,6 +22,7 @@ import java.io.Serial;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.Objects;
 
 import static cn.toutatis.xvoid.orm.base.authentication.entity.SystemUserLogin.TABLE;
@@ -114,6 +116,14 @@ public class SystemUserLogin extends EntityBasicAttribute<SystemUserLogin> {
     public long getExpiredTimeMs() {
         return expiredTime == null ? 0L :  Timestamp.valueOf(expiredTime).getTime()/1000;
     }
+
+//    @ManyToMany()
+//    @JoinTable(
+//            name = SystemUserRoleIntermediate.TABLE,
+//            joinColumns = {@JoinColumn(name = "userId")},
+//            inverseJoinColumns = {@JoinColumn(name = "roleId")}
+//    )
+//    private List<SystemAuthRole> roles;
 
     @Override
     public boolean equals(Object o) {

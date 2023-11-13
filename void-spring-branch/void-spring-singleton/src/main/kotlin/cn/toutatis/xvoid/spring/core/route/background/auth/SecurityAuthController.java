@@ -15,6 +15,7 @@ import cn.toutatis.xvoid.spring.core.tools.ViewToolkit;
 import cn.toutatis.xvoid.spring.annotations.application.VoidController;
 import cn.toutatis.xvoid.toolkit.clazz.LambdaToolkit;
 import cn.toutatis.xvoid.toolkit.validator.Validator;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.github.xiaoymin.knife4j.annotations.ApiSupport;
@@ -142,14 +143,7 @@ public class SecurityAuthController {
                         switch (registryType) {
                             case ACCOUNT -> {
                                 if (Validator.checkCNUsernameFormat(account)){
-                                    newUser.setAccount(account);
-                                    QueryWrapper<Object> usernameRepeatQuery = Wrappers.query();
-                                    usernameRepeatQuery.select(LambdaToolkit.getFieldName(SystemUserLogin::getUsername));
-                                    usernameRepeatQuery.eq(LambdaToolkit.getFieldName(SystemUserLogin::getUsername),account);
-                                    SystemUserLogin usernameEntity = systemUserLoginService.getOneObj(usernameRepeatQuery);
-                                    newUser.setUsername(usernameEntity !=null ? account+"_"+ RandomStringUtils.randomAlphabetic(6) : account);
-                                    newUser.setUid(systemUserLoginService.userUidGenerate(newUser));
-                                    newUser.setSecret(passwordEncoder.encode(registryEntity.getSecret()));
+                                    this.fillAccountRegistryInfo(newUser,account,registryEntity);
                                 }else {
                                     registryResult.setSupportMessage(AuthValidationMessage.ACCOUNT_NOT_MATCH);
                                     return registryResult;
@@ -179,6 +173,23 @@ public class SecurityAuthController {
             registryResult.setSupportMessage(AuthValidationMessage.USERNAME_BLANK);
         }
         return registryResult;
+    }
+
+    /**
+     * 填充账户注册信息
+     * @param userLogin 注册用户实体
+     * @param account 账户名
+     * @param registryEntity 注册信息
+     * @throws Exception UID生成异常
+     */
+    private void fillAccountRegistryInfo(SystemUserLogin userLogin, String account, AccountRegistryEntity registryEntity) throws Exception {
+        userLogin.setAccount(account);
+        LambdaQueryWrapper<SystemUserLogin> lambdaQuery = Wrappers.lambdaQuery();
+        lambdaQuery.select(SystemUserLogin::getUsername).eq(SystemUserLogin::getUsername,account);
+        SystemUserLogin usernameEntity = systemUserLoginService.getOneObj(lambdaQuery);
+        userLogin.setUsername(usernameEntity !=null ? "%s_%s".formatted(account, RandomStringUtils.randomAlphabetic(6)) : account);
+        userLogin.setUid(systemUserLoginService.userUidGenerate(userLogin));
+        userLogin.setSecret(passwordEncoder.encode(registryEntity.getSecret()));
     }
 
     @ApiOperation(value="忘记密码",notes="忘记密码,重置用户密码")
