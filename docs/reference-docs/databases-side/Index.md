@@ -1,5 +1,5 @@
 
-Mysql 8.0更新默认加密方式为 caching_sha2_password ,部分连接工具无法连接,命令行连接Mysql执行命令
+Mysql 8.0更新默认加密方式为 **caching_sha2_password** ,部分连接工具无法连接,命令行连接Mysql执行命令
 
 PS> mysql -u root -p
 

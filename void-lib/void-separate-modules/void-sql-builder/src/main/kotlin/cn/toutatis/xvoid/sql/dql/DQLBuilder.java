@@ -19,6 +19,7 @@ public class DQLBuilder<T> {
 
     private final Logger logger = LoggerToolkit.getLogger(this.getClass());
 
+    @lombok.Getter
     private final DQLMetaBuilder<T> metaInfo;
 
     private final ResultObjectMapperConverter converter = ResultObjectMapperConverter.instance();
@@ -84,9 +85,7 @@ public class DQLBuilder<T> {
         String columnsPlaceholder = SQLPlaceHolder.SELECT_COLUMNS.value();
         int start = metaInfo.getSqlType().name().length() + 1;
         sql.replace(start,start+columnsPlaceholder.length(),this.processingColumns());
-        if (isDistinct()){
-            sql.insert(start, SQLPlaceHolder.DISTINCT+StringPool.SPACE);
-        }
+        if (isDistinct()){ sql.insert(start, SQLPlaceHolder.DISTINCT+StringPool.SPACE); }
         sql.append("FROM");
         appendSpacing(sql);
         sql.append(metaInfo.getTable());
@@ -94,7 +93,7 @@ public class DQLBuilder<T> {
         sql.append(conditions);
         String sqlString = sql.toString();
         if (metaInfo.isShowSql()){
-            logger.info(sqlString);
+            logger.info("\033[40;31;4m" + sqlString + "\033[0m");
         }
         return sqlString;
     }
@@ -152,10 +151,6 @@ public class DQLBuilder<T> {
 
     public boolean isDistinct() {
         return isDistinct;
-    }
-
-    public DQLMetaBuilder<T> getMetaInfo() {
-        return metaInfo;
     }
 
     @Override
