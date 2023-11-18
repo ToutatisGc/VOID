@@ -27,7 +27,7 @@
 
     <groupId>cn.toutatis</groupId>
     <artifactId>void-kotlin-runtime-support</artifactId>
-    <version>1.7.21</version>
+    <version>1.9.20</version>
     <packaging>pom</packaging>
 
     <properties>

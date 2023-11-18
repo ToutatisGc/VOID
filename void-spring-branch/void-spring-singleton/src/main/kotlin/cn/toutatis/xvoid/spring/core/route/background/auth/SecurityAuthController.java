@@ -135,13 +135,13 @@ public class SecurityAuthController {
                         registryResult.setSupportMessage(AuthValidationMessage.ACCOUNT_ALREADY_EXIST);
                         return registryResult;
                     }else {
-                        SystemUserLogin newUser = new SystemUserLogin();
-                        newUser.setRegistryType(registryType);
+                        SystemUserLogin registryInfo = new SystemUserLogin();
+                        registryInfo.setRegistryType(registryType);
                         // 进入不同认证类型
                         switch (registryType) {
                             case ACCOUNT -> {
                                 if (Validator.checkCNUsernameFormat(account)){
-                                    this.fillAccountRegistryInfo(newUser,account,registryEntity);
+                                    this.fillAccountRegistryInfo(registryInfo,account,registryEntity);
                                 }else {
                                     registryResult.setSupportMessage(AuthValidationMessage.ACCOUNT_NOT_MATCH);
                                     return registryResult;
@@ -154,7 +154,7 @@ public class SecurityAuthController {
                                 /*发送短信验证码*/
                             }
                         }
-                        boolean save = systemUserLoginService.save(newUser);
+                        boolean save = systemUserLoginService.save(registryInfo);
                         if (save){
                             return new ProxyResult(ResultCode.NORMAL_SUCCESS,AuthValidationMessage.ACCOUNT_REGISTRY_SUCCESS);
                         }else {

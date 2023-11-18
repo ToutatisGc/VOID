@@ -18,7 +18,7 @@
         <java11.version>11</java11.version>
         <java17.version>17</java17.version>
 
-        <kotlin.version>1.7.21</kotlin.version>
+        <kotlin.version>1.9.20</kotlin.version>
         <kotlinx.version>1.6.4</kotlinx.version>
         <kotlin.code.style>official</kotlin.code.style>
 
@@ -35,12 +35,12 @@
         <commons-io.version>2.11.0</commons-io.version>
         <commons-compress.version>1.23.0</commons-compress.version>
         <hutool.version>5.8.16</hutool.version>
-        <fastjson.version>1.2.80</fastjson.version>
+        <fastjson.version>1.2.83</fastjson.version>
         <snakeyaml.version>1.33</snakeyaml.version>
         <jackson.version>2.13.1</jackson.version>
         <servlet.version>4.0.1</servlet.version>
         <junit-jupiter.version>5.7.0</junit-jupiter.version>
-        <junit.version>4.12</junit.version>
+        <junit.version>4.13.1</junit.version>
         <logback.version>1.2.11</logback.version>
         <aspectj.version>1.9.9.1</aspectj.version>
         <ehcache.version>3.10.0</ehcache.version>
@@ -461,21 +461,6 @@
                         <autoReleaseAfterClose>true</autoReleaseAfterClose>
                     </configuration>
                 </plugin>
-                <plugin>
-                    <groupId>org.apache.maven.plugins</groupId>
-                    <artifactId>maven-gpg-plugin</artifactId>
-                    <version>3.0.1</version>
-                    <executions>
-                        <execution>
-                            <id>sign-artifacts</id>
-                            <phase>verify</phase>
-                            <goals>
-                                <goal>sign</goal>
-                            </goals>
-                        </execution>
-                    </executions>
-                </plugin>
-
                 <plugin>
                     <groupId>org.jetbrains.kotlin</groupId>
                     <artifactId>kotlin-maven-plugin</artifactId>

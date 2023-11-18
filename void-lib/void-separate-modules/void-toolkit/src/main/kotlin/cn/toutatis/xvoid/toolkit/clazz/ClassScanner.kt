@@ -76,7 +76,7 @@ class ClassScanner : ResourceLoaderAware {
         val classes: MutableSet<Class<*>> = HashSet()
         try {
             val packageSearchPath = (ResourcePatternResolver.CLASSPATH_ALL_URL_PREFIX
-                    + ClassUtils.convertClassNameToResourcePath(SystemPropertyUtils.resolvePlaceholders(basePackage!!))
+                    + ClassUtils.convertClassNameToResourcePath(SystemPropertyUtils.resolvePlaceholders(basePackage))
                     + "/**/*.class")
             val resources = resourcePatternResolver.getResources(packageSearchPath)
             for (i in resources.indices) {

@@ -27,7 +27,7 @@ class VoidSpringToolkit : ApplicationContextAware {
 
     fun <T> getBean(beanName: String): T? {
         return if (applicationContext.containsBean(beanName)) {
-            applicationContext.getBean(beanName) as T
+            applicationContext.getBean(beanName) as? T
         } else {
             null
         }

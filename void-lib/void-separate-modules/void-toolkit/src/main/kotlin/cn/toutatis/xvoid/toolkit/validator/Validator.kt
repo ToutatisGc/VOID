@@ -48,7 +48,7 @@ public object Validator {
     @JvmStatic
     fun strIsBlank(o: Any?): Boolean {
         if (o == null) return true
-        val s = o.toString() ?: return true
+        val s = o.toString()
         val trim = s.trim { it <= ' ' }.lowercase()
         return trim.isEmpty() || "null" == trim || "undefined" == trim
     }
@@ -71,7 +71,7 @@ public object Validator {
                     if (name.startsWith("get") || name.startsWith("is")) {
                         methodCount += 1
                         try {
-                            val invoke: Any = declaredMethod.invoke(obj)
+                            val invoke: Any? = declaredMethod.invoke(obj)
                             if (invoke == null) {
                                 nullValueCount += 1
                             }

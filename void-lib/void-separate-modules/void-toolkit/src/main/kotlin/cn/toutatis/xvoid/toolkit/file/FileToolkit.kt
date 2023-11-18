@@ -104,7 +104,7 @@ object FileToolkit {
         if (filename.startsWith("/")){
             formatFilename = filename.substring(1)
         }
-        return File(this.getThreadPath()+formatFilename).toURL()
+        return File(this.getThreadPath()+formatFilename).toURI().toURL()
     }
 
     /**

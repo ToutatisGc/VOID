@@ -8,7 +8,7 @@ ${AnsiColor.BLUE}
   _____ __  _  _ _____ __ _____ _   __     ▏
  |_   _/__\| || |_   _/  \_   _| |/' _/    ▏[Author: Toutatis_Gc]
    | || \/ | \/ | | || /\ || | | |`._`.    ▏Spring [${spring-boot.version}][当前STARTER 2.7.1.RELEASE]
-   |_| \__/ \__/  |_||_||_||_| |_||___/    ▏当前内部号:XVOID-J17K1721-20230630-ALPHA
-                                     Gc    ▏环境要求 [Kotlin 1.7.21] [Maven 3.7.0+]
+   |_| \__/ \__/  |_||_||_||_| |_||___/    ▏当前内部号:XVOID-J17K1920-20231118-ALPHA
+                                     Gc    ▏环境要求 [Kotlin 1.9.20] [Maven 3.9.5+]
                                            ▏        [GraalVM-JDK-17.0.5]      [Tomcat 9.0.72]
 =========================================== FOR HIGHER, YOU KNOW. -- Toutatis_Gc ============

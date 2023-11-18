@@ -146,8 +146,5 @@ class VoidRedisBuilder{
                 TODO("未完成")
             }
         }
-        /*TODO 未完成*/
-        TODO("未完成")
-//        return VoidRedisClient(VoidJedisClient(JedisPool()))
     }
 }
