@@ -11,8 +11,10 @@ import com.baomidou.mybatisplus.annotation.Version;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
-import lombok.*;
+import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
@@ -52,9 +54,16 @@ public abstract class EntityBasicAttribute<O extends Model<?>> extends Model<O> 
     public static final String CREATE_BY_COLUMN_NAME = "createBy";
 
     /**
-     *
+     * 创建日期字段名称
      */
     public static final String CREATE_TIME_COLUMN_NAME = "createTime";
+
+    /**
+     * 逻辑删除字段名称
+     */
+    public static final String LOGIC_DELETED_COLUMN_NAME = "logicDeleted";
+
+    public static final String DEFAULT_WHERE_CLAUSE = LOGIC_DELETED_COLUMN_NAME + " = 0";
 
     protected EntityBasicAttribute(){}
 
@@ -64,7 +73,7 @@ public abstract class EntityBasicAttribute<O extends Model<?>> extends Model<O> 
     @JsonIgnore
     @Enumerated(EnumType.STRING)
     @TableField("businessType")
-    @ApiModelProperty(value="业务类型")
+    @Schema(name="业务类型")
     @Column(name="businessType",nullable = false,columnDefinition = "VARCHAR(64) COMMENT '业务类型'")
     protected BusinessType businessType = BusinessType.XVOID_SYSTEM;
 
@@ -72,7 +81,7 @@ public abstract class EntityBasicAttribute<O extends Model<?>> extends Model<O> 
      * 预留整型值
      */
     @TableField("rInt")
-    @ApiModelProperty(value="预留整形值")
+    @Schema(name="预留整形值")
     @Column(name="rInt",columnDefinition = "INT COMMENT '预留整形值'")
     protected Integer reservedInt;
 
@@ -80,7 +89,7 @@ public abstract class EntityBasicAttribute<O extends Model<?>> extends Model<O> 
      * 预留字符串值
      */
     @TableField("rStr")
-    @ApiModelProperty(value="预留字符串")
+    @Schema(name="预留字符串")
     @Column(name="rStr",columnDefinition = "VARCHAR(255) COMMENT '预留字符串'")
     protected String reservedString;
 
@@ -90,7 +99,7 @@ public abstract class EntityBasicAttribute<O extends Model<?>> extends Model<O> 
     @JsonIgnore
     @CreatedDate
     @TableField(value = CREATE_TIME_COLUMN_NAME,fill = FieldFill.INSERT)
-    @ApiModelProperty(value="创建日期", required=true)
+    @Schema(name="创建日期", required=true)
     @Column(columnDefinition = "DATETIME NOT NULL DEFAULT current_timestamp() COMMENT '创建日期'")
     protected LocalDateTime createTime;
 
@@ -100,7 +109,7 @@ public abstract class EntityBasicAttribute<O extends Model<?>> extends Model<O> 
     @JsonIgnore
     @CreatedBy
     @TableField(value = CREATE_BY_COLUMN_NAME)
-    @ApiModelProperty(value="创建操作人")
+    @Schema(name="创建操作人")
     @Column(columnDefinition = "VARCHAR(32) NOT NULL DEFAULT '"+ StandardFields.VOID_BUSINESS_DEFAULT_CREATOR +"' COMMENT '创建操作人'")
     protected String createBy;
 
@@ -110,14 +119,14 @@ public abstract class EntityBasicAttribute<O extends Model<?>> extends Model<O> 
     @JsonIgnore
     @LastModifiedDate
     @TableField(value = "lastUpdateTime",fill = FieldFill.INSERT_UPDATE)
-    @ApiModelProperty(value="最后更新日期", required=true)
+    @Schema(name="最后更新日期", required=true)
     @Column(columnDefinition = "DATETIME NOT NULL DEFAULT current_timestamp() COMMENT '最后更新日期'")
     protected LocalDateTime lastUpdateTime;
 
     @JsonIgnore
     @LastModifiedBy
     @TableField(value = "updateBy")
-    @ApiModelProperty(value="更新操作人")
+    @Schema(name="更新操作人")
     @Column(columnDefinition = "VARCHAR(32) NOT NULL DEFAULT '"+ StandardFields.VOID_BUSINESS_DEFAULT_CREATOR +"' COMMENT '更新操作人'")
     protected String updateBy;
 
@@ -127,7 +136,7 @@ public abstract class EntityBasicAttribute<O extends Model<?>> extends Model<O> 
     @JsonIgnore
     @Version
     @TableField(value = "version",fill = FieldFill.INSERT)
-    @ApiModelProperty(value="数据版本号", required=true)
+    @Schema(name="数据版本号", required=true)
     @Column(columnDefinition = "INT NOT NULL DEFAULT 0 COMMENT '版本号'")
     private Integer version;
 
@@ -136,7 +145,7 @@ public abstract class EntityBasicAttribute<O extends Model<?>> extends Model<O> 
      */
     @Enumerated(EnumType.ORDINAL)
     @TableField(value = "`"+STATUS_COLUMN_NAME+"`",fill = FieldFill.INSERT)
-    @ApiModelProperty(value="数据状态标志", required=true)
+    @Schema(name="数据状态标志", required=true)
     @Column(nullable = false,columnDefinition = "TINYINT NOT NULL DEFAULT 0 COMMENT '数据状态'")
     protected DataStatus status = DataStatus.SYS_OPEN_0000;
 
@@ -146,8 +155,8 @@ public abstract class EntityBasicAttribute<O extends Model<?>> extends Model<O> 
     @JsonIgnore
     @TableLogic
     @Enumerated(EnumType.ORDINAL)
-    @TableField(value = "logicDeleted",fill = FieldFill.INSERT)
-    @ApiModelProperty(value="逻辑删除标志", required=true)
+    @TableField(value = LOGIC_DELETED_COLUMN_NAME,fill = FieldFill.INSERT)
+    @Schema(name="逻辑删除标志", required=true)
     @Column(nullable = false,columnDefinition = "TINYINT NOT NULL DEFAULT 0 COMMENT '0正常:1删除'")
     protected DataStatus logicDeleted = DataStatus.SYS_OPEN_0000;
 
@@ -155,7 +164,7 @@ public abstract class EntityBasicAttribute<O extends Model<?>> extends Model<O> 
      * 备注
      */
     @TableField("remark")
-    @ApiModelProperty(value="备注")
+    @Schema(name="备注")
     @Column(columnDefinition = "VARCHAR(255) COMMENT '备注'")
     protected String remark;
 
@@ -166,7 +175,7 @@ public abstract class EntityBasicAttribute<O extends Model<?>> extends Model<O> 
      */
     @JsonIgnore
     @TableField("belongTo")
-    @ApiModelProperty(value="归属")
+    @Schema(name="归属")
     @Column(columnDefinition = "VARCHAR(32) NOT NULL DEFAULT '"+ StandardFields.VOID_BUSINESS_DEFAULT_CREATOR +"' COMMENT '归属'")
     protected String belongTo;
 

@@ -1,20 +1,22 @@
 package cn.toutatis.xvoid.orm.base.infrastructure.entity;
 
-import com.baomidou.mybatisplus.annotation.TableName;
 import cn.toutatis.xvoid.orm.base.data.common.EntityBasicAttribute;
 import com.baomidou.mybatisplus.annotation.TableField;
-import java.io.Serializable;
+import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import javax.persistence.*;
 import org.hibernate.Hibernate;
 import org.hibernate.annotations.GenericGenerator;
+
+import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Objects;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.baomidou.mybatisplus.annotation.TableId;
 
 /**
  * <p>
@@ -34,7 +36,7 @@ public class SystemLog extends EntityBasicAttribute<SystemLog> {
     private static final long serialVersionUID = 1L;
 
     @Id @TableId
-    @ApiModelProperty(value="主键ID",required = true, example = "0b01f8466bcf11eda9c1b827eb90cfbc")
+    @Schema(name="主键ID",required = true, example = "0b01f8466bcf11eda9c1b827eb90cfbc")
     @Column(name="id",columnDefinition = "VARCHAR(32) COMMENT '主键ID'")
     @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
     @GeneratedValue(generator = "UUID")

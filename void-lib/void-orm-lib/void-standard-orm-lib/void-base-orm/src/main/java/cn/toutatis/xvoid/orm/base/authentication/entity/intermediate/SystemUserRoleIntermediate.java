@@ -6,7 +6,7 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -45,18 +45,18 @@ public class SystemUserRoleIntermediate extends EntityBasicAttribute<SystemUserR
 
     @Id
     @TableId
-    @ApiModelProperty(value="主键ID",required = true, example = "0")
+    @Schema(name="主键ID",required = true, example = "0")
     @Column(name = "id", nullable = false, columnDefinition = "INT COMMENT '主键ID'")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @TableField("userId")
-    @ApiModelProperty(value="用户ID",required = true, example = "administrator")
+    @Schema(name="用户ID",required = true, example = "administrator")
     @Column(name = "userId",nullable = false, columnDefinition = "VARCHAR(32) COMMENT '用户ID'")
     private String userId;
 
     @TableField("roleId")
-    @ApiModelProperty(value="角色ID",required = true, example = "administrator")
+    @Schema(name="角色ID",required = true, example = "administrator")
     @Column(name = "roleId",nullable = false, columnDefinition = "VARCHAR(32) COMMENT '角色ID'")
     private String roleId;
 
