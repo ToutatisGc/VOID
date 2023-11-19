@@ -10,7 +10,6 @@ import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.baomidou.mybatisplus.annotation.Version;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import io.swagger.annotations.ApiModel;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Getter;
 import lombok.Setter;
@@ -40,7 +39,7 @@ import java.time.format.DateTimeFormatter;
  */
 @Getter @Setter @ToString
 @MappedSuperclass
-@ApiModel(value = "EntityBasicAttribute", description = "基础实体类")
+@Schema(name = "EntityBasicAttribute", description = "基础实体类")
 public abstract class EntityBasicAttribute<O extends Model<?>> extends Model<O> {
 
     /**
@@ -73,7 +72,7 @@ public abstract class EntityBasicAttribute<O extends Model<?>> extends Model<O> 
     @JsonIgnore
     @Enumerated(EnumType.STRING)
     @TableField("businessType")
-    @Schema(name="业务类型")
+    @Schema(name="businessType[业务类型]",requiredMode = Schema.RequiredMode.REQUIRED)
     @Column(name="businessType",nullable = false,columnDefinition = "VARCHAR(64) COMMENT '业务类型'")
     protected BusinessType businessType = BusinessType.XVOID_SYSTEM;
 
@@ -81,7 +80,7 @@ public abstract class EntityBasicAttribute<O extends Model<?>> extends Model<O> 
      * 预留整型值
      */
     @TableField("rInt")
-    @Schema(name="预留整形值")
+    @Schema(name="rInt[预留整形值]")
     @Column(name="rInt",columnDefinition = "INT COMMENT '预留整形值'")
     protected Integer reservedInt;
 
@@ -89,7 +88,7 @@ public abstract class EntityBasicAttribute<O extends Model<?>> extends Model<O> 
      * 预留字符串值
      */
     @TableField("rStr")
-    @Schema(name="预留字符串")
+    @Schema(name="rStr[预留字符串]")
     @Column(name="rStr",columnDefinition = "VARCHAR(255) COMMENT '预留字符串'")
     protected String reservedString;
 
@@ -99,7 +98,7 @@ public abstract class EntityBasicAttribute<O extends Model<?>> extends Model<O> 
     @JsonIgnore
     @CreatedDate
     @TableField(value = CREATE_TIME_COLUMN_NAME,fill = FieldFill.INSERT)
-    @Schema(name="创建日期", required=true)
+    @Schema(name="createTime[创建日期]", requiredMode = Schema.RequiredMode.REQUIRED)
     @Column(columnDefinition = "DATETIME NOT NULL DEFAULT current_timestamp() COMMENT '创建日期'")
     protected LocalDateTime createTime;
 
@@ -109,7 +108,7 @@ public abstract class EntityBasicAttribute<O extends Model<?>> extends Model<O> 
     @JsonIgnore
     @CreatedBy
     @TableField(value = CREATE_BY_COLUMN_NAME)
-    @Schema(name="创建操作人")
+    @Schema(name="createBy[创建操作人]")
     @Column(columnDefinition = "VARCHAR(32) NOT NULL DEFAULT '"+ StandardFields.VOID_BUSINESS_DEFAULT_CREATOR +"' COMMENT '创建操作人'")
     protected String createBy;
 
@@ -119,14 +118,14 @@ public abstract class EntityBasicAttribute<O extends Model<?>> extends Model<O> 
     @JsonIgnore
     @LastModifiedDate
     @TableField(value = "lastUpdateTime",fill = FieldFill.INSERT_UPDATE)
-    @Schema(name="最后更新日期", required=true)
+    @Schema(name="lastUpdateTime[最后更新日期]", requiredMode = Schema.RequiredMode.REQUIRED)
     @Column(columnDefinition = "DATETIME NOT NULL DEFAULT current_timestamp() COMMENT '最后更新日期'")
     protected LocalDateTime lastUpdateTime;
 
     @JsonIgnore
     @LastModifiedBy
     @TableField(value = "updateBy")
-    @Schema(name="更新操作人")
+    @Schema(name="updateBy[更新操作人]")
     @Column(columnDefinition = "VARCHAR(32) NOT NULL DEFAULT '"+ StandardFields.VOID_BUSINESS_DEFAULT_CREATOR +"' COMMENT '更新操作人'")
     protected String updateBy;
 
@@ -136,7 +135,7 @@ public abstract class EntityBasicAttribute<O extends Model<?>> extends Model<O> 
     @JsonIgnore
     @Version
     @TableField(value = "version",fill = FieldFill.INSERT)
-    @Schema(name="数据版本号", required=true)
+    @Schema(name="version[数据版本号]", requiredMode = Schema.RequiredMode.REQUIRED)
     @Column(columnDefinition = "INT NOT NULL DEFAULT 0 COMMENT '版本号'")
     private Integer version;
 
@@ -145,7 +144,7 @@ public abstract class EntityBasicAttribute<O extends Model<?>> extends Model<O> 
      */
     @Enumerated(EnumType.ORDINAL)
     @TableField(value = "`"+STATUS_COLUMN_NAME+"`",fill = FieldFill.INSERT)
-    @Schema(name="数据状态标志", required=true)
+    @Schema(name="status[数据状态标志]", requiredMode = Schema.RequiredMode.REQUIRED)
     @Column(nullable = false,columnDefinition = "TINYINT NOT NULL DEFAULT 0 COMMENT '数据状态'")
     protected DataStatus status = DataStatus.SYS_OPEN_0000;
 
@@ -156,7 +155,7 @@ public abstract class EntityBasicAttribute<O extends Model<?>> extends Model<O> 
     @TableLogic
     @Enumerated(EnumType.ORDINAL)
     @TableField(value = LOGIC_DELETED_COLUMN_NAME,fill = FieldFill.INSERT)
-    @Schema(name="逻辑删除标志", required=true)
+    @Schema(name="logicDeleted[逻辑删除标志]", requiredMode = Schema.RequiredMode.REQUIRED)
     @Column(nullable = false,columnDefinition = "TINYINT NOT NULL DEFAULT 0 COMMENT '0正常:1删除'")
     protected DataStatus logicDeleted = DataStatus.SYS_OPEN_0000;
 
@@ -164,7 +163,7 @@ public abstract class EntityBasicAttribute<O extends Model<?>> extends Model<O> 
      * 备注
      */
     @TableField("remark")
-    @Schema(name="备注")
+    @Schema(name="remark[备注]")
     @Column(columnDefinition = "VARCHAR(255) COMMENT '备注'")
     protected String remark;
 
@@ -175,7 +174,7 @@ public abstract class EntityBasicAttribute<O extends Model<?>> extends Model<O> 
      */
     @JsonIgnore
     @TableField("belongTo")
-    @Schema(name="归属")
+    @Schema(name="belongTo[归属]")
     @Column(columnDefinition = "VARCHAR(32) NOT NULL DEFAULT '"+ StandardFields.VOID_BUSINESS_DEFAULT_CREATOR +"' COMMENT '归属'")
     protected String belongTo;
 
@@ -220,11 +219,13 @@ public abstract class EntityBasicAttribute<O extends Model<?>> extends Model<O> 
     }
 
     @Transient
+    @Schema(name="createTimeStr[创建时间字符串]")
     public String getCreateTimeStr() {
         return createTime == null ? "" : createTime.format(DateTimeFormatter.ofPattern(Time.SIMPLE_DATE_FORMAT_REGEX));
     }
 
     @Transient
+    @Schema(name="createTimeMs[创建时间时间戳]")
     public long getCreateTimeMs() {
         return createTime == null ? 0L :  Timestamp.valueOf(createTime).getTime()/1000;
     }
@@ -238,11 +239,13 @@ public abstract class EntityBasicAttribute<O extends Model<?>> extends Model<O> 
     }
 
     @Transient
+    @Schema(name="lastUpdateTimeStr[创建时间字符串]")
     public String getLastUpdateTimeStr() {
         return lastUpdateTime == null ? "" : lastUpdateTime.format(DateTimeFormatter.ofPattern(Time.SIMPLE_DATE_FORMAT_REGEX));
     }
 
     @Transient
+    @Schema(name="lastUpdateTimeMs[最后更新时间时间戳]")
     public long getLastUpdateTimeMs() {
         return lastUpdateTime == null ? 0L : Timestamp.valueOf(lastUpdateTime).getTime()/1000;
     }

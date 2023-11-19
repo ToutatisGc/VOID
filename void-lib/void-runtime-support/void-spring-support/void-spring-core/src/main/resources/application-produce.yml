@@ -47,7 +47,7 @@ knife4j:
       repositories:
         enabled: false
 springdoc:
-  model-and-view-allowed: true
+  model-and-view-allowed: false
   swagger-ui:
     try-it-out-enabled: true
     display-request-duration: true

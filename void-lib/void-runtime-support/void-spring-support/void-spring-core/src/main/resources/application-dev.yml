@@ -51,7 +51,7 @@ knife4j:
     enable-footer-custom: true
     footer-custom-content: "Apache License 2.0 | Copyright  2020-[XVOID]-[Toutatis_Gc](https://github.com/ToutatisGc)"
 springdoc:
-  model-and-view-allowed: true
+  model-and-view-allowed: false
   swagger-ui:
     try-it-out-enabled: true
     display-request-duration: true
