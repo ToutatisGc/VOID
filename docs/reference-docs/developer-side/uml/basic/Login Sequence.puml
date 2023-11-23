@@ -1,0 +1,23 @@
+@startuml
+!theme blueprint
+autonumber
+
+actor 用户 as user
+participant VoidSecurityAuthenticationService as securityService
+user ->  securityService : 请求/auth/authentication
+boundary 校验 as check
+securityService -> check : 格式错误退回登录
+participant RoleService
+participant SecurityHandler
+participant UserService
+securityService -> VoidAuthService : 根据登录信息分发到各种认证
+VoidAuthService -> "preCheckAccount()" : 根据配置预检用户状态
+control 预检失败 as c
+"preCheckAccount()" -> c:校验失败,退回登录
+"preCheckAccount()" -> VoidAuthService : 预检成功
+VoidAuthService -> UserService : 查找用户信息
+UserService -> check : 查找用户是否允许登录
+check -> SecurityHandler : 校验跳转
+SecurityHandler -> RoleService : 赋予用户角色和权限信息
+SecurityHandler -> user : 生成Token信息,登录成功
+@enduml
