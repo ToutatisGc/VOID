@@ -1,36 +1,31 @@
-运行前请检查
-mvn版本,jdk版本..地址..说明
+# 欢迎浏览开发者参考文档
 
-安装依赖
-服务依赖于void-lib包
-1.install void-feature-support
-2.install void-lib
+## 1.文档说明
 
-命名规则
-功能的二次包装为Shell
+### 1.1  目录说明
 
-找不到注入的类不要慌,因为把各种scan集合到一个注解中
-idea无法探测注解配置
-如果需要显示注入可以把@VoidApplication注解中的scan拆分出来
-或者把IDEA警告检查设置为弱警告
+该文档分为后端开发文档,前端开发文档和服务端文档.
 
-实时模板设置
-@Serial
-private static final long serialVersionUID = 1L;
-/**
-* 数据库表名以及业务类型
-*/
-public static final String TABLE = "";
-{this.setBusinessType(BusinessType.);}
-  
-项目启动失败?
+在下列说明中,会对以上模块进行一个概要说明.
 
-中间件端口占用
-例如redis
-netstat -ano | findstr 6379
+### 1.2 模块说明
 
-TCP    0.0.0.0:6379           0.0.0.0:0              LISTENING       11684
-TCP    127.0.0.1:6379         127.0.0.1:13128        ESTABLISHED     11684
+#### 1.2.1 模块表格
 
-停止占用
-taskkill /PID 11684
+| 目录                             | 说明             |
+| -------------------------------- | ---------------- |
+| [back-end-side](back-end-side)   | 后端开发参考文档 |
+| [front-end-side](front-end-side) | 前端开发参考文档 |
+| [server-side](server-side)       | 服务端参考文档   |
+
+#### 1.2.2 后端参考文档
+
+后端参考文档中包含了准备开发环境,如何使用项目,拓展与使用等
+
+#### 1.2.3 前端参考文档
+
+前端开发文档中包含了前端包等组件开发说明,配置说明,样式风格说明等
+
+#### 1.2.4 服务端参考文档
+
+服务端参考文档中包含了各种方式部署中间件,服务的操作指南,以及服务内容的初始化以匹配现有系统内容
