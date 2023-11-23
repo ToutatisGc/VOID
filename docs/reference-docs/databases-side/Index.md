@@ -1,3 +1,18 @@
+# 数据库说明
+
+## 基本说明
+
+本系统使用MySQL 8.0+ 开发
+
+## 初始化说明
+
+开发时使用Docker进行部署，部署文档请参考[【章节 I ：准备开发环境】](..\server-side\Part I - Prepare devel environment.md) 
+
+```sql
+create schema VOID collate utf8mb4_unicode_ci;
+```
+
+## 额外内容说明
 
 Mysql 8.0更新默认加密方式为 **caching_sha2_password** ,部分连接工具无法连接,命令行连接Mysql执行命令
 
