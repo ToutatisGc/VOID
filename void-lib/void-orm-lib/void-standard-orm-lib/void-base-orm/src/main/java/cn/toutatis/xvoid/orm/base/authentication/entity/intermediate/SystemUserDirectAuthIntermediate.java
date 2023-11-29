@@ -26,13 +26,13 @@ import static cn.toutatis.xvoid.orm.base.authentication.entity.intermediate.Syst
 @ApiModel(value = "SystemUserDirectAuthIntermediate 系统用户直属权限类", description = "系统用户直属权限类", parent = EntityBasicAttribute.class)
 @JsonIgnoreProperties({"reservedString","reservedInt"})
 @Table(
-        name = TABLE
-        ,indexes = {
+        name = TABLE,
+        indexes = {
                 @Index(name = "USER_INDEX",columnList = "userId"),
                 @Index(name = "AUTH_INDEX",columnList = "authId")
         }
 )
-@org.hibernate.annotations.Table(appliesTo = TABLE, comment = "系统用户&角色关系类")
+@org.hibernate.annotations.Table(appliesTo = TABLE, comment = "系统用户&直属权限关系表")
 public class SystemUserDirectAuthIntermediate extends EntityBasicAttribute<SystemUserDirectAuthIntermediate> {
 
     @Serial

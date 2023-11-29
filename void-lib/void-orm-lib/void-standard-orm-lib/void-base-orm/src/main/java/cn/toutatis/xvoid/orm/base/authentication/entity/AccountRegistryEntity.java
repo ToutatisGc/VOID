@@ -1,11 +1,8 @@
 package cn.toutatis.xvoid.orm.base.authentication.entity;
 
 
-import cn.toutatis.xvoid.toolkit.constant.Regex;
 import cn.toutatis.xvoid.toolkit.validator.Validator;
 import lombok.Data;
-
-import java.util.regex.Matcher;
 
 /**
  * 账户注册方式额外字段
@@ -14,8 +11,14 @@ import java.util.regex.Matcher;
 @Data
 public class AccountRegistryEntity {
 
+    /**
+     * 密码
+     */
     private String secret;
 
+    /**
+     * 二次确认密码
+     */
     private String confirmSecret;
 
     /**

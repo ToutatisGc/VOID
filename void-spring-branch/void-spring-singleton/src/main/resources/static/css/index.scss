@@ -50,7 +50,38 @@ body {
   margin: 10px;
 }
 
+
 .#{$class-prefix} {
+
+  &-mock-input {
+    background-color: #e1e3ee;
+    height: 3rem;
+    border: 2px solid #e1e3ee;
+    outline: 2px solid #e1e3ee;
+    border-radius: 4px;
+    color: #363636;
+    font-size: 1rem;
+    text-indent: 10px;
+    width: 100%;
+  }
+
+  &-mock-input::placeholder{
+    font-weight: lighter;
+  }
+
+  &-mock-input:hover {
+    transition-duration: 300ms;
+    transition-property:outline-color;
+    outline: 2px solid #d7d9e3;
+  }
+
+  &-mock-input:invalid {
+    outline: 2px solid red;
+  }
+
+  &-mock-input:focus {
+    outline: 2px solid #d7d9e3;
+  }
 
   &-background_theme{
     background-color: $theme-color;
@@ -166,7 +197,7 @@ body {
 
     &-main-text{
       @include main-text;
-      font-size: 2vh;
+      font-size: 3vh;
     }
 
     &-subhead{

@@ -26,8 +26,8 @@ import static cn.toutatis.xvoid.orm.base.authentication.entity.intermediate.Syst
 @JsonIgnoreProperties({"reservedString","reservedInt"})
 @ApiModel(value = "SystemRolePathIntermediate 系统角色&权限关系类", description = "系统角色&权限关系类", parent = EntityBasicAttribute.class)
 @Table(
-        name = TABLE
-        ,indexes = {
+        name = TABLE,
+        indexes = {
                 @Index(name = "ROLE_INDEX",columnList = "roleId"),
                 @Index(name = "AUTH_INDEX",columnList = "authId")
         }

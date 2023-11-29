@@ -183,6 +183,7 @@ public class SecurityAuthController {
     private void fillAccountRegistryInfo(SystemUserLogin userLogin, String account, AccountRegistryEntity registryEntity) throws Exception {
         userLogin.setAccount(account);
         LambdaQueryWrapper<SystemUserLogin> lambdaQuery = Wrappers.lambdaQuery();
+        // 检查是否有用户重名
         lambdaQuery.select(SystemUserLogin::getUsername).eq(SystemUserLogin::getUsername,account);
         SystemUserLogin usernameEntity = systemUserLoginService.getOneObj(lambdaQuery);
         userLogin.setUsername(usernameEntity !=null ? "%s_%s".formatted(account, RandomStringUtils.randomAlphabetic(6)) : account);
