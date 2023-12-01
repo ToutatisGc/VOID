@@ -1,18 +1,18 @@
 package cn.toutatis.xvoid.spring.core.route.background.auth;
 
 import cn.toutatis.redis.RedisCommonKeys;
+import cn.toutatis.xvoid.common.enums.RegistryType;
 import cn.toutatis.xvoid.common.result.ProxyResult;
 import cn.toutatis.xvoid.common.result.Result;
 import cn.toutatis.xvoid.common.result.ResultCode;
 import cn.toutatis.xvoid.common.standard.AuthFields;
+import cn.toutatis.xvoid.common.standard.AuthValidationMessage;
 import cn.toutatis.xvoid.orm.base.authentication.entity.AccountRegistryEntity;
 import cn.toutatis.xvoid.orm.base.authentication.entity.SystemUserLogin;
-import cn.toutatis.xvoid.common.enums.RegistryType;
 import cn.toutatis.xvoid.orm.base.authentication.service.SystemUserLoginService;
-import cn.toutatis.xvoid.common.standard.AuthValidationMessage;
+import cn.toutatis.xvoid.spring.annotations.application.VoidController;
 import cn.toutatis.xvoid.spring.configure.system.VoidSecurityConfiguration;
 import cn.toutatis.xvoid.spring.core.tools.ViewToolkit;
-import cn.toutatis.xvoid.spring.annotations.application.VoidController;
 import cn.toutatis.xvoid.toolkit.validator.Validator;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
@@ -23,7 +23,6 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.apache.commons.lang3.RandomStringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.BoundValueOperations;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -47,18 +46,20 @@ public class SecurityAuthController {
 
     private final ViewToolkit viewToolkit = new ViewToolkit("pages/background/auth");
 
-    @Autowired
-    private RedisTemplate<String,Object> redisTemplate;
+    private final RedisTemplate<String,Object> redisTemplate;
 
-    @Autowired
-    private SystemUserLoginService systemUserLoginService;
+    private final SystemUserLoginService systemUserLoginService;
 
-    @Autowired
-    private VoidSecurityConfiguration voidSecurityConfiguration;
+    private final VoidSecurityConfiguration voidSecurityConfiguration;
 
-    @Autowired
-    private BCryptPasswordEncoder passwordEncoder;
+    private final BCryptPasswordEncoder passwordEncoder;
 
+    public SecurityAuthController(RedisTemplate<String, Object> redisTemplate, SystemUserLoginService systemUserLoginService, VoidSecurityConfiguration voidSecurityConfiguration, BCryptPasswordEncoder passwordEncoder) {
+        this.redisTemplate = redisTemplate;
+        this.systemUserLoginService = systemUserLoginService;
+        this.voidSecurityConfiguration = voidSecurityConfiguration;
+        this.passwordEncoder = passwordEncoder;
+    }
 
 
     @Operation(summary="后台管理系统登陆页面",description="管理后台登录页面访问地址")

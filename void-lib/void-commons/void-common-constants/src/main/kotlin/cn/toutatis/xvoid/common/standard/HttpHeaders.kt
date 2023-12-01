@@ -19,7 +19,7 @@ object HttpHeaders {
      * 2021-05-10 14:45:41
      * token header
      */
-    const val VOID_TOKEN = "Void-Token"
+    const val VOID_AUTHENTICATION = "Void-Authentication"
 
     /**
      * 2021-07-03 23:25:00

@@ -1,21 +1,23 @@
 package cn.toutatis.xvoid.spring.core.security.access
 
-import cn.toutatis.xvoid.common.standard.StandardFields
+import cn.toutatis.xvoid.common.enums.AuthType
+import cn.toutatis.xvoid.common.enums.MessageType
 import cn.toutatis.xvoid.common.result.ResultCode
 import cn.toutatis.xvoid.common.standard.AuthFields
 import cn.toutatis.xvoid.common.standard.AuthValidationMessage
+import cn.toutatis.xvoid.common.standard.HttpHeaders
+import cn.toutatis.xvoid.common.standard.StandardFields
 import cn.toutatis.xvoid.orm.base.authentication.entity.RequestAuthEntity
 import cn.toutatis.xvoid.spring.configure.system.VoidGlobalConfiguration
 import cn.toutatis.xvoid.spring.core.security.access.auth.LocalUserService
-import cn.toutatis.xvoid.common.enums.AuthType
-import cn.toutatis.xvoid.common.enums.MessageType
 import cn.toutatis.xvoid.toolkit.log.LoggerToolkit
 import cn.toutatis.xvoid.toolkit.validator.Validator
 import com.alibaba.fastjson.JSON
 import com.alibaba.fastjson.JSONObject
 import com.github.xiaoymin.knife4j.annotations.ApiSupport
-import io.swagger.v3.oas.annotations.media.Schema
-import io.swagger.v3.oas.annotations.tags.Tag
+import io.swagger.v3.oas.annotations.enums.SecuritySchemeIn
+import io.swagger.v3.oas.annotations.enums.SecuritySchemeType
+import io.swagger.v3.oas.annotations.security.SecurityScheme
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.core.userdetails.UserDetailsService
@@ -31,9 +33,13 @@ import javax.servlet.http.HttpSession
  * @author Toutatis_Gc
  */
 
-@Tag(name = "权限API", description = "权限部分接口")
 @ApiSupport(order = 0, author = "Toutatis_Gc")
 @Service
+@SecurityScheme(
+    name = HttpHeaders.VOID_AUTHENTICATION,
+    type = SecuritySchemeType.APIKEY,
+    `in` = SecuritySchemeIn.HEADER,
+    paramName = "请求接口必须携带Http-Header")
 class VoidSecurityAuthenticationService : UserDetailsService {
 
 
@@ -65,7 +71,7 @@ class VoidSecurityAuthenticationService : UserDetailsService {
      * 出现异常情况只会在开发调试阶段，所以线上服务出现违规操作说明有渗透情况，需要及时排查
      * @param identity 认证信息,认证信息为JSON对象
      */
-    @Schema(name = "用户登录")
+
     @Throws(UsernameNotFoundException::class)
     override fun loadUserByUsername(identity: String): UserDetails {
         // 校验是否为空

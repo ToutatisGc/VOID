@@ -6,7 +6,7 @@ import cn.toutatis.xvoid.common.standard.HttpHeaders.ACCESS_CONTROL_ALLOW_METHOD
 import cn.toutatis.xvoid.common.standard.HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN
 import cn.toutatis.xvoid.common.standard.HttpHeaders.ACCESS_CONTROL_MAX_AGE
 import cn.toutatis.xvoid.common.standard.HttpHeaders.VOID_MCH
-import cn.toutatis.xvoid.common.standard.HttpHeaders.VOID_TOKEN
+import cn.toutatis.xvoid.common.standard.HttpHeaders.VOID_AUTHENTICATION
 import com.alibaba.fastjson.JSON
 import java.io.IOException
 import java.net.URLEncoder
@@ -26,7 +26,7 @@ class VoidResponse {
         fun cors(request: HttpServletRequest,response: HttpServletResponse,
                  method:String? = "POST,GET,OPTIONS",
                  allowCredentials:Boolean? = true,
-                 allowHeaders:String? = "$VOID_TOKEN,$VOID_MCH,$ACCESS_CONTROL_ALLOW_HEADERS"){
+                 allowHeaders:String? = "$VOID_AUTHENTICATION,$VOID_MCH,$ACCESS_CONTROL_ALLOW_HEADERS"){
             response.setHeader(ACCESS_CONTROL_ALLOW_ORIGIN, request.getHeader("Origin"))
             response.setHeader(ACCESS_CONTROL_ALLOW_CREDENTIALS, allowCredentials.toString())
             response.setHeader(ACCESS_CONTROL_ALLOW_METHODS, method)
@@ -46,7 +46,7 @@ class VoidResponse {
                        response:HttpServletResponse,
                        any:Any?,method:String? = "POST,GET,OPTIONS",
                        allowCredentials:Boolean? = true,
-                       allowHeaders:String? = "$VOID_TOKEN,$VOID_MCH,$ACCESS_CONTROL_ALLOW_HEADERS"
+                       allowHeaders:String? = "$VOID_AUTHENTICATION,$VOID_MCH,$ACCESS_CONTROL_ALLOW_HEADERS"
                        ){
             cors(request,response,method,allowCredentials,allowHeaders)
             try {

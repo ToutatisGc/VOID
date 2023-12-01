@@ -1,18 +1,17 @@
 package cn.toutatis.xvoid.spring.core.route.base;
 
+import cn.toutatis.xvoid.common.Version;
 import cn.toutatis.xvoid.common.result.ProxyResult;
 import cn.toutatis.xvoid.common.result.Result;
-import cn.toutatis.xvoid.common.standard.StandardFields;
+import cn.toutatis.xvoid.common.result.ResultCode;
 import cn.toutatis.xvoid.spring.annotations.application.VoidController;
 import cn.toutatis.xvoid.spring.configure.system.VoidGlobalConfiguration;
+import cn.toutatis.xvoid.spring.configure.system.VoidSecurityConfiguration;
 import cn.toutatis.xvoid.sqlite.SQLiteShell;
 import com.alibaba.fastjson.JSONObject;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
-
-import java.util.Map;
 
 /**
  * 根路径控制器
@@ -27,16 +26,23 @@ public class RootInitController {
 
     private final VoidGlobalConfiguration.GlobalServiceConfig globalServiceConfig;
 
-    public RootInitController(VoidGlobalConfiguration voidGlobalConfiguration) {
+    private final VoidSecurityConfiguration securityConfiguration;
+
+    private final SQLiteShell sqLiteShell;
+
+    public RootInitController(VoidGlobalConfiguration voidGlobalConfiguration, SQLiteShell sqLiteShell, VoidSecurityConfiguration securityConfiguration) {
         this.voidGlobalConfiguration = voidGlobalConfiguration;
         globalServiceConfig = voidGlobalConfiguration.getGlobalServiceConfig();
+        this.sqLiteShell = sqLiteShell;
+        this.securityConfiguration = securityConfiguration;
     }
 
-    @Autowired
-    private SQLiteShell sqLiteShell;
 
     @RequestMapping(value = "/handleServiceConfiguration",method = RequestMethod.GET)
-    public Result handleServiceConfiguration(){
+    public Result handleServiceConfiguration(Version version){
+        if (version == null){return new ProxyResult(ResultCode.MISSING_PARAMETER);}
+
+        System.err.println(version);
         JSONObject info = new JSONObject();
         info.put("isPlatform", voidGlobalConfiguration.getPlatformMode());
         info.put("version", voidGlobalConfiguration.getVersion().getVersion());

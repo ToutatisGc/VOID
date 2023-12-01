@@ -37,6 +37,8 @@ public enum ResultCode implements Cloneable {
     DELETE_SUCCESS("200003","OP_DEL_000003_SC",true,"删除成功","删除"+FORMAT_HEADER+"操作成功"),
     APPLY_SUCCESS("200004","OP_APL_000004_SC",true,"审核成功","审核"+FORMAT_HEADER+"操作成功"),
     UPLOAD_SUCCESS("200005","UP_ADD_000005_SC",true,"上传成功","上传"+FORMAT_HEADER+"文件成功"),
+    MERGE_DIFF("200006","REQ_MERGE_200006_SC",true,"请求成功","需要合并旧数据"),
+    OVERRIDE_DIFF("200007","REQ_OV_200007_SC",true,"请求成功","需要覆盖旧数据"),
     REQUEST_SUCCESS("320001","REQ_THIRD_320001_SC",true,"发送请求成功","向第三方接口"+FORMAT_HEADER+"发送请求成功"),
     /**
      * 操作部分[FAILED]
