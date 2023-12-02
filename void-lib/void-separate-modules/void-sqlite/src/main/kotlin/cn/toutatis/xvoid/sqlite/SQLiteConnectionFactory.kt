@@ -36,6 +36,7 @@ class SQLiteConnectionFactory {
                     sqLiteConnection.close()
                     logger.infoWithModule(Meta.MODULE_NAME, "SQLite", "关闭SQLite连接")
                 }
+                closeHook.name = "SQLiteShutdownHook"
                 Runtime.getRuntime().addShutdownHook(closeHook);
                 return sqLiteConnection;
             }catch (e:Exception){

@@ -54,7 +54,7 @@ class VoidKnife4JConfiguration {
     open fun publicApi(): GroupedOpenApi = GroupedOpenApi.builder()
         .group("all")
         .pathsToMatch("/**")
-        .displayName("所有接口")
+        .displayName("接口列表")
         .build()
 
     @Bean

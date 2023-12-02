@@ -1,5 +1,6 @@
 package cn.toutatis.xvoid.orm.base.infrastructure.entity;
 
+import cn.toutatis.xvoid.BusinessType;
 import cn.toutatis.xvoid.orm.base.data.common.EntityBasicAttribute;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -15,8 +16,11 @@ import org.hibernate.Hibernate;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Objects;
+
+import static cn.toutatis.xvoid.orm.base.infrastructure.entity.SystemLog.TABLE;
 
 /**
  * <p>
@@ -27,13 +31,19 @@ import java.util.Objects;
  * @since 2022-12-04
  */
 @Getter @Setter @ToString(callSuper = true)
-@TableName("vb_system_log")
+@TableName(TABLE)
 @JsonIgnoreProperties({"reservedString","reservedInt","lastUpdateTimeMs","createTimeMs"})
 @ApiModel(value="SystemLog对象",description="系统日志",parent = EntityBasicAttribute.class)
-@Entity @Table(name = "vb_system_log") @org.hibernate.annotations.Table(appliesTo = "vb_system_log", comment = "系统日志")
+@Entity @Table(name = TABLE) @org.hibernate.annotations.Table(appliesTo = TABLE, comment = "系统日志")
 public class SystemLog extends EntityBasicAttribute<SystemLog> {
 
+    @Serial
     private static final long serialVersionUID = 1L;
+    /**
+     * 数据库表名以及业务类型
+     */
+    public static final String TABLE = "vb_system_log";
+    {this.setBusinessType(BusinessType.XVOID_SYSTEM);}
 
     @Id @TableId
     @Schema(name="主键ID",required = true, example = "0b01f8466bcf11eda9c1b827eb90cfbc")
@@ -46,6 +56,11 @@ public class SystemLog extends EntityBasicAttribute<SystemLog> {
     @TableField("`type`")
     @Column(name="type",columnDefinition = "VARCHAR(32) COMMENT '日志类型'")
     private String type;
+
+    @ApiModelProperty(value = "子业务类型")
+    @TableField("subType")
+    @Column(name="subType",columnDefinition = "VARCHAR(32) COMMENT '子业务类型'")
+    private String subType;
 
     @ApiModelProperty(value = "摘要")
     @Column(name="intro",columnDefinition = "VARCHAR(255) COMMENT '摘要'")
@@ -60,52 +75,10 @@ public class SystemLog extends EntityBasicAttribute<SystemLog> {
     @Column(name="user",columnDefinition = "VARCHAR(32) COMMENT '请求用户'")
     private String user;
 
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public String getIntro() {
-        return intro;
-    }
-
-    public void setIntro(String intro) {
-        this.intro = intro;
-    }
-
-    public String getDetails() {
-        return details;
-    }
-
-    public void setDetails(String details) {
-        this.details = details;
-    }
-
-    public String getUser() {
-        return user;
-    }
-
-    public void setUser(String user) {
-        this.user = user;
-    }
-
-
     @Override
     public Serializable pkVal() {
         return this.id;
     }
-
 
     @Override
     public boolean equals(Object o) {
