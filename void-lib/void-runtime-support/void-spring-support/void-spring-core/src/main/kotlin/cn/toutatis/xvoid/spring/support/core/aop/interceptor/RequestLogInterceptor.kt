@@ -1,11 +1,11 @@
 package cn.toutatis.xvoid.spring.support.core.aop.interceptor
 
 import cn.toutatis.xvoid.common.standard.StandardFields
-import cn.toutatis.xvoid.spring.support.Meta.MODULE_NAME
-import cn.toutatis.xvoid.spring.support.amqp.AmqpShell
 import cn.toutatis.xvoid.orm.base.infrastructure.entity.SystemLog
 import cn.toutatis.xvoid.orm.base.infrastructure.enums.LogType
 import cn.toutatis.xvoid.spring.configure.system.VoidGlobalConfiguration
+import cn.toutatis.xvoid.spring.support.Meta.MODULE_NAME
+import cn.toutatis.xvoid.spring.support.amqp.AmqpShell
 import cn.toutatis.xvoid.toolkit.constant.Time
 import cn.toutatis.xvoid.toolkit.http.RequestToolkit
 import cn.toutatis.xvoid.toolkit.locale.I18n
@@ -26,10 +26,19 @@ import javax.servlet.http.HttpServletResponse
 @Component
 class RequestLogInterceptor(voidGlobalConfiguration: VoidGlobalConfiguration) : HandlerInterceptor {
 
+    /**
+     * Logger 日志
+     */
     private val logger = LoggerToolkit.getLogger(RequestLogInterceptor::class.java)
 
+    /**
+     * Log config 日志配置
+     */
     private var logConfig : VoidGlobalConfiguration.GlobalLogConfig = voidGlobalConfiguration.globalLogConfig
 
+    /**
+     * Amqp shell 消息队列
+     */
     @Autowired
     private lateinit var amqpShell: AmqpShell
 
@@ -44,7 +53,16 @@ class RequestLogInterceptor(voidGlobalConfiguration: VoidGlobalConfiguration) : 
         return this.logRequest(request, response, handler)
     }
 
+    /**
+     * Log request 日志记录方法
+     *
+     * @param request 请求对象
+     * @param response 响应对象
+     * @param handler 处理者来源可能为请求/自定义JSON
+     * @return true 仅为日志拦截，不对请求做控制
+     */
     fun logRequest(request: HttpServletRequest, response: HttpServletResponse, handler: Any): Boolean {
+        // 是否静态资源请求
         if (handler is ResourceHttpRequestHandler){
             if (logConfig.recordStaticResource){
                 logger.info("<=STATIC-TIME:[${Time.getCurrentLocalDateTime()}]=RID:[${request.getAttribute(StandardFields.FILTER_REQUEST_ID_KEY)}]=${request.requestURI}====>")
@@ -59,7 +77,6 @@ class RequestLogInterceptor(voidGlobalConfiguration: VoidGlobalConfiguration) : 
                 className = beanType.name
                 methodName = handler.method.name
             }else if (handler is JSONObject){
-                handler as JSONObject
                 className = handler.getString("className")
                 methodName = handler.getString("methodName")
             }else{
@@ -82,6 +99,7 @@ class RequestLogInterceptor(voidGlobalConfiguration: VoidGlobalConfiguration) : 
             paramsStr+= "]"
             if (logConfig.recordToDb){
                 val systemLog = SystemLog()
+//                systemLog.subType = ""
                 systemLog.intro = "请求[${request.requestURI}]"
                 if (request.requestURI.contains("auth")){
                     systemLog.type = LogType.AUTH.name
