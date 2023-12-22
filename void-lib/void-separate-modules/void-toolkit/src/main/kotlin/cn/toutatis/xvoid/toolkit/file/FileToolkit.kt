@@ -210,19 +210,19 @@ object FileToolkit {
             val resourcesFile = this.getResourcesFile(path)
             if (resourcesFile != null && File(resourcesFile.toURI()).exists()){
                 return File(resourcesFile.toURI()).apply {
-                    logger.trace("Found the file!this file is a resource file,please use getResource method! ")
+                    logger.info("Found the file!this file is a resource file,please use getResource method! ")
                 }
             }
             val jarResource = this.getJarResource(path)
             if (jarResource != null && File(jarResource.toURI()).exists()){
                 return File(jarResource.toURI()).apply {
-                    logger.trace("Found the file!this file is a JAR package file,please use getJarResource method! ")
+                    logger.info("Found the file!this file is a JAR package file,please use getJarResource method! ")
                 }
             }
             val threadPath = this.getClassesFile(path)
             if (File(threadPath?.toURI()!!).exists()){
                 return File(threadPath.toURI()).apply {
-                    logger.trace("Found the file!this file is a runtime path file,please use getClassesFile method! ")
+                    logger.info("Found the file!this file is a runtime path file,please use getClassesFile method! ")
                 }
             }
             throw FileNotFoundException("Can't find [$path] this file location. QAQ")
