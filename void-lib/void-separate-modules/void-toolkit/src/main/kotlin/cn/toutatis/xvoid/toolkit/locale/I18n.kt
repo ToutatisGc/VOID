@@ -79,7 +79,7 @@ object I18n {
             "en" -> country = "US"
         } else country = locale.country
         val filename = "i18n/locale_${locale.language}_${country}.json"
-        val path = FileToolkit.getResourcesFile(filename)?.path
+        val path = FileToolkit.getResourceFile(filename)?.path
         if (Validator.strIsBlank(path)) {
             logger.warnWithModule(Meta.MODULE_NAME,
                 "Locale translation file not found [${filename}]." +

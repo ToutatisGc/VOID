@@ -36,12 +36,12 @@ public class XvoidMappingResolver {
 
     public XvoidMappingResolver(VoidGlobalConfiguration voidGlobalConfiguration) {
         File file = null;
-        URL resourcesFile = FileToolkit.getResourcesFile("config/xvoid-resources-mapping.json");
+        URL resourcesFile = FileToolkit.getResourceFile("config/xvoid-resources-mapping.json");
         if (resourcesFile != null){
             file = new File(resourcesFile.getFile());
         }
         if (file == null || !file.exists()){
-            resourcesFile = FileToolkit.getResourcesFile("xvoid-resources-mapping.json");
+            resourcesFile = FileToolkit.getResourceFile("xvoid-resources-mapping.json");
             if (resourcesFile != null){
                 file = new File(resourcesFile.getFile());
             }
@@ -50,7 +50,7 @@ public class XvoidMappingResolver {
                         "请参考此文件在开发框架下创建resources/config/xvoid-resources-mapping.json[*config文件夹下优先级更高]" +
                         "或resources/xvoid-resources-mapping-default.json文件作为资源和安全部分映射管理.");
                 try {
-                    file = new File(Objects.requireNonNull(FileToolkit.getResourcesFile("config/xvoid-resources-mapping-default.json")).toURI());
+                    file = new File(Objects.requireNonNull(FileToolkit.getResourceFile("config/xvoid-resources-mapping-default.json")).toURI());
                 } catch (URISyntaxException e) { e.printStackTrace(); }
             }
         }

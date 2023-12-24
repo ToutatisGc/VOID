@@ -89,14 +89,14 @@ class VoidRedisBuilder{
 
     fun setConfig(): VoidRedisBuilder {
         //根文件必须指定,不得缺失
-        val rootConfigFile = fileToolkit.getResourcesFile(configPath)
+        val rootConfigFile = fileToolkit.getResourceFile(configPath)
             ?: throw FileNotFoundException("[void-redis.json] configuration file could not be found. Please configure the file or specify the configuration file.")
         val generalConfig = JSONObject.parseObject(fileToolkit.getFileContent(File(rootConfigFile.toURI())))
         val includeFiles = generalConfig.getJSONArray("include")
         if (includeFiles!= null && includeFiles.size > 0){
             for (filename in includeFiles) {
                 filename as String
-                val includeFile = fileToolkit.getResourcesFile(filename)
+                val includeFile = fileToolkit.getResourceFile(filename)
                 if (includeFile != null){
                     val includeConfigJSONObject = JSONObject.parseObject(fileToolkit.getFileContent(File(includeFile.toURI())))
                     generalConfig.putAll(includeConfigJSONObject)

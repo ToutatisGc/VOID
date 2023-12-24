@@ -86,15 +86,20 @@ object FileToolkit {
     }
 
     @JvmStatic
-    fun getResourcesFileAsString(filename:String): String? {
-        return getResourcesFile(filename)?.readText(Charsets.UTF_8)
+    fun getResourceFileAsString(filename:String): String? {
+        return getResourceFile(filename)?.readText(Charsets.UTF_8)
+    }
+
+    @JvmStatic
+    fun getResourceFileAsFile(filename:String): File?{
+        return getResourceFile(filename)?.toURI()?.let { File(it) }
     }
 
     /**
      * Gets the files in the run directory.
      */
     @JvmStatic
-    fun getResourcesFile(filename:String): URL?{
+    fun getResourceFile(filename:String): URL?{
         return Thread.currentThread().contextClassLoader.getResource(filename)
     }
 
@@ -207,7 +212,7 @@ object FileToolkit {
                 logger.info("Found the file!this file has a clear path!Nice!")
             }
         }else{
-            val resourcesFile = this.getResourcesFile(path)
+            val resourcesFile = this.getResourceFile(path)
             if (resourcesFile != null && File(resourcesFile.toURI()).exists()){
                 return File(resourcesFile.toURI()).apply {
                     logger.trace("Found the file!this file is a resource file,please use getResource method! ")

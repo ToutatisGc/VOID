@@ -85,7 +85,7 @@ class IPResolver(mode: Boolean, private val params: Map<String, String>? = null)
                 val runtimePath = fileToolkit.getRuntimePath(true)
                 File("${runtimePath}/${RELEASE_DIR}/${filename}")
             }else{
-                File(fileToolkit.getResourcesFile("${RELEASE_DIR}/${filename}")!!.toURI())
+                File(fileToolkit.getResourceFile("${RELEASE_DIR}/${filename}")!!.toURI())
             }
             return file
         }
@@ -232,8 +232,8 @@ class IPResolver(mode: Boolean, private val params: Map<String, String>? = null)
             urlPool = File("${runtimePath}/${RELEASE_DIR}/url-pool.json")
             config = File("${runtimePath}/${RELEASE_DIR}/config.properties")
         }else{
-            urlPool =  File(fileToolkit.getResourcesFile("${RELEASE_DIR}/url-pool.json")!!.toURI())
-            val configFile = fileToolkit.getResourcesFile("${RELEASE_DIR}/config.properties")
+            urlPool =  File(fileToolkit.getResourceFile("${RELEASE_DIR}/url-pool.json")!!.toURI())
+            val configFile = fileToolkit.getResourceFile("${RELEASE_DIR}/config.properties")
             config = configFile?.toURI()?.let { File(it) }
         }
         /*加载第三方网址*/
