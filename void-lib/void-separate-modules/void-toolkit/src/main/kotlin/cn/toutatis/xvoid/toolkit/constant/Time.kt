@@ -51,7 +51,7 @@ object Time {
     const val SIMPLE_DATE_FORMAT_REGEX = "yyyy-MM-dd HH:mm:ss"
 
     @Volatile
-    var simpleDateFormat = SimpleDateFormat(SIMPLE_DATE_FORMAT_REGEX)
+    private var simpleDateFormat = SimpleDateFormat(SIMPLE_DATE_FORMAT_REGEX)
 
     /**
      * 获取当前时间的格式化字符串
@@ -99,6 +99,15 @@ object Time {
      */
     @JvmStatic
     fun regexTime(format: String, time: Long): String = SimpleDateFormat(format).format(time)
+
+    /**
+     * Regex time
+     * 使用默认格式化
+     * @param time 传入日期
+     * @return 格式化时间
+     */
+    @JvmStatic
+    fun regexTime(time: Date): String = simpleDateFormat.format(time)
 
     /**
      * Get current day last mills time 获取这一天的最后一秒
