@@ -25,7 +25,7 @@ public class XvoidAntTask {
 
     public static SQLiteShell sqliteShell() throws FileNotFoundException {
         SQLiteConnectionFactory sqLiteConnectionFactory = new SQLiteConnectionFactory();
-        URL resourcesFile = FileToolkit.getResourcesFile("sql/VOID.db");
+        URL resourcesFile = FileToolkit.getResourceFile("sql/VOID.db");
         if (resourcesFile != null) {
             File dbFile = null;
             try {

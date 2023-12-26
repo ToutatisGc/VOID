@@ -3,6 +3,7 @@ package cn.toutatis.toolkit.validator
 import cn.toutatis.xvoid.toolkit.constant.Regex
 import org.junit.Assert
 import org.junit.Test
+import java.util.*
 import java.util.regex.Pattern
 
 class RegexTest {
@@ -25,6 +26,18 @@ class RegexTest {
         Assert.assertEquals(true,pattern.matcher("*a12345678").matches())
         Assert.assertEquals(false,pattern.matcher("*a1234 5678").matches())
         Assert.assertEquals(false,pattern.matcher("a12345678♠").matches())
+    }
+
+    @Test
+    fun `test split number`(){
+        Assert.assertEquals("[A, 32]",Regex.splitAlphaNumeric("A32").contentToString())
+        Assert.assertEquals("[AA, 32]",Regex.splitAlphaNumeric("AA32").contentToString())
+        Assert.assertEquals("[BV, 5]",Regex.splitAlphaNumeric("BV5").contentToString())
+        Assert.assertEquals("[C, 0]",Regex.splitAlphaNumeric("C0").contentToString())
+        Assert.assertEquals("[]",Regex.splitAlphaNumeric("C").contentToString())
+        Assert.assertEquals("[]",Regex.splitAlphaNumeric("5").contentToString())
+        Assert.assertEquals("[]",Regex.splitAlphaNumeric("-15").contentToString())
+        Assert.assertEquals("[]",Regex.splitAlphaNumeric("dd-15").contentToString())
     }
 
 }

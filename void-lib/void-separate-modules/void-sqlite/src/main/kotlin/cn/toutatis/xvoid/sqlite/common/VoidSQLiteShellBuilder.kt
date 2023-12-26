@@ -40,7 +40,7 @@ object VoidSQLiteShellBuilder {
      * @return SQLiteConnection连接对象
      */
     private fun builderConnection(filename:String): SQLiteConnection {
-        val resourcesFile: URL? = FileToolkit.getResourcesFile(filename)
+        val resourcesFile: URL? = FileToolkit.getResourceFile(filename)
         if (resourcesFile != null) {
             val dbFile = Paths.get(resourcesFile.toURI()).toFile()
             val connection: SQLiteConnection = factory.createConnection(dbFile)

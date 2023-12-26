@@ -1,5 +1,6 @@
 package cn.toutatis.xvoid.toolkit.constant
 
+import java.util.regex.Matcher
 import java.util.regex.Pattern
 
 /**
@@ -95,6 +96,28 @@ object Regex {
         regex = regex.replace("]", "]")
         regex = regex.replace("!", "^")
         return regex
+    }
+
+    /**
+     * Split alpha numeric
+     * 分割字母和数字
+     * @param input 字符串
+     * @return index：0为字母，1为数字
+     */
+    @JvmStatic
+    public fun splitAlphaNumeric(input: String): Array<String> {
+        // 使用正则表达式匹配字母和数字部分
+        val pattern = Pattern.compile("([a-zA-Z]+)(\\d+)")
+        val matcher: Matcher = pattern.matcher(input)
+        // 如果匹配成功，则获取字母和数字部分
+        return if (matcher.matches()) {
+            val alphaPart: String = matcher.group(1)
+            val numericPart: String = matcher.group(2)
+            arrayOf(alphaPart, numericPart)
+        } else {
+            // 如果不匹配，返回空数组
+            arrayOf()
+        }
     }
 
 
