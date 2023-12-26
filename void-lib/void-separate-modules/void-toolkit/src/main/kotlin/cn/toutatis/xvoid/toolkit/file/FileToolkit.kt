@@ -90,11 +90,6 @@ object FileToolkit {
         return getResourceFile(filename)?.readText(Charsets.UTF_8)
     }
 
-    @JvmStatic
-    fun getResourceFileAsFile(filename:String): File?{
-        return getResourceFile(filename)?.toURI()?.let { File(it) }
-    }
-
     /**
      * Gets the files in the run directory.
      */
@@ -154,6 +149,11 @@ object FileToolkit {
     @JvmStatic
     fun getJarResourceAsStream(filename:String) : InputStream?{
         return this.javaClass.classLoader.getResourceAsStream(filename)
+    }
+
+    @JvmStatic
+    fun getResourceFileAsFile(filename:String):File?{
+        return this.getResourceFile(filename)?.toURI()?.let { File(it) }
     }
 
     /**
