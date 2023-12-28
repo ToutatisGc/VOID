@@ -120,5 +120,16 @@ object Regex {
         }
     }
 
+    /**
+     * Convert single line
+     * 转换字符串为单行
+     * @param input 输入字符串
+     * @return 单行字符串
+     */
+    @JvmStatic
+    public fun convertSingleLine(input: String):String{
+        return input.replace("\\s".toRegex(), "")
+    }
+
 
 }

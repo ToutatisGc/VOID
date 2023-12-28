@@ -3,7 +3,6 @@ package cn.toutatis.toolkit.validator
 import cn.toutatis.xvoid.toolkit.constant.Regex
 import org.junit.Assert
 import org.junit.Test
-import java.util.*
 import java.util.regex.Pattern
 
 class RegexTest {
@@ -38,6 +37,11 @@ class RegexTest {
         Assert.assertEquals("[]",Regex.splitAlphaNumeric("5").contentToString())
         Assert.assertEquals("[]",Regex.splitAlphaNumeric("-15").contentToString())
         Assert.assertEquals("[]",Regex.splitAlphaNumeric("dd-15").contentToString())
+    }
+
+    @Test
+    fun `remove all blank`(){
+        Assert.assertEquals("HelloWorld!",Regex.convertSingleLine("Hello Wo\rr \r\nld \r\n!"))
     }
 
 }
