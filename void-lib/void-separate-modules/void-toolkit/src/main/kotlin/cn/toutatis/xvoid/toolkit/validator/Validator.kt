@@ -213,4 +213,9 @@ public object Validator {
         }
     }
 
+    @JvmStatic
+    fun validateRegex(regex:String?):Boolean{
+        return Regex.validateRegex(regex)
+    }
+
 }

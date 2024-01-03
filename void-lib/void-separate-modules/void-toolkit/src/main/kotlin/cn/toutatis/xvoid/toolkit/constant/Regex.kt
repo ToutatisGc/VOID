@@ -2,6 +2,10 @@ package cn.toutatis.xvoid.toolkit.constant
 
 import java.util.regex.Matcher
 import java.util.regex.Pattern
+import java.util.regex.PatternSyntaxException
+
+
+
 
 /**
  * Regex 类是一个 Kotlin 对象（object），用于存储常用的正则表达式模式。
@@ -129,6 +133,25 @@ object Regex {
     @JvmStatic
     public fun convertSingleLine(input: String):String{
         return input.replace("\\s".toRegex(), "")
+    }
+
+    /**
+     * Validate regex
+     * 验证正则表达式是否合法
+     * @param regex 正则表达式
+     * @return 表达式是否合法
+     */
+    fun validateRegex(regex: String?): Boolean {
+        if (regex == null) { return false }
+        return try {
+            // 尝试编译正则表达式
+            Pattern.compile(regex)
+            // 编译成功，说明是合法的正则表达式
+            true
+        } catch (e: PatternSyntaxException) {
+            // 编译失败，说明不是合法的正则表达式
+            false
+        }
     }
 
 
