@@ -1,7 +1,10 @@
 package cn.toutatis.xvoid.toolkit.constant
 
 import java.text.SimpleDateFormat
-import java.time.*
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.LocalTime
+import java.time.ZoneOffset
 import java.time.format.DateTimeFormatter
 import java.util.*
 
@@ -127,6 +130,11 @@ object Time {
      */
     @JvmStatic
     fun parseData(str :String) : Date{
+        return parseData(simpleDateFormat,str)
+    }
+
+    @JvmStatic
+    fun parseData(simpleDateFormat: SimpleDateFormat,str :String) : Date{
         return simpleDateFormat.parse(str)
     }
 
