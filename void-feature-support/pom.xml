@@ -8,10 +8,11 @@
     <artifactId>void-feature-support</artifactId>
 
     <groupId>cn.toutatis</groupId>
-    <version>0.0.0-ALPHA</version>
+    <version>0.0.2-ALPHA</version>
     <packaging>pom</packaging>
 
     <properties>
+        <gpg.name>VOID</gpg.name>
         <void.version>0.0.0-ALPHA</void.version>
 
         <java8.version>1.8</java8.version>
@@ -20,6 +21,7 @@
 
         <kotlin.version>1.9.20</kotlin.version>
         <kotlinx.version>1.6.4</kotlinx.version>
+        <kotlin.dokka.version>1.9.10</kotlin.dokka.version>
         <kotlin.code.style>official</kotlin.code.style>
 
         <springboot.version>2.7.1</springboot.version>
@@ -60,14 +62,16 @@
 
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
-        <p.source.version>2.2.1</p.source.version>
-        <p.javadoc.version>3.4.1</p.javadoc.version>
-        <p.nexus-staging.version>1.6.7</p.nexus-staging.version>
+        <p.source.version>3.3.0</p.source.version>
+        <p.javadoc.version>3.6.3</p.javadoc.version>
+        <p.gpg.version>3.1.0</p.gpg.version>
+        <p.nexus-staging.version>1.6.13</p.nexus-staging.version>
     </properties>
 
-    <url>https://www.toutatis.cn/</url>
+    <name>void-feature-support</name>
+    <url>https://www.xvoid.cn</url>
 
-    <description>VOID Framework support by Springboot</description>
+    <description>VOID-Framework dependency management</description>
 
     <licenses>
         <license>
@@ -81,11 +85,17 @@
         <url>https://github.com/ToutatisGc/VOID/issues</url>
     </issueManagement>
 
+    <scm>
+        <url>https://github.com/ToutatisGc/VOID</url>
+        <connection>scm:git:https://github.com/ToutatisGc/VOID.git</connection>
+        <developerConnection>scm:git:https://github.com/ToutatisGc/VOID.git</developerConnection>
+    </scm>
+
     <developers>
         <developer>
-            <id>Toutatis_Gc</id>
-            <name>George</name>
+            <name>Toutatis_Gc</name>
             <email>gc@toutatis.cn</email>
+            <url>https://github.com/ToutatisGc</url>
             <roles>
                 <role>Administrator</role>
             </roles>
@@ -94,11 +104,11 @@
 
     <distributionManagement>
         <snapshotRepository>
-            <id>sonatype</id>
-            <url>https://s01.oss.sonatype.org/compressContent/repositories/snapshots</url>
+            <id>ossrh</id>
+            <url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
         </snapshotRepository>
         <repository>
-            <id>sonatype</id>
+            <id>ossrh</id>
             <url>https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/</url>
         </repository>
     </distributionManagement>
@@ -433,11 +443,6 @@
                     </executions>
                 </plugin>
                 <plugin>
-                    <groupId>org.springframework.boot</groupId>
-                    <artifactId>spring-boot-maven-plugin</artifactId>
-                    <version>${springboot.version}</version>
-                </plugin>
-                <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-javadoc-plugin</artifactId>
                     <version>${p.javadoc.version}</version>
@@ -451,15 +456,57 @@
                     </executions>
                 </plugin>
                 <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-gpg-plugin</artifactId>
+                    <version>${p.gpg.version}</version>
+                    <executions>
+                        <execution>
+                            <id>sign-artifacts</id>
+                            <phase>verify</phase>
+                            <goals>
+                                <goal>sign</goal>
+                            </goals>
+                            <configuration>
+                                <keyname>${gpg.name}</keyname>
+                                <passphraseServerId>${gpg.name}</passphraseServerId>
+                                <gpgArguments>
+                                    <arg>--pinentry-mode</arg>
+                                    <arg>loopback</arg>
+                                </gpgArguments>
+                            </configuration>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
                     <groupId>org.sonatype.plugins</groupId>
                     <artifactId>nexus-staging-maven-plugin</artifactId>
                     <version>${p.nexus-staging.version}</version>
                     <extensions>true</extensions>
                     <configuration>
-                        <serverId>sonatype</serverId>
+                        <serverId>ossrh</serverId>
                         <nexusUrl>https://s01.oss.sonatype.org/</nexusUrl>
                         <autoReleaseAfterClose>true</autoReleaseAfterClose>
                     </configuration>
+                </plugin>
+                <plugin>
+                    <groupId>org.jetbrains.dokka</groupId>
+                    <artifactId>dokka-maven-plugin</artifactId>
+                    <version>${kotlin.dokka.version}</version>
+                    <executions>
+                        <execution>
+                            <phase>package</phase>
+                            <id>dokka</id>
+                            <goals>
+                                <goal>dokka</goal>
+                                <goal>javadocJar</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+                <plugin>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-maven-plugin</artifactId>
+                    <version>${springboot.version}</version>
                 </plugin>
                 <plugin>
                     <groupId>org.jetbrains.kotlin</groupId>
@@ -502,31 +549,14 @@
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-source-plugin</artifactId>
-                <version>${p.source.version}</version>
+                <artifactId>maven-gpg-plugin</artifactId>
                 <inherited>false</inherited>
             </plugin>
-
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-javadoc-plugin</artifactId>
-                <version>${p.javadoc.version}</version>
-                <inherited>false</inherited>
-            </plugin>
-
             <plugin>
                 <groupId>org.sonatype.plugins</groupId>
                 <artifactId>nexus-staging-maven-plugin</artifactId>
-                <version>${p.nexus-staging.version}</version>
                 <inherited>false</inherited>
             </plugin>
-
-<!--            <plugin>-->
-<!--                <groupId>org.apache.maven.plugins</groupId>-->
-<!--                <artifactId>maven-gpg-plugin</artifactId>-->
-<!--                <inherited>false</inherited>-->
-<!--            </plugin>-->
-
         </plugins>
 
     </build>

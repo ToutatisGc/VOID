@@ -1,18 +1,14 @@
 package cn.toutatis.xvoid.orm.support.mybatisplus;
 
-import cn.toutatis.xvoid.common.result.ProxyResult;
-import cn.toutatis.xvoid.orm.base.data.common.EntityBasicAttribute;
 import cn.toutatis.xvoid.common.result.DataStatus;
+import cn.toutatis.xvoid.orm.base.data.common.EntityBasicAttribute;
 import cn.toutatis.xvoid.orm.support.VoidService;
-import cn.toutatis.xvoid.toolkit.data.DataExportConfig;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
@@ -334,22 +330,22 @@ public interface VoidMybatisService<T extends EntityBasicAttribute<T>> extends V
     @Override
     Page<T> pageList(PagingQuery pagingQuery, T t);
 
-    /**
-     * 导出表格数据
-     *
-     * @param response         响应对象
-     * @param dataExportConfig 导出配置
-     */
-    @Override
-    void export(HttpServletResponse response, DataExportConfig dataExportConfig);
-
-    /**
-     * 获取导出状态
-     *
-     * @param request          请求
-     * @param response         响应
-     * @param dataExportConfig 导出配置
-     */
-    @Override
-    ProxyResult selectExportStatus(HttpServletRequest request, HttpServletResponse response, DataExportConfig dataExportConfig);
+//    /**
+//     * 导出表格数据
+//     *
+//     * @param response         响应对象
+//     * @param dataExportConfig 导出配置
+//     */
+//    @Override
+//    void export(HttpServletResponse response, DataExportConfig dataExportConfig);
+//
+//    /**
+//     * 获取导出状态
+//     *
+//     * @param request          请求
+//     * @param response         响应
+//     * @param dataExportConfig 导出配置
+//     */
+//    @Override
+//    ProxyResult selectExportStatus(HttpServletRequest request, HttpServletResponse response, DataExportConfig dataExportConfig);
 }

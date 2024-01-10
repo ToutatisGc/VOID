@@ -16,20 +16,7 @@
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <kotlin.version>1.9.20</kotlin.version>
     </properties>
-
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>cn.toutatis</groupId>
-                <artifactId>void-feature-support</artifactId>
-                <version>0.0.0-ALPHA</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
 
     <dependencies>
         <dependency>
@@ -42,8 +29,9 @@
 
 
     <modules>
+        <!-- 通用常量 -->
         <module>void-common-constants</module>
-
+        <!-- 标准使用实体 -->
         <module>void-common</module>
     </modules>
 

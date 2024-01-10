@@ -15,17 +15,10 @@
     <description>
         Void Kotlin Runtime Support 是Kotlin支持库，为基于 Kotlin 的应用程序提供必要的运行时支持。
         该项目旨在通过提供一组实用类、扩展和与其他框架的集成，简化和增强 Kotlin 应用程序的开发。
-        主要特性：
-        - Kotlin 反射：该库包含 `kotlin-reflect` 依赖，使开发者能够利用反射的能力执行高级运行时操作。
-        - Kotlin 标准库：包含 `kotlin-stdlib-jdk8` 依赖，提供额外的功能和与 Java 8 特性的兼容性。
-        - 协程支持：包含 `kotlinx-coroutines-core` 依赖，实现与 Kotlin 协程的无缝集成，实现高效和异步的编程。
-        - 单元测试：包含 `kotlin-test-junit` 和 `junit` 依赖，用于使用 JUnit 进行 Kotlin 代码的单元测试。
-        - Spring 编译器插件：集成了用于 Spring 框架的 Kotlin 编译器插件，提供增强的 Spring 特定功能和优化。
         该库旨在轻松集成到 Kotlin 项目中，为使用 Kotlin 进行开发的开发人员提供各种实用工具和改进。
         请注意，该项目是 Void Feature Support 生态系统的一部分，该生态系统提供了一套全面的库和工具，以增强基于 Kotlin 的应用程序。
     </description>
 
-    <groupId>cn.toutatis</groupId>
     <artifactId>void-kotlin-runtime-support</artifactId>
     <version>1.9.20</version>
     <packaging>pom</packaging>
@@ -123,6 +116,20 @@
                 </plugin>
             </plugins>
         </pluginManagement>
+
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-gpg-plugin</artifactId>
+                <inherited>false</inherited>
+            </plugin>
+            <plugin>
+                <groupId>org.sonatype.plugins</groupId>
+                <artifactId>nexus-staging-maven-plugin</artifactId>
+                <inherited>false</inherited>
+            </plugin>
+        </plugins>
+
     </build>
 
 </project>

@@ -2,10 +2,8 @@ package cn.toutatis.xvoid.orm.support.mybatisplus;
 
 import cn.toutatis.xvoid.common.Meta;
 import cn.toutatis.xvoid.common.result.DataStatus;
-import cn.toutatis.xvoid.common.result.ProxyResult;
 import cn.toutatis.xvoid.orm.base.data.common.EntityBasicAttribute;
 import cn.toutatis.xvoid.spring.configure.system.VoidGlobalConfiguration;
-import cn.toutatis.xvoid.toolkit.data.DataExportConfig;
 import cn.toutatis.xvoid.toolkit.log.LoggerToolkit;
 import com.baomidou.mybatisplus.core.conditions.Wrapper;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
@@ -15,8 +13,6 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
 
 /**
@@ -70,15 +66,15 @@ public class VoidMybatisServiceImpl<M extends BaseMapper<T>, T extends EntityBas
         return page;
     }
 
-    @Override
-    public void export(HttpServletResponse response, DataExportConfig dataExportConfig) {
-
-    }
-
-    @Override
-    public ProxyResult selectExportStatus(HttpServletRequest request, HttpServletResponse response, DataExportConfig dataExportConfig) {
-        return null;
-    }
+//    @Override
+//    public void export(HttpServletResponse response, DataExportConfig dataExportConfig) {
+//
+//    }
+//
+//    @Override
+//    public ProxyResult selectExportStatus(HttpServletRequest request, HttpServletResponse response, DataExportConfig dataExportConfig) {
+//        return null;
+//    }
 
     private void checkConditionIsWrapper(Object condition){
         if (!(condition instanceof Wrapper)){

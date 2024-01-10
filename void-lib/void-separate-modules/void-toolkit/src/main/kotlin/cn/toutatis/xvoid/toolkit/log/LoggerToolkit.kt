@@ -126,3 +126,16 @@ fun Logger.warnWithModule(module: String,message: String,vararg arguments: Strin
     this.warn(log,arguments)
     return log
 }
+
+/**
+ * Logger扩展函数
+ * Debug with module
+ * debug方法携带module信息和消息日志
+ * @param module 模块信息
+ * @param message 日志消息
+ */
+fun Logger.debugWithModule(module: String,message: String):String{
+    val log = LoggerToolkit.infoWithModule(module, message)
+    this.debug(log)
+    return log
+}

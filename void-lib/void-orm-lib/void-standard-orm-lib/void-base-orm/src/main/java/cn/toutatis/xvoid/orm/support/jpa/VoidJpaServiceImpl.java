@@ -1,17 +1,13 @@
 package cn.toutatis.xvoid.orm.support.jpa;
 
-import cn.toutatis.xvoid.common.result.ProxyResult;
 import cn.toutatis.xvoid.orm.base.data.common.EntityBasicAttribute;
 import cn.toutatis.xvoid.orm.support.mybatisplus.PagingQuery;
-import cn.toutatis.xvoid.toolkit.data.DataExportConfig;
 import com.baomidou.mybatisplus.core.metadata.TableInfo;
 import com.baomidou.mybatisplus.core.metadata.TableInfoHelper;
 import com.baomidou.mybatisplus.core.toolkit.Assert;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
@@ -160,13 +156,13 @@ public class VoidJpaServiceImpl<R extends VoidJpaRepo<T,ID>,ID,T extends EntityB
         return null;
     }
 
-    @Override
-    public void export(HttpServletResponse response, DataExportConfig dataExportConfig) {
-
-    }
-
-    @Override
-    public ProxyResult selectExportStatus(HttpServletRequest request, HttpServletResponse response, DataExportConfig dataExportConfig) {
-        return null;
-    }
+//    @Override
+//    public void export(HttpServletResponse response, DataExportConfig dataExportConfig) {
+//
+//    }
+//
+//    @Override
+//    public ProxyResult selectExportStatus(HttpServletRequest request, HttpServletResponse response, DataExportConfig dataExportConfig) {
+//        return null;
+//    }
 }

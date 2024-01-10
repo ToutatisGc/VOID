@@ -1,14 +1,10 @@
 package cn.toutatis.xvoid.orm.support;
 
-import cn.toutatis.xvoid.common.result.ProxyResult;
 import cn.toutatis.xvoid.orm.base.data.common.EntityBasicAttribute;
 import cn.toutatis.xvoid.orm.support.mybatisplus.PagingQuery;
-import cn.toutatis.xvoid.toolkit.data.DataExportConfig;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
@@ -225,19 +221,20 @@ public interface VoidService<T extends EntityBasicAttribute<T>>{
      */
     Page<T> pageList(PagingQuery pagingQuery, T t);
 
-    /**
-     * 导出表格数据
-     * @param response 响应对象
-     * @param dataExportConfig 导出配置
-     */
-    void export(HttpServletResponse response, DataExportConfig dataExportConfig);
-
-    /**
-     * 获取导出状态
-     * @param request 请求
-     * @param response 响应
-     * @param dataExportConfig 导出配置
-     */
-    ProxyResult selectExportStatus(HttpServletRequest request, HttpServletResponse response, DataExportConfig dataExportConfig);
+    // TODO 导出表格数据
+//    /**
+//     * 导出表格数据
+//     * @param response 响应对象
+//     * @param dataExportConfig 导出配置
+//     */
+//    void export(HttpServletResponse response, DataExportConfig dataExportConfig);
+//
+//    /**
+//     * 获取导出状态
+//     * @param request 请求
+//     * @param response 响应
+//     * @param dataExportConfig 导出配置
+//     */
+//    ProxyResult selectExportStatus(HttpServletRequest request, HttpServletResponse response, DataExportConfig dataExportConfig);
 
 }
