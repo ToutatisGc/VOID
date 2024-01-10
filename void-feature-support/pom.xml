@@ -8,7 +8,7 @@
     <artifactId>void-feature-support</artifactId>
 
     <groupId>cn.toutatis</groupId>
-    <version>0.0.3-ALPHA</version>
+    <version>0.0.4-ALPHA</version>
     <packaging>pom</packaging>
 
     <properties>
