@@ -58,9 +58,6 @@
             <plugin>
                 <groupId>org.sonatype.plugins</groupId>
                 <artifactId>nexus-staging-maven-plugin</artifactId>
-                <configuration>
-                    <skipRemoteStaging>false</skipRemoteStaging>
-                </configuration>
                 <inherited>false</inherited>
             </plugin>
         </plugins>
