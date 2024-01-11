@@ -12,7 +12,9 @@
     <packaging>pom</packaging>
     <artifactId>void-separate-modules</artifactId>
 
+    <name>void-separate-modules</name>
     <description>可单独引入工作的模块</description>
+    <version>0.0.0-ALPHA</version>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>

@@ -7,7 +7,7 @@
     <parent>
         <groupId>cn.toutatis</groupId>
         <artifactId>void-feature-support</artifactId>
-        <version>0.0.3-ALPHA</version>
+        <version>0.0.4-ALPHA</version>
     </parent>
 
     <artifactId>void-lib</artifactId>
@@ -43,7 +43,7 @@
                 <groupId>org.sonatype.plugins</groupId>
                 <artifactId>nexus-staging-maven-plugin</artifactId>
                 <configuration>
-                    <skipRemoteStaging>false</skipRemoteStaging>
+                    <skipNexusStagingDeployMojo>false</skipNexusStagingDeployMojo>
                 </configuration>
                 <inherited>false</inherited>
             </plugin>
