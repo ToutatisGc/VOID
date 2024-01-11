@@ -11,7 +11,11 @@
 
     <artifactId>void-toolkit</artifactId>
 
+    <version>0.0.0-ALPHA-8</version>
+
     <properties>
+        <maven.compiler.source>1.8</maven.compiler.source>
+        <maven.compiler.target>1.8</maven.compiler.target>
     </properties>
 
     <dependencies>
@@ -19,7 +23,7 @@
         <dependency>
             <groupId>cn.toutatis</groupId>
             <artifactId>void-common-constants</artifactId>
-            <version>0.0.0-ALPHA</version>
+            <version>0.0.0-ALPHA-8</version>
         </dependency>
 
         <dependency>
@@ -127,7 +131,7 @@
                 <artifactId>kotlin-maven-plugin</artifactId>
                 <version>1.9.20</version>
                 <configuration>
-                    <jvmTarget>17</jvmTarget>
+                    <jvmTarget>1.8</jvmTarget>
                     <args>
                         <arg>-Xjsr305=strict</arg>
                     </args>
@@ -174,7 +178,7 @@
                 <groupId>org.sonatype.plugins</groupId>
                 <artifactId>nexus-staging-maven-plugin</artifactId>
                 <configuration>
-                    <skipNexusStagingDeployMojo>true</skipNexusStagingDeployMojo>
+                    <skipNexusStagingDeployMojo>false</skipNexusStagingDeployMojo>
                 </configuration>
             </plugin>
         </plugins>
