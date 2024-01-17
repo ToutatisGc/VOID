@@ -15,9 +15,10 @@
         <gpg.name>VOID</gpg.name>
         <void.version>0.0.0-ALPHA</void.version>
 
-        <java8.version>1.8</java8.version>
-        <java11.version>11</java11.version>
-        <java17.version>17</java17.version>
+        <jdk8.version>1.8</jdk8.version>
+        <jdk11.version>11</jdk11.version>
+        <jdk17.version>17</jdk17.version>
+        <default-jdk.version>${jdk17.version}</default-jdk.version>
 
         <kotlin.version>1.9.20</kotlin.version>
         <kotlinx.version>1.6.4</kotlinx.version>
@@ -31,7 +32,7 @@
 
         <vertx.version>4.2.4</vertx.version>
 
-        <guava.version>31.0.1-jre</guava.version>
+        <guava.version>33.0.0-jre</guava.version>
         <druid.version>1.2.8</druid.version>
         <commons-lang.version>3.12.0</commons-lang.version>
         <commons-io.version>2.11.0</commons-io.version>

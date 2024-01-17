@@ -14,13 +14,6 @@
     <packaging>pom</packaging>
     <version>0.0.1-ALPHA</version>
 
-    <properties>
-        <jdk8.version>1.8</jdk8.version>
-        <jdk11.version>11</jdk11.version>
-        <jdk17.version>17</jdk17.version>
-        <default-jdk.version>${jdk17.version}</default-jdk.version>
-    </properties>
-
     <modules>
         <!--公共部分-->
         <module>void-commons</module>
