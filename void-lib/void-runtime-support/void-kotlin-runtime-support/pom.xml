@@ -8,7 +8,7 @@
     <parent>
         <groupId>cn.toutatis</groupId>
         <artifactId>void-feature-support</artifactId>
-        <version>0.0.0-ALPHA</version>
+        <version>0.0.4-ALPHA</version>
         <relativePath/>
     </parent>
 
@@ -20,24 +20,12 @@
     </description>
 
     <artifactId>void-kotlin-runtime-support</artifactId>
-    <version>1.9.20</version>
+    <version>1.9.20-1</version>
     <packaging>pom</packaging>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
-
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>cn.toutatis</groupId>
-                <artifactId>void-feature-support</artifactId>
-                <version>0.0.0-ALPHA</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
 
     <dependencies>
 
@@ -127,6 +115,9 @@
                 <groupId>org.sonatype.plugins</groupId>
                 <artifactId>nexus-staging-maven-plugin</artifactId>
                 <inherited>false</inherited>
+                <configuration>
+                    <skipNexusStagingDeployMojo>false</skipNexusStagingDeployMojo>
+                </configuration>
             </plugin>
         </plugins>
 

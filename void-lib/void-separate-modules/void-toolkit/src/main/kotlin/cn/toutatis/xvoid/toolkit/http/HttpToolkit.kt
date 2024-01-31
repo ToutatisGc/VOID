@@ -36,12 +36,11 @@ object HttpToolkit {
         this.addHeader(builder,headers)
         val request: Request = builder.build()
         val responseBody = getResponseBody(request)
-        System.err.println(responseBody)
         return  responseBody
     }
 
     fun asyncGet(){
-
+        //TODO 异步请求
     }
 
 
@@ -53,7 +52,7 @@ object HttpToolkit {
     @JvmStatic
     fun post(url: String, parameters: Map<String,String>? = null,headers:Map<String,String>? = null): String? {
         val builder = FormBody.Builder()
-        if (parameters != null && parameters.isNotEmpty()) {
+        if (!parameters.isNullOrEmpty()) {
             for (key in parameters.keys) {
                 parameters[key]?.let { builder.add(key, it) }
             }
@@ -73,19 +72,19 @@ object HttpToolkit {
      * @return 拼接get的请求地址和参数
      */
     private fun concatMapParameters(url: String, queries: Map<String, String>?): String {
-        val stringBuilder = StringBuilder(url)
-        if (queries != null && queries.isNotEmpty()) {
+        val urlBuilder = StringBuilder(url)
+        if (!queries.isNullOrEmpty()) {
             var firstParameterFlag = true
             for ((key, value) in queries) {
                 if (firstParameterFlag) {
-                    stringBuilder.append("?$key=$value")
+                    urlBuilder.append("?$key=$value")
                     firstParameterFlag = false
                 } else {
-                    stringBuilder.append("&$key=$value")
+                    urlBuilder.append("&$key=$value")
                 }
             }
         }
-        return stringBuilder.toString()
+        return urlBuilder.toString()
     }
 
     /**
@@ -100,6 +99,7 @@ object HttpToolkit {
             }
         } catch (e: IOException) {
             // FIXME 明确原因,完善日志
+            e.printStackTrace()
             logger.error("对外请求失败,请查询原因[URL:" + request.url.toString() + "]")
         }
         return message

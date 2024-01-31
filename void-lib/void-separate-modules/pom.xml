@@ -14,11 +14,11 @@
 
     <name>void-separate-modules</name>
     <description>可单独引入工作的模块</description>
-    <version>0.0.0-ALPHA</version>
+    <version>0.0.1-ALPHA</version>
 
     <properties>
-        <maven.compiler.source>17</maven.compiler.source>
-        <maven.compiler.target>17</maven.compiler.target>
+        <maven.compiler.source>${jdk8.version}</maven.compiler.source>
+        <maven.compiler.target>${jdk8.version}</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
@@ -26,7 +26,7 @@
         <dependency>
             <groupId>cn.toutatis</groupId>
             <artifactId>void-kotlin-runtime-support</artifactId>
-            <version>${kotlin.version}</version>
+            <version>${kotlin.version}-1</version>
             <type>pom</type>
         </dependency>
     </dependencies>
