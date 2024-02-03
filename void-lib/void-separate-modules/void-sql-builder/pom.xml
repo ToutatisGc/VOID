@@ -5,7 +5,7 @@
     <parent>
         <groupId>cn.toutatis</groupId>
         <artifactId>void-separate-modules</artifactId>
-        <version>0.0.0-ALPHA</version>
+        <version>0.0.1-ALPHA</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
@@ -18,7 +18,11 @@
     </properties>
 
     <dependencies>
-
+        <dependency>
+            <groupId>cn.toutatis</groupId>
+            <artifactId>void-toolkit</artifactId>
+            <version>0.0.1-ALPHA</version>
+        </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter</artifactId>

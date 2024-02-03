@@ -14,11 +14,11 @@
 
     <name>void-separate-modules</name>
     <description>可单独引入工作的模块</description>
-    <version>0.0.1-ALPHA</version>
+    <version>0.0.2-ALPHA</version>
 
     <properties>
-        <maven.compiler.source>${jdk8.version}</maven.compiler.source>
-        <maven.compiler.target>${jdk8.version}</maven.compiler.target>
+        <maven.compiler.source>${jdk17.version}</maven.compiler.source>
+        <maven.compiler.target>${jdk17.version}</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
@@ -28,6 +28,7 @@
             <artifactId>void-kotlin-runtime-support</artifactId>
             <version>${kotlin.version}-1</version>
             <type>pom</type>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
 
