@@ -1,4 +1,4 @@
-package cn.toutatis.xvoid.ddns.ip.commands.commandLib.dns.ali
+package cn.toutatis.xvoid.ddns.commands.dns.ali
 
 import cn.toutatis.xvoid.ddns.IPResolver
 import cn.toutatis.xvoid.ddns.IPResolver.Companion.commandInterpreter

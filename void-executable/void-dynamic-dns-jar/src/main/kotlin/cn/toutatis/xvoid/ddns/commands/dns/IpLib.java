@@ -1,7 +1,7 @@
-package cn.toutatis.xvoid.ddns.commands.commandLib.dns;
+package cn.toutatis.xvoid.ddns.commands.dns;
 
 import cn.toutatis.xvoid.ddns.IPResolver;
-import cn.toutatis.xvoid.ddns.ip.commands.commandLib.support.CommandHelper;
+import cn.toutatis.xvoid.ddns.commands.support.CommandHelper;
 import cn.toutatis.xvoid.ddns.ip.scan.UrlPoolScanner;
 import cn.toutatis.xvoid.toolkit.log.LoggerToolkit;
 import com.alibaba.fastjson.JSONArray;

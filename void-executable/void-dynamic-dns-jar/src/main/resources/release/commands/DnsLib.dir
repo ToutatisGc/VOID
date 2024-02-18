@@ -2,7 +2,7 @@
   "DNS": {
     "type": "command",
     "description": "获取阿里云解析域名地址",
-    "class": "cn.toutatis.xvoid.ddns.ip.commands.commandLib.dns.DNSLib",
+    "class": "cn.toutatis.xvoid.ddns.commands.dns.DNSLib",
     "args": {
       "l": {
         "fullName": "last",
@@ -23,7 +23,7 @@
   "UPDNS": {
     "type": "command",
     "description": "更新阿里云解析域名地址",
-    "class": "cn.toutatis.xvoid.ddns.ip.commands.commandLib.dns.DNSLib",
+    "class": "cn.toutatis.xvoid.ddns.commands.dns.DNSLib",
     "method": "updateDNS",
     "args": {
       "s": {

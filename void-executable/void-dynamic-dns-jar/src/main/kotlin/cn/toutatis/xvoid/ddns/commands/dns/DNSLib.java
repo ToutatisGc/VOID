@@ -1,8 +1,8 @@
-package cn.toutatis.xvoid.ddns.commands.commandLib.dns;
+package cn.toutatis.xvoid.ddns.commands.dns;
 
-import cn.toutatis.xvoid.ddns.ip.commands.commandLib.dns.ali.AliCloudDNS;
-import cn.toutatis.xvoid.ddns.ip.commands.commandLib.support.BaseCommand;
-import cn.toutatis.xvoid.ddns.ip.commands.commandLib.support.CommandHelper;
+import cn.toutatis.xvoid.ddns.commands.dns.ali.AliCloudDNS;
+import cn.toutatis.xvoid.ddns.commands.support.BaseCommand;
+import cn.toutatis.xvoid.ddns.commands.support.CommandHelper;
 import com.alibaba.fastjson.JSONObject;
 
 public class DNSLib extends CommandHelper implements BaseCommand {

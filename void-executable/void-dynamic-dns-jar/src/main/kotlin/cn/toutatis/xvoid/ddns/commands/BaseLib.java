@@ -1,8 +1,8 @@
-package cn.toutatis.xvoid.ddns.commands.commandLib;
+package cn.toutatis.xvoid.ddns.commands;
 
 import cn.toutatis.xvoid.ddns.IPResolver;
-import cn.toutatis.xvoid.ddns.ip.commands.commandLib.support.BaseCommand;
-import cn.toutatis.xvoid.ddns.ip.commands.commandLib.support.CommandHelper;
+import cn.toutatis.xvoid.ddns.commands.support.BaseCommand;
+import cn.toutatis.xvoid.ddns.commands.support.CommandHelper;
 import cn.toutatis.xvoid.toolkit.log.LoggerToolkit;
 import com.alibaba.fastjson.JSONObject;
 import org.slf4j.Logger;
@@ -11,7 +11,6 @@ import static cn.toutatis.xvoid.ddns.PkgInfo.MODULE_NAME;
 
 /**
  * @author Toutatis_Gc
- * @date 2022/10/7 22:32
  */
 public class BaseLib extends CommandHelper implements BaseCommand {
 

@@ -61,7 +61,7 @@ class IPResolver(mode: Boolean, private val params: Map<String, String>? = null)
         private const val RELEASE_DIR = "release"
 
         /*命令库前缀*/
-        private const val CMD_SUFFIX = ".lib"
+        private const val CMD_SUFFIX = ".dir"
 
         /*运行类型是否为jar包*/
         var runTypeIsJar = true
@@ -144,7 +144,7 @@ class IPResolver(mode: Boolean, private val params: Map<String, String>? = null)
 
     private fun loadCommandLibrary():CommandInterpreter{
         val fileList = ArrayList<File>()
-        val libs = getFile("libs")
+        val libs = getFile("commands")
         this.findFiles(fileList,libs)
         val tmpLib = JSONObject(16)
         val keySort = ArrayList<String>(16)

@@ -12,9 +12,13 @@ import java.util.regex.Matcher
 import java.util.regex.Pattern
 
 /**
- * 第三方解析IP
+ * 解析IP工具
+ * 如果你想要获取你的网络连接所使用的公网IP地址，你需要向外部的一个服务器发送请求，
+ * 服务器能够检测到请求的源IP地址，即你的公网IP地址。
+ * 需要这样的服务发送HTTP请求的原因。这个服务能够检测到请求的源IP地址，然后返回给你。
+ * url-pool.json文件中有预设的IP地址池，你可以使用这些地址池中的地址来发送请求。
  */
-class UrlPoolScanner constructor(private val urlPool:JSONArray) {
+class UrlPoolScanner(private val urlPool:JSONArray) {
 
     companion object{
 

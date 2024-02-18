@@ -1,4 +1,4 @@
-package cn.toutatis.xvoid.ddns.ip.commands.commandLib.support
+package cn.toutatis.xvoid.ddns.commands.support
 
 enum class CommandEnum {
 

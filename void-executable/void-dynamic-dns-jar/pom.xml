@@ -14,8 +14,7 @@
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
-        <main.class>cn.toutatis.xvoid.ddns.IPResolverKt</main.class>
-        <kotlin.compiler.incremental>true</kotlin.compiler.incremental>
+        <main.class>cn.toutatis.xvoid.ddns.DynamicDNSResolverKt</main.class>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <kotlin.version>1.9.20</kotlin.version>
     </properties>
@@ -46,13 +45,13 @@
         <dependency>
             <groupId>cn.toutatis</groupId>
             <artifactId>void-toolkit</artifactId>
-            <version>0.0.1-ALPHA</version>
+            <version>0.0.2-ALPHA</version>
         </dependency>
         <!--阿里云SDK支持-->
         <dependency>
             <groupId>com.aliyun</groupId>
             <artifactId>alidns20150109</artifactId>
-            <version>3.0.10</version>
+            <version>2.0.1</version>
         </dependency>
 
     </dependencies>
@@ -61,11 +60,33 @@
         <finalName>void_dynamic_dns</finalName>
         <sourceDirectory>${project.basedir}/src/main/kotlin</sourceDirectory>
         <testSourceDirectory>${project.basedir}/src/test/kotlin</testSourceDirectory>
-
         <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>3.2.0</version> <!-- 可以根据需要指定版本号 -->
+                <executions>
+                    <execution>
+                        <id>copy-resources</id>
+                        <phase>validate</phase>
+                        <goals>
+                            <goal>copy-resources</goal>
+                        </goals>
+                        <configuration>
+                            <outputDirectory>${project.build.directory}</outputDirectory>
+                            <resources>
+                                <resource>
+                                    <directory>src/main/resources</directory>
+                                </resource>
+                            </resources>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
             <plugin>
                 <groupId>org.jetbrains.kotlin</groupId>
                 <artifactId>kotlin-maven-plugin</artifactId>
+                <version>${kotlin.version}</version>
                 <configuration>
                     <jvmTarget>17</jvmTarget>
                     <args>
@@ -73,6 +94,21 @@
                         <arg>-Xjvm-default=all</arg>
                     </args>
                 </configuration>
+                <executions>
+                    <execution>
+                        <id>compile</id>
+                        <phase>process-sources</phase>
+                        <goals>
+                            <goal>compile</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>test-compile</id>
+                        <goals>
+                            <goal>test-compile</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>

@@ -1,4 +1,4 @@
-package cn.toutatis.xvoid.ddns.ip.commands.commandLib.support
+package cn.toutatis.xvoid.ddns.commands.support
 
 import com.alibaba.fastjson.JSONObject
 import org.slf4j.Logger
@@ -51,7 +51,7 @@ open class CommandHelper {
                                 index++
                                 true
                             }
-                            existKey(argHash,getParamName(currentStr),next)
+                            existKey(argHash, getParamName(currentStr),next)
                         }
                         index++
                     }
