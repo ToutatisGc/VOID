@@ -5,16 +5,16 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>cn.toutatis</groupId>
-    <artifactId>void-ip-resolve-jar</artifactId>
+    <artifactId>void-dynamic-dns-jar</artifactId>
     <version>0.0.0-ALPHA</version>
     <packaging>jar</packaging>
 
-    <name>void-ip-resolve-jar</name>
+    <name>void-dynamic-dns-jar</name>
 
     <properties>
-        <maven.compiler.source>8</maven.compiler.source>
-        <maven.compiler.target>8</maven.compiler.target>
-        <main.class>cn.toutatis.xvoid.resolve.ip.IPResolverKt</main.class>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+        <main.class>cn.toutatis.xvoid.ddns.IPResolverKt</main.class>
         <kotlin.compiler.incremental>true</kotlin.compiler.incremental>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <kotlin.version>1.9.20</kotlin.version>
@@ -38,31 +38,27 @@
         <dependency>
             <groupId>cn.toutatis</groupId>
             <artifactId>void-kotlin-runtime-support</artifactId>
-            <version>${kotlin.version}</version>
+            <version>${kotlin.version}-1</version>
             <type>pom</type>
+            <scope>compile</scope>
         </dependency>
-
+        <!--VOID工具类-->
         <dependency>
             <groupId>cn.toutatis</groupId>
             <artifactId>void-toolkit</artifactId>
-            <version>0.0.0-ALPHA</version>
+            <version>0.0.1-ALPHA</version>
         </dependency>
-
-        <dependency>
-            <groupId>ch.qos.logback</groupId>
-            <artifactId>logback-classic</artifactId>
-        </dependency>
-
+        <!--阿里云SDK支持-->
         <dependency>
             <groupId>com.aliyun</groupId>
             <artifactId>alidns20150109</artifactId>
-            <version>2.0.1</version>
+            <version>3.0.10</version>
         </dependency>
 
     </dependencies>
 
     <build>
-        <finalName>void_ip_resolve</finalName>
+        <finalName>void_dynamic_dns</finalName>
         <sourceDirectory>${project.basedir}/src/main/kotlin</sourceDirectory>
         <testSourceDirectory>${project.basedir}/src/test/kotlin</testSourceDirectory>
 
@@ -71,7 +67,7 @@
                 <groupId>org.jetbrains.kotlin</groupId>
                 <artifactId>kotlin-maven-plugin</artifactId>
                 <configuration>
-                    <jvmTarget>1.8</jvmTarget>
+                    <jvmTarget>17</jvmTarget>
                     <args>
                         <arg>-Xjsr305=strict</arg>
                         <arg>-Xjvm-default=all</arg>

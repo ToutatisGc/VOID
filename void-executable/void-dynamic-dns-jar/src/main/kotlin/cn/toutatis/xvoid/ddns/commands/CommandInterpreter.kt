@@ -1,7 +1,7 @@
-package cn.toutatis.xvoid.resolve.ip.commands
+package cn.toutatis.xvoid.ddns.ip.commands
 
-import cn.toutatis.xvoid.resolve.ip.IPResolver
-import cn.toutatis.xvoid.resolve.ip.PkgInfo.MODULE_NAME
+import cn.toutatis.xvoid.ddns.IPResolver
+import cn.toutatis.xvoid.ddns.PkgInfo.MODULE_NAME
 import cn.toutatis.xvoid.toolkit.validator.Validator
 import com.alibaba.fastjson.JSONObject
 import com.alibaba.fastjson.parser.Feature

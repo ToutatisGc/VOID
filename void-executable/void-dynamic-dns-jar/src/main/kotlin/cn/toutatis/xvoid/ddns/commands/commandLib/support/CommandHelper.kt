@@ -1,4 +1,4 @@
-package cn.toutatis.xvoid.resolve.ip.commands.commandLib.support
+package cn.toutatis.xvoid.ddns.ip.commands.commandLib.support
 
 import com.alibaba.fastjson.JSONObject
 import org.slf4j.Logger

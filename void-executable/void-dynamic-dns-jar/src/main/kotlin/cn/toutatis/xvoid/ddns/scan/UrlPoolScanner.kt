@@ -1,6 +1,6 @@
-package cn.toutatis.xvoid.resolve.ip.scan
+package cn.toutatis.xvoid.ddns.ip.scan
 
-import cn.toutatis.xvoid.resolve.ip.IPResolver.Companion.config
+import cn.toutatis.xvoid.ddns.IPResolver.Companion.config
 import com.alibaba.fastjson.JSONArray
 import okhttp3.*
 import org.slf4j.LoggerFactory

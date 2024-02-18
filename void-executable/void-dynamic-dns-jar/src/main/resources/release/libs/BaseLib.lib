@@ -2,7 +2,7 @@
   "HELP": {
     "type": "command",
     "description": "获取帮助信息",
-    "class": "cn.toutatis.xvoid.resolve.ip.commands.commandLib.BaseLib",
+    "class": "cn.toutatis.xvoid.ddns.ip.commands.commandLib.BaseLib",
     "method": "help",
     "args": {
       "s": {
@@ -19,7 +19,7 @@
   "EXIT": {
     "type": "command",
     "description": "退出程序",
-    "class": "cn.toutatis.xvoid.resolve.ip.commands.commandLib.BaseLib",
+    "class": "cn.toutatis.xvoid.ddns.ip.commands.commandLib.BaseLib",
     "method": "exit"
   },
   "Q":{

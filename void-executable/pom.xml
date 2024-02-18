@@ -17,7 +17,7 @@
     <modules>
         <module>void-creator-jar</module>
         <module>void-compress-jar</module>
-        <module>void-ip-resolve-jar</module>
+        <module>void-dynamic-dns-jar</module>
     </modules>
 
 </project>

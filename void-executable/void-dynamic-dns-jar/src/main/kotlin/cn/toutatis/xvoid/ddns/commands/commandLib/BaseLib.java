@@ -1,13 +1,13 @@
-package cn.toutatis.xvoid.resolve.ip.commands.commandLib;
+package cn.toutatis.xvoid.ddns.commands.commandLib;
 
-import cn.toutatis.xvoid.resolve.ip.IPResolver;
-import cn.toutatis.xvoid.resolve.ip.commands.commandLib.support.BaseCommand;
-import cn.toutatis.xvoid.resolve.ip.commands.commandLib.support.CommandHelper;
+import cn.toutatis.xvoid.ddns.IPResolver;
+import cn.toutatis.xvoid.ddns.ip.commands.commandLib.support.BaseCommand;
+import cn.toutatis.xvoid.ddns.ip.commands.commandLib.support.CommandHelper;
 import cn.toutatis.xvoid.toolkit.log.LoggerToolkit;
 import com.alibaba.fastjson.JSONObject;
 import org.slf4j.Logger;
 
-import static cn.toutatis.xvoid.resolve.ip.PkgInfo.MODULE_NAME;
+import static cn.toutatis.xvoid.ddns.PkgInfo.MODULE_NAME;
 
 /**
  * @author Toutatis_Gc

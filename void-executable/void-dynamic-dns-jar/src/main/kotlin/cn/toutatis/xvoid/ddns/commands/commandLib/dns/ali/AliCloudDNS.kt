@@ -1,9 +1,9 @@
-package cn.toutatis.xvoid.resolve.ip.commands.commandLib.dns.ali
+package cn.toutatis.xvoid.ddns.ip.commands.commandLib.dns.ali
 
-import cn.toutatis.xvoid.resolve.ip.IPResolver
-import cn.toutatis.xvoid.resolve.ip.IPResolver.Companion.commandInterpreter
-import cn.toutatis.xvoid.resolve.ip.IPResolver.Companion.config
-import cn.toutatis.xvoid.resolve.ip.PkgInfo.MODULE_NAME
+import cn.toutatis.xvoid.ddns.IPResolver
+import cn.toutatis.xvoid.ddns.IPResolver.Companion.commandInterpreter
+import cn.toutatis.xvoid.ddns.IPResolver.Companion.config
+import cn.toutatis.xvoid.ddns.PkgInfo.MODULE_NAME
 import cn.toutatis.xvoid.toolkit.validator.Validator
 import com.alibaba.fastjson.JSONObject
 import com.aliyun.alidns20150109.Client

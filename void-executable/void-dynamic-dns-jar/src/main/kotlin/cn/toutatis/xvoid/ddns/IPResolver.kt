@@ -1,7 +1,7 @@
-package cn.toutatis.xvoid.resolve.ip
+package cn.toutatis.xvoid.ddns
 
-import cn.toutatis.xvoid.resolve.ip.PkgInfo.MODULE_NAME
-import cn.toutatis.xvoid.resolve.ip.commands.CommandInterpreter
+import cn.toutatis.xvoid.ddns.PkgInfo.MODULE_NAME
+import cn.toutatis.xvoid.ddns.ip.commands.CommandInterpreter
 import cn.toutatis.xvoid.toolkit.file.FileToolkit
 import cn.toutatis.xvoid.toolkit.validator.Validator
 import com.alibaba.fastjson.JSON
@@ -83,9 +83,9 @@ class IPResolver(mode: Boolean, private val params: Map<String, String>? = null)
         fun getFile(filename:String):File{
             val file:File = if (runTypeIsJar){
                 val runtimePath = fileToolkit.getRuntimePath(true)
-                File("${runtimePath}/${RELEASE_DIR}/${filename}")
+                File("${runtimePath}/$RELEASE_DIR/${filename}")
             }else{
-                File(fileToolkit.getResourceFile("${RELEASE_DIR}/${filename}")!!.toURI())
+                File(fileToolkit.getResourceFile("$RELEASE_DIR/${filename}")!!.toURI())
             }
             return file
         }
@@ -229,11 +229,11 @@ class IPResolver(mode: Boolean, private val params: Map<String, String>? = null)
         /*运行在jar中的文件需要另外获取*/
         if (runTypeIsJar){
             val runtimePath = fileToolkit.getRuntimePath(true)
-            urlPool = File("${runtimePath}/${RELEASE_DIR}/url-pool.json")
-            config = File("${runtimePath}/${RELEASE_DIR}/config.properties")
+            urlPool = File("${runtimePath}/$RELEASE_DIR/url-pool.json")
+            config = File("${runtimePath}/$RELEASE_DIR/config.properties")
         }else{
-            urlPool =  File(fileToolkit.getResourceFile("${RELEASE_DIR}/url-pool.json")!!.toURI())
-            val configFile = fileToolkit.getResourceFile("${RELEASE_DIR}/config.properties")
+            urlPool =  File(fileToolkit.getResourceFile("$RELEASE_DIR/url-pool.json")!!.toURI())
+            val configFile = fileToolkit.getResourceFile("$RELEASE_DIR/config.properties")
             config = configFile?.toURI()?.let { File(it) }
         }
         /*加载第三方网址*/
@@ -263,7 +263,7 @@ class IPResolver(mode: Boolean, private val params: Map<String, String>? = null)
      */
     private fun releaseFiles(): Unit {
         val runtimePath = fileToolkit.getRuntimePath(true)
-        val dirMk = File("$runtimePath/${RELEASE_DIR}")
+        val dirMk = File("$runtimePath/$RELEASE_DIR")
         if (fileToolkit.getRuntimePath(false).endsWith(".jar")){
             if (dirMk.exists() && dirMk.isDirectory){
                 val jarResources = fileToolkit.getJarResource(RELEASE_DIR)
@@ -271,7 +271,7 @@ class IPResolver(mode: Boolean, private val params: Map<String, String>? = null)
                 val jarFile = openConnection.jarFile
                 for (innerFile in jarFile.entries()) {
                     val name = innerFile.name
-                    if (name.startsWith("${RELEASE_DIR}/") && !name.endsWith("/")){
+                    if (name.startsWith("$RELEASE_DIR/") && !name.endsWith("/")){
                         val jarResourcesStream = fileToolkit.getJarResourceAsStream(name)!!
                         val split = name.split("/")
                         var path = runtimePath

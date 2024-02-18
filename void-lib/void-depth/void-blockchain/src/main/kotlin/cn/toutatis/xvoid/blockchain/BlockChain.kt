@@ -1,7 +1,5 @@
 package cn.toutatis.xvoid.blockchain
 
-import cn.toutatis.xvoid.toolkit.log.LoggerToolkit
-
 /**
  * Block chain
  * 区块链是由多个前后连接的区块组成
@@ -79,6 +77,7 @@ class BlockChain {
             minedTimes++
             println("NONCE:${minedBlock.nonce},HASH:${minedBlock.hash},TIMES:${minedTimes}")
         }
+
         return minedBlock
     }
 
