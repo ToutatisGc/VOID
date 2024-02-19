@@ -1,6 +1,8 @@
 package cn.toutatis.xvoid.ddns.ip.scan
 
-import cn.toutatis.xvoid.ddns.IPResolver.Companion.config
+import cn.toutatis.xvoid.ddns.DynamicDNSResolver.Companion.config
+import cn.toutatis.xvoid.ddns.constance.ParamConstance
+import cn.toutatis.xvoid.toolkit.constant.Regex
 import com.alibaba.fastjson.JSONArray
 import okhttp3.*
 import org.slf4j.LoggerFactory
@@ -21,17 +23,27 @@ import java.util.regex.Pattern
 class UrlPoolScanner(private val urlPool:JSONArray) {
 
     companion object{
-
+        /**
+         * Http client HTTP请求客户端
+         */
         private lateinit var httpClient : OkHttpClient
 
-        const val IP_REGEX = "((2(5[0-5]|[0-4]\\d))|[0-1]?\\d{1,2})(\\.((2(5[0-5]|[0-4]\\d))|[0-1]?\\d{1,2})){3}"
+        /**
+         * Ip Regex IPv4地址正则
+         */
+        const val IP_REGEX = Regex.IPV4_ADDRESS_REGEX
 
+        /**
+         * Logger 日志
+         */
         private val logger = LoggerFactory.getLogger(UrlPoolScanner::class.java)
-
     }
 
+    /**
+     * 初始化创建HTTP请求客户端
+     */
     init {
-        val requestTimeOut = config.getProperty("Request-Time-Out").toLong()
+        val requestTimeOut = config.getProperty(ParamConstance.REQUEST_TIME_OUT_PARAM).toLong()
         val httpClient: OkHttpClient = OkHttpClient.Builder()
             .retryOnConnectionFailure(false)
             .connectTimeout(requestTimeOut, TimeUnit.SECONDS)

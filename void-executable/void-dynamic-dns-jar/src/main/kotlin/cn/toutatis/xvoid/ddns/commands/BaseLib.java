@@ -1,13 +1,13 @@
 package cn.toutatis.xvoid.ddns.commands;
 
-import cn.toutatis.xvoid.ddns.IPResolver;
+import cn.toutatis.xvoid.ddns.DynamicDNSResolver;
 import cn.toutatis.xvoid.ddns.commands.support.BaseCommand;
 import cn.toutatis.xvoid.ddns.commands.support.CommandHelper;
 import cn.toutatis.xvoid.toolkit.log.LoggerToolkit;
 import com.alibaba.fastjson.JSONObject;
 import org.slf4j.Logger;
 
-import static cn.toutatis.xvoid.ddns.PkgInfo.MODULE_NAME;
+import static cn.toutatis.xvoid.ddns.Meta.MODULE_NAME;
 
 /**
  * @author Toutatis_Gc
@@ -17,7 +17,7 @@ public class BaseLib extends CommandHelper implements BaseCommand {
     private final static Logger logger = LoggerToolkit.getLogger(BaseLib.class);
 
     public static void exit(String target,Object args){
-        boolean modea = IPResolver.Companion.getModea();
+        boolean modea = DynamicDNSResolver.Companion.getModea();
         if (!modea){
             System.exit(0);
         }else {
@@ -26,7 +26,7 @@ public class BaseLib extends CommandHelper implements BaseCommand {
     }
 
     public static void help(String target,Object args){
-        JSONObject commandTable = IPResolver.commandInterpreter.getCommandTable();
+        JSONObject commandTable = DynamicDNSResolver.commandInterpreter.getCommandTable();
         commandTable.forEach((key, value) -> {
             JSONObject obj = commandTable.getJSONObject(key);
             if ("command".equals(obj.getString("type"))){
@@ -53,7 +53,7 @@ public class BaseLib extends CommandHelper implements BaseCommand {
 
 //    public static void next(String target,Object args){
 //        StringBuilder sb = new StringBuilder("输入命令[");
-//        JSONObject commandTable = IPResolver.Companion.getCommandInterpreter().getCommandTable();
+//        JSONObject commandTable = DynamicDNSResolver.Companion.getCommandInterpreter().getCommandTable();
 //        JSONObject targetCommand = commandTable.getJSONObject(target);
 //        JSONObject next = targetCommand.getJSONObject("next");
 //        logger.info(sb.toString());

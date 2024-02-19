@@ -1,9 +1,9 @@
 package cn.toutatis.xvoid.ddns.commands.dns.ali
 
-import cn.toutatis.xvoid.ddns.IPResolver
-import cn.toutatis.xvoid.ddns.IPResolver.Companion.commandInterpreter
-import cn.toutatis.xvoid.ddns.IPResolver.Companion.config
-import cn.toutatis.xvoid.ddns.PkgInfo.MODULE_NAME
+import cn.toutatis.xvoid.ddns.DynamicDNSResolver
+import cn.toutatis.xvoid.ddns.DynamicDNSResolver.Companion.commandInterpreter
+import cn.toutatis.xvoid.ddns.DynamicDNSResolver.Companion.config
+import cn.toutatis.xvoid.ddns.Meta.MODULE_NAME
 import cn.toutatis.xvoid.toolkit.validator.Validator
 import com.alibaba.fastjson.JSONObject
 import com.aliyun.alidns20150109.Client
@@ -114,7 +114,7 @@ class AliCloudDNS {
             if (address != null){
                 updateDomainRecordRequest.value = address
             }else{
-                val lastRecord = IPResolver.lastRecord
+                val lastRecord = DynamicDNSResolver.lastRecord
                 if (Validator.strNotBlank(lastRecord)){
                     if (lastRecord == dnsObj.value){
                         logger.info("[${MODULE_NAME}]OLD:${dnsObj.hashCode()}[STATUS:=]")

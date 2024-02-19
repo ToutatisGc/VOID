@@ -1,4 +1,8 @@
 {
+  "schedule": {
+    "period": 120,
+    "delay": 0,
+  },
   "DNS": {},
   "UPDNS": {
     "args": "-s 0"

@@ -1,6 +1,6 @@
 package cn.toutatis.xvoid.ddns.commands.dns;
 
-import cn.toutatis.xvoid.ddns.IPResolver;
+import cn.toutatis.xvoid.ddns.DynamicDNSResolver;
 import cn.toutatis.xvoid.ddns.commands.support.CommandHelper;
 import cn.toutatis.xvoid.ddns.ip.scan.UrlPoolScanner;
 import cn.toutatis.xvoid.toolkit.log.LoggerToolkit;
@@ -23,7 +23,7 @@ public class IpLib extends CommandHelper {
 
     private final static Logger logger = LoggerToolkit.getLogger(IpLib.class);
 
-    private static final UrlPoolScanner urlPoolScanner = new UrlPoolScanner(IPResolver.urlPool);
+    private static final UrlPoolScanner urlPoolScanner = new UrlPoolScanner(DynamicDNSResolver.urlPool);
 
     public static void execute(String target,Object args) {
         JSONArray ipGroup = urlPoolScanner.getIp();
@@ -33,19 +33,19 @@ public class IpLib extends CommandHelper {
             if (ipGroup.size() == 1){
                 Map.Entry<String, Integer> ip = (Map.Entry<String, Integer>) ipGroup.get(0);
                 logger.info("当前公网IP为["+ip.getKey()+"]");
-                IPResolver.Companion.setLastRecord(ip.getKey());
+                DynamicDNSResolver.Companion.setLastRecord(ip.getKey());
                 if (choosePingIp){
-                    pingIP( IPResolver.Companion.getLastRecord());
+                    pingIP( DynamicDNSResolver.Companion.getLastRecord());
                 }
             }else{
                 logger.info("当前命中目标"+ipGroup.size()+"个,按优先级排列.");
                 for (Object ips : ipGroup) {
                     Map.Entry<String, Integer> ip = (Map.Entry<String, Integer>) ips;
                     logger.info(ip.getKey()+" HITS:"+ip.getValue());
-                    String defaultChooseFirstAddress = IPResolver.config.getProperty("Default-Choose-First-Address");
+                    String defaultChooseFirstAddress = DynamicDNSResolver.config.getProperty("Default-Choose-First-Address");
                     if (Boolean.parseBoolean(defaultChooseFirstAddress)){
                         logger.info("当前公网IP为["+ip.getKey()+"]");
-                        IPResolver.Companion.setLastRecord(ip.getKey());
+                        DynamicDNSResolver.Companion.setLastRecord(ip.getKey());
                     }
                 }
             }

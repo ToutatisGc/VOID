@@ -1,14 +1,17 @@
 package cn.toutatis.xvoid.ddns
 
-import cn.toutatis.xvoid.ddns.PkgInfo.MODULE_NAME
-import cn.toutatis.xvoid.ddns.ip.commands.CommandInterpreter
+import cn.toutatis.xvoid.ddns.commands.CommandInterpreter
+import cn.toutatis.xvoid.ddns.constance.CommonConstance.CMD_SUFFIX
+import cn.toutatis.xvoid.ddns.constance.CommonConstance.MODULE_NAME
+import cn.toutatis.xvoid.ddns.constance.CommonConstance.RELEASE_DIR
 import cn.toutatis.xvoid.toolkit.file.FileToolkit
+import cn.toutatis.xvoid.toolkit.log.LoggerToolkit
+import cn.toutatis.xvoid.toolkit.log.infoWithModule
 import cn.toutatis.xvoid.toolkit.validator.Validator
 import com.alibaba.fastjson.JSON
 import com.alibaba.fastjson.JSONArray
 import com.alibaba.fastjson.JSONObject
 import org.slf4j.Logger
-import org.slf4j.LoggerFactory
 import java.io.*
 import java.net.JarURLConnection
 import java.util.*
@@ -21,49 +24,46 @@ import kotlin.system.exitProcess
 
 /**
  * @author Toutatis_Gc
+ * 形参：args[0]
+ *      True 为剧本模式：TODO
+ *      False 为命令行模式：命令行模式为手动输入命令调用
  * 在此文件运行main方法
  * */
 fun main(args: Array<String>) {
     if (args.size == 1) {
-        IPResolver(args[0].toBoolean())
+        val runType = args[0].uppercase()
+        if ("TRUE" == runType || "FALSE" == runType){
+            DynamicDNSResolver(runType.toBoolean())
+        }else {
+            throw IllegalArgumentException("参数错误")
+        }
     }else{
-        IPResolver(false)
+        DynamicDNSResolver(false)
     }
-}
-
-internal object PkgInfo {
-    const val MODULE_NAME = "VOID-RESOLVE"
 }
 
 /**
  * 主类
- * @param mode true 为指令模式 / false 为命令行模式
+ * @param runMode true 为指令模式 / false 为命令行模式
  * @param params 参数 没有配置文件下可用此方式加入配置
  */
-class IPResolver(mode: Boolean, private val params: Map<String, String>? = null) {
+class DynamicDNSResolver(runMode: Boolean, private val params: Map<String, String>? = null) {
 
     companion object{
 
+        /**
+         * 最后一次解析记录
+         */
         var lastRecord: String? = null
 
-        /*日志*/
-        private val logger: Logger = LoggerFactory.getLogger(IPResolver::class.java)
+        /**
+         * Logger 日志
+         */
+        private val logger: Logger = LoggerToolkit.getLogger(this::class.java)
 
-        /*固定线程池*/
-        private var threadPool: ExecutorService = Executors.newFixedThreadPool(2)
-
-        /*文件工具类*/
-        val fileToolkit = FileToolkit
-
-//        val osTools = OSTools.INSTANCE
-
-        /*释放文件目录*/
-        private const val RELEASE_DIR = "release"
-
-        /*命令库前缀*/
-        private const val CMD_SUFFIX = ".dir"
-
-        /*运行类型是否为jar包*/
+        /**
+         * Run type is jar 运行类型是否为jar包
+         */
         var runTypeIsJar = true
 
         /*配置文件*/
@@ -80,48 +80,71 @@ class IPResolver(mode: Boolean, private val params: Map<String, String>? = null)
 
         var modea: Boolean = false
 
-        fun getFile(filename:String):File{
-            val file:File = if (runTypeIsJar){
-                val runtimePath = fileToolkit.getRuntimePath(true)
+        /**
+         * Thread pool 固定线程池
+         */
+        private var _THREAD_POOL: ExecutorService = Executors.newFixedThreadPool(2)
+
+        /**
+         * Get resource file
+         * 获取资源文件
+         * @param filename 文件名
+         * @return 文件
+         */
+        fun getResourceFile(filename:String):File{
+            val resource = if (runTypeIsJar){
+                val runtimePath = FileToolkit.getRuntimePath(true)
                 File("${runtimePath}/$RELEASE_DIR/${filename}")
             }else{
-                File(fileToolkit.getResourceFile("$RELEASE_DIR/${filename}")!!.toURI())
+                File(FileToolkit.getResourceFile("$RELEASE_DIR/${filename}")!!.toURI())
             }
-            return file
+            return resource
         }
     }
 
+    /**
+     * 初始化
+     * 1.释放资源文件
+     * 2.加载配置
+     */
     init {
-        logger.info("[${MODULE_NAME}]欢迎使用[VOID私转公网云解析工具]")
-        if (!mode) {
-            logger.info("[VOID-RESOLVE]加载中，请稍后...")
+        logger.infoWithModule(MODULE_NAME,"欢迎使用[VOID私转公网云解析工具]")
+        if (!runMode) {
+            logger.infoWithModule(MODULE_NAME,"加载中，请稍后...")
         }
-        this.releaseFiles()
+        this.releaseSupportFiles()
         logger.info("[${MODULE_NAME}]配置文件加载成功")
         this.loadConfig(params)
         logger.info("[${MODULE_NAME}]配置加载成功")
         commandInterpreter = this.loadCommandLibrary()
         logger.info("[${MODULE_NAME}]库加载成功")
-        if (!mode) {
+        if (!runMode) {
             logger.info("[${MODULE_NAME}]输入 help (h) 获取帮助")
             this.run()
         }else{
-            this.auto()
+            this.autoStartRunningPlaybook()
         }
-        modea = mode
+        modea = runMode
 
         Runtime.getRuntime().addShutdownHook(object : Thread() {
             override fun run() {
                 logger.info("[${MODULE_NAME}]正在退出")
-                threadPool.shutdown()
+                _THREAD_POOL.shutdown()
             }
         })
     }
 
-    fun auto(){
-        threadPool = Executors.newSingleThreadScheduledExecutor()
-        (threadPool as ScheduledExecutorService)
-            .scheduleAtFixedRate(this.createCircleTask(), 0L, config.getProperty("Circles-Time").toLong(),TimeUnit.MINUTES)
+    /**
+     * Auto start running playbook
+     * 剧本模式下自动运行剧本
+     */
+    private fun autoStartRunningPlaybook(){
+        // 将线程池转为定时线程
+        _THREAD_POOL = Executors.newSingleThreadScheduledExecutor()
+        val scheduledExecutorService = _THREAD_POOL as ScheduledExecutorService
+        scheduledExecutorService.scheduleAtFixedRate(
+            this.createCircleTask(), 0L, config.getProperty("Circles-Time").toLong(),TimeUnit.MINUTES
+        )
     }
 
     private fun createCircleTask(): Runnable{
@@ -130,10 +153,10 @@ class IPResolver(mode: Boolean, private val params: Map<String, String>? = null)
         }
     }
 
-    fun run(): Unit {
+    fun run() {
         if (statusSign++ == 0){
-            threadPool.execute(this.createCommandScanner())
-            threadPool.shutdown()
+            _THREAD_POOL.execute(this.createCommandScanner())
+            _THREAD_POOL.shutdown()
         }
     }
 
@@ -142,15 +165,15 @@ class IPResolver(mode: Boolean, private val params: Map<String, String>? = null)
         commandInterpreter.execute(command)
     }
 
-    private fun loadCommandLibrary():CommandInterpreter{
+    private fun loadCommandLibrary(): CommandInterpreter {
         val fileList = ArrayList<File>()
-        val libs = getFile("commands")
+        val libs = getResourceFile("commands")
         this.findFiles(fileList,libs)
         val tmpLib = JSONObject(16)
         val keySort = ArrayList<String>(16)
         fileList.forEach {
             logger.info("[${MODULE_NAME}]加载库:${it.name}")
-            val obj: JSONObject = JSON.parseObject(fileToolkit.getFileContent(it))
+            val obj: JSONObject = JSON.parseObject(FileToolkit.getFileContent(it))
             obj.entries.forEach { entry ->
                 val uppercaseKey = entry.key.uppercase()
                 keySort.add(uppercaseKey)
@@ -228,12 +251,12 @@ class IPResolver(mode: Boolean, private val params: Map<String, String>? = null)
         val config: File?
         /*运行在jar中的文件需要另外获取*/
         if (runTypeIsJar){
-            val runtimePath = fileToolkit.getRuntimePath(true)
+            val runtimePath = FileToolkit.getRuntimePath(true)
             urlPool = File("${runtimePath}/$RELEASE_DIR/url-pool.json")
             config = File("${runtimePath}/$RELEASE_DIR/config.properties")
         }else{
-            urlPool =  File(fileToolkit.getResourceFile("$RELEASE_DIR/url-pool.json")!!.toURI())
-            val configFile = fileToolkit.getResourceFile("$RELEASE_DIR/config.properties")
+            urlPool =  File(FileToolkit.getResourceFile("$RELEASE_DIR/url-pool.json")!!.toURI())
+            val configFile = FileToolkit.getResourceFile("$RELEASE_DIR/config.properties")
             config = configFile?.toURI()?.let { File(it) }
         }
         /*加载第三方网址*/
@@ -261,18 +284,18 @@ class IPResolver(mode: Boolean, private val params: Map<String, String>? = null)
     /**
      * 如果运行在jar中，将resources下的资源释放当前目录下
      */
-    private fun releaseFiles(): Unit {
-        val runtimePath = fileToolkit.getRuntimePath(true)
+    private fun releaseSupportFiles() {
+        val runtimePath = FileToolkit.getRuntimePath(true)
         val dirMk = File("$runtimePath/$RELEASE_DIR")
-        if (fileToolkit.getRuntimePath(false).endsWith(".jar")){
+        if (FileToolkit.getRuntimePath(false).endsWith(".jar")){
             if (dirMk.exists() && dirMk.isDirectory){
-                val jarResources = fileToolkit.getJarResource(RELEASE_DIR)
+                val jarResources = FileToolkit.getJarResource(RELEASE_DIR)
                 val openConnection = jarResources!!.openConnection() as JarURLConnection
                 val jarFile = openConnection.jarFile
                 for (innerFile in jarFile.entries()) {
                     val name = innerFile.name
                     if (name.startsWith("$RELEASE_DIR/") && !name.endsWith("/")){
-                        val jarResourcesStream = fileToolkit.getJarResourceAsStream(name)!!
+                        val jarResourcesStream = FileToolkit.getJarResourceAsStream(name)!!
                         val split = name.split("/")
                         var path = runtimePath
                         for (i in split.indices){
@@ -297,7 +320,7 @@ class IPResolver(mode: Boolean, private val params: Map<String, String>? = null)
                 }
             }else{
                 dirMk.mkdir()
-                this.releaseFiles()
+                this.releaseSupportFiles()
             }
         }else{
             runTypeIsJar = false

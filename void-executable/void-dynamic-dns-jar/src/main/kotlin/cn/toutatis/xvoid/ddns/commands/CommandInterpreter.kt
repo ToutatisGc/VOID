@@ -1,7 +1,8 @@
-package cn.toutatis.xvoid.ddns.ip.commands
+package cn.toutatis.xvoid.ddns.commands
 
-import cn.toutatis.xvoid.ddns.IPResolver
-import cn.toutatis.xvoid.ddns.PkgInfo.MODULE_NAME
+import cn.toutatis.xvoid.ddns.DynamicDNSResolver
+import cn.toutatis.xvoid.ddns.constance.CommonConstance.MODULE_NAME
+import cn.toutatis.xvoid.toolkit.log.infoWithModule
 import cn.toutatis.xvoid.toolkit.validator.Validator
 import com.alibaba.fastjson.JSONObject
 import com.alibaba.fastjson.parser.Feature
@@ -79,25 +80,21 @@ class CommandInterpreter(private val commandTable:JSONObject) {
             finalPrintOut("未实现的命令 $head")
         }
     }
-//
-//    fun getNext(command: String){
-//
-//    }
 
     /**
      *
      */
     fun play(playbook: String) {
-        logger.info("[${MODULE_NAME}]加载剧本:${playbook}")
-        val playbook = JSONObject.parseObject(IPResolver.getFile("/playbook/$playbook").readText(Charsets.UTF_8), Feature.OrderedField)
-        playbook.forEach { k, v ->
+        logger.infoWithModule(MODULE_NAME,"加载剧本:${playbook}")
+        val playbookJson = JSONObject.parseObject(DynamicDNSResolver.getResourceFile("/playbook/$playbook").readText(Charsets.UTF_8), Feature.OrderedField)
+        playbookJson.forEach { k, v ->
             v as JSONObject
             val args = v.getString("args")
             var cmd = k
             if (Validator.strNotBlank(args)){
                 cmd+= " $args"
             }
-            IPResolver.commandInterpreter.execute(cmd)
+            DynamicDNSResolver.commandInterpreter.execute(cmd)
         }
     }
 
