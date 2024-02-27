@@ -8,7 +8,6 @@ import okhttp3.*
 import org.slf4j.LoggerFactory
 import java.io.IOException
 import java.net.SocketTimeoutException
-import java.util.*
 import java.util.concurrent.TimeUnit
 import java.util.regex.Matcher
 import java.util.regex.Pattern
@@ -27,11 +26,6 @@ class UrlPoolScanner(private val urlPool:JSONArray) {
          * Http client HTTP请求客户端
          */
         private lateinit var httpClient : OkHttpClient
-
-        /**
-         * Ip Regex IPv4地址正则
-         */
-        const val IP_REGEX = Regex.IPV4_ADDRESS_REGEX
 
         /**
          * Logger 日志
@@ -82,7 +76,7 @@ class UrlPoolScanner(private val urlPool:JSONArray) {
                 override fun onResponse(call: Call, response: Response) {
                     try {
                         val responseBody = response.body.string()
-                        val pattern: Pattern = Pattern.compile(IP_REGEX)
+                        val pattern: Pattern = Pattern.compile(Regex.IPV4_ADDRESS_REGEX)
                         val matcher: Matcher = pattern.matcher(responseBody)
                         if (matcher.find()){
                             val group = matcher.group()
@@ -113,8 +107,8 @@ class UrlPoolScanner(private val urlPool:JSONArray) {
             }
         }
 
-        val list: List<Map.Entry<String, Int>> = ArrayList<Map.Entry<String, Int>>(timesHash.entries)
-        Collections.sort(list) { (_, value0), (_, value1) -> value1.compareTo(value0) }
+        val list = ArrayList<Map.Entry<String, Int>>(timesHash.entries)
+        list.sortWith { (_, value0), (_, value1) -> value1.compareTo(value0) }
         return list
 
     }

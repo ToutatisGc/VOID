@@ -1,16 +1,12 @@
 package cn.toutatis.xvoid.ddns.commands.support
 
 import com.alibaba.fastjson.JSONObject
-import org.slf4j.Logger
-import org.slf4j.LoggerFactory
 import java.util.*
 import java.util.regex.Pattern
 
 open class CommandHelper {
 
     companion object{
-
-        val logger: Logger = LoggerFactory.getLogger("CMD")
 
         @JvmStatic
         fun analysisArgs(args:Any?): JSONObject {

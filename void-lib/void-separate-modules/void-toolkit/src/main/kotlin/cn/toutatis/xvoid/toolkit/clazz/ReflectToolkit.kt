@@ -2,7 +2,9 @@ package cn.toutatis.xvoid.toolkit.clazz
 
 import cn.toutatis.xvoid.common.annotations.database.AssignField
 import cn.toutatis.xvoid.toolkit.formatting.JsonToolkit
+import java.lang.reflect.Field
 import java.lang.reflect.Modifier
+
 
 /**
  * Reflect toolkit
@@ -12,7 +14,7 @@ import java.lang.reflect.Modifier
 object ReflectToolkit {
 
     /**
-     * Convert map to entity
+     * Convert a map to entity
      * 将Map类型对象转换为Java实体类
      * @param T 泛型
      * @param map 需要转换的图
@@ -61,6 +63,51 @@ object ReflectToolkit {
                clazz == Byte::class.java || clazz == Float::class.java ||
                clazz == Double::class.java || clazz == Char::class.java ||
                clazz == Boolean::class.java
+    }
+
+    /**
+     * Get all fields
+     * 获取一个类的所有字段包括父级
+     * @param clazz 类对象
+     * @param includeSuper 包含父级
+     * @return 所有Field字段
+     */
+    @JvmStatic
+    fun getAllFields(clazz: Class<*>,includeSuper:Boolean = true): List<Field> {
+        val fields = ArrayList<Field>()
+
+        // 获取当前类的字段
+        val declaredFields: Array<Field> = clazz.getDeclaredFields()
+        for (field in declaredFields) {
+            fields.add(field)
+        }
+
+        if (!includeSuper) return fields
+
+        // 递归获取父类的字段
+        val superClass = clazz.superclass
+        if (superClass != null) {
+            val superClassFields: List<Field> = getAllFields(superClass)
+            fields.addAll(superClassFields)
+        }
+        return fields
+    }
+
+    /**
+     * Set object field
+     * 设置对象字段
+     * @param obj 对象
+     * @param field 字段
+     * @param value 值
+     */
+    @JvmStatic
+    fun setObjectField(obj: Any, field: Field, value: Any){
+        field.setAccessible(true)
+        try {
+            field.set(obj, value)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
     }
 
 }

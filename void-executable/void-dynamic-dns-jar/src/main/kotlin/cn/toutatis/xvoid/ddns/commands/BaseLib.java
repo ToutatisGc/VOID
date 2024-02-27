@@ -7,7 +7,7 @@ import cn.toutatis.xvoid.toolkit.log.LoggerToolkit;
 import com.alibaba.fastjson.JSONObject;
 import org.slf4j.Logger;
 
-import static cn.toutatis.xvoid.ddns.Meta.MODULE_NAME;
+import static cn.toutatis.xvoid.ddns.constance.CommonConstance.MODULE_NAME;
 
 /**
  * @author Toutatis_Gc

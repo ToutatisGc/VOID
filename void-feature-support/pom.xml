@@ -8,12 +8,11 @@
     <artifactId>void-feature-support</artifactId>
 
     <groupId>cn.toutatis</groupId>
-    <version>0.0.4-ALPHA</version>
+    <version>0.0.5-ALPHA</version>
     <packaging>pom</packaging>
 
     <properties>
         <gpg.name>VOID</gpg.name>
-        <void.version>0.0.0-ALPHA</void.version>
 
         <jdk8.version>1.8</jdk8.version>
         <jdk11.version>11</jdk11.version>
@@ -60,6 +59,7 @@
         <minio.version>8.5.2</minio.version>
         <lombok.version>1.18.28</lombok.version>
         <sqlite.version>3.42.0.0</sqlite.version>
+        <commons-beanutils.version>1.9.4</commons-beanutils.version>
 
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
@@ -245,6 +245,12 @@
                 <groupId>commons-io</groupId>
                 <artifactId>commons-io</artifactId>
                 <version>${commons-io.version}</version>
+                <optional>true</optional>
+            </dependency>
+            <dependency>
+                <groupId>commons-beanutils</groupId>
+                <artifactId>commons-beanutils</artifactId>
+                <version>${commons-beanutils.version}</version>
                 <optional>true</optional>
             </dependency>
             <!--Servlet API支持-->

@@ -7,12 +7,12 @@
     <parent>
         <groupId>cn.toutatis</groupId>
         <artifactId>void-feature-support</artifactId>
-        <version>0.0.4-ALPHA</version>
+        <version>0.0.5-ALPHA</version>
     </parent>
 
     <artifactId>void-lib</artifactId>
     <packaging>pom</packaging>
-    <version>0.0.1-ALPHA</version>
+    <version>0.0.3-ALPHA</version>
 
     <modules>
         <!--公共部分-->

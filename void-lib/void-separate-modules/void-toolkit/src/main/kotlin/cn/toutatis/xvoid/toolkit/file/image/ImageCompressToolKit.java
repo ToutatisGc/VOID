@@ -95,7 +95,7 @@ public class ImageCompressToolKit {
             Iterator<ImageWriter> iter = ImageIO.getImageWriters(type,"jpg");
             if (iter.hasNext()) { writer = iter.next(); }
             if (writer == null) {
-                logger.error("[%s-IMAGE]未找到合适的输入器[%s]".formatted(Meta.MODULE_NAME, fileSuffix));
+                logger.error(String.format("[%s-IMAGE]未找到合适的输入器[%s]",Meta.MODULE_NAME, fileSuffix));
                 return;
             }
             IIOImage iioImage = new IIOImage(bufferedImage, null, null);
@@ -121,7 +121,7 @@ public class ImageCompressToolKit {
                         .collect(Collectors.toList());
         ArrayList<String> filenameList = new ArrayList<>(distinctFileList.size());
         if (distinctFileList.size() > 0){
-            logger.info("[%s]待生成 ".formatted(Meta.MODULE_NAME)+distinctFileList.size()+ " 个图像资源.");
+            logger.info(String.format("[%s]待生成 ",Meta.MODULE_NAME)+distinctFileList.size()+ " 个图像资源.");
             Integer zipTimes = config.getZipTimes();
             String lastSaveDir = config.getLastSaveDir();
             if (Validator.strNotBlank(lastSaveDir)){
@@ -130,14 +130,14 @@ public class ImageCompressToolKit {
                     file.mkdir();
                 }
                 if (file.exists() && file.isDirectory()){
-                    logger.info("[%s]目标地址校验成功.[√]".formatted(Meta.MODULE_NAME));
+                    logger.info(String.format("[%s]目标地址校验成功.[√]",Meta.MODULE_NAME));
                 }else {
-                    String error = "[%s]保存目录错误.[目标地址不是目录×]".formatted(Meta.MODULE_NAME);
+                    String error = String.format("[%s]保存目录错误.[目标地址不是目录×]",Meta.MODULE_NAME);
                     logger.error(error);
                     throw new FileNotFoundException(error);
                 }
             }else {
-                logger.info("[%s]保存目录错误.[空文件夹×]".formatted(Meta.MODULE_NAME));
+                logger.info(String.format("[%s]保存目录错误.[空文件夹×]",Meta.MODULE_NAME));
                 throw new FileNotFoundException("");
             }
             AtomicInteger count = new AtomicInteger();

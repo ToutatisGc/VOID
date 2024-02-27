@@ -65,7 +65,6 @@ public class DesensitizationToolkit {
      */
     public static Map<String,Object> hiddenInfo(Map<String,Object> map ,String... fields){
         if (map == null || map.isEmpty()){ return map; }
-        if (fields.length == 0){return map;}
         for (String field : fields) {
             if (map.containsKey(field)){
                 Class<?> fieldClass = map.get(field).getClass();
@@ -76,7 +75,7 @@ public class DesensitizationToolkit {
                 String hiddenInfo = hiddenInfo(String.valueOf(map.get(field)));
                 map.put(field,hiddenInfo);
             }else {
-                throw new IllegalArgumentException(LoggerToolkit.infoWithModule(Meta.MODULE_NAME, "脱敏map不存在[%s]字段".formatted(field)));
+                throw new IllegalArgumentException(LoggerToolkit.infoWithModule(Meta.MODULE_NAME, String.format("脱敏map不存在[%s]字段",field)));
             }
         }
         return map;
