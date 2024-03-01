@@ -5,11 +5,12 @@
     <parent>
         <groupId>cn.toutatis</groupId>
         <artifactId>void-separate-modules</artifactId>
-        <version>0.0.1-ALPHA</version>
+        <version>0.0.4-ALPHA</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>void-sql-builder</artifactId>
+    <version>0.0.0-ALPHA</version>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
@@ -18,11 +19,6 @@
     </properties>
 
     <dependencies>
-        <dependency>
-            <groupId>cn.toutatis</groupId>
-            <artifactId>void-toolkit</artifactId>
-            <version>0.0.1-ALPHA</version>
-        </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter</artifactId>
@@ -50,6 +46,12 @@
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>cn.toutatis</groupId>
+            <artifactId>void-toolkit</artifactId>
+            <version>${void-toolkit.version}</version>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
 

@@ -9,7 +9,6 @@ import cn.toutatis.xvoid.sqlite.SQLiteShell;
 import cn.toutatis.xvoid.toolkit.clazz.ReflectToolkit;
 import cn.toutatis.xvoid.toolkit.log.LoggerToolkit;
 import org.slf4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -43,13 +42,21 @@ public class VoidContextConfiguration {
     public VoidSpringContextVariables exposeContextVariables() throws Exception {
         DQLBuilder<SqliteVoidContext> dictDQLBuilder = new DQLBuilder<>(SqliteVoidContext.class,true);
         dictDQLBuilder.eq(SqliteVoidContext::getMchId, StandardFields.VOID_BUSINESS_DEFAULT_CREATOR);
-        List<Map<String, Object>> listMap = sqLiteShell.selectListMap(dictDQLBuilder);
-        return ReflectToolkit.convertMapToEntity(
-                listMap.stream().collect(Collectors.toMap(
-                        map -> (String) map.get(SqliteVoidContext.KEY_FIELD),
-                        map -> map.get(SqliteVoidContext.VALUE_FIELD),
-                        (existingValue, newValue) -> { return existingValue; }
-                )), VoidSpringContextVariables.class
-        );
+        try {
+            List<Map<String, Object>> listMap = sqLiteShell.selectListMap(dictDQLBuilder);
+            VoidSpringContextVariables voidSpringContextVariables = ReflectToolkit.convertMapToEntity(
+                    listMap.stream().collect(Collectors.toMap(
+                            map -> (String) map.get(SqliteVoidContext.KEY_FIELD),
+                            map -> map.get(SqliteVoidContext.VALUE_FIELD),
+                            (existingValue, newValue) -> {
+                                return existingValue;
+                            }
+                    )), VoidSpringContextVariables.class
+            );
+            return voidSpringContextVariables;
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return null;
     }
 }

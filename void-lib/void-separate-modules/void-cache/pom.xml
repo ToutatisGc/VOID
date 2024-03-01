@@ -5,7 +5,7 @@
     <parent>
         <artifactId>void-separate-modules</artifactId>
         <groupId>cn.toutatis</groupId>
-        <version>0.0.0-ALPHA</version>
+        <version>0.0.3-ALPHA</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 

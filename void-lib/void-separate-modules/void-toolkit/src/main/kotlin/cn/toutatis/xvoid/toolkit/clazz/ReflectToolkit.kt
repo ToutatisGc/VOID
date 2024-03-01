@@ -14,6 +14,12 @@ import java.lang.reflect.Modifier
 object ReflectToolkit {
 
     /**
+     * Getter描述符
+     */
+    const val IS_FIELD_LAMBDA = "is"
+    const val GET_FIELD_LAMBDA = "get"
+
+    /**
      * Convert a map to entity
      * 将Map类型对象转换为Java实体类
      * @param T 泛型
@@ -108,6 +114,27 @@ object ReflectToolkit {
         } catch (e: Exception) {
             e.printStackTrace()
         }
+    }
+
+    /**
+     * Convert getter to field name
+     * 将getter方法名转换为字段名
+     * @param getterName getter方法名
+     * @return 字段名
+     */
+    @JvmStatic
+    fun convertGetterToFieldName(getterName: String): String {
+        // 判断getter方法是否以"get"或"is"开头
+        val fieldName = if (getterName.startsWith("get")) {
+            // 获取字段名的部分（去掉"get"后的字符串）
+            getterName.substring(3)
+        } else if (getterName.startsWith("is")) {
+            // 获取字段名的部分（去掉"is"后的字符串）
+            getterName.substring(2)
+        }else{
+            throw IllegalArgumentException("The getter method name must start with \"get\" or \"is\"")
+        }
+        return fieldName[0].lowercaseChar().toString() + fieldName.substring(1)
     }
 
 }

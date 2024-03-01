@@ -45,7 +45,7 @@
         <junit.version>4.13.1</junit.version>
         <logback.version>1.2.11</logback.version>
         <aspectj.version>1.9.9.1</aspectj.version>
-        <ehcache.version>3.10.0</ehcache.version>
+        <ehcache.version>3.10.8</ehcache.version>
         <cacheapi.version>1.1.0</cacheapi.version>
         <mybatis.version>3.5.2</mybatis.version>
         <swagger.version>1.5.22</swagger.version>

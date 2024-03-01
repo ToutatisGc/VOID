@@ -29,7 +29,7 @@
             <dependency>
                 <groupId>cn.toutatis</groupId>
                 <artifactId>void-feature-support</artifactId>
-                <version>0.0.0-ALPHA</version>
+                <version>0.0.5-ALPHA</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
@@ -41,7 +41,7 @@
         <dependency>
             <artifactId>void-kotlin-runtime-support</artifactId>
             <groupId>cn.toutatis</groupId>
-            <version>${kotlin.version}</version>
+            <version>${kotlin.version}-1</version>
             <type>pom</type>
         </dependency>
     </dependencies>

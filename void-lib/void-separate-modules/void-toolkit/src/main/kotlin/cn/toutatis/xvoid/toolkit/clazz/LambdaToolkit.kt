@@ -2,9 +2,6 @@ package cn.toutatis.xvoid.toolkit.clazz
 
 import cn.toutatis.xvoid.common.annotations.database.AssignField
 import cn.toutatis.xvoid.toolkit.validator.Validator
-import kotlin.Throws
-import java.lang.Exception
-import java.lang.IllegalArgumentException
 import java.lang.invoke.SerializedLambda
 
 /**
@@ -12,7 +9,7 @@ import java.lang.invoke.SerializedLambda
  */
 object LambdaToolkit {
 
-    private const val GET_FIELD_LAMBDA = "get"
+
 
     private val CACHE:HashMap<String,String> = HashMap(128)
 
@@ -42,14 +39,17 @@ object LambdaToolkit {
     @JvmStatic
     fun getFieldName(serializedLambda: SerializedLambda): String {
         val implMethodName = serializedLambda.implMethodName
-        require(implMethodName.startsWith(GET_FIELD_LAMBDA)) { "非GET参数" }
+        require(
+            implMethodName.startsWith(ReflectToolkit.GET_FIELD_LAMBDA) ||
+                implMethodName.startsWith(ReflectToolkit.IS_FIELD_LAMBDA)
+        ) { "非Getter字段" }
         val implClassName = serializedLambda.implClass
         val keyName = "${implClassName}:${implMethodName}"
         if (CACHE.containsKey(keyName)){
             return CACHE[keyName]!!
         }
         val implClass = Class.forName(implClassName.replace("/","."))
-        val uppercaseName = implMethodName.substring(3)
+        val uppercaseName = implMethodName.substring(if(implMethodName.startsWith(ReflectToolkit.GET_FIELD_LAMBDA)) 3 else 2)
         val firstChar = Character.toLowerCase(uppercaseName[0])
         val lowercaseFieldName = firstChar.toString() + uppercaseName.substring(1)
         val fieldName:String = try {

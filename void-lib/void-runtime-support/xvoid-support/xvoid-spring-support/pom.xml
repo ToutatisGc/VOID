@@ -34,7 +34,7 @@
         <dependency>
             <groupId>cn.toutatis</groupId>
             <artifactId>void-toolkit</artifactId>
-            <version>0.0.0-ALPHA</version>
+            <version>0.0.2-ALPHA</version>
             <scope>compile</scope>
         </dependency>
         <!--SQLite依赖-->
