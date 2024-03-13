@@ -1,5 +1,7 @@
 package cn.toutatis.xvoid.structure.tree;
 
+import cn.toutatis.xvoid.structure.base.Node;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -7,7 +9,7 @@ import java.util.Map;
  * 字典树
  * @param <T>
  */
-public class TrieNode<T> {
+public class TrieNode<T> implements Node<T> {
 
     /**
      * 子节点
