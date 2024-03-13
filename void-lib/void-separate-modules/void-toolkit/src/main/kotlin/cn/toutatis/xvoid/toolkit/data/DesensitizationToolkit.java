@@ -116,7 +116,7 @@ public class DesensitizationToolkit {
             if (!isEvenLengthStr) {startLength--;}
             int i = 0;
             while (i < startLength) { sb.append(customSymbol);i++; }
-            return trimInfo.substring(0, hiddenLength) + sb.toString() + trimInfo.substring((infoLength-hiddenLength)+(isEvenLengthStr?0:-1),infoLength);
+            return trimInfo.substring(0, hiddenLength) + sb + trimInfo.substring((infoLength-hiddenLength)+(isEvenLengthStr?0:-1),infoLength);
         }
     }
 

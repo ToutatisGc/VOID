@@ -22,7 +22,7 @@
         <dependency>
             <groupId>cn.toutatis</groupId>
             <artifactId>void-common-constants</artifactId>
-            <version>0.0.0-ALPHA</version>
+            <version>0.0.1-ALPHA</version>
         </dependency>
 
         <dependency>
@@ -129,6 +129,12 @@
         <dependency>
             <groupId>org.jetbrains.kotlin</groupId>
             <artifactId>kotlin-stdlib</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>cn.toutatis</groupId>
+            <artifactId>void-data-structure</artifactId>
+            <version>0.0.0-ALPHA</version>
+            <scope>compile</scope>
         </dependency>
 
     </dependencies>

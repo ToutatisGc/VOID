@@ -9,8 +9,6 @@ import java.lang.invoke.SerializedLambda
  */
 object LambdaToolkit {
 
-
-
     private val CACHE:HashMap<String,String> = HashMap(128)
 
     /**

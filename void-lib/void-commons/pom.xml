@@ -5,7 +5,7 @@
     <parent>
         <artifactId>void-lib</artifactId>
         <groupId>cn.toutatis</groupId>
-        <version>0.0.1-ALPHA</version>
+        <version>0.0.3-ALPHA</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <packaging>pom</packaging>
@@ -13,8 +13,8 @@
     <artifactId>void-commons</artifactId>
 
     <properties>
-        <maven.compiler.source>${default-jdk.version}</maven.compiler.source>
-        <maven.compiler.target>${default-jdk.version}</maven.compiler.target>
+        <maven.compiler.source>${jdk8.version}</maven.compiler.source>
+        <maven.compiler.target>${jdk8.version}</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
@@ -29,6 +29,8 @@
 
 
     <modules>
+        <!-- 数据结构构件 -->
+        <module>void-data-structure</module>
         <!-- 通用常量 -->
         <module>void-common-constants</module>
         <!-- 标准使用实体 -->

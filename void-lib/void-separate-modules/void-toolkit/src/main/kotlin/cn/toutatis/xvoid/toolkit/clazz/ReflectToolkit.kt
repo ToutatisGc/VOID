@@ -125,12 +125,12 @@ object ReflectToolkit {
     @JvmStatic
     fun convertGetterToFieldName(getterName: String): String {
         // 判断getter方法是否以"get"或"is"开头
-        val fieldName = if (getterName.startsWith("get")) {
+        val fieldName = if (getterName.startsWith(GET_FIELD_LAMBDA)) {
             // 获取字段名的部分（去掉"get"后的字符串）
-            getterName.substring(3)
-        } else if (getterName.startsWith("is")) {
+            getterName.substring(GET_FIELD_LAMBDA.length)
+        } else if (getterName.startsWith(IS_FIELD_LAMBDA)) {
             // 获取字段名的部分（去掉"is"后的字符串）
-            getterName.substring(2)
+            getterName.substring(IS_FIELD_LAMBDA.length)
         }else{
             throw IllegalArgumentException("The getter method name must start with \"get\" or \"is\"")
         }
