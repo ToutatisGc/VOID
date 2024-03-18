@@ -1,5 +1,0 @@
-使用说明：
-本工具作用在于将宽带运营商分配的私网申请转为公网后IP地址经常变动的情况
-1.阿里云https://www.aliyun.com/activity/new?userCode=6g4ylfua 购买域名后添加解析记录并备注_CROSS_
-2.运行后将release/config.properties配置补充完整
-3.help获取帮助

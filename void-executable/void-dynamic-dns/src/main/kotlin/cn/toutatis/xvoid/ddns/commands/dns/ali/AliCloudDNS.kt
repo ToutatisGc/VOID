@@ -1,7 +1,7 @@
 package cn.toutatis.xvoid.ddns.commands.dns.ali
 
 import cn.toutatis.xvoid.ddns.DynamicDNSResolver
-import cn.toutatis.xvoid.ddns.DynamicDNSResolver.Companion.commandInterpreter
+import cn.toutatis.xvoid.ddns.DynamicDNSResolver.Companion.COMMAND_INTERPRETER
 import cn.toutatis.xvoid.ddns.DynamicDNSResolver.Companion.config
 import cn.toutatis.xvoid.ddns.constance.CommonConstance.MODULE_NAME
 import cn.toutatis.xvoid.toolkit.validator.Validator
@@ -122,7 +122,7 @@ class AliCloudDNS {
                     }
                     updateDomainRecordRequest.value = lastRecord
                 }else{
-                    commandInterpreter.execute("scan")
+                    COMMAND_INTERPRETER.execute("scan")
                     this.modifyOneRecord(args)
                     return
                 }

@@ -17,8 +17,7 @@ public class BaseLib extends CommandHelper implements BaseCommand {
     private final static Logger logger = LoggerToolkit.getLogger(BaseLib.class);
 
     public static void exit(String target,Object args){
-        boolean modea = DynamicDNSResolver.Companion.getModea();
-        if (!modea){
+        if (DynamicDNSResolver.Companion.getModeCache()){
             System.exit(0);
         }else {
             logger.error("["+MODULE_NAME+"]指令模式禁止退出");
@@ -26,11 +25,12 @@ public class BaseLib extends CommandHelper implements BaseCommand {
     }
 
     public static void help(String target,Object args){
-        JSONObject commandTable = DynamicDNSResolver.commandInterpreter.getCommandTable();
+        JSONObject commandTable = DynamicDNSResolver.COMMAND_INTERPRETER.getCommandTable();
         commandTable.forEach((key, value) -> {
+            System.out.println("---------------------------");
             JSONObject obj = commandTable.getJSONObject(key);
             if ("command".equals(obj.getString("type"))){
-                logger.info("命令:"+key+"\t"+obj.getString("description"));
+                System.out.println("命令:"+key+"\t"+obj.getString("description"));
                 if (obj.containsKey("args")){
                     JSONObject innerArgs = obj.getJSONObject("args");
                     innerArgs.forEach((akey,avalue) ->{
@@ -43,7 +43,7 @@ public class BaseLib extends CommandHelper implements BaseCommand {
                         }
                         sb.append(" ").append(arg.getString("fullName"));
                         sb.append(" ").append(arg.getString("description"));
-                        logger.info(sb.toString());
+                        System.out.println(sb);
                     });
                 }
             }

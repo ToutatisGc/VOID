@@ -94,7 +94,7 @@ class CommandInterpreter(private val commandTable:JSONObject) {
             if (Validator.strNotBlank(args)){
                 cmd+= " $args"
             }
-            DynamicDNSResolver.commandInterpreter.execute(cmd)
+            DynamicDNSResolver.COMMAND_INTERPRETER.execute(cmd)
         }
     }
 
