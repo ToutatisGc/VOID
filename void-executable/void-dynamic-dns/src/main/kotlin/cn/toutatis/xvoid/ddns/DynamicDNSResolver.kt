@@ -306,7 +306,7 @@ class DynamicDNSResolver(runMode: Boolean, private val params: Map<String, Strin
         /*运行在jar中的文件需要另外获取*/
         if (runTypeIsJar){
             val runtimePath = FileToolkit.getRuntimePath(true)
-            urlPool = File("$runtimePath$SLASH$RELEASE_DIR$SLASH")
+            urlPool = File("$runtimePath$SLASH$RELEASE_DIR$SLASH$THIRD_PARTY_URL_POOL_FILE_NAME")
             config = File("$runtimePath$SLASH$RELEASE_DIR$SLASH$CONFIG_FILE_NAME")
         }else{
             urlPool =  File(FileToolkit.getResourceFile("$RELEASE_DIR$SLASH$THIRD_PARTY_URL_POOL_FILE_NAME")!!.toURI())
@@ -314,7 +314,7 @@ class DynamicDNSResolver(runMode: Boolean, private val params: Map<String, Strin
             config = configFile?.toURI()?.let { File(it) }
         }
         /*加载第三方网址*/
-        Companion.urlPool = JSON.parseArray( FileToolkit.getFileContent(urlPool))
+        Companion.urlPool = JSON.parseArray(FileToolkit.getFileContent(urlPool))
         /*加载配置文件*/
         val properties = Properties()
         config?.let { if (it.exists()){ properties.load(FileInputStream(it)) } }

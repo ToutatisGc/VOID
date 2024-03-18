@@ -10,6 +10,7 @@ import com.aliyun.alidns20150109.Client
 import com.aliyun.alidns20150109.models.DescribeDomainRecordInfoRequest
 import com.aliyun.alidns20150109.models.DescribeDomainRecordsRequest
 import com.aliyun.alidns20150109.models.UpdateDomainRecordRequest
+import com.aliyun.tea.TeaException
 import com.aliyun.teaopenapi.models.Config
 import org.slf4j.LoggerFactory
 
@@ -44,22 +45,31 @@ class AliCloudDNS {
         if (Validator.strNotBlank(domainName)){
             val describeDomainRecordsRequest = DescribeDomainRecordsRequest()
             describeDomainRecordsRequest.domainName = domainName
-            val describeDomainRecords = client.describeDomainRecords(describeDomainRecordsRequest)
-            val domainRecords = describeDomainRecords.body.getDomainRecords()
-            val size = domainRecords.record.size
-            /*{"RR":"minecraft","rR":"minecraft","line":"default","weight":1,"type":"A","TTL":600,"tTL":600,
-            "recordId":"735497802049472512","domainName":"xvoid.cn","locked":false,"value":"110.177.180.111","status":"ENABLE"}*/
-            for (index in 0 until size){
-                val record = domainRecords.record[index]
-                val aliCloudDnsObj = AliCloudDnsObj(record.recordId,record.RR,record.domainName,record.value,record.type,record.remark)
-                if ("_CROSS_" == record.remark){
-                    lastRequestRecords[index+1] = aliCloudDnsObj
-                }else if (args.getBooleanValue("a")){
-                    lastRequestRecords[index+1] = aliCloudDnsObj
+            try {
+                val describeDomainRecords = client.describeDomainRecords(describeDomainRecordsRequest)
+                val domainRecords = describeDomainRecords.body.getDomainRecords()
+                val size = domainRecords.record.size
+                /*{"RR":"minecraft","rR":"minecraft","line":"default","weight":1,"type":"A","TTL":600,"tTL":600,
+                "recordId":"735497802049472512","domainName":"xvoid.cn","locked":false,"value":"110.177.180.111","status":"ENABLE"}*/
+                for (index in 0 until size){
+                    val record = domainRecords.record[index]
+                    val aliCloudDnsObj = AliCloudDnsObj(record.recordId,record.RR,record.domainName,record.value,record.type,record.remark)
+                    if ("_CROSS_" == record.remark){
+                        lastRequestRecords[index+1] = aliCloudDnsObj
+                    }else if (args.getBooleanValue("a")){
+                        lastRequestRecords[index+1] = aliCloudDnsObj
+                    }
+                }
+                alreadyCheck = domainName
+                this.getLastRecords()
+            }catch (e: TeaException){
+                val message = e.message
+                if (message.contains("Specified access key is not found")){
+                    logger.error("请检查配置[Ali-Access-Key-Id]和[ALi-Access-Key-Secret]是否正确.")
+                }else{
+                    logger.error("发生错误: $message")
                 }
             }
-            alreadyCheck = domainName
-            this.getLastRecords()
         }else{
             logger.info("必要配置[Resolve-Domain]不存在")
         }

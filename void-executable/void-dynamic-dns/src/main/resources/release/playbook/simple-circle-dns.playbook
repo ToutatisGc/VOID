@@ -1,13 +1,22 @@
 {
     "NAME":"自动执行解析域名到公有云",
     "TIMER": {
-        "INTERVAL": 1,
+        "INTERVAL": 60,
         "DELAY": 0,
     },
     "TASKS":[
         {
-            "NAME":"解析公网IP",
+            "NAME":"解析公网IP到缓存",
             "COMMAND":"SCAN"
+        },
+        {
+            "NAME":"获取DNS解析列表",
+            "COMMAND":"DNS"
+        },
+        {
+            "NAME":"解析动态IP到DNS云解析",
+            "COMMAND":"UPDNS",
+            "ARGS": "-s 0"
         }
     ]
 }
