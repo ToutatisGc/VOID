@@ -199,6 +199,15 @@ object FileToolkit {
         return file.exists()
     }
 
+    @JvmStatic
+    fun readFileLines(file: File): List<String> {
+        return if (file.exists()){
+            file.readLines()
+        }else{
+            throw FileNotFoundException("文件不存在")
+        }
+    }
+
     /**
      * Find file in possible location
      * 寻找文件可能存在的位置

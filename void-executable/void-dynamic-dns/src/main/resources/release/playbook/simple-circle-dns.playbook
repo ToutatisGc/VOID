@@ -1,0 +1,13 @@
+{
+    "NAME":"自动执行解析域名到公有云",
+    "TIMER": {
+        "INTERVAL": 1,
+        "DELAY": 0,
+    },
+    "TASKS":[
+        {
+            "NAME":"解析公网IP",
+            "COMMAND":"SCAN"
+        }
+    ]
+}

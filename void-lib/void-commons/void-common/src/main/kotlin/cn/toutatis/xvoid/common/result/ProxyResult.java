@@ -219,15 +219,17 @@ public class ProxyResult extends AbstractResult implements Result {
      * @param key 数据键
      * @param value 数据值
      */
+    @SuppressWarnings("unchecked")
     public void putData(String key, Object value){
         if (data == null){
             JSONObject data = new JSONObject();
             data.put(key, value);
+            this.data = data;
         }else if (Map.class.isAssignableFrom(data.getClass())){
             Map<String,Object> data =(Map<String,Object>) this.data;
             data.put(key, value);
         }else {
-            throw new IllegalArgumentException("[%s-DATA]该类型并不是Map.class的子类,无法put数据.".formatted(Meta.MODULE_NAME));
+            throw new IllegalArgumentException(String.format("[%s-DATA]该类型并不是Map.class的子类,无法put数据.",Meta.MODULE_NAME));
         }
         this.alreadyEdited = true;
         setContent(data);

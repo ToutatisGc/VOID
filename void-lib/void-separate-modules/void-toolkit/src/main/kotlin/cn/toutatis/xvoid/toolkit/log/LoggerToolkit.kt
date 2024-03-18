@@ -34,7 +34,7 @@ object LoggerToolkit {
      */
     @JvmStatic
     fun infoWithModule(module:String, message:String): String{
-        return "[$module] $message"
+        return "[$module]$message"
     }
 
     /**

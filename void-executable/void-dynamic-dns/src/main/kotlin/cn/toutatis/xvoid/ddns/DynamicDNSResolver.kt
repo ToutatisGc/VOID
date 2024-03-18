@@ -1,13 +1,21 @@
 package cn.toutatis.xvoid.ddns
 
 import cn.toutatis.xvoid.common.standard.StringPool
+import cn.toutatis.xvoid.common.standard.StringPool.SLASH
 import cn.toutatis.xvoid.ddns.Meta.Companion.MODULE_NAME
 import cn.toutatis.xvoid.ddns.commands.CommandInterpreter
+import cn.toutatis.xvoid.ddns.constance.CommonConstance
 import cn.toutatis.xvoid.ddns.constance.CommonConstance.CMD_SUFFIX
+import cn.toutatis.xvoid.ddns.constance.CommonConstance.CONFIG_FILE_NAME
 import cn.toutatis.xvoid.ddns.constance.CommonConstance.RELEASE_DIR
+import cn.toutatis.xvoid.ddns.constance.CommonConstance.THIRD_PARTY_URL_POOL_FILE_NAME
 import cn.toutatis.xvoid.ddns.constance.LibKeys
+import cn.toutatis.xvoid.ddns.constance.ParamConstance.ALI_ACCESS_KEY_ID_PARAM
+import cn.toutatis.xvoid.ddns.constance.ParamConstance.ALI_ACCESS_KEY_SECRET_PARAM
+import cn.toutatis.xvoid.ddns.constance.ParamConstance.RESOLVE_DOMAIN_PARAM
 import cn.toutatis.xvoid.toolkit.file.FileToolkit
 import cn.toutatis.xvoid.toolkit.log.LoggerToolkit
+import cn.toutatis.xvoid.toolkit.log.errorWithModule
 import cn.toutatis.xvoid.toolkit.log.infoWithModule
 import cn.toutatis.xvoid.toolkit.validator.Validator
 import com.alibaba.fastjson.JSON
@@ -54,10 +62,16 @@ fun main(args: Array<String>) {
  */
 class DynamicDNSResolver(runMode: Boolean, private val params: Map<String, String?>? = null) {
 
-    companion object{
+    /*第一次运行释放文件夹*/
+    private var firstReleaseFolder = false
 
-        /*Logger 日志*/
-        private val LOGGER: Logger = LoggerToolkit.getLogger(this::class.java)
+    /*Logger 日志*/
+    private val logger: Logger = LoggerToolkit.getLogger(this::class.java)
+
+    /*运行状态*/
+    private var statusSign = 0
+
+    companion object{
 
         /*命令解释器*/
         lateinit var COMMAND_INTERPRETER: CommandInterpreter
@@ -65,18 +79,16 @@ class DynamicDNSResolver(runMode: Boolean, private val params: Map<String, Strin
         /*最后一次解析记录*/
         var lastRecord: String? = null
 
-        /*运行类型是否为jar包*/
-        var runTypeIsJar = true
-
         /*配置文件*/
         lateinit var config : Properties
 
         /*第三方网站池*/
         lateinit var urlPool : JSONArray
 
-        /*运行状态*/
-        var statusSign = 0
+        /*运行类型是否为jar包*/
+        private var runTypeIsJar = true
 
+        /*运行模式和缓存*/
         var modeCache: Boolean = false
 
         /**
@@ -93,13 +105,24 @@ class DynamicDNSResolver(runMode: Boolean, private val params: Map<String, Strin
         fun getResourceFile(filename:String):File{
             val resource = if (runTypeIsJar){
                 val runtimePath = FileToolkit.getRuntimePath(true)
-                File("${runtimePath}/$RELEASE_DIR/${filename}")
+                File("${runtimePath}$SLASH$RELEASE_DIR$SLASH${filename}")
             }else{
-                File(FileToolkit.getResourceFile("$RELEASE_DIR/${filename}")!!.toURI())
+                val file = FileToolkit.getResourceFile("$RELEASE_DIR$SLASH${filename}")
+                    ?.toURI()?.let { File(it) } ?: throw FileNotFoundException("找不到文件 $filename")
+                file
             }
             return resource
         }
 
+        /**
+         * 获取参数
+         *
+         * @param T 参数类型泛型
+         * @param list 参数列表
+         * @param index 参数位置
+         * @param type 参数类型
+         * @return 参数
+         */
         fun <T> getArg(list : List<String>,index: Int,type:Class<T>) : Any? {
             val hasIndex = list.size > index && list[index].isNotEmpty()
             when (type){
@@ -122,27 +145,33 @@ class DynamicDNSResolver(runMode: Boolean, private val params: Map<String, Strin
      * 2.加载配置
      */
     init {
-        LOGGER.infoWithModule(MODULE_NAME,"欢迎使用[VOID私转公网云解析工具]")
+        logger.infoWithModule(MODULE_NAME,"欢迎使用[VOID动态IP解析工具]")
         if (!runMode) {
-            LOGGER.infoWithModule(MODULE_NAME,"加载中，请稍后...")
+            logger.infoWithModule(MODULE_NAME,"加载中，请稍后...")
         }
+        // 释放或加载资源文件
         this.releaseSupportFiles()
-        LOGGER.info("[${MODULE_NAME}]配置文件加载成功")
+        logger.info("[${MODULE_NAME}]配置文件加载成功")
         this.loadConfig(params)
-        LOGGER.info("[${MODULE_NAME}]配置加载成功")
+        logger.info("[${MODULE_NAME}]配置加载成功")
         COMMAND_INTERPRETER = this.loadCommandLibrary()
-        LOGGER.info("[${MODULE_NAME}]库加载成功")
+        logger.info("[${MODULE_NAME}]库加载成功")
         if (!runMode) {
-            LOGGER.info("[${MODULE_NAME}]输入 help (h) 获取帮助")
+            logger.info("[${MODULE_NAME}]输入 help (h) 获取帮助")
             this.run()
         }else{
-            this.autoStartRunningPlaybook()
+            val playbook = config.getProperty(LibKeys.PLAYBOOK)
+            if (Validator.strNotBlank(playbook)){
+                this.autoStartRunningPlaybook(playbook)
+            }else{
+                logger.debug("[${MODULE_NAME}]未配置剧本，请自行继承功能.")
+            }
         }
         modeCache = runMode
 
         Runtime.getRuntime().addShutdownHook(object : Thread() {
             override fun run() {
-                LOGGER.info("[${MODULE_NAME}]正在退出")
+                logger.info("[${MODULE_NAME}]正在退出")
                 _THREAD_POOL.shutdown()
             }
         })
@@ -152,19 +181,32 @@ class DynamicDNSResolver(runMode: Boolean, private val params: Map<String, Strin
      * Auto start running playbook
      * 剧本模式下自动运行剧本
      */
-    private fun autoStartRunningPlaybook(){
-        // 将线程池转为定时线程
-        _THREAD_POOL = Executors.newSingleThreadScheduledExecutor()
-        val scheduledExecutorService = _THREAD_POOL as ScheduledExecutorService
-        scheduledExecutorService.scheduleAtFixedRate(
-            this.createCircleTask(), 0L, config.getProperty("Circles-Time").toLong(),TimeUnit.MINUTES
-        )
-    }
-
-    private fun createCircleTask(): Runnable{
-        return Runnable {
-            COMMAND_INTERPRETER.play("simple-auto-resolve.playbook")
+    private fun autoStartRunningPlaybook(playbook: String){
+        val playbookInfo = COMMAND_INTERPRETER.getPlaybookInfo(playbook)
+        if (playbookInfo != null){
+            // 将线程池转为定时线程
+            _THREAD_POOL = Executors.newSingleThreadScheduledExecutor()
+            val scheduledExecutorService = _THREAD_POOL as ScheduledExecutorService
+            val playTimerConfig = playbookInfo.getJSONObject(LibKeys.PLAYBOOK_TIMER)
+            val interval:Int
+            val delay:Int
+            if (playTimerConfig != null){
+                interval = playTimerConfig.getOrDefault(LibKeys.PLAYBOOK_TIMER_INTERVAL,CommonConstance.PLAYBOOK_TIMER_INTERVAL_DEFAULT) as Int
+                delay = playTimerConfig.getOrDefault(LibKeys.PLAYBOOK_TIMER_DELAY,CommonConstance.PLAYBOOK_TIMER_DELAY_DEFAULT) as Int
+            }else{
+                interval = CommonConstance.PLAYBOOK_TIMER_INTERVAL_DEFAULT
+                delay = CommonConstance.PLAYBOOK_TIMER_DELAY_DEFAULT
+            }
+            playTimerConfig[LibKeys.PLAYBOOK_TIMER_INTERVAL] = interval
+            playTimerConfig[LibKeys.PLAYBOOK_TIMER_DELAY] = delay
+            val task = Runnable { COMMAND_INTERPRETER.play(playbook,playbookInfo) }
+            logger.infoWithModule(MODULE_NAME,"启动剧本定时器，剧本[$playbook]将每[${interval}]分钟执行一次.")
+            scheduledExecutorService.scheduleAtFixedRate(task, delay.toLong(), interval.toLong(), TimeUnit.MINUTES)
+        }else{
+            logger.errorWithModule(MODULE_NAME,"未找到剧本[$playbook],即将退出")
+            exitProcess(-1)
         }
+
     }
 
     private fun run() {
@@ -186,7 +228,7 @@ class DynamicDNSResolver(runMode: Boolean, private val params: Map<String, Strin
         val tmpLib = JSONObject(16)
         val keySort = ArrayList<String>(16)
         fileList.forEach {
-            LOGGER.info("[${MODULE_NAME}]加载库:${it.name}")
+            logger.info("[${MODULE_NAME}]加载库:${it.name}")
             val obj: JSONObject = JSON.parseObject(FileToolkit.getFileContent(it))
             obj.entries.forEach { entry ->
                 val uppercaseKey = entry.key.uppercase()
@@ -194,14 +236,14 @@ class DynamicDNSResolver(runMode: Boolean, private val params: Map<String, Strin
                 if (!tmpLib.containsKey(uppercaseKey)){
                     tmpLib[uppercaseKey] = entry.value
                 }else{
-                    LOGGER.warn("[${MODULE_NAME}]已存在命令${uppercaseKey}")
+                    logger.warn("[${MODULE_NAME}]已存在命令${uppercaseKey}")
                     val levelObj = obj.getJSONObject(uppercaseKey)
                     val level = levelObj.getOrDefault("level", 0) as Int
                     val libObj = tmpLib.getJSONObject(uppercaseKey)
                     val libLevel = libObj.getOrDefault("level", 10) as Int
                     if (level > libLevel){
                         tmpLib[uppercaseKey] = levelObj
-                        LOGGER.warn("[${MODULE_NAME}]已覆盖命令${uppercaseKey},LEVEL:${level}")
+                        logger.warn("[${MODULE_NAME}]已覆盖命令${uppercaseKey},LEVEL:${level}")
                     }
                 }
             }
@@ -238,7 +280,7 @@ class DynamicDNSResolver(runMode: Boolean, private val params: Map<String, Strin
             if (input.isNotEmpty()){
                 when(input){
                     "EXIT","exit" ->{
-                        LOGGER.info("退出")
+                        logger.info("退出")
                         exitProcess(0)
                     }
                     else ->{
@@ -246,7 +288,7 @@ class DynamicDNSResolver(runMode: Boolean, private val params: Map<String, Strin
                             execute(input)
                         }catch (e:Exception){
                             e.printStackTrace()
-                            LOGGER.info("${e.javaClass }:" + e.message)
+                            logger.info("${e.javaClass }:" + e.message)
                         }
                     }
                 }
@@ -264,31 +306,29 @@ class DynamicDNSResolver(runMode: Boolean, private val params: Map<String, Strin
         /*运行在jar中的文件需要另外获取*/
         if (runTypeIsJar){
             val runtimePath = FileToolkit.getRuntimePath(true)
-            urlPool = File("${runtimePath}/$RELEASE_DIR/url-pool.json")
-            config = File("${runtimePath}/$RELEASE_DIR/config.properties")
+            urlPool = File("$runtimePath$SLASH$RELEASE_DIR$SLASH")
+            config = File("$runtimePath$SLASH$RELEASE_DIR$SLASH$CONFIG_FILE_NAME")
         }else{
-            urlPool =  File(FileToolkit.getResourceFile("$RELEASE_DIR/url-pool.json")!!.toURI())
-            val configFile = FileToolkit.getResourceFile("$RELEASE_DIR/config.properties")
+            urlPool =  File(FileToolkit.getResourceFile("$RELEASE_DIR$SLASH$THIRD_PARTY_URL_POOL_FILE_NAME")!!.toURI())
+            val configFile = FileToolkit.getResourceFile("$RELEASE_DIR$SLASH$CONFIG_FILE_NAME")
             config = configFile?.toURI()?.let { File(it) }
         }
         /*加载第三方网址*/
-        var poolStr = ""
-        val bufferedReader = BufferedReader(FileReader(urlPool))
-        var line: String?
-        while ((bufferedReader.readLine().also { line = it }) != null) {
-            poolStr += line
-        }
-        bufferedReader.close()
-        Companion.urlPool = JSON.parseArray(poolStr)
+        Companion.urlPool = JSON.parseArray( FileToolkit.getFileContent(urlPool))
         /*加载配置文件*/
         val properties = Properties()
         config?.let { if (it.exists()){ properties.load(FileInputStream(it)) } }
-        params?.forEach { (t, u) -> properties.setProperty(t,u) }
-        if (Validator.strIsBlank(properties.getProperty("Ali-Access-Key-Id"))
-            || Validator.strIsBlank(properties.getProperty("ALi-Access-Key-Secret"))
-            || Validator.strIsBlank(properties.getProperty("Resolve-Domain"))){
-            LOGGER.error("[${MODULE_NAME}]请检查配置文件缺失值[config.properties [*]标必填属性]")
-            exitProcess(-1)
+        params?.forEach { (k, v) -> properties.setProperty(k,v) }
+        if (Validator.strIsBlank(properties.getProperty(ALI_ACCESS_KEY_ID_PARAM))
+            || Validator.strIsBlank(properties.getProperty(ALI_ACCESS_KEY_SECRET_PARAM))
+            || Validator.strIsBlank(properties.getProperty(RESOLVE_DOMAIN_PARAM))){
+            if (firstReleaseFolder){
+                logger.info("[${MODULE_NAME}]请检查[${RELEASE_DIR}]文件夹并配置文件[${CONFIG_FILE_NAME}]配置项并重新运行.")
+                exitProcess(0)
+            }else{
+                logger.error("[${MODULE_NAME}]请检查配置文件缺失值[${CONFIG_FILE_NAME} [*]标必填属性]")
+                exitProcess(-1)
+            }
         }
         Companion.config = properties
     }
@@ -298,27 +338,29 @@ class DynamicDNSResolver(runMode: Boolean, private val params: Map<String, Strin
      */
     private fun releaseSupportFiles() {
         val runtimePath = FileToolkit.getRuntimePath(true)
-        val dirMk = File("$runtimePath/$RELEASE_DIR")
-        if (FileToolkit.getRuntimePath(false).endsWith(".jar")){
+        val dirMk = File("$runtimePath$SLASH$RELEASE_DIR")
+        // 如果是Jar包，释放resource文件夹到运行目录
+        if (FileToolkit.getRuntimePath(false).endsWith(StringPool.JAR_SUFFIX)){
             if (dirMk.exists() && dirMk.isDirectory){
                 val jarResources = FileToolkit.getJarResource(RELEASE_DIR)
                 val openConnection = jarResources!!.openConnection() as JarURLConnection
                 val jarFile = openConnection.jarFile
                 for (innerFile in jarFile.entries()) {
                     val name = innerFile.name
-                    if (name.startsWith("$RELEASE_DIR/") && !name.endsWith("/")){
+                    if (name.startsWith("$RELEASE_DIR$SLASH") && !name.endsWith(SLASH)){
                         val jarResourcesStream = FileToolkit.getJarResourceAsStream(name)!!
-                        val split = name.split("/")
+                        val split = name.split(SLASH)
                         var path = runtimePath
                         for (i in split.indices){
                             if (i != split.lastIndex){
-                                path+= "/${split[i]}"
+                                path+= "$SLASH${split[i]}"
                                 File(path).let { if (!it.exists()){ it.mkdir() } }
                             }
                         }
-                        val nFile = File("$runtimePath/${name}")
-                        if (!nFile.exists()){
-                            val fileOutputStream = FileOutputStream(nFile)
+                        val writeFile = File("$runtimePath$SLASH${name}")
+                        if (!writeFile.exists()){
+                            logger.info("文件缺失,释放文件[${name}].")
+                            val fileOutputStream = FileOutputStream(writeFile)
                             val buff = ByteArray(1024)
                             var len: Int
                             while (0 <= jarResourcesStream.read(buff).also { len = it }) {
@@ -326,12 +368,11 @@ class DynamicDNSResolver(runMode: Boolean, private val params: Map<String, Strin
                             }
                             fileOutputStream.flush()
                             fileOutputStream.close()
-                            LOGGER.info("文件缺失,释放 ${name}.")
                         }
                     }
                 }
             }else{
-                dirMk.mkdir()
+                firstReleaseFolder = dirMk.mkdir()
                 this.releaseSupportFiles()
             }
         }else{

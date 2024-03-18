@@ -69,6 +69,7 @@ public interface StringPool {
     String HTML_QUOTE = "&quot;";
     String HTML_LT = "&lt;";
     String HTML_GT = "&gt;";
+    String JAR_SUFFIX = DOT+"jar";
 
     // ---------------------------------------------------------------- array
 

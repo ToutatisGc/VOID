@@ -23,4 +23,28 @@ object CommonConstance {
      */
     const val CMD_SUFFIX = ".dir"
 
+    /**
+     * Config File Name
+     * 配置文件名
+     */
+    const val CONFIG_FILE_NAME = "config.properties"
+
+    /**
+     * Third Party Url Pool File Name
+     * 第三方地址池
+     */
+    const val THIRD_PARTY_URL_POOL_FILE_NAME = "url-pool.json"
+
+    /**
+     * Playbook Timer Interval Default
+     * 剧本默认的定时器间隔
+     */
+    const val PLAYBOOK_TIMER_INTERVAL_DEFAULT = 120
+
+    /**
+     * Playbook Timer Delay Default
+     * 剧本默认的定时器延迟
+     */
+    const val PLAYBOOK_TIMER_DELAY_DEFAULT = 0
+
 }

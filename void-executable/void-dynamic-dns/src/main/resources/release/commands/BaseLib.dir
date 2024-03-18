@@ -9,6 +9,11 @@
         "required": true,
         "fullName": "shortDetails",
         "description": "显示精简命令"
+      },
+      "c": {
+        "required": false,
+        "fullName": "command",
+        "description": "查找具体命令"
       }
     }
   },

@@ -9,6 +9,7 @@ open class CommandHelper {
     companion object{
 
         @JvmStatic
+        @Suppress("UNCHECKED_CAST")
         fun analysisArgs(args:Any?): JSONObject {
             val argHash = JSONObject(true)
             if (args == null){

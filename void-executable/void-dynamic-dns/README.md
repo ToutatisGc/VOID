@@ -72,9 +72,25 @@ start /B java -server -Xms16M -Xmx32M -XX:+UseParallelGC -jar void-dynamic-dns-f
 
 ### 3.执行成功后ping解析地址并查看是否成功
 
+```
 
+```
 
 ## Part.3 配置说明:
+
+### 📖程序实参说明：
+
+​	运行Jar包或者程序集成时，可以指定一些参数：
+
+| 索引<font color='red'>*</font> |    键    | 值类型  | 类型 | 默认值 |
+| :----------------------------: | :------: | :-----: | ---- | :----: |
+|               0                | runType  | Boolean | 通用 | false  |
+|               1                | playbook | String  | 通用 |   无   |
+|                                |          |         |      |        |
+
+> (索引<font color='red'>*</font>为main方法args实参索引)
+
+### 📖config.properties配置说明：
 
 ​	首次运行后,会在运行目录释放**release**文件夹,请配置**config.properties**缺失配置。
 

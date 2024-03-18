@@ -103,6 +103,9 @@ object Time {
     @JvmStatic
     fun regexTime(format: String, time: Long): String = SimpleDateFormat(format).format(time)
 
+    @JvmStatic
+    fun regexTime(format: String, time: LocalDateTime): String = time.format(DateTimeFormatter.ofPattern(format))
+
     /**
      * Regex time
      * 使用默认格式化

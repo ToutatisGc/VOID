@@ -4,6 +4,7 @@ import cn.toutatis.xvoid.ddns.DynamicDNSResolver;
 import cn.toutatis.xvoid.ddns.commands.support.BaseCommand;
 import cn.toutatis.xvoid.ddns.commands.support.CommandHelper;
 import cn.toutatis.xvoid.toolkit.log.LoggerToolkit;
+import cn.toutatis.xvoid.toolkit.log.LoggerToolkitKt;
 import com.alibaba.fastjson.JSONObject;
 import org.slf4j.Logger;
 
@@ -25,30 +26,42 @@ public class BaseLib extends CommandHelper implements BaseCommand {
     }
 
     public static void help(String target,Object args){
+        JSONObject analysisArgs = analysisArgs(args);
+        String command = analysisArgs.getString("c");
         JSONObject commandTable = DynamicDNSResolver.COMMAND_INTERPRETER.getCommandTable();
-        commandTable.forEach((key, value) -> {
-            System.out.println("---------------------------");
-            JSONObject obj = commandTable.getJSONObject(key);
-            if ("command".equals(obj.getString("type"))){
-                System.out.println("命令:"+key+"\t"+obj.getString("description"));
-                if (obj.containsKey("args")){
-                    JSONObject innerArgs = obj.getJSONObject("args");
-                    innerArgs.forEach((akey,avalue) ->{
-                        StringBuilder sb = new StringBuilder("\t\t-");
-                        sb.append(akey);
-                        JSONObject arg = innerArgs.getJSONObject(akey);
-                        Boolean required =(Boolean) arg.getOrDefault("required",false);
-                        if (required){
-                            sb.append("[*]");
-                        }
-                        sb.append(" ").append(arg.getString("fullName"));
-                        sb.append(" ").append(arg.getString("description"));
-                        System.out.println(sb);
-                    });
+        // TODO 命令解析
+        if (command == null){
+            commandTable.forEach((key, value) -> {
+                System.out.println("----------------------------------------------------------------------------");
+                JSONObject obj = commandTable.getJSONObject(key);
+                if ("command".equals(obj.getString("type"))){
+                    System.out.println("命令:"+key+"\t"+obj.getString("description"));
+                    if (obj.containsKey("args")){
+                        JSONObject innerArgs = obj.getJSONObject("args");
+                        innerArgs.forEach((akey,avalue) ->{
+                            StringBuilder sb = new StringBuilder("\t\t-");
+                            sb.append(akey);
+                            JSONObject arg = innerArgs.getJSONObject(akey);
+                            Boolean required =(Boolean) arg.getOrDefault("required",false);
+                            if (required){
+                                sb.append("[*]");
+                            }
+                            sb.append(" ").append(arg.getString("fullName"));
+                            sb.append(" ").append(arg.getString("description"));
+                            System.out.println(sb);
+                        });
+                    }
                 }
+            });
+        }else{
+            if("true".equals(command)){
+                LoggerToolkitKt.warnWithModule(logger,MODULE_NAME,"command参数：请输入具体指令");
+            }else{
+
             }
-//            System.out.println();
-        });
+        }
+
+
     }
 
 //    public static void next(String target,Object args){
