@@ -32,36 +32,53 @@ public class BaseLib extends CommandHelper implements BaseCommand {
         // TODO 命令解析
         if (command == null){
             commandTable.forEach((key, value) -> {
-                System.out.println("----------------------------------------------------------------------------");
                 JSONObject obj = commandTable.getJSONObject(key);
                 if ("command".equals(obj.getString("type"))){
-                    System.out.println("命令:"+key+"\t"+obj.getString("description"));
-                    if (obj.containsKey("args")){
-                        JSONObject innerArgs = obj.getJSONObject("args");
-                        innerArgs.forEach((akey,avalue) ->{
-                            StringBuilder sb = new StringBuilder("\t\t-");
-                            sb.append(akey);
-                            JSONObject arg = innerArgs.getJSONObject(akey);
-                            Boolean required =(Boolean) arg.getOrDefault("required",false);
-                            if (required){
-                                sb.append("[*]");
-                            }
-                            sb.append(" ").append(arg.getString("fullName"));
-                            sb.append(" ").append(arg.getString("description"));
-                            System.out.println(sb);
-                        });
-                    }
+                    System.out.println("=--------------------------------------------------------------------------=");
+                    printCommand(commandTable,key);
                 }
             });
         }else{
             if("true".equals(command)){
                 LoggerToolkitKt.warnWithModule(logger,MODULE_NAME,"command参数：请输入具体指令");
             }else{
-
+                command = command.toUpperCase();
+                if(commandTable.containsKey(command)){
+                    printCommand(commandTable,command);
+                }else {
+                    LoggerToolkitKt.warnWithModule(logger,MODULE_NAME,"指令不存在");
+                }
             }
         }
+    }
 
-
+    /**
+     * 打印指令
+     * @param commandTable 命令表
+     * @param key 指令名
+     */
+    private static void printCommand(JSONObject commandTable,String key){
+        JSONObject obj = commandTable.getJSONObject(key);
+        if ("command".equals(obj.getString("type"))){
+            System.out.println("命令:"+key+"\t"+obj.getString("description"));
+            if (obj.containsKey("args")){
+                JSONObject innerArgs = obj.getJSONObject("args");
+                innerArgs.forEach((akey,avalue) ->{
+                    StringBuilder sb = new StringBuilder("\t\t-");
+                    sb.append(akey);
+                    JSONObject arg = innerArgs.getJSONObject(akey);
+                    Boolean required =(Boolean) arg.getOrDefault("required",false);
+                    if (required){
+                        sb.append("[*]");
+                    }
+                    sb.append(" ").append(arg.getString("fullName"));
+                    sb.append(" ").append(arg.getString("description"));
+                    System.out.println(sb);
+                });
+            }
+        }else{
+            System.out.println("指令类型不存在");
+        }
     }
 
 //    public static void next(String target,Object args){
