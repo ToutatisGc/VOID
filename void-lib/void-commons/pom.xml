@@ -13,6 +13,11 @@
     <packaging>pom</packaging>
 
     <artifactId>void-commons</artifactId>
+    <version>0.0.1-ALPHA</version>
+
+    <description>
+       VOID 通用构件
+    </description>
 
     <properties>
         <maven.compiler.source>${jdk8.version}</maven.compiler.source>

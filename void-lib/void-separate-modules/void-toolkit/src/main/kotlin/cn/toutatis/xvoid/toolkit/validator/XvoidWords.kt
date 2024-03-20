@@ -40,7 +40,7 @@ object XvoidWords {
                     val resourceFileAsFile = FileToolkit.getResourceFileAsFile(SENSITIVE_WORD_FILE)
                     if (resourceFileAsFile != null){
                         LOGGER.debugWithModule(Meta.MODULE_NAME,"开始加载敏感词字典")
-                        val zipArchiveInputStream = ZipArchiveInputStream(FileInputStream(resourceFileAsFile))
+                        val zipArchiveInputStream = ZipArchiveInputStream(FileInputStream(resourceFileAsFile),"UTF-8")
                         var entry: ZipArchiveEntry?
                         while (zipArchiveInputStream.nextZipEntry.also { entry = it } != null){
                             val entryName = entry!!.name

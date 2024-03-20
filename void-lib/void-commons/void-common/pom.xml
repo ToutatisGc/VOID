@@ -5,7 +5,7 @@
     <parent>
         <artifactId>void-commons</artifactId>
         <groupId>cn.toutatis</groupId>
-        <version>0.0.3-ALPHA</version>
+        <version>0.0.1-ALPHA</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
     <packaging>jar</packaging>
@@ -13,15 +13,22 @@
     <artifactId>void-common</artifactId>
     <version>0.0.0-ALPHA</version>
 
+    <description>
+        VOID通用组件
+    </description>
+
     <properties>
+        <maven.compiler.source>${default-jdk.version}</maven.compiler.source>
+        <maven.compiler.target>${default-jdk.version}</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
     <dependencies>
-
+        <!-- VOID常量-->
         <dependency>
             <groupId>cn.toutatis</groupId>
             <artifactId>void-common-constants</artifactId>
-            <version>0.0.0-ALPHA</version>
+            <version>0.0.1-ALPHA</version>
         </dependency>
 
         <dependency>
@@ -38,7 +45,7 @@
         <dependency>
             <groupId>cn.toutatis</groupId>
             <artifactId>void-toolkit</artifactId>
-            <version>0.0.1-ALPHA</version>
+            <version>0.0.3-ALPHA</version>
         </dependency>
         <dependency>
             <groupId>com.baomidou</groupId>
@@ -55,7 +62,7 @@
                 <artifactId>kotlin-maven-plugin</artifactId>
                 <version>${kotlin.version}</version>
                 <configuration>
-                    <jvmTarget>17</jvmTarget>
+                    <jvmTarget>${default-jdk.version}</jvmTarget>
                     <args>
                         <arg>-Xjsr305=strict</arg>
                     </args>
@@ -85,6 +92,25 @@
                         <version>${kotlin.version}</version>
                     </dependency>
                 </dependencies>
+            </plugin>
+            <plugin>
+                <groupId>org.jetbrains.dokka</groupId>
+                <artifactId>dokka-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-gpg-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.sonatype.plugins</groupId>
+                <artifactId>nexus-staging-maven-plugin</artifactId>
+                <configuration>
+                    <skipNexusStagingDeployMojo>false</skipNexusStagingDeployMojo>
+                </configuration>
             </plugin>
         </plugins>
     </build>

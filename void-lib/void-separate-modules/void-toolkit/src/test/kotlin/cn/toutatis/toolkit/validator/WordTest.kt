@@ -9,8 +9,9 @@ class WordTest {
     @Test
     fun testSensitiveWordFilter() {
         val builtInSensitiveWordFilter = XvoidWords.getBuiltInSensitiveWordFilter()
-        val search = builtInSensitiveWordFilter.search("检查")
-        Assert.assertEquals(1, search.size)
+        val search = builtInSensitiveWordFilter.search("大漠孤烟直销，长河落日元3P")
+        System.err.println(search)
+        Assert.assertEquals(2, search.size)
     }
 
 }

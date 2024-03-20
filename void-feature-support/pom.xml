@@ -8,7 +8,7 @@
     <artifactId>void-feature-support</artifactId>
 
     <groupId>cn.toutatis</groupId>
-    <version>0.0.5-ALPHA</version>
+    <version>0.0.6-ALPHA</version>
     <packaging>pom</packaging>
 
     <properties>
@@ -65,7 +65,7 @@
         <maven.compiler.target>17</maven.compiler.target>
         <p.source.version>3.3.0</p.source.version>
         <p.javadoc.version>3.6.3</p.javadoc.version>
-        <p.gpg.version>3.1.0</p.gpg.version>
+        <p.gpg.version>3.2.1</p.gpg.version>
         <p.nexus-staging.version>1.6.13</p.nexus-staging.version>
     </properties>
 
@@ -374,7 +374,7 @@
                 <artifactId>lombok</artifactId>
                 <version>${lombok.version}</version>
                 <optional>true</optional>
-                <scope>compile</scope>
+                <scope>provided</scope>
             </dependency>
             <!--swagger2文档注解支持-->
             <dependency>
@@ -475,7 +475,6 @@
                             </goals>
                             <configuration>
                                 <keyname>${gpg.name}</keyname>
-                                <passphraseServerId>${gpg.name}</passphraseServerId>
                                 <gpgArguments>
                                     <arg>--pinentry-mode</arg>
                                     <arg>loopback</arg>
