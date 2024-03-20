@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>cn.toutatis</groupId>
+        <artifactId>void-feature-support</artifactId>
+        <version>0.0.7-ALPHA</version>
+    </parent>
+
+    <artifactId>void-spring-framework</artifactId>
+    <version>0.0.0-ALPHA</version>
+    <packaging>pom</packaging>
+
+    <description>
+        VOID Spring Framework 框架支持，全系支持Kotlin。
+    </description>
+
+    <properties>
+        <maven.compiler.source>${default-jdk.version}</maven.compiler.source>
+        <maven.compiler.target>${default-jdk.version}</maven.compiler.target>
+    </properties>
+
+    <dependencies>
+
+    </dependencies>
+
+    <modules>
+        <!--Spring 预制件-->
+        <module>void-spring-preformed-units</module>
+        <!--Spring 分支应用-->
+        <module>void-spring-branches</module>
+    </modules>
+
+</project>

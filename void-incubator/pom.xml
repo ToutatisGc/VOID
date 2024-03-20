@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>cn.toutatis</groupId>
+        <artifactId>void-feature-support</artifactId>
+        <version>0.0.7-ALPHA</version>
+    </parent>
+
+    <artifactId>void-incubator</artifactId>
+    <version>0.0.1-ALPHA</version>
+    <packaging>pom</packaging>
+
+    <modules>
+        <!-- VOID-SPRING 生成器 -->
+        <module>void-project-generator</module>
+
+        <!--图片压缩工具-->
+        <module>void-compress-jar</module>
+
+        <!--动态DNS工具-->
+        <module>void-dynamic-dns</module>
+    </modules>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-gpg-plugin</artifactId>
+                <inherited>false</inherited>
+            </plugin>
+            <plugin>
+                <groupId>org.sonatype.plugins</groupId>
+                <artifactId>nexus-staging-maven-plugin</artifactId>
+                <configuration>
+                    <skipNexusStagingDeployMojo>false</skipNexusStagingDeployMojo>
+                </configuration>
+                <inherited>false</inherited>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>

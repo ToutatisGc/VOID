@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>cn.toutatis</groupId>
+        <artifactId>void-spring-framework</artifactId>
+        <version>0.0.0-ALPHA</version>
+    </parent>
+    <packaging>pom</packaging>
+
+    <artifactId>void-spring-branches</artifactId>
+    <version>0.0.0-ALPHA</version>
+
+    <modules>
+        <!--单体Spring Boot应用 -->
+        <module>void-spring-singleton</module>
+        <!--分布式微服务环境架构-->
+        <module>void-spring-microservice</module>
+        <!--Spring 扩展服务-->
+        <module>void-spring-expand</module>
+    </modules>
+
+
+</project>
