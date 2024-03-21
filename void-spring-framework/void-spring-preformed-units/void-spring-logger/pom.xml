@@ -5,22 +5,17 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>cn.toutatis</groupId>
-        <artifactId>void-spring-framework</artifactId>
+        <artifactId>void-spring-preformed-units</artifactId>
         <version>0.0.0-ALPHA</version>
     </parent>
     <packaging>pom</packaging>
-
-    <version>0.0.0-ALPHA</version>
-
-    <description>
-        VOID Spring Boot 组件预制件
-    </description>
-
-    <artifactId>void-spring-preformed-units</artifactId>
-
     <modules>
-        <!--日志组件-->
-        <module>void-spring-logger</module>
+        <module>void-spring-logger-api</module>
+        <module>void-spring-logger-rabbit</module>
     </modules>
+
+    <artifactId>void-spring-logger</artifactId>
+
+
 
 </project>

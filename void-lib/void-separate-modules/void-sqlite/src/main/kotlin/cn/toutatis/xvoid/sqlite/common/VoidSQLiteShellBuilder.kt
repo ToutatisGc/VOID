@@ -30,7 +30,7 @@ object VoidSQLiteShellBuilder {
      */
     @JvmStatic
     fun buildSystemVoidContextShell(): SQLiteShell {
-        return SQLiteShell(builderConnection("sql/VOID.db"))
+        return SQLiteShell(builderConnection("database/db/VOID.db"))
     }
 
     /**
