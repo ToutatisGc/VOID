@@ -1,6 +1,7 @@
 package cn.toutatis.xvoid.toolkit.validator
 
 import cn.toutatis.xvoid.toolkit.Meta
+import cn.toutatis.xvoid.toolkit.clazz.ClassToolkit
 import cn.toutatis.xvoid.toolkit.file.FileToolkit
 import cn.toutatis.xvoid.toolkit.log.LoggerToolkit
 import cn.toutatis.xvoid.toolkit.log.debugWithModule
@@ -20,7 +21,7 @@ object XvoidWords {
      * Sensitive Word File
      * 敏感词字典文件
      */
-    private const val SENSITIVE_WORD_FILE = "sensitive-words.compress";
+    private const val SENSITIVE_WORD_FILE = "sensitive-words.compress"
 
     @Volatile
     private var sensitiveWordFilter: SensitiveWordFilter? = null
@@ -37,10 +38,14 @@ object XvoidWords {
                 if (sensitiveWordFilter == null) {
                     LOGGER.debugWithModule(Meta.MODULE_NAME,"初始化构建敏感词过滤器")
                     sensitiveWordFilter = SensitiveWordFilter()
-                    val resourceFileAsFile = FileToolkit.getResourceFileAsFile(SENSITIVE_WORD_FILE)
-                    if (resourceFileAsFile != null){
+                    val runningFromJar = ClassToolkit.isRunningFromJar(javaClass)
+                    val ins =  if (runningFromJar){
+                        FileToolkit.getJarResourceAsStream(SENSITIVE_WORD_FILE)
+                    }else FileToolkit.getResourceFileAsFile(SENSITIVE_WORD_FILE)?.let { FileInputStream(it) }
+                    if (ins != null){
                         LOGGER.debugWithModule(Meta.MODULE_NAME,"开始加载敏感词字典")
-                        val zipArchiveInputStream = ZipArchiveInputStream(FileInputStream(resourceFileAsFile),"UTF-8")
+                        javaClass.getResourceAsStream(SENSITIVE_WORD_FILE)
+                        val zipArchiveInputStream = ZipArchiveInputStream(ins,"UTF-8")
                         var entry: ZipArchiveEntry?
                         while (zipArchiveInputStream.nextZipEntry.also { entry = it } != null){
                             val entryName = entry!!.name

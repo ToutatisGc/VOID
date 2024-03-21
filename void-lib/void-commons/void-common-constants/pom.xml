@@ -10,7 +10,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>void-common-constants</artifactId>
-    <version>0.0.1-ALPHA</version>
+    <version>0.0.2-ALPHA</version>
+
+    <description>
+        VOID 环境标准常量
+    </description>
 
     <properties>
 

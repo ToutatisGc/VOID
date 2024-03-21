@@ -12,8 +12,10 @@ class HttpRequestTest {
 
     @Test
     fun getTest(){
-        val get = HttpToolkit.syncGet("https://www.baidu.com", null)
+        val get = HttpToolkit.syncGet("https://www.baidu.1com")
         System.err.println(get)
+        val get1 = HttpToolkit.syncGetAsBytes("https://www.baidu.com", null,null,false)
+        get1?.let { System.err.println(it.size) }
     }
 
 }
