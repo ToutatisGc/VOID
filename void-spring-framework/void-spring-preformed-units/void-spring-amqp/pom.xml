@@ -5,27 +5,30 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>cn.toutatis</groupId>
-        <artifactId>void-spring-logger</artifactId>
+        <artifactId>void-spring-preformed-units</artifactId>
         <version>0.0.0-ALPHA</version>
     </parent>
 
-    <artifactId>void-spring-logger-rabbit</artifactId>
+    <artifactId>void-spring-amqp</artifactId>
 
-    <description>RabbitMQ日志组件实现</description>
+    <properties>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
 
     <dependencies>
         <dependency>
             <groupId>cn.toutatis</groupId>
-            <artifactId>void-spring-logger-api</artifactId>
-            <version>${project.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>cn.toutatis</groupId>
-            <artifactId>void-spring-amqp</artifactId>
+            <artifactId>void-spring-annotations</artifactId>
             <version>0.0.0-ALPHA</version>
         </dependency>
+        <!--rabbitMQ支持-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-amqp</artifactId>
+        </dependency>
     </dependencies>
-
 
     <build>
         <sourceDirectory>${project.basedir}/src/main/kotlin</sourceDirectory>

@@ -1,4 +1,4 @@
-package cn.toutatis.xvoid.spring.support.amqp
+package cn.toutatis.xvoid.spring.amqp
 
 import cn.toutatis.xvoid.common.standard.StandardFields
 

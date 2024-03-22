@@ -1,15 +1,15 @@
 package cn.toutatis.xvoid.spring.support.core.aop.exception
 
 import cn.toutatis.xvoid.common.exception.IllegalException
-import cn.toutatis.xvoid.common.standard.StandardFields
 import cn.toutatis.xvoid.common.result.ProxyResult
 import cn.toutatis.xvoid.common.result.ResultCode
+import cn.toutatis.xvoid.common.standard.StandardFields
 import cn.toutatis.xvoid.orm.base.infrastructure.entity.SystemLog
 import cn.toutatis.xvoid.orm.base.infrastructure.enums.LogType
-import cn.toutatis.xvoid.spring.configure.system.enums.global.RunMode
 import cn.toutatis.xvoid.spring.configure.system.VoidGlobalConfiguration
+import cn.toutatis.xvoid.spring.configure.system.enums.global.RunMode
+import cn.toutatis.xvoid.spring.logger.VoidSpringLoggerSender
 import cn.toutatis.xvoid.spring.support.Meta
-import cn.toutatis.xvoid.spring.support.amqp.AmqpShell
 import cn.toutatis.xvoid.toolkit.log.LoggerToolkit
 import cn.toutatis.xvoid.toolkit.log.errorWithModule
 import com.alibaba.fastjson.JSONObject
@@ -36,7 +36,7 @@ class VoidExceptionAdviceDispose {
     private lateinit var voidGlobalConfiguration: VoidGlobalConfiguration
 
     @Autowired
-    private lateinit var amqpShell: AmqpShell
+    private lateinit var loggerSender: VoidSpringLoggerSender
 
     /**
      * 异常处理器
@@ -93,9 +93,9 @@ class VoidExceptionAdviceDispose {
             systemLog.intro = "异常[${e::class.simpleName}]"
             systemLog.details = parseErrorJson(e,request).toJSONString()
             if (e.javaClass == IllegalException::class.java){
-                amqpShell.sendLog(LogType.ILLEGAL,systemLog)
+                loggerSender.sendLog(LogType.ILLEGAL,systemLog)
             }else{
-                amqpShell.sendLog(LogType.EXCEPTION,systemLog)
+                loggerSender.sendLog(LogType.EXCEPTION,systemLog)
             }
 
         }

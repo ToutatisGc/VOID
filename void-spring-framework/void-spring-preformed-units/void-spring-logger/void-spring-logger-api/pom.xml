@@ -10,6 +10,16 @@
     </parent>
 
     <artifactId>void-spring-logger-api</artifactId>
+    <description>日志组件API</description>
+
+    <dependencies>
+        <dependency>
+            <groupId>cn.toutatis</groupId>
+            <artifactId>void-base-orm</artifactId>
+            <version>0.0.0-ALPHA</version>
+            <scope>compile</scope>
+        </dependency>
+    </dependencies>
 
 
     <build>

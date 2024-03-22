@@ -12,6 +12,7 @@
     <modules>
         <module>void-spring-logger-api</module>
         <module>void-spring-logger-rabbit</module>
+        <module>void-spring-logger-local</module>
     </modules>
 
     <artifactId>void-spring-logger</artifactId>

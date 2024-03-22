@@ -4,8 +4,8 @@ import cn.toutatis.xvoid.common.standard.StandardFields
 import cn.toutatis.xvoid.orm.base.infrastructure.entity.SystemLog
 import cn.toutatis.xvoid.orm.base.infrastructure.enums.LogType
 import cn.toutatis.xvoid.spring.configure.system.VoidGlobalConfiguration
+import cn.toutatis.xvoid.spring.logger.VoidSpringLoggerSender
 import cn.toutatis.xvoid.spring.support.Meta.MODULE_NAME
-import cn.toutatis.xvoid.spring.support.amqp.AmqpShell
 import cn.toutatis.xvoid.toolkit.constant.Time
 import cn.toutatis.xvoid.toolkit.http.RequestToolkit
 import cn.toutatis.xvoid.toolkit.locale.I18n
@@ -40,7 +40,7 @@ class RequestLogInterceptor(voidGlobalConfiguration: VoidGlobalConfiguration) : 
      * Amqp shell 消息队列
      */
     @Autowired
-    private lateinit var amqpShell: AmqpShell
+    private lateinit var loggerSender: VoidSpringLoggerSender
 
     init {
         logger.info("[${MODULE_NAME}] RequestLogInterceptor init success.")
@@ -113,7 +113,7 @@ class RequestLogInterceptor(voidGlobalConfiguration: VoidGlobalConfiguration) : 
                     details["params"] = paramsStr
                 }
                 systemLog.details = details.toJSONString()
-                amqpShell.sendLog(LogType.REQUEST,systemLog)
+                loggerSender.sendLog(LogType.REQUEST,systemLog)
             }
         }
         return true

@@ -9,9 +9,9 @@
         <version>0.0.0-ALPHA</version>
     </parent>
 
-    <artifactId>void-spring-logger-rabbit</artifactId>
+    <artifactId>void-spring-logger-local</artifactId>
 
-    <description>RabbitMQ日志组件实现</description>
+    <description>本地日志记录器</description>
 
     <dependencies>
         <dependency>
@@ -19,13 +19,7 @@
             <artifactId>void-spring-logger-api</artifactId>
             <version>${project.version}</version>
         </dependency>
-        <dependency>
-            <groupId>cn.toutatis</groupId>
-            <artifactId>void-spring-amqp</artifactId>
-            <version>0.0.0-ALPHA</version>
-        </dependency>
     </dependencies>
-
 
     <build>
         <sourceDirectory>${project.basedir}/src/main/kotlin</sourceDirectory>

@@ -3,9 +3,14 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 
+    <parent>
+        <groupId>cn.toutatis</groupId>
+        <artifactId>void-runtime-support</artifactId>
+        <version>0.0.0-ALPHA</version>
+    </parent>
+
     <modelVersion>4.0.0</modelVersion>
     <packaging>pom</packaging>
-    <groupId>cn.toutatis</groupId>
     <artifactId>void-spring-support</artifactId>
 
     <modules>
@@ -17,11 +22,7 @@
     </modules>
 
 
-    <parent>
-        <groupId>cn.toutatis</groupId>
-        <artifactId>void-runtime-support</artifactId>
-        <version>0.0.0-ALPHA</version>
-    </parent>
+
 
     <properties>
         <kotlin.version>1.9.20</kotlin.version>

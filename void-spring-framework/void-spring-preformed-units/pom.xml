@@ -19,6 +19,8 @@
     <artifactId>void-spring-preformed-units</artifactId>
 
     <modules>
+        <!--AMQP组件-->
+        <module>void-spring-amqp</module>
         <!--日志组件-->
         <module>void-spring-logger</module>
     </modules>

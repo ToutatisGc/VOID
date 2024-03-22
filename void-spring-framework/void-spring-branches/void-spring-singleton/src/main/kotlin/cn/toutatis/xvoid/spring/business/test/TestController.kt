@@ -6,7 +6,7 @@ import cn.toutatis.xvoid.orm.forum.persistence.ForumArticleRepository
 import cn.toutatis.xvoid.common.result.ProxyResult
 import cn.toutatis.xvoid.common.result.ResultCode
 import cn.toutatis.xvoid.spring.business.test.persistence.PersonMapper
-import cn.toutatis.xvoid.spring.support.amqp.AmqpShell
+import cn.toutatis.xvoid.spring.amqp.AmqpShell
 import cn.toutatis.xvoid.orm.base.infrastructure.entity.SystemLog
 import cn.toutatis.xvoid.orm.base.infrastructure.enums.LogType
 import cn.toutatis.xvoid.spring.annotations.application.VoidController
@@ -41,7 +41,7 @@ import org.springframework.web.servlet.ModelAndView
 open class TestController {
 
     @Autowired
-    private lateinit var amqpShell : AmqpShell;
+    private lateinit var amqpShell : cn.toutatis.xvoid.spring.amqp.AmqpShell;
 
     @Autowired
     private lateinit var jdbcTemplate: JdbcTemplate

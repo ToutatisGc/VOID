@@ -2,8 +2,8 @@ package cn.toutatis.xvoid.spring.support.listener
 
 import cn.toutatis.xvoid.orm.base.infrastructure.entity.SystemLog
 import cn.toutatis.xvoid.orm.base.infrastructure.enums.LogType
+import cn.toutatis.xvoid.spring.logger.VoidSpringLoggerSender
 import cn.toutatis.xvoid.spring.support.Meta
-import cn.toutatis.xvoid.spring.support.amqp.AmqpShell
 import cn.toutatis.xvoid.toolkit.constant.Time
 import cn.toutatis.xvoid.toolkit.log.LoggerToolkit
 import cn.toutatis.xvoid.toolkit.log.infoWithModule
@@ -19,7 +19,7 @@ class ApplicationStartListener : ApplicationListener<ApplicationStartedEvent> {
     private final val logger = LoggerToolkit.getLogger(javaClass)
 
     @Autowired
-    private lateinit var amqpShell: AmqpShell
+    private lateinit var loggerSender: VoidSpringLoggerSender
 
     override fun onApplicationEvent(event: ApplicationStartedEvent) {
         /*TODO 启动事件*/
@@ -31,7 +31,7 @@ class ApplicationStartListener : ApplicationListener<ApplicationStartedEvent> {
         obj["applicationName"] = id
         obj["mainClass"] = event.springApplication.mainApplicationClass
         obj["startDate"] = Time.getCurrentTimeByLong(event.timestamp)
-        amqpShell.sendLog(LogType.SYSTEM,systemLog)
+        loggerSender.sendLog(LogType.SYSTEM,systemLog)
         logger.infoWithModule(Meta.MODULE_NAME,"项目[$id]已于[${Time.currentTime}]启动,类加载已完成,等待DispatcherServlet介入...")
     }
 }
