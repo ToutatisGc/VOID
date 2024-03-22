@@ -1,16 +1,16 @@
 package cn.toutatis.xvoid.spring.business.test
 
+import cn.toutatis.xvoid.common.result.ProxyResult
+import cn.toutatis.xvoid.common.result.ResultCode
+import cn.toutatis.xvoid.orm.base.infrastructure.entity.SystemLog
+import cn.toutatis.xvoid.orm.base.infrastructure.enums.LogType
 import cn.toutatis.xvoid.orm.forum.entity.ForumArticle
 import cn.toutatis.xvoid.orm.forum.persistence.ForumArticleMapper
 import cn.toutatis.xvoid.orm.forum.persistence.ForumArticleRepository
-import cn.toutatis.xvoid.common.result.ProxyResult
-import cn.toutatis.xvoid.common.result.ResultCode
-import cn.toutatis.xvoid.spring.business.test.persistence.PersonMapper
-import cn.toutatis.xvoid.spring.amqp.AmqpShell
-import cn.toutatis.xvoid.orm.base.infrastructure.entity.SystemLog
-import cn.toutatis.xvoid.orm.base.infrastructure.enums.LogType
 import cn.toutatis.xvoid.spring.annotations.application.VoidController
+import cn.toutatis.xvoid.spring.business.test.persistence.PersonMapper
 import cn.toutatis.xvoid.spring.configure.system.VoidGlobalConfiguration
+import cn.toutatis.xvoid.spring.logger.VoidSpringLoggerSender
 import cn.toutatis.xvoid.spring.support.core.file.service.impl.SystemResourceServiceImpl
 import com.alibaba.fastjson.JSONObject
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper
@@ -41,7 +41,7 @@ import org.springframework.web.servlet.ModelAndView
 open class TestController {
 
     @Autowired
-    private lateinit var amqpShell : cn.toutatis.xvoid.spring.amqp.AmqpShell;
+    private lateinit var loggerSender : VoidSpringLoggerSender;
 
     @Autowired
     private lateinit var jdbcTemplate: JdbcTemplate
@@ -118,7 +118,7 @@ open class TestController {
         jsonObject["id"] = "642a775f05c11ea64792833"
         jsonObject["name"] = "CCD"
         systemLog.details = jsonObject.toJSONString()
-        amqpShell.sendLog(LogType.AUTH, systemLog)
+        loggerSender.sendLog(LogType.AUTH, systemLog)
     }
 
     @Autowired

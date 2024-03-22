@@ -14,6 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
+ * 注入请求ID的过滤器
  * @author Toutatis_Gc
  * @date 2022/11/13 18:14
  */

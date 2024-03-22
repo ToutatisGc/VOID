@@ -12,6 +12,7 @@ class VoidSpringLocalLoggerSender : VoidSpringLoggerSender{
     private lateinit var localLoggerReceiver: VoidSpringLocalLoggerReceiver
 
     override fun sendLog(type: LogType, systemLog: SystemLog) {
+        systemLog.type = type.name
         localLoggerReceiver.receive(systemLog)
     }
 }

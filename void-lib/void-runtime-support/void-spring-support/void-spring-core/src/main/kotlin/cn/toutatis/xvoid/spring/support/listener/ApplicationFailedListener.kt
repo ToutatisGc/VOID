@@ -1,6 +1,8 @@
 package cn.toutatis.xvoid.spring.support.listener
 
+import cn.toutatis.xvoid.spring.support.Meta
 import cn.toutatis.xvoid.toolkit.log.LoggerToolkit
+import cn.toutatis.xvoid.toolkit.log.errorWithModule
 import org.springframework.boot.context.event.ApplicationFailedEvent
 import org.springframework.context.ApplicationListener
 import org.springframework.stereotype.Component
@@ -14,9 +16,10 @@ class ApplicationFailedListener : ApplicationListener<ApplicationFailedEvent> {
     override fun onApplicationEvent(event: ApplicationFailedEvent) {
         // TODO 失败处理
         try {
-            System.err.println(event)
-        }catch (e:Exception){
 
+        }catch (e:Exception){
+            e.printStackTrace()
+            logger.errorWithModule(Meta.MODULE_NAME,"应用启动失败。错误原因：[${e.message}]")
         }finally {
             exitProcess(0)
         }

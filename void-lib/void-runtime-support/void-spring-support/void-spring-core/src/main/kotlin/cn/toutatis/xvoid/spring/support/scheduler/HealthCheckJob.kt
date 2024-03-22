@@ -13,7 +13,6 @@ class HealthCheckJob : Job{
     private lateinit var healthEndpoint: HealthEndpoint
 
     override fun execute(context: JobExecutionContext) {
-        TODO("Not yet implemented")
-//        VoidSpringToolkit
+        System.err.println(healthEndpoint.health().status)
     }
 }

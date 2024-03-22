@@ -32,7 +32,10 @@ class MultiTenantManager {
      */
     fun checkPlatform(): String? {
         if (voidGlobalConfiguration.platformMode) {
-            val mchId = httpServletRequest.getHeader(StandardFields.VOID_REQUEST_HEADER_MCH_ID)
+            var mchId = httpServletRequest.getHeader(StandardFields.VOID_REQUEST_HEADER_MCH_ID)
+            if (strIsBlank(mchId)){
+                mchId = httpServletRequest.getParameter(StandardFields.VOID_REQUEST_HEADER_MCH_ID)
+            }
             if (strIsBlank(mchId)) throw MissingParameterException("缺失商户ID")
             if (StandardFields.VOID_BUSINESS_DEFAULT_CREATOR == mchId) return null
             if (mchId.length < 16 || mchId.length > 32){
