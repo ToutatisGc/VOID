@@ -14,9 +14,8 @@ class ApplicationFailedListener : ApplicationListener<ApplicationFailedEvent> {
     private final val logger = LoggerToolkit.getLogger(javaClass)
 
     override fun onApplicationEvent(event: ApplicationFailedEvent) {
-        // TODO 失败处理
         try {
-
+            // TODO 失败处理
         }catch (e:Exception){
             e.printStackTrace()
             logger.errorWithModule(Meta.MODULE_NAME,"应用启动失败。错误原因：[${e.message}]")
