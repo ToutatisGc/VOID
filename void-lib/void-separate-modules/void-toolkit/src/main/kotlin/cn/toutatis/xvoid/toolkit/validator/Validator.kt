@@ -181,7 +181,7 @@ public object Validator {
 
     /**
      * Check map contains key
-     * 检查Map中是否存在该键,不存在则返回缺失字段的列表
+     * 检查Map中是否存在该键, 不存在则返回缺失字段的列表
      * Check whether the key exists in the Map. If no, return a list of missing fields.
      * @param map 列表
      * @param keys 键名
@@ -213,9 +213,35 @@ public object Validator {
         }
     }
 
+    /**
+     * 验证正则
+     * @param regex 正则表达式
+     */
     @JvmStatic
     fun validateRegex(regex:String?):Boolean{
         return Regex.validateRegex(regex)
+    }
+
+    /**
+     * 判断返回值类型是否是集合或者数组类型
+     * @param clazz 类型
+     * @return 是否是集合或者数组类型
+     */
+    @JvmStatic
+    fun isCollectionOrArray(clazz: Class<*>): Boolean {
+        val isCollection = Collection::class.java.isAssignableFrom(clazz)
+        return isCollection || clazz.isArray
+    }
+
+    /**
+     * 判断类型是否是集合或者数组类型
+     * @param obj 对象实例
+     * @return 是否是集合或者数组类型
+     */
+    @JvmStatic
+    fun isCollectionOrArray(obj: Any?): Boolean {
+        if (obj == null){ return false }
+        return isCollectionOrArray(obj.javaClass)
     }
 
 }

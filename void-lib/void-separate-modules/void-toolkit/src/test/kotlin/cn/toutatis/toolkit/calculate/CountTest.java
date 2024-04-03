@@ -1,7 +1,11 @@
 package cn.toutatis.toolkit.calculate;
 
+import cn.toutatis.xvoid.toolkit.number.NumberToolkit;
 import cn.toutatis.xvoid.toolkit.digest.DigestToolkit;
+import org.junit.Assert;
 import org.junit.Test;
+
+import java.math.BigDecimal;
 
 public class CountTest {
 
@@ -23,6 +27,18 @@ public class CountTest {
     public void test2(){
         System.err.println(DigestToolkit.sha256("test"));
         System.err.println(DigestToolkit.sha256("test"));
+    }
+
+    @Test
+    public void test3(){
+        BigDecimal a1 = new BigDecimal("-10.5");
+        Assert.assertFalse(NumberToolkit.isInteger(a1));
+        BigDecimal a2 = new BigDecimal("-1999");
+        Assert.assertTrue(NumberToolkit.isInteger(a2));
+        BigDecimal a3 = new BigDecimal("100.5355353");
+        Assert.assertFalse(NumberToolkit.isInteger(a3));
+        BigDecimal a4 = new BigDecimal("0");
+        Assert.assertTrue(NumberToolkit.isInteger(a4));
     }
 
 }

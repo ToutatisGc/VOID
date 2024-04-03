@@ -10,7 +10,7 @@
     </parent>
 
     <artifactId>void-data-structure</artifactId>
-    <version>0.0.0-ALPHA</version>
+    <version>0.0.1-ALPHA</version>
     <packaging>jar</packaging>
 
     <description>

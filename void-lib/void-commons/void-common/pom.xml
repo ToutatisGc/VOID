@@ -45,7 +45,7 @@
         <dependency>
             <groupId>cn.toutatis</groupId>
             <artifactId>void-toolkit</artifactId>
-            <version>0.0.3-ALPHA</version>
+            <version>0.0.5-ALPHA</version>
         </dependency>
         <dependency>
             <groupId>com.baomidou</groupId>

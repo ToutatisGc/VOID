@@ -1,6 +1,6 @@
 package cn.toutatis.xvoid.toolkit.validator
 
-import cn.toutatis.xvoid.achievable.filter.WordSearchFilter
+import cn.toutatis.xvoid.achievable.filter.AbstractWordSearchFilter
 import cn.toutatis.xvoid.achievable.filter.WordSearchResult
 import cn.toutatis.xvoid.structure.tree.TrieNode
 
@@ -9,23 +9,18 @@ import cn.toutatis.xvoid.structure.tree.TrieNode
  * 敏感词过滤器
  * @author Toutatis_Gc
  */
-class SensitiveWordFilter : WordSearchFilter {
+class SensitiveWordFilter : AbstractWordSearchFilter() {
 
-    private val rootNode = TrieNode<Char>()
-    override fun addSearchWord(word: String) {
-        var current: TrieNode<Char> = rootNode
-        for (c in word.toCharArray()) {
-            current.childrenNodes().putIfAbsent(c, TrieNode())
-            current = current.childrenNodes()[c]!!
-        }
-        current.isEndNode = true
-    }
+    /**
+     * 排除词汇
+     */
+    private val excludeWords = HashSet<String>()
 
     override fun search(text: String?): MutableList<WordSearchResult> {
         val filteredWords: MutableList<WordSearchResult> = ArrayList()
         if (Validator.strIsBlank(text)) return filteredWords
         var currentWord = StringBuilder()
-        var current: TrieNode<Char> = rootNode
+        var current: TrieNode<Char> = root
         var idx = 0
         val records = LinkedHashMap<String,ArrayList<Int>>()
         while (idx < text!!.toCharArray().size) {
@@ -50,12 +45,27 @@ class SensitiveWordFilter : WordSearchFilter {
             } else {
                 if (currentWord.isNotEmpty()) { idx-- }
                 currentWord = StringBuilder()
-                current = rootNode
+                current = root
             }
             idx++
         }
-        records.forEach { (word, positionList) -> filteredWords.add(WordSearchResult(positionList, word)) }
+        records.forEach { (word, positionList) ->
+            run {
+                if (excludeWords.contains(word)) return@forEach
+                filteredWords.add(WordSearchResult(positionList, word))
+            }
+        }
         return filteredWords
+    }
+
+    /**
+     * 排除词汇
+     */
+    fun exclude(vararg words: String) {
+        words.forEach {
+            if (Validator.strIsBlank(it)) return@forEach
+            excludeWords.add(it)
+        }
     }
 
 }

@@ -1,7 +1,6 @@
 package cn.toutatis.xvoid.toolkit.formatting
 
 import cn.toutatis.xvoid.toolkit.validator.Validator
-import java.lang.StringBuilder
 
 /**
  * String toolkit
@@ -66,7 +65,7 @@ object StringToolkit {
         if (Validator.strIsBlank(str)){ return str }
         if (str.length < length){ return str }
         val separator = System.getProperty("line.separator")
-        val times = (str.length / length).toInt()
+        val times = (str.length / length)
         val stringBuilder = StringBuilder("")
         for (i in 0 until times){
             if (i != 0){

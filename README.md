@@ -55,10 +55,10 @@ clean install -DskipTests -Dgpg.skip=true
 
 | 模块名称                                       |            当前阶段             | 优先级 | 用途                                                         |
 | :--------------------------------------------- | :-----------------------------: | :----: | :----------------------------------------------------------- |
-| docs                                           |                -                |        | [文档资源]文档资源以及使用说明                               |
-| [void-feature-support](void-feature-support)   | <font color='green'>完成</font> |   ✅    | [[依赖支持](void-feature-support)]项目所需依赖和插件的版本控制 |
-| [void-lib](void-lib)                           | <font color='green'>迭代</font> |   🔁    | [[库支持](void-lib)]包含独立工具和项目依赖的具体实现         |
-| [void-hardware](void-hardware)                 | <font color='grey'>立项</font>  |   ⏹️    | [[硬件开发](void-hardware)]仅立项阶段                        |
+| docs                                           |                -                |        | [文档资源]文档资源以及使用说明。                             |
+| [void-feature-support](void-feature-support)   | <font color='green'>完成</font> |   ✅    | [[依赖支持](void-feature-support)]项目所需依赖和插件的版本控制。 |
+| [void-lib](void-lib)                           | <font color='green'>迭代</font> |   🔁    | [[库支持](void-lib)]包含独立工具和项目依赖的具体实现。       |
+| [void-hardware](void-hardware)                 | <font color='grey'>立项</font>  |   ⏹️    | [[硬件开发](void-hardware)]仅立项阶段。                      |
 | [void-incubator](void-incubator)               | <font color='green'>迭代</font> |   🔁    | [[孵化器](void-incubator)]独立运行包，包含动态解析，项目生成器，图片压缩工具等。 |
 | [void-front-end](void-front-end)               |             开发中              |   ⏬    | [[前端页面](void-front-end)]配合Web项目的前端开发页面。      |
 | [void-spring-framework](void-spring-framework) |             开发中              |   ⏫    | [[春野VoidSpring支持](void-spring-framework)]SpringBoot集成支持。 |

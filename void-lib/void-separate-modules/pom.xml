@@ -20,7 +20,7 @@
         <maven.compiler.source>${jdk17.version}</maven.compiler.source>
         <maven.compiler.target>${jdk17.version}</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <void-toolkit.version>0.0.3-ALPHA</void-toolkit.version>
+        <void-toolkit.version>0.0.5-ALPHA</void-toolkit.version>
     </properties>
 
     <dependencies>

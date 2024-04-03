@@ -10,7 +10,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>void-toolkit</artifactId>
-    <version>0.0.4-ALPHA</version>
+    <version>0.0.5-ALPHA</version>
 
     <description>
         VOID 工具箱
@@ -132,7 +132,7 @@
         <dependency>
             <groupId>cn.toutatis</groupId>
             <artifactId>void-data-structure</artifactId>
-            <version>0.0.0-ALPHA</version>
+            <version>0.0.1-ALPHA</version>
             <scope>compile</scope>
         </dependency>
 

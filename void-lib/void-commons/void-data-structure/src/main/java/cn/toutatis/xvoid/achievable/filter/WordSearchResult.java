@@ -24,6 +24,14 @@ public class WordSearchResult {
 
     @Override
     public String toString() {
-        return String.format("单词[%s]-位置%s",word,position);
+        return String.format("单词[%s]-位置%s",word,position == null ? "未匹配" : position.toString());
+    }
+
+    /**
+     * 获取单词出现频率
+     */
+    public int getFrequency(){
+        if (position == null) return 0;
+        return position.size();
     }
 }
