@@ -9,7 +9,6 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.boot.web.servlet.ServletComponentScan
 import org.springframework.context.annotation.ComponentScan
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories
-import org.springframework.scheduling.annotation.EnableAsync
 import org.springframework.scheduling.annotation.EnableScheduling
 import org.springframework.transaction.annotation.EnableTransactionManagement
 
@@ -18,7 +17,6 @@ import org.springframework.transaction.annotation.EnableTransactionManagement
  *@date 2022/4/15 14:28
  * SpringBoot启动类注解集合
  */
-@EnableAsync
 @EnableScheduling
 @EnableConfigurationProperties
 @ServletComponentScan

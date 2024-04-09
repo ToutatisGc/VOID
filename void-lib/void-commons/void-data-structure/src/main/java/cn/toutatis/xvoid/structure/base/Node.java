@@ -8,7 +8,10 @@ import java.util.Map;
  */
 public interface Node<NT,T> {
 
-
+    /**
+     * 获取子节点
+     * @return 子节点
+     */
     Map<T, NT> childrenNodes();
 
 }

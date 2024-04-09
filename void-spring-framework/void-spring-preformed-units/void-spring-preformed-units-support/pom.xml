@@ -3,31 +3,20 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
+
     <parent>
         <groupId>cn.toutatis</groupId>
-        <artifactId>void-spring-logger</artifactId>
+        <artifactId>void-spring-preformed-units</artifactId>
         <version>0.0.0-ALPHA</version>
     </parent>
 
-    <artifactId>void-spring-logger-api</artifactId>
-    <description>日志组件API</description>
+    <artifactId>void-spring-preformed-units-support</artifactId>
+    <description>VOID Spring 预设组件支持</description>
+    <version>0.0.0-ALPHA</version>
 
-    <dependencies>
-
-        <dependency>
-            <groupId>cn.toutatis</groupId>
-            <artifactId>void-base-orm</artifactId>
-            <version>0.0.0-ALPHA</version>
-            <scope>compile</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>cn.toutatis</groupId>
-            <artifactId>void-spring-preformed-units-support</artifactId>
-            <version>0.0.0-ALPHA</version>
-        </dependency>
-    </dependencies>
-
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
 
     <build>
         <sourceDirectory>${project.basedir}/src/main/kotlin</sourceDirectory>

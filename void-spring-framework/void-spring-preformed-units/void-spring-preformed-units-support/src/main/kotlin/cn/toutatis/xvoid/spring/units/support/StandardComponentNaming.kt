@@ -1,15 +1,27 @@
-package cn.toutatis.xvoid.common.standard
+package cn.toutatis.xvoid.spring.units.support
 
 /**
  * @author Toutatis_Gc
  * 标准命名池
  * SpringBoot 自定义Component/自定义Bean标准命名
  */
-class StandardComponentPool {
+class StandardComponentNaming {
 
    companion object {
 
-       const val VOID_AUTO_INSERT_OBJS_COMPONENT = "VOID_AUTO_INSERT_OBJS_COMPONENT"
+       /*日志支持*/
+
+       /**
+        * 默认日志发送器
+        */
+       const val VOID_SIMPLE_LOGGER_SENDER = "VOID_SIMPLE_LOGGER_SENDER"
+
+       /**
+        * 默认日志接收器
+        */
+       const val VOID_SIMPLE_LOGGER_RECEIVER = "VOID_SIMPLE_LOGGER_RECEIVER"
+
+       /*Spring Boot 异步支持*/
 
        /**
         * 异步线程池
@@ -24,6 +36,8 @@ class StandardComponentPool {
        const val VOID_CONTEXT_VARIABLES = "VOID_CONTEXT_VARIABLES"
 
        const val VOID_JPA_CREATOR_AUDIT_AWARE = "VOID_JPA_CREATOR_AUDIT_AWARE"
+
+       const val VOID_AUTO_INSERT_OBJS_COMPONENT = "VOID_AUTO_INSERT_OBJS_COMPONENT"
    }
 
 }

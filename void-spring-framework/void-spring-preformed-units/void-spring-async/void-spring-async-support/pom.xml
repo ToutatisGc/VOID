@@ -5,29 +5,36 @@
     <modelVersion>4.0.0</modelVersion>
     <parent>
         <groupId>cn.toutatis</groupId>
-        <artifactId>void-spring-logger</artifactId>
+        <artifactId>void-spring-async</artifactId>
         <version>0.0.0-ALPHA</version>
     </parent>
 
-    <artifactId>void-spring-logger-api</artifactId>
-    <description>日志组件API</description>
+    <artifactId>void-spring-async-support</artifactId>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
 
     <dependencies>
 
         <dependency>
-            <groupId>cn.toutatis</groupId>
-            <artifactId>void-base-orm</artifactId>
-            <version>0.0.0-ALPHA</version>
-            <scope>compile</scope>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
         </dependency>
 
         <dependency>
             <groupId>cn.toutatis</groupId>
-            <artifactId>void-spring-preformed-units-support</artifactId>
-            <version>0.0.0-ALPHA</version>
+            <artifactId>void-toolkit</artifactId>
+            <version>0.0.5-ALPHA</version>
         </dependency>
-    </dependencies>
 
+        <dependency>
+            <groupId>cn.toutatis</groupId>
+            <artifactId>void-spring-logger-api</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+    </dependencies>
 
     <build>
         <sourceDirectory>${project.basedir}/src/main/kotlin</sourceDirectory>

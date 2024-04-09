@@ -67,7 +67,8 @@ public class AbstractNode<NT extends AbstractNode<NT,T>,T> implements Node<NT,T>
         } else {
             int count = 1;
             for (Map.Entry<T, NT> nodeEntry : root.childrenNodes().entrySet()) {
-                count += countNodes(nodeEntry.getValue()); // 递归计算子树的节点数量
+                // 递归计算子树的节点数量
+                count += countNodes(nodeEntry.getValue());
             }
             return count;
         }
