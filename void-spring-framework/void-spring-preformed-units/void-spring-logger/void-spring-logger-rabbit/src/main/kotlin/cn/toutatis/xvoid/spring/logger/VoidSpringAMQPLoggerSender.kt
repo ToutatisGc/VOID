@@ -4,10 +4,11 @@ import cn.toutatis.xvoid.common.standard.StandardFields
 import cn.toutatis.xvoid.orm.base.infrastructure.entity.SystemLog
 import cn.toutatis.xvoid.orm.base.infrastructure.enums.LogType
 import cn.toutatis.xvoid.spring.amqp.AMQPShell
+import cn.toutatis.xvoid.spring.units.support.StandardComponentNaming
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 
-@Component
+@Component(StandardComponentNaming.VOID_SIMPLE_LOGGER_SENDER)
 class VoidSpringAMQPLoggerSender : VoidSpringLoggerSender {
 
     @Autowired

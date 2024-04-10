@@ -25,7 +25,10 @@
         <module>void-spring-amqp</module>
         <!--日志组件-->
         <module>void-spring-logger</module>
+        <!--异步组件-->
         <module>void-spring-async</module>
+        <!--WebSocket组件-->
+        <module>void-spring-websocket</module>
     </modules>
 
 </project>

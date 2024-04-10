@@ -5,6 +5,7 @@ import cn.toutatis.xvoid.orm.base.infrastructure.enums.LogType
 import cn.toutatis.xvoid.orm.base.infrastructure.services.SystemLogService
 import cn.toutatis.xvoid.spring.amqp.AMQPShell
 import cn.toutatis.xvoid.spring.amqp.XvoidSystemAmqpNamingDescription
+import cn.toutatis.xvoid.spring.units.support.StandardComponentNaming
 import cn.toutatis.xvoid.toolkit.validator.Validator.strIsBlank
 import com.alibaba.fastjson.JSON
 import org.springframework.amqp.core.Message
@@ -16,7 +17,7 @@ import org.springframework.stereotype.Component
  * @date 2022/11/28 14:47
  * 日志消费者
  */
-@Component
+@Component(StandardComponentNaming.VOID_SIMPLE_LOGGER_RECEIVER)
 class VoidSpringAMQPLoggerReceiver(private val amqpShell: AMQPShell, private val systemLogService: SystemLogService) : VoidSpringLoggerReceiver{
 
     @RabbitListener(queues = [XvoidSystemAmqpNamingDescription.XVOID_SYSTEM_LOG_QUEUE])

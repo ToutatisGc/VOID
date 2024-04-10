@@ -6,7 +6,7 @@ import lombok.Data;
 import java.util.List;
 
 /**
- * 单词查找结果
+ * 词汇查找结果
  */
 @Data
 @AllArgsConstructor

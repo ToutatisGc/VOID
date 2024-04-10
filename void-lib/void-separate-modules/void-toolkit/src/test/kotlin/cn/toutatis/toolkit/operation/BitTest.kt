@@ -14,4 +14,10 @@ class BitTest {
 
     }
 
+    @Test
+    fun `getSysProperties`(){
+        val properties = System.getProperties()
+        properties.forEach { (k, v) -> println("$k:$v") }
+    }
+
 }

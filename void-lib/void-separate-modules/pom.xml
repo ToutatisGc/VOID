@@ -40,8 +40,6 @@
         <module>void-redis</module>
         <!--缓存-->
         <module>void-cache</module>
-        <!--WebSocket模块-->
-        <module>void-websocket</module>
         <!--爬虫-->
         <module>void-creeper</module>
         <!--第三方接入-->

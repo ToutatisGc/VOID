@@ -14,23 +14,145 @@
 
 ## Part.2 模块：
 
-| Package包  | 说明                                                       |
-| ---------- | ---------------------------------------------------------- |
-| clazz      | 通常是对类相关的操作，例如获取类的信息，反射，注解相关等。 |
-| constant   | 常量包，包含常见使用和共识内容。                           |
-| data       | 数据操作相关工具集。                                       |
-| digest     | 加密相关工具集。                                           |
-| file       | 文件操作相关工具集。                                       |
-| formatting | 格式化相关。                                               |
-| http       | HTTP请求相关。                                             |
-| locale     | 语言本地化支持。                                           |
-|            |                                                            |
+| 序号 | Package包  | 说明                                                       |
+| :--: | :--------: | :--------------------------------------------------------- |
+|  1   |   clazz    | 通常是对类相关的操作，例如获取类的信息，反射，注解相关等。 |
+|  2   |  constant  | 常量包，包含常见使用和共识内容。                           |
+|  3   |    data    | 数据操作相关工具集。                                       |
+|  4   |   digest   | 加密相关工具集。                                           |
+|  5   |    file    | 文件操作相关工具集。                                       |
+|  6   | formatting | 格式化相关。                                               |
+|  7   |    http    | HTTP请求相关。                                             |
+|  8   |   locale   | 语言本地化支持。                                           |
+|  9   | validator  | 校验相关。                                                 |
 
 ## Part.3 详细说明：
 
-### 1. 类相关 Clazz
+### 9. 校验 Validator
+
+#### 📚词汇集合 XvoidWords
+
+​	其中实现了一些词汇相关的二次包装，方便拆箱使用。
 
 
 
-### 2. 常量 Constant
+##### 📖获取内置敏感词过滤器 getBuiltInSensitiveWordFilter
+
+​	内置敏感词过滤器使用toolkit包中的内置敏感词字典，包含80000+词汇。
+
+```java
+SensitiveWordFilter swf = XvoidWords.getBuiltInSensitiveWordFilter();
+```
+
+
+
+#### 📚 敏感词过滤器 SensitiveWordFilter
+
+​	构建一个空的敏感词过滤器。
+
+```java
+SensitiveWordFilter swf = new SensitiveWordFilter();
+```
+
+
+
+##### 📖添加敏感词 addSearchWord
+
+​	添加词汇到敏感词过滤器的词库中。
+
+**传入参数：**
+
+| 序号 | 参数 | 说明     |
+| ---- | ---- | -------- |
+| 0    | word | 敏感词。 |
+
+**示例代码：**
+
+```java
+sensitiveWordFilter.addSearchWord("敏感词");
+```
+
+
+
+##### 📖搜索敏感词 search
+
+​	从字符串中搜索敏感词集合。
+
+**传入参数：**
+
+| 序号 | 类型   | 参数 | 说明             |
+| ---- | ------ | ---- | ---------------- |
+| 0    | String | text | 需要搜索的文本。 |
+
+**返回值：**
+
+<div style='border:2px solid green;border-radius:4px;background-color:white'>
+    <div style='text-align:center;font-weight:bold;background-color:green'>
+        <p style='color:white'>词汇查找结果 WordSearchResult</p>
+    </div>
+    <div>
+        <table style='text-align:center;color:black;border:1px solid green'>
+          <caption style='font-weight:bolder'>实体字段</caption>
+          <thead>
+            <tr><th>序号</th><th>类型</th><th>字段</th><th>说明</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+                <td>0</td>
+                <td>String</td>
+                <td>word</td>
+                <td>词汇</td>
+            </tr>
+            <tr>
+              	<td>1</td>
+                <td>List&lt;Integer&gt;</td>
+                <td>position</td>
+                <td>词汇位置</td>
+            </tr>
+          </tbody>
+        </table>
+        <table style='text-align:center;color:black;border:1px solid green'>
+          <caption style='font-weight:bolder'>可调用方法</caption>
+          <thead>
+            <tr><th>返回类型</th><th>方法</th><th>说明</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+                <td>-</td>
+                <td>字段Getter</td>
+                <td>获取字段赋值</td>
+            </tr>
+            <tr>
+              	<td>int</td>
+                <td>getFrequency</td>
+                <td>获取词频</td>
+            </tr>
+          </tbody>
+        </table>
+    </div>
+</div>
+
+**示例代码：**
+
+```java
+ List<WordSearchResult> wsr = sensitiveWordFilter.search("一大段包含敏感词字符串");
+```
+
+
+
+##### 📖排除敏感词 exclude
+
+​	从搜索结果移除排除词汇。
+
+**传入参数：**
+
+| 序号 | 类型                                   | 参数  | 说明       |
+| ---- | -------------------------------------- | ----- | ---------- |
+| 0    | <b style='color:red'>vararg</b> String | words | 排除词汇。 |
+
+**示例代码：**
+
+```java
+sensitiveWordFilter.exclude("敏感词1","敏感词2","敏感词3");
+```
 
