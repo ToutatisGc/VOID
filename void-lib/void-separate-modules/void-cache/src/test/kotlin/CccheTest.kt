@@ -26,7 +26,7 @@ class CacheTest {
     fun cacheTest() : Unit {
         val voidEhCacheManager = VoidEhCacheManager();
         voidEhCacheManager.init(fileToolkit.getRuntimePath(javaClass),"VOID-TEST-PERSISTENCE",null)
-//        voidEhCacheManager.putValue(VoidCommonCacheDefinition.VOID_SECURITY_CODE_CACHE,"test","abc")
+        voidEhCacheManager.setValue(VoidCommonCacheDefinition.VOID_SECURITY_CODE_CACHE.name,"test","abc")
 //        voidEhCacheManager.putValue(VoidCommonCacheDefinition.VOID_SECURITY_CODE_CACHE,"tes2t","abc")
 //        voidEhCacheManager.putValue(VoidCommonCacheDefinition.VOID_SECURITY_CODE_CACHE,"te5st","abc")
 //        voidEhCacheManager.putValue(VoidCommonCacheDefinition.VOID_SECURITY_CODE_CACHE,"te35st","abc")

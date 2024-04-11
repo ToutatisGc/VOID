@@ -4,7 +4,6 @@ import cn.toutatis.redis.config.ClientType
 import cn.toutatis.redis.config.RedisConnectInfo
 import cn.toutatis.redis.config.VoidRedisBuilder
 import org.junit.Assert
-import org.junit.Test
 import org.slf4j.LoggerFactory
 
 /**
