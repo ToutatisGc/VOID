@@ -20,7 +20,7 @@ class VoidSpringWebsocketSupportConfiguration {
     private val logger = LoggerToolkit.getLogger(javaClass)
 
     @Bean
-    fun getServerEndpointExporter(): ServerEndpointExporter {
+    fun getServerEndpointExporter(): ServerEndpointExporter? {
         val serverEndpointExporter = ServerEndpointExporter()
         logger.infoWithModule(Meta.MODULE_NAME,"已注册Tomcat-Spring-WebSocket支持.")
         return serverEndpointExporter

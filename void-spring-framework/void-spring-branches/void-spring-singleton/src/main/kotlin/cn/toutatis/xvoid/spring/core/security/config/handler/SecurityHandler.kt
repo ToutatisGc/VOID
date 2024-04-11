@@ -1,24 +1,24 @@
 package cn.toutatis.xvoid.spring.core.security.config.handler
 
-import cn.toutatis.redis.RedisCommonKeys.concat
+import cn.toutatis.xvoid.common.enums.MessageType
 import cn.toutatis.xvoid.common.result.ProxyResult
 import cn.toutatis.xvoid.common.result.Result
 import cn.toutatis.xvoid.common.result.ResultCode
 import cn.toutatis.xvoid.common.standard.AuthFields
+import cn.toutatis.xvoid.common.standard.AuthValidationMessage
 import cn.toutatis.xvoid.common.standard.StandardFields
-import cn.toutatis.xvoid.spring.VoidModuleInfo
 import cn.toutatis.xvoid.orm.base.authentication.entity.derive.AuthInfo
-import cn.toutatis.xvoid.common.enums.MessageType
 import cn.toutatis.xvoid.orm.base.authentication.service.SystemAuthPathService
 import cn.toutatis.xvoid.orm.base.authentication.service.SystemAuthRoleService
+import cn.toutatis.xvoid.spring.VoidModuleInfo
 import cn.toutatis.xvoid.spring.configure.system.VoidGlobalConfiguration
 import cn.toutatis.xvoid.spring.configure.system.VoidGlobalConfiguration.GlobalServiceConfig
 import cn.toutatis.xvoid.spring.configure.system.VoidSecurityConfiguration
-import cn.toutatis.xvoid.common.standard.AuthValidationMessage
 import cn.toutatis.xvoid.spring.support.Meta
 import cn.toutatis.xvoid.spring.support.core.aop.advice.ResponseResultDispatcherAdvice
 import cn.toutatis.xvoid.spring.support.toolkits.VoidSpringToolkit
 import cn.toutatis.xvoid.toolkit.constant.Time
+import cn.toutatis.xvoid.toolkit.formatting.StringToolkit
 import cn.toutatis.xvoid.toolkit.log.LoggerToolkit.getLogger
 import cn.toutatis.xvoid.toolkit.log.errorWithModule
 import cn.toutatis.xvoid.toolkit.validator.Validator.strIsBlank
@@ -285,11 +285,11 @@ class SecurityHandler(
      */
     private fun tryLockAccount(request: HttpServletRequest):Result{
         val jSessionId = voidSpringToolkit.getJSessionId(request)
-        val loginAccountOps = redisTemplate.boundValueOps(concat(AuthFields.LOGIN_ACCOUNT_SESSION_KEY, jSessionId))
+        val loginAccountOps = redisTemplate.boundValueOps(StringToolkit.concat(AuthFields.LOGIN_ACCOUNT_SESSION_KEY, jSessionId))
         val loginAccount = loginAccountOps.get()
         if (strNotBlank(loginAccount)) {
             /*没有缓存添加一条*/
-            val retryOps = redisTemplate.boundValueOps(concat(AuthFields.LOGIN_RETRY_TIMES_KEY, loginAccount))
+            val retryOps = redisTemplate.boundValueOps(StringToolkit.concat(AuthFields.LOGIN_RETRY_TIMES_KEY, loginAccount))
             var retryTimes = retryOps.get() as Int?
             if (retryTimes == null) retryTimes = 1 else retryTimes++
             retryOps.set(retryTimes)
@@ -311,7 +311,7 @@ class SecurityHandler(
                     lockDuration = Time.currentMillis+loginFailedLockTime.toMillis()
                     currentTimeByLong = Time.getCurrentTimeByLong(lockDuration)
                 }
-                val lockedOps = redisTemplate.boundValueOps(concat(AuthFields.LOGIN_ACCOUNT_LOCKED_KEY, loginAccount))
+                val lockedOps = redisTemplate.boundValueOps(StringToolkit.concat(AuthFields.LOGIN_ACCOUNT_LOCKED_KEY, loginAccount))
                 /*如果锁定大于今日,提醒今日不可登录*/
                 if (lockDuration > Time.parseTimeToMills(Time.getCurrentDayLastMillsTime())){
                     lockedOps.set(AuthValidationMessage.ACCOUNT_LOCKED_TODAY)

@@ -29,6 +29,8 @@
         <module>void-spring-async</module>
         <!--WebSocket组件-->
         <module>void-spring-websocket</module>
+        <!--缓存支持-->
+        <module>void-spring-cache</module>
     </modules>
 
 </project>

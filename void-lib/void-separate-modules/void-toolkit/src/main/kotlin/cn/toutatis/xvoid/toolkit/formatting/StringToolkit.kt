@@ -89,4 +89,12 @@ object StringToolkit {
         return stringBuilder.toString()
     }
 
+    /**
+     * 拼接字符串
+     */
+    @JvmStatic
+    fun concat(key:String,vararg value:Any?):String{
+        return String.format(key,*value)
+    }
+
 }

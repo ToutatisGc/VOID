@@ -1,6 +1,5 @@
 package cn.toutatis.xvoid.spring.core.route.background.auth;
 
-import cn.toutatis.redis.RedisCommonKeys;
 import cn.toutatis.xvoid.common.enums.RegistryType;
 import cn.toutatis.xvoid.common.result.ProxyResult;
 import cn.toutatis.xvoid.common.result.Result;
@@ -13,6 +12,7 @@ import cn.toutatis.xvoid.orm.base.authentication.service.SystemUserLoginService;
 import cn.toutatis.xvoid.spring.annotations.application.VoidController;
 import cn.toutatis.xvoid.spring.configure.system.VoidSecurityConfiguration;
 import cn.toutatis.xvoid.spring.core.tools.ViewToolkit;
+import cn.toutatis.xvoid.toolkit.formatting.StringToolkit;
 import cn.toutatis.xvoid.toolkit.validator.Validator;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
@@ -99,7 +99,7 @@ public class SecurityAuthController {
         if (accountExist){
             // 设置当前session下所预检的账户并设置10分钟有效期
             BoundValueOperations<String, Object> sessionOps = redisTemplate.boundValueOps(
-                    RedisCommonKeys.concat(AuthFields.LOGIN_PRE_CHECK_KEY,request.getSession().getId(), account)
+                    StringToolkit.concat(AuthFields.LOGIN_PRE_CHECK_KEY,request.getSession().getId(), account)
             );
             sessionOps.set(account, Duration.ofMinutes(10L));
             return new ProxyResult(ResultCode.AUTHENTICATION_PRE_CHECK_SUCCESSFUL);

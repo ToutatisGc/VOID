@@ -117,7 +117,7 @@ class VoidEhCacheManager : VCache{
 
 
     override fun getCache(definition: String) : Cache<Serializable,Serializable>? {
-        VoidCommonCacheDefinition.values().forEach {
+        VoidCommonCacheDefinition.entries.forEach {
             if(it.cacheName == definition){
                 return when(it.persistent){
                     true -> persistentCacheManager.getCache(definition,it.keyClazz as Class<Serializable>,it.valueClazz as Class<Serializable>)

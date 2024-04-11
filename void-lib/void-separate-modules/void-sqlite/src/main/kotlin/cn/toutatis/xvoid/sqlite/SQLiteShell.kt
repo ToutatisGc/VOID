@@ -25,6 +25,10 @@ class SQLiteShell(val connection: SQLiteConnection) {
      * @return 查询Map列表
      */
     fun selectListMap(sql:String):List<Map<String,Any>>{
+        if (connection.isClosed){
+            val error = logger.errorWithModule(Meta.MODULE_NAME, Meta.SUB_MODULE_NAME, "数据库已关闭")
+            throw SQLException(error)
+        }
         val statement: Statement = connection.createStatement()
         val resultSet: ResultSet = statement.executeQuery(sql)
         val list = ArrayList<Map<String, Any>>()

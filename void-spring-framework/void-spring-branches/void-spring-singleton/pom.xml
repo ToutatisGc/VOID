@@ -99,7 +99,7 @@
 
         <dependency>
             <groupId>cn.toutatis</groupId>
-            <artifactId>void-redis</artifactId>
+            <artifactId>void-spring-redis-support</artifactId>
             <version>0.0.0-ALPHA</version>
         </dependency>
 

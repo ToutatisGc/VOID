@@ -1,6 +1,6 @@
 package cn.toutatis.redis.support.spring
 
-import cn.toutatis.redis.Meta
+import cn.toutatis.xvoid.spring.redis.Meta
 import cn.toutatis.xvoid.toolkit.log.LoggerToolkit
 import cn.toutatis.xvoid.toolkit.log.infoWithModule
 import com.fasterxml.jackson.annotation.JsonAutoDetect
@@ -36,7 +36,7 @@ class VoidSpringRedisAutoConfiguration {
         template.setConnectionFactory(factory)
         val objectMapper = ObjectMapper()
         objectMapper.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY)
-        objectMapper.activateDefaultTyping(LaissezFaireSubTypeValidator.instance, ObjectMapper.DefaultTyping.NON_FINAL, JsonTypeInfo.As.PROPERTY);
+        objectMapper.activateDefaultTyping(LaissezFaireSubTypeValidator.instance, ObjectMapper.DefaultTyping.NON_FINAL, JsonTypeInfo.As.PROPERTY)
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false)
         val jackson2JsonRedisSerializer = Jackson2JsonRedisSerializer(Any::class.java)
         jackson2JsonRedisSerializer.setObjectMapper(objectMapper)
