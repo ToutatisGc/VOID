@@ -5,25 +5,28 @@
     <parent>
         <artifactId>void-separate-modules</artifactId>
         <groupId>cn.toutatis</groupId>
-        <version>0.0.3-ALPHA</version>
+        <version>0.0.4-ALPHA</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
+    <version>0.0.0-ALPHA</version>
+
     <artifactId>void-cache</artifactId>
 
+    <packaging>pom</packaging>
+
     <properties>
-        <maven.compiler.source>17</maven.compiler.source>
-        <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
-    <dependencies>
+    <modules>
+        <!--缓存基础-->
+        <module>void-cache-base</module>
+        <!--Redis数据库支持-->
+        <module>void-redis</module>
+    </modules>
 
-        <dependency>
-            <groupId>cn.toutatis</groupId>
-            <artifactId>void-toolkit</artifactId>
-            <version>0.0.5-ALPHA</version>
-        </dependency>
+    <dependencies>
 
         <dependency>
             <groupId>org.ehcache</groupId>
@@ -41,12 +44,6 @@
         </dependency>
 
         <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter</artifactId>
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot</artifactId>
         </dependency>
@@ -61,48 +58,5 @@
             <artifactId>spring-boot-autoconfigure</artifactId>
         </dependency>
     </dependencies>
-
-    <build>
-        <sourceDirectory>${project.basedir}/src/main/kotlin</sourceDirectory>
-        <testSourceDirectory>${project.basedir}/src/test/kotlin</testSourceDirectory>
-        <plugins>
-            <plugin>
-                <groupId>org.jetbrains.kotlin</groupId>
-                <artifactId>kotlin-maven-plugin</artifactId>
-                <version>${kotlin.version}</version>
-                <configuration>
-                    <jvmTarget>17</jvmTarget>
-                    <args>
-                        <arg>-Xjsr305=strict</arg>
-                    </args>
-                    <compilerPlugins>
-                        <plugin>spring</plugin>
-                    </compilerPlugins>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>compile</id>
-                        <phase>process-sources</phase>
-                        <goals>
-                            <goal>compile</goal>
-                        </goals>
-                    </execution>
-                    <execution>
-                        <id>test-compile</id>
-                        <goals>
-                            <goal>test-compile</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <dependencies>
-                    <dependency>
-                        <groupId>org.jetbrains.kotlin</groupId>
-                        <artifactId>kotlin-maven-allopen</artifactId>
-                        <version>${kotlin.version}</version>
-                    </dependency>
-                </dependencies>
-            </plugin>
-        </plugins>
-    </build>
 
 </project>
