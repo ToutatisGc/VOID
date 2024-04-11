@@ -1,4 +1,4 @@
-package cn.toutatis.xvoid.cache.core;
+package cn.toutatis.xvoid.cache.base;
 
 import java.io.Serializable;
 
