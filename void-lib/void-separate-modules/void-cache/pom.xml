@@ -24,8 +24,10 @@
     <modules>
         <!--缓存基础-->
         <module>void-cache-base</module>
+        <!--本地缓存支持-->
+        <module>void-cache-ehcache</module>
         <!--Redis数据库支持-->
-        <module>void-redis</module>
+        <module>void-cache-redis</module>
     </modules>
 
     <dependencies>
@@ -38,20 +40,7 @@
             <scope>compile</scope>
         </dependency>
 
-        <dependency>
-            <groupId>org.ehcache</groupId>
-            <artifactId>ehcache</artifactId>
-        </dependency>
 
-        <dependency>
-            <groupId>org.ehcache</groupId>
-            <artifactId>ehcache-transactions</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>javax.cache</groupId>
-            <artifactId>cache-api</artifactId>
-        </dependency>
 
         <dependency>
             <groupId>org.springframework.boot</groupId>

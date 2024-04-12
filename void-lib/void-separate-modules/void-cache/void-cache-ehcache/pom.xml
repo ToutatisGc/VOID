@@ -9,20 +9,35 @@
         <version>0.0.0-ALPHA</version>
     </parent>
 
-    <artifactId>void-cache-base</artifactId>
+    <artifactId>void-cache-ehcache</artifactId>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    </properties>
 
     <dependencies>
+
         <dependency>
             <groupId>cn.toutatis</groupId>
-            <artifactId>void-toolkit</artifactId>
-            <version>0.0.5-ALPHA</version>
+            <artifactId>void-cache-base</artifactId>
+            <version>0.0.0-ALPHA</version>
         </dependency>
+
         <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
+            <groupId>org.ehcache</groupId>
+            <artifactId>ehcache</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.ehcache</groupId>
+            <artifactId>ehcache-transactions</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>javax.cache</groupId>
+            <artifactId>cache-api</artifactId>
         </dependency>
     </dependencies>
-
 
     <build>
         <sourceDirectory>${project.basedir}/src/main/kotlin</sourceDirectory>
@@ -102,7 +117,5 @@
             </plugin>
         </plugins>
     </build>
-
-
 
 </project>
