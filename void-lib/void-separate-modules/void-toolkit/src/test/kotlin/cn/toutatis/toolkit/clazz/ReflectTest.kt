@@ -17,4 +17,15 @@ class ReflectTest {
         System.err.println(child.address)
     }
 
+    @Test
+    fun testGetFieldName(){
+        val testEntity = TestEntity()
+        testEntity.name = "ttt"
+        System.err.println(testEntity)
+        val getterMethods = ReflectToolkit.getGetterMethods(testEntity::class.java)
+        getterMethods.forEach {
+            System.err.println(it.name)
+        }
+    }
+
 }

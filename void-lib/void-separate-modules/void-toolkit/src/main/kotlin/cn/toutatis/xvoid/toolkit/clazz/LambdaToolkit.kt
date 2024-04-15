@@ -72,4 +72,5 @@ object LambdaToolkit {
     fun <T,R> getFieldName(func: XFunc<T, R>): String {
         return getFieldName(serialize<T, R>(func))
     }
+
 }

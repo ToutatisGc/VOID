@@ -1,15 +1,16 @@
 package cn.toutatis.xvoid.cache.base
 
-import java.io.Serializable
+class VoidCache {
 
-interface VoidCache {
+    companion object{
 
-    fun getCacheManager(definition: String): VoidCacheManager
+        private lateinit var cacheManager: VoidCacheManager
 
-    fun setValue(definition:String,key: Serializable, value: Serializable): Boolean
+        @JvmStatic
+        fun init(cacheManager: VoidCacheManager){
+            this.cacheManager = cacheManager
+        }
+    }
 
-    fun <T> getValue(definition: String,key:String): T?
-
-    fun close()
 
 }

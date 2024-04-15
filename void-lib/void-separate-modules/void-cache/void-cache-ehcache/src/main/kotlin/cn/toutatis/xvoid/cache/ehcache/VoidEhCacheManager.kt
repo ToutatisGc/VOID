@@ -1,6 +1,7 @@
 package cn.toutatis.xvoid.cache.ehcache
 
 import cn.toutatis.xvoid.cache.base.VoidCache
+import cn.toutatis.xvoid.cache.base.VoidCacheDefinition
 import cn.toutatis.xvoid.toolkit.log.LoggerToolkit
 import org.ehcache.Cache
 import org.ehcache.CacheManager
@@ -28,7 +29,7 @@ import java.time.Duration
  * 常被查询、数据量中等的数据存放在堆外缓存，几个G就好了，不用担心服务器的重启，有持久化机制；
  * 不常用、大量的数据、但又不想占用数据库IO的数据，放在Disk缓存，容量自便；
  */
-class VoidEhCacheManager : VoidCache{
+abstract class VoidEhCacheManager : VoidCache{
 
     private val logger  = LoggerToolkit.getLogger(javaClass)
 
@@ -65,7 +66,7 @@ class VoidEhCacheManager : VoidCache{
 
         persistentCacheManager = persistentCacheManagerBuilder.build(true)
 
-        for (cacheDefinition in VoidCommonCacheDefinition.values()) {
+        for (cacheDefinition in VoidCacheDefinition.entries) {
             val resourcePoolsBuilder = ResourcePoolsBuilder.newResourcePoolsBuilder()
                 .heap(200, EntryUnit.ENTRIES)
                 .offheap(1, MemoryUnit.MB)
@@ -74,15 +75,15 @@ class VoidEhCacheManager : VoidCache{
                 cacheDefinition.keyClazz, cacheDefinition.valueClazz, resourcePoolsBuilder
             )
             when(cacheDefinition.expiredPolicy){
-                VoidCommonCacheDefinition.DataExpiredPolicy.NO_EXPIRED -> {
+                VoidCacheDefinition.DataExpiredPolicy.NO_EXPIRED -> {
                     cacheConfiguration.withExpiry(ExpiryPolicy.NO_EXPIRY)
                 }
-                VoidCommonCacheDefinition.DataExpiredPolicy.EXPIRED_CREATED -> {
+                VoidCacheDefinition.DataExpiredPolicy.EXPIRED_CREATED -> {
                     cacheConfiguration.withExpiry(ExpiryPolicyBuilder.timeToLiveExpiration(
                         Duration.ofSeconds(cacheDefinition.expiredTime)
                     ))
                 }
-                VoidCommonCacheDefinition.DataExpiredPolicy.EXPIRE_IDLE -> {
+                VoidCacheDefinition.DataExpiredPolicy.EXPIRE_IDLE -> {
                     cacheConfiguration.withExpiry(ExpiryPolicyBuilder.timeToIdleExpiration(
                         Duration.ofSeconds(cacheDefinition.expiredTime)
                     ))
@@ -93,21 +94,21 @@ class VoidEhCacheManager : VoidCache{
             }
 
             when(cacheDefinition.persistent){
-                true -> persistentCacheManager.createCache(cacheDefinition.cacheName,cacheConfiguration)
-                false -> defaultCacheManager.createCache(cacheDefinition.cacheName,cacheConfiguration)
+                true -> persistentCacheManager.createCache(cacheDefinition.cacheDefinition,cacheConfiguration)
+                false -> defaultCacheManager.createCache(cacheDefinition.cacheDefinition,cacheConfiguration)
             }
         }
 
     }
 
 
-    fun getCache(definition:VoidCommonCacheDefinition): Cache<in Serializable, in Serializable> {
+    fun getCache(definition:VoidCacheDefinition): Cache<in Serializable, in Serializable> {
         /*ISSUE kotlin的型变和Java的对应不上?*/
         val keyClazz = definition.keyClazz as Class<Serializable>
         val valueClazz = definition.valueClazz as Class<Serializable>
         val cache : Cache<Serializable,Serializable> = when(definition.persistent){
-            true -> persistentCacheManager.getCache(definition.cacheName,keyClazz, valueClazz)
-            false -> defaultCacheManager.getCache(definition.cacheName,keyClazz, valueClazz)
+            true -> persistentCacheManager.getCache(definition.cacheDefinition,keyClazz, valueClazz)
+            false -> defaultCacheManager.getCache(definition.cacheDefinition,keyClazz, valueClazz)
         }
         return cache
     }
@@ -115,8 +116,8 @@ class VoidEhCacheManager : VoidCache{
 
 
     override fun getCache(definition: String) : Cache<Serializable,Serializable>? {
-        VoidCommonCacheDefinition.entries.forEach {
-            if(it.cacheName == definition){
+        VoidCacheDefinition.entries.forEach {
+            if(it.cacheDefinition == definition){
                 return when(it.persistent){
                     true -> persistentCacheManager.getCache(definition,it.keyClazz as Class<Serializable>,it.valueClazz as Class<Serializable>)
                     false -> defaultCacheManager.getCache(definition,it.keyClazz as Class<Serializable>,it.valueClazz as Class<Serializable>)
@@ -132,7 +133,7 @@ class VoidEhCacheManager : VoidCache{
             cache.put(key,value)
             true
         }else{
-            logger.error("[${PkgInfo.MODULE_NAME}]缓存不存在,缓存名称:$definition")
+            logger.error("[${Meta.MODULE_NAME}]缓存不存在,缓存名称:$definition")
             false
         }
         return success
@@ -150,8 +151,8 @@ class VoidEhCacheManager : VoidCache{
      * @return 缓存值
      * 当缓存不存在时，会报错缓存不存在
      */
-    fun <T> getValue(definition: VoidCommonCacheDefinition, key: String): T? {
-        return getValue(definition.cacheName,key)
+    fun <T> getValue(definition: VoidCacheDefinition, key: String): T? {
+        return getValue(definition.cacheDefinition,key)
     }
 
     override fun close(): Unit {

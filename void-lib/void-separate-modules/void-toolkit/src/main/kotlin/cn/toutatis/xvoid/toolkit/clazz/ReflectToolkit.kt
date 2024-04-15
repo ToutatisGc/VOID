@@ -3,6 +3,7 @@ package cn.toutatis.xvoid.toolkit.clazz
 import cn.toutatis.xvoid.common.annotations.database.AssignField
 import cn.toutatis.xvoid.toolkit.formatting.JsonToolkit
 import java.lang.reflect.Field
+import java.lang.reflect.Method
 import java.lang.reflect.Modifier
 
 
@@ -18,6 +19,7 @@ object ReflectToolkit {
      */
     const val IS_FIELD_LAMBDA = "is"
     const val GET_FIELD_LAMBDA = "get"
+    const val SET_FIELD_LAMBDA = "set"
 
     /**
      * Convert a map to entity
@@ -135,6 +137,27 @@ object ReflectToolkit {
             throw IllegalArgumentException("The getter method name must start with \"get\" or \"is\"")
         }
         return fieldName[0].lowercaseChar().toString() + fieldName.substring(1)
+    }
+
+    /**
+     * 获取一个类的所有getter方法
+     */
+    @JvmStatic
+    fun getGetterMethods(clazz:Class<*>) : ArrayList<Method>{
+        val methods = ArrayList<Method>()
+        clazz.declaredMethods.forEach {
+            val methodName = it.name
+            if (methodName.startsWith(GET_FIELD_LAMBDA) || methodName.startsWith(IS_FIELD_LAMBDA)){
+                if (methodName != "getClass") methods.add(it)
+            }
+        }
+        return methods
+    }
+
+    @JvmStatic
+    fun getFieldGetterMethodName(field:Field):String{
+        val name = field.name
+        return GET_FIELD_LAMBDA + name[0].uppercaseChar() + name.substring(1)
     }
 
 }
