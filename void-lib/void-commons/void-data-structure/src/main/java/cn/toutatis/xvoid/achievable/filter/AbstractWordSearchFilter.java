@@ -4,7 +4,7 @@ import cn.toutatis.xvoid.structure.tree.TrieNode;
 
 /**
  * 默认支持词汇插入，需要实现search方法
- * @description 抽象词搜索过滤器
+ * 抽象词搜索过滤器
  * @author Toutatis_Gc
  */
 public abstract class AbstractWordSearchFilter implements WordSearchFilter{

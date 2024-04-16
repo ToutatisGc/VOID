@@ -154,10 +154,27 @@ object ReflectToolkit {
         return methods
     }
 
+    /**
+     * 获取字段的getter方法名
+     */
     @JvmStatic
     fun getFieldGetterMethodName(field:Field):String{
         val name = field.name
         return GET_FIELD_LAMBDA + name[0].uppercaseChar() + name.substring(1)
+    }
+
+    /**
+     * 获取字段的值
+     */
+    @JvmStatic
+    fun getFieldValue(obj: Any, field: Field):Any?{
+        field.isAccessible = true
+        return try {
+            field.get(obj)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            null
+        }
     }
 
 }

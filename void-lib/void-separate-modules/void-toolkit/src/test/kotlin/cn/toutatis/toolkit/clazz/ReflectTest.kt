@@ -20,6 +20,11 @@ class ReflectTest {
     @Test
     fun testGetFieldName(){
         val testEntity = TestEntity()
+        val allFields = ReflectToolkit.getAllFields(TestEntity::class.java)
+        for ((index, field) in allFields.withIndex()) {
+            val fieldGetterMethodName = ReflectToolkit.getFieldGetterMethodName(field)
+            System.err.println(fieldGetterMethodName)
+        }
         testEntity.name = "ttt"
         System.err.println(testEntity)
         val getterMethods = ReflectToolkit.getGetterMethods(testEntity::class.java)

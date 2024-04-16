@@ -2,7 +2,7 @@ package cn.toutatis.xvoid.structure.tree;
 
 /**
  * 字典树
- * @param <T>
+ * @param <T> 类型泛型
  */
 public class TrieNode<T> extends AbstractNode<TrieNode<T>,T>{
 
