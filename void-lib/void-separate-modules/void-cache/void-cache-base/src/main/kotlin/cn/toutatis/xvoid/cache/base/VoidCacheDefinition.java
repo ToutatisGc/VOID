@@ -17,7 +17,7 @@ public enum VoidCacheDefinition {
     /**
      * 验证码缓存
      */
-    VOID_SECURITY_CODE_CACHE("VOID_SECURITY_CODE_CACHE","",String.class,String.class, DataExpiredPolicy.EXPIRED_CREATED,300L,true),
+    VOID_SECURITY_CODE_CACHE("VOID_SECURITY_CODE_CACHE","SEC_CODE_${name}",String.class,String.class, DataExpiredPolicy.EXPIRED_CREATED,300L,true),
 
     ;
 

@@ -4,10 +4,13 @@ class VoidCache {
 
     companion object{
 
-        private lateinit var cacheManager: VoidCacheManager
+        private var cacheManager: VoidCacheManager<*,*>? = null
 
         @JvmStatic
-        fun init(cacheManager: VoidCacheManager){
+        fun init(cacheManager: VoidCacheManager<*,*>){
+            if (this.cacheManager != null){
+                throw IllegalStateException("VoidCacheManager已初始化"+ this.cacheManager!!.javaClass)
+            }
             this.cacheManager = cacheManager
         }
     }

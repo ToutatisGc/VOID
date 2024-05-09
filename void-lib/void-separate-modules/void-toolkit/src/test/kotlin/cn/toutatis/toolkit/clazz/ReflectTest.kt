@@ -33,4 +33,12 @@ class ReflectTest {
         }
     }
 
+    @Test
+    fun testGetterAndSetter(){
+        val testEntity = TestEntity()
+        ReflectToolkit.invokeFieldSetter("name",testEntity,"abc")
+        val invokeFieldGetter = ReflectToolkit.invokeFieldGetter("name", testEntity)
+        System.err.println(invokeFieldGetter)
+    }
+
 }

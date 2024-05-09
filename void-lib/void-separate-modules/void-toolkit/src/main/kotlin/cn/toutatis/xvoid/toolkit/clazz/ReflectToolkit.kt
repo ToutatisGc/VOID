@@ -5,6 +5,7 @@ import cn.toutatis.xvoid.toolkit.formatting.JsonToolkit
 import java.lang.reflect.Field
 import java.lang.reflect.Method
 import java.lang.reflect.Modifier
+import java.util.*
 
 
 /**
@@ -19,6 +20,10 @@ object ReflectToolkit {
      */
     const val IS_FIELD_LAMBDA = "is"
     const val GET_FIELD_LAMBDA = "get"
+
+    /**
+     * Setter描述符
+     */
     const val SET_FIELD_LAMBDA = "set"
 
     /**
@@ -159,11 +164,40 @@ object ReflectToolkit {
      */
     @JvmStatic
     fun getFieldGetterMethodName(field:Field):String{
-        val name = field.name
-        return GET_FIELD_LAMBDA + name[0].uppercaseChar() + name.substring(1)
+        return getFieldGetterMethodName(field.name)
     }
 
     /**
+     * 获取字段的getter方法名
+     */
+    @JvmStatic
+    fun getFieldGetterMethodName(field:String?):String{
+        if (field.isNullOrEmpty()){
+            throw IllegalArgumentException("The field name cannot be empty")
+        }
+        return GET_FIELD_LAMBDA + field[0].uppercaseChar() + field.substring(1)
+    }
+
+    /**
+     * 获取字段的getter方法名
+     */
+    @JvmStatic
+    fun getFieldSetterMethodName(field:Field):String{
+        return getFieldSetterMethodName(field.name)
+    }
+
+    /**
+     * 获取字段的setter方法名
+     */
+    @JvmStatic
+    fun getFieldSetterMethodName(field:String?):String{
+        if (field.isNullOrEmpty()){
+            throw IllegalArgumentException("The field name cannot be empty")
+        }
+        return SET_FIELD_LAMBDA + field[0].uppercaseChar() + field.substring(1)
+    }
+
+            /**
      * 获取字段的值
      */
     @JvmStatic
@@ -177,4 +211,100 @@ object ReflectToolkit {
         }
     }
 
+    /**
+     * 递归获取字段
+     * @param clazz 类
+     * @param fieldName 字段名
+     */
+    @JvmStatic
+    fun recursionGetField(clazz: Class<*>, fieldName: String): Field? {
+        return recursionGetField(clazz, fieldName,true)
+    }
+
+    /**
+     * 递归获取字段,不包含父类
+     * @param clazz 类
+     * @param fieldName 字段名
+     */
+    @JvmStatic
+    fun recursionGetFieldExcludeSuper(clazz: Class<*>, fieldName: String): Field? {
+        return recursionGetField(clazz, fieldName,false)
+    }
+
+    /**
+     * 递归获取字段
+     * @param clazz 类
+     * @param fieldName 字段名
+     * @param includeSuper 是否包含父类
+     */
+    @JvmStatic
+    fun recursionGetField(clazz: Class<*>, fieldName: String,includeSuper: Boolean): Field? {
+        return try {
+            clazz.getDeclaredField(fieldName)
+        } catch (e: NoSuchFieldException) {
+            if (!includeSuper) return null
+            if (clazz.superclass != null) {
+                recursionGetField(clazz.superclass, fieldName,true)
+            } else null
+        }
+    }
+
+    @JvmStatic
+    fun invokeFieldGetter(field: Field, obj: Any,vararg args:Any?):Any?{
+        return invokeFieldGetter(field.name,obj,*args)
+    }
+
+    @JvmStatic
+    fun invokeFieldGetter(field: String, obj: Any,vararg args:Any?):Any?{
+        return invokeFieldGetter(field,obj, ClassToolkit.castObjectArray2ClassArray(listOf(*args)),*args)
+    }
+
+    @JvmStatic
+    fun invokeFieldGetter(field: Field, obj: Any,methodParameterClass: Array<Class<*>>,vararg args:Any?):Any?{
+        return invokeFieldGetter(field.name,obj, methodParameterClass,*args)
+    }
+
+    @JvmStatic
+    fun invokeFieldGetter(field: String, obj: Any,methodParameterClass: Array<Class<*>>,vararg args:Any?):Any?{
+        return invokeMethod(getFieldGetterMethodName(field),obj, methodParameterClass,*args)
+    }
+
+    @JvmStatic
+    fun invokeFieldSetter(field: Field, obj: Any,vararg args:Any?):Any?{
+        return invokeFieldSetter(field.name,obj,*args)
+    }
+
+    @JvmStatic
+    fun invokeFieldSetter(field: String, obj: Any,vararg args:Any?):Any?{
+        return invokeFieldSetter(field,obj, ClassToolkit.castObjectArray2ClassArray(listOf(*args)),*args)
+    }
+
+    @JvmStatic
+    fun invokeFieldSetter(field: Field, obj: Any,methodParameterClass: Array<Class<*>>,vararg args:Any?):Any?{
+        return invokeFieldSetter(field.name,obj, methodParameterClass,*args)
+    }
+
+    @JvmStatic
+    fun invokeFieldSetter(field: String, obj: Any,methodParameterClass: Array<Class<*>>,vararg args:Any?):Any?{
+        return invokeMethod(getFieldSetterMethodName(field),obj, methodParameterClass,*args)
+    }
+
+    /**
+     * 静态方法，用于调用对象上的指定方法。
+     *
+     * @param methodName 要调用的方法的名称。
+     * @param obj 要调用方法的对象实例。
+     * @param methodParameterClass 方法参数的类型数组。
+     * @param args 调用方法时传递的参数，可变参数。
+     * @return 方法的返回值，如果方法无返回值则返回null。
+     */
+    @JvmStatic
+    fun invokeMethod(methodName: String, obj: Any, methodParameterClass: Array<Class<*>>, vararg args:Any?):Any?{
+        return obj::class.java.getMethod(methodName, *methodParameterClass).invoke(obj,*args)
+    }
+
+}
+
+fun Any.invokeGetter(field: String,vararg args:Any?):Any?{
+    return ReflectToolkit.invokeFieldGetter(field,this,*args)
 }

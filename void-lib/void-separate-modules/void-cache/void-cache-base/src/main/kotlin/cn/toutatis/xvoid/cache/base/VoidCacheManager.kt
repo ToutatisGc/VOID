@@ -2,13 +2,13 @@ package cn.toutatis.xvoid.cache.base
 
 import java.io.Serializable
 
-interface VoidCacheManager {
+interface VoidCacheManager<in K:Serializable,in V:Serializable> {
 
-    fun getCacheManager(definition: String): VoidCacheManager
+    fun getCacheManager(definition: String): Any
 
-    fun setValue(definition:String, key: Serializable, value: Serializable): Boolean
+    fun setValue(definition:String, key: K, value: V): Boolean
 
-    fun <T> getValue(definition: String,key:String): T?
+    fun <T> getValue(definition: String,key:K): T?
 
     fun close()
 

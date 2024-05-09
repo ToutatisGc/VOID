@@ -67,7 +67,7 @@
         <dependency>
             <groupId>cn.toutatis</groupId>
             <artifactId>void-toolkit</artifactId>
-            <version>0.0.5-ALPHA</version>
+            <version>0.0.7-ALPHA</version>
             <scope>compile</scope>
         </dependency>
     </dependencies>
