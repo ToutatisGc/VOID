@@ -11,13 +11,13 @@ import cn.toutatis.xvoid.toolkit.http.RequestToolkit
 import cn.toutatis.xvoid.toolkit.locale.I18n
 import cn.toutatis.xvoid.toolkit.log.LoggerToolkit
 import com.alibaba.fastjson.JSONObject
+import jakarta.servlet.http.HttpServletRequest
+import jakarta.servlet.http.HttpServletResponse
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
 import org.springframework.web.method.HandlerMethod
 import org.springframework.web.servlet.HandlerInterceptor
 import org.springframework.web.servlet.resource.ResourceHttpRequestHandler
-import javax.servlet.http.HttpServletRequest
-import javax.servlet.http.HttpServletResponse
 
 
 /**

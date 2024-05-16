@@ -11,7 +11,7 @@ import cn.toutatis.xvoid.toolkit.validator.Validator.strIsBlank
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
-import javax.servlet.http.HttpServletRequest
+import jakarta.servlet.http.HttpServletRequest
 
 @Component
 class MultiTenantManager {

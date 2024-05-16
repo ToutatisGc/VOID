@@ -31,6 +31,7 @@
         <module>void-spring-websocket</module>
         <!--缓存支持-->
         <module>void-spring-cache</module>
+        <module>void-spring-security</module>
     </modules>
 
 </project>

@@ -20,7 +20,7 @@ import lombok.experimental.Accessors;
     </#if>
 </#if>
 <#if usePersistence>
-import javax.persistence.*;
+import jakarta.persistence.*;
 import org.hibernate.Hibernate;
 import org.hibernate.annotations.GenericGenerator;
 import java.util.Objects;

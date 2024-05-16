@@ -4,7 +4,7 @@ import cn.toutatis.xvoid.spring.configure.system.VoidGlobalConfiguration
 import com.baomidou.mybatisplus.core.conditions.Wrapper
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
-import javax.servlet.http.HttpServletRequest
+import jakarta.servlet.http.HttpServletRequest
 
 /**
  * @author Toutatis_Gc

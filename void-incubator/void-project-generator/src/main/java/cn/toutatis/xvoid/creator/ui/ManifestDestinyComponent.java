@@ -10,11 +10,11 @@ import cn.toutatis.xvoid.creator.tools.Parameter;
 import cn.toutatis.xvoid.toolkit.file.FileToolkit;
 import org.apache.log4j.Logger;
 
-import javax.swing.*;
-import javax.swing.filechooser.FileSystemView;
-import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.JTableHeader;
-import javax.swing.table.TableColumn;
+import jakarta.swing.*;
+import jakarta.swing.filechooser.FileSystemView;
+import jakarta.swing.table.DefaultTableCellRenderer;
+import jakarta.swing.table.JTableHeader;
+import jakarta.swing.table.TableColumn;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.File;

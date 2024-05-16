@@ -12,8 +12,8 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.log4j.Logger;
 
 
-import javax.swing.*;
-import javax.swing.border.Border;
+import jakarta.swing.*;
+import jakarta.swing.border.Border;
 import java.awt.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;

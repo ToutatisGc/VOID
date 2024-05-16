@@ -5,7 +5,7 @@ import cn.toutatis.xvoid.common.standard.StandardFields;
 import cn.toutatis.xvoid.common.enums.MessageType;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletRequest;
 
 /**
  * 认证过程中一些默认行为

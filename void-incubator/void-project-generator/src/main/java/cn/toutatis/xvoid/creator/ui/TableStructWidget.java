@@ -6,10 +6,10 @@ import cn.toutatis.xvoid.creator.tools.ConfigurationTable;
 import cn.toutatis.xvoid.creator.tools.ManifestToolkit;
 import cn.toutatis.xvoid.creator.ui.listener.PlaceholderFocusListener;
 
-import javax.swing.*;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
-import javax.swing.text.Document;
+import jakarta.swing.*;
+import jakarta.swing.event.DocumentEvent;
+import jakarta.swing.event.DocumentListener;
+import jakarta.swing.text.Document;
 import java.awt.event.ItemEvent;
 import java.util.Arrays;
 import java.util.List;

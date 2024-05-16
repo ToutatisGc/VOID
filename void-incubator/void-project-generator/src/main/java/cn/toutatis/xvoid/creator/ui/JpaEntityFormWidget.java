@@ -4,9 +4,9 @@ import cn.toutatis.xvoid.creator.ManifestDestiny;
 import cn.toutatis.xvoid.toolkit.validator.Validator;
 import com.alibaba.fastjson.JSONObject;
 
-import javax.swing.*;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
+import jakarta.swing.*;
+import jakarta.swing.event.DocumentEvent;
+import jakarta.swing.event.DocumentListener;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;

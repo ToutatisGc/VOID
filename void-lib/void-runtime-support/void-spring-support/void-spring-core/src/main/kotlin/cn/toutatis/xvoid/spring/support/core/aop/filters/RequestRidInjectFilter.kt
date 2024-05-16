@@ -2,10 +2,10 @@ package cn.toutatis.xvoid.spring.support.core.aop.filters
 
 import cn.toutatis.xvoid.spring.configure.system.VoidGlobalConfiguration
 import org.springframework.beans.factory.annotation.Autowired
-import javax.servlet.Filter
-import javax.servlet.FilterChain
-import javax.servlet.ServletRequest
-import javax.servlet.ServletResponse
+import jakarta.servlet.Filter
+import jakarta.servlet.FilterChain
+import jakarta.servlet.ServletRequest
+import jakarta.servlet.ServletResponse
 
 /**
  * @see AnyPerRequestInjectRidFilter 参考此过滤器

@@ -3,8 +3,8 @@ package cn.toutatis.xvoid.sql.base;
 
 import cn.toutatis.xvoid.common.annotations.database.DDLTable;
 import com.baomidou.mybatisplus.annotation.TableName;
+import jakarta.persistence.Table;
 
-import javax.persistence.Table;
 import java.util.ArrayList;
 import java.util.List;
 

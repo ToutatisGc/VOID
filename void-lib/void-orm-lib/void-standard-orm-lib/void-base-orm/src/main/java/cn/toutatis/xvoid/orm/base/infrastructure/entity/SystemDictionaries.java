@@ -13,7 +13,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.io.Serial;
 
 import static cn.toutatis.xvoid.orm.base.infrastructure.entity.SystemDictionaries.*;

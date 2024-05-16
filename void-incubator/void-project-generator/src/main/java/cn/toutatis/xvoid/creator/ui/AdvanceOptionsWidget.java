@@ -2,10 +2,10 @@ package cn.toutatis.xvoid.creator.ui;
 
 import cn.toutatis.xvoid.creator.tools.ManifestToolkit;
 
-import javax.swing.*;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
-import javax.swing.text.Document;
+import jakarta.swing.*;
+import jakarta.swing.event.DocumentEvent;
+import jakarta.swing.event.DocumentListener;
+import jakarta.swing.text.Document;
 
 /**
  * @author TouTatis_Gc
