@@ -6,11 +6,12 @@
     <parent>
         <artifactId>void-lib</artifactId>
         <groupId>cn.toutatis</groupId>
-        <version>0.0.0-ALPHA</version>
+        <version>0.0.3-ALPHA</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>void-orm-lib</artifactId>
+    <version>0.0.0-ALPHA</version>
     <packaging>pom</packaging>
 
     <modules>

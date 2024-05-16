@@ -60,6 +60,17 @@
            <version>10.1.20</version>
            <scope>compile</scope>
        </dependency>
+       <dependency>
+           <groupId>org.projectlombok</groupId>
+           <artifactId>lombok</artifactId>
+           <scope>compile</scope>
+       </dependency>
+       <dependency>
+           <groupId>org.hibernate.orm</groupId>
+           <artifactId>hibernate-core</artifactId>
+           <version>6.4.4.Final</version>
+           <scope>compile</scope>
+       </dependency>
    </dependencies>
 
 
