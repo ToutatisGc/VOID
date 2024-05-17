@@ -41,7 +41,7 @@
         <dependency>
             <artifactId>void-kotlin-runtime-support</artifactId>
             <groupId>cn.toutatis</groupId>
-            <version>${kotlin.version}-1</version>
+            <version>${kotlin.version}</version>
             <type>pom</type>
         </dependency>
     </dependencies>

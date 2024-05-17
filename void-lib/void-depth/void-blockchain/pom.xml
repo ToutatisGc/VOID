@@ -25,7 +25,7 @@
             <dependency>
                 <groupId>cn.toutatis</groupId>
                 <artifactId>void-feature-support</artifactId>
-                <version>0.0.0-ALPHA</version>
+                <version>0.0.7-ALPHA</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>

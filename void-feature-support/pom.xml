@@ -21,13 +21,12 @@
         <default-jdk.version>${jdk17.version}</default-jdk.version>
         <project.build.sourceEncoding>${void.encoding}</project.build.sourceEncoding>
 
-        <kotlin.version>1.9.20</kotlin.version>
-        <kotlinx.version>1.6.4</kotlinx.version>
+        <kotlin.version>1.9.23</kotlin.version>
+        <kotlinx.version>1.8.1</kotlinx.version>
         <kotlin.dokka.version>1.9.10</kotlin.dokka.version>
         <kotlin.code.style>official</kotlin.code.style>
 
         <springboot.version>3.2.5</springboot.version>
-        <spring.security.version>5.5.1</spring.security.version>
         <spring-cloud.version>2022.0.3</spring-cloud.version>
 
         <vertx.version>4.2.4</vertx.version>

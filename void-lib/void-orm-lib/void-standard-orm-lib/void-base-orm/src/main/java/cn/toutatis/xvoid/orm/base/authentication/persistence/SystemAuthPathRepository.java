@@ -1,7 +1,7 @@
 package cn.toutatis.xvoid.orm.base.authentication.persistence;
 
 import cn.toutatis.xvoid.orm.base.authentication.entity.SystemAuthPath;
-import cn.toutatis.xvoid.orm.support.jpa.VoidJpaRepo;
+import org.springframework.data.repository.CrudRepository;
 
 /**
  * <p>
@@ -11,6 +11,6 @@ import cn.toutatis.xvoid.orm.support.jpa.VoidJpaRepo;
  * @author Toutatis_Gc
  * @since 2022-11-26
 */
-public interface SystemAuthPathRepository extends VoidJpaRepo<SystemAuthPath,Integer> {
+public interface SystemAuthPathRepository extends CrudRepository<SystemAuthPath,Integer> {
 
 }

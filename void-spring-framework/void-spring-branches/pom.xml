@@ -20,6 +20,8 @@
         <module>void-spring-microservice</module>
         <!--Spring 扩展服务-->
         <module>void-spring-expand</module>
+        <!--单体Spring Boot应用 重新构建 Spring Boot 3-->
+        <module>void-spring-singleton-reborn</module>
     </modules>
 
 

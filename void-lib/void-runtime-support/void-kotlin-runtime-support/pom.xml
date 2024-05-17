@@ -8,7 +8,7 @@
     <parent>
         <groupId>cn.toutatis</groupId>
         <artifactId>void-feature-support</artifactId>
-        <version>0.0.4-ALPHA</version>
+        <version>0.0.7-ALPHA</version>
         <relativePath/>
     </parent>
 
@@ -20,7 +20,7 @@
     </description>
 
     <artifactId>void-kotlin-runtime-support</artifactId>
-    <version>1.9.20-1</version>
+    <version>1.9.23</version>
     <packaging>pom</packaging>
 
     <properties>
@@ -71,7 +71,7 @@
                     <artifactId>kotlin-maven-plugin</artifactId>
                     <version>${kotlin.version}</version>
                     <configuration>
-                        <jvmTarget>17</jvmTarget>
+                        <jvmTarget>${default-jdk.version}</jvmTarget>
                         <args>
                             <arg>-Xjsr305=strict</arg>
                         </args>
